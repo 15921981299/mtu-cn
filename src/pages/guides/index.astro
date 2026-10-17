@@ -17,30 +17,27 @@ const guideCards = partsGuides.map((guide) => {
 ---
 
 <BaseLayout
-  title="Engine Parts Guides — Overhaul Planning & Series Identification"
-  description="Practical sourcing guides for MTU engine parts: overhaul planning checklists, series identification, superseded-number tracing, and the verified part groups we supply per series."
+  title="发动机零件指南 — 大修规划与系列识别"
+  description="面向 MTU 发动机零件的实用采购指南：大修规划清单、系列识别、被替代编号追溯，以及我们按系列供应的经核验零件组。"
   currentPath="/guides"
   jsonLd={[
     breadcrumbSchema([
-      { name: 'Home', url: site.url },
-      { name: 'Parts Guides', url: pageUrl },
+      { name: '首页', url: site.url },
+      { name: '零件指南', url: pageUrl },
     ]),
   ]}
 >
   <FunnelPageView stage="service" label="guides-index" />
   <BreadcrumbHero
-    title="Engine Parts Guides"
-    trail={[{ label: 'Home', href: '/' }, { label: 'Parts Guides' }]}
+    title="发动机零件指南"
+    trail={[{ label: '首页', href: '/' }, { label: '零件指南' }]}
     variant="3"
   />
 
   <div class="resource-page">
     <section class="resource-page-section">
       <p>
-        Sourcing guides written around one principle: the right part comes from the engine
-        <strong> serial number</strong>, not the model badge alone. Each guide combines an
-        identification checklist with the verified part groups we supply for that series —
-        no filler content, no invented specifications.
+        采购指南围绕一个原则编写：正确的零件来自发动机的<strong>出厂编号</strong>，而非单凭型号铭牌。每篇指南都将识别清单与我们为该系列供应的经核验零件组相结合——没有凑数内容，没有臆造的规格。
       </p>
     </section>
 
@@ -50,49 +47,41 @@ const guideCards = partsGuides.map((guide) => {
           <a class="guide-card" href={`/guides/${guide.slug}/`}>
             <h2>{guide.h1}</h2>
             <p>{guide.description}</p>
-            <span class="guide-card__meta">{count} verified part numbers inside →</span>
+            <span class="guide-card__meta">内含 {count} 个经核验零件号 →</span>
           </a>
         ))}
       </div>
     </section>
 
     <section class="resource-page-section">
-      <h2>Which Guide to Start With</h2>
+      <h2>从哪篇指南开始</h2>
       <p>
-        If you are planning a <strong>major overhaul</strong>, start with the overhaul guide for your series: it lists the
-        part groups that are always replaced, the ones that depend on measurements, and the information to collect before the
-        engine is opened. If you only have an <strong>old or unreadable part number</strong>, use the series identification
-        guide together with the <a href="/cross-reference/">cross-reference</a>, which maps earlier numbers to their current
-        references. For a <strong>single urgent item</strong>, skip the guides and search the
-        <a href="/part-products/">part-number catalog</a> directly.
+        如果您在计划一次<strong>大修（Overhaul）</strong>，请从您系列的大修指南开始：其中列出总是要更换的零件组、取决于测量结果的零件组，以及开缸前要收集的信息。如果您手上只有<strong>旧或看不清的零件号</strong>，请将系列识别指南与<a href="/cross-reference/">交叉引用</a>配合使用，后者将较早的编号对应到现行参考号。如果是<strong>单件紧急需求</strong>，可跳过指南，直接搜索<a href="/part-products/">零件号目录</a>。
       </p>
-      <h2>What the Guides Do Not Replace</h2>
+      <h2>指南不能替代什么</h2>
       <p>
-        The guides help you prepare an accurate inquiry; they are not a substitute for the engine manufacturer's maintenance
-        documentation. Service intervals, tightening torques, and settings should always come from the operating and
-        maintenance manuals for your specific engine. When the guide and your documentation differ, your documentation and the
-        engine serial number take priority, and we will check the reference before quoting.
+        指南帮助您准备准确的询价；但不能替代发动机制造商的维护文档。保养间隔、拧紧扭矩与设定值应始终来自您具体发动机的操作与维护手册。当指南与您的文档不一致时，以您的文档和发动机出厂编号为准，我们会在报价前核查该参考号。
       </p>
     </section>
 
     <section class="resource-page-section">
-      <h2>More Sourcing Tools</h2>
+      <h2>更多采购工具</h2>
       <ul class="resource-olist">
-        <li><a href="/cross-reference/">Part Number Cross Reference</a> — OEM and superseded numbers mapped to the parts we supply</li>
-        <li><a href="/engine-models/">Parts Lists by Engine Model</a> — every catalogued part number for your model code, grouped by system</li>
-        <li><a href="/part-products/">MTU Part Number Catalog</a> — all part numbers, searchable</li>
-        <li><a href="/catalog/">Catalog PDF Downloads</a> — the same index as a printable, searchable PDF, one file per series</li>
-        <li><a href="/guides/how-to-read-mtu-parts-diagram/">How to Read a Parts Diagram</a> — find the position number, then find the part number behind it</li>
-        <li><a href="/how-to-source-mtu-parts/">Dealer or Independent Supplier</a> — which route suits your engine, and how we sit against both</li>
-        <li><a href="/certifications/">Quality & Certifications</a> — how parts are verified before shipment</li>
+        <li><a href="/cross-reference/">零件号交叉引用</a>——OEM 号与被替代号对应到我们供应的零件</li>
+        <li><a href="/engine-models/">按发动机型号列出的零件清单</a>——您型号代码对应的全部已收录零件号，按系统分组</li>
+        <li><a href="/part-products/">MTU 零件号目录</a>——全部零件号，可搜索</li>
+        <li><a href="/catalog/">目录 PDF 下载</a>——同一索引的可打印、可搜索 PDF，每个系列一个文件</li>
+        <li><a href="/guides/how-to-read-mtu-parts-diagram/">如何阅读零件图</a>——先找位置号，再找其背后的零件号</li>
+        <li><a href="/how-to-source-mtu-parts/">分销商还是独立供应商</a>——哪条路线适合您的发动机，我们两者对比下的定位</li>
+        <li><a href="/certifications/">质量与认证</a>——零件发货前如何核验</li>
       </ul>
     </section>
 
     <DetailRfqStrip
-      title="Skip the reading — send the part number"
-      text="Part number, engine model, and serial number are enough for a verified availability check."
+      title="跳过阅读——直接发零件号"
+      text="零件号、发动机型号与出厂编号，足以进行一次经核验的供货情况检查。"
       quoteHref="/contact/?source=guides-index"
-      label="Request Parts Quote"
+      label="发起零件询价"
       modalSource="guides-index"
     />
   </div>

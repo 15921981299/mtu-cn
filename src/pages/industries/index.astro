@@ -13,23 +13,23 @@ const featuredCount = featuredSlugs.size;
 ---
 
 <BaseLayout
-  title="Industries Served — Marine, Industrial, Power Generation & Rail Engine Parts"
-  description="Diesel Part Source supplies diesel engine parts for marine, industrial engines, power generation, rail, shipyards, repair companies, and energy suppliers."
+  title="服务行业 —— 船用、工业、发电与铁路发动机零件"
+  description="柴油零件源 为船用、工业发动机、发电、铁路、船厂、维修公司与能源供应商供应柴油发动机零件。"
   currentPath="/industries"
   jsonLd={[
     breadcrumbSchema([
-      { name: 'Home', url: site.url },
-      { name: 'Industries', url: `${site.url}/industries/` },
+      { name: '首页', url: site.url },
+      { name: '行业', url: `${site.url}/industries/` },
     ]),
     faqSchema(industryFaqs.map((f) => ({ question: f.question, answer: f.answer }))),
   ]}
 >
   <FunnelPageView stage="selection" label="industries-index" />
   <BreadcrumbHero
-    title="Industries We Serve"
+    title="服务行业"
     trail={[
-      { label: 'Home', href: '/' },
-      { label: 'Industries' },
+      { label: '首页', href: '/' },
+      { label: '行业' },
     ]}
     variant="1"
   />
@@ -38,36 +38,36 @@ const featuredCount = featuredSlugs.size;
     <div class="section-gap bottom">
       <div class="container">
         <article class="blog-details-content-block resource-page fade-in">
-          <nav class="resource-nav" aria-label="Industries navigation">
+          <nav class="resource-nav" aria-label="行业导航">
             <a href="/industries/" class="resource-nav-link active" aria-current="page">
-              All industries
+              全部行业
             </a>
-            <a href="/industries/marine/" class="resource-nav-link">Marine</a>
-            <a href="/industries/industrial-engines/" class="resource-nav-link">Industrial</a>
-            <a href="/industries/power-generation/" class="resource-nav-link">Power</a>
-            <a href="/part-products/" class="resource-nav-link resource-nav-all">Parts Guides</a>
+            <a href="/industries/marine/" class="resource-nav-link">船用</a>
+            <a href="/industries/industrial-engines/" class="resource-nav-link">工业</a>
+            <a href="/industries/power-generation/" class="resource-nav-link">发电</a>
+            <a href="/part-products/" class="resource-nav-link resource-nav-all">零件指南</a>
           </nav>
 
           <p class="resource-intro">
-            Diesel Part Source supports maintenance and procurement teams that operate MTU, Detroit Diesel, Cummins, and DEUTZ engines in marine, industrial, power generation, rail, shipyard, repair, and energy applications.
+            柴油零件源 为在船用、工业、发电、铁路、船厂、维修与能源领域运营 MTU、Detroit Diesel、Cummins 与 DEUTZ 发动机的维护与采购团队提供支持。
           </p>
 
           <div class="resource-meta">
-            <span><strong>{industries.length}</strong> buyer groups</span>
-            <span><strong>{featuredCount}</strong> featured</span>
-            <span>Marine · Industrial · Power</span>
-            <span>Parts by <strong>engine series</strong></span>
+            <span><strong>{industries.length}</strong> 个买方群体</span>
+            <span><strong>{featuredCount}</strong> 个重点行业</span>
+            <span>船用 · 工业 · 发电</span>
+            <span>按<strong>发动机系列</strong>选零件</span>
           </div>
 
           <div class="detail-rfq-strip">
-            <p>Send your part list, engine model, serial number, quantity, and destination. We verify correct parts for your application.</p>
-            <a href="/contact/?source=industries" class="detail-rfq-link">Send Parts Inquiry</a>
+            <p>请提供零件清单、发动机型号、出厂编号、数量与目的地，我们将为您的应用场景核验正确的零件。</p>
+            <a href="/contact/?source=industries" class="detail-rfq-link">发送零件询价</a>
           </div>
 
           <div class="hub-grid">
             {industries.map((industry) => (
               <article class:list={['hub-card', { featured: featuredSlugs.has(industry.slug) }]}>
-                {featuredSlugs.has(industry.slug) && <span class="hub-featured-badge">Featured</span>}
+                {featuredSlugs.has(industry.slug) && <span class="hub-featured-badge">重点推荐</span>}
                 <a href={`/industries/${industry.slug}/`} class="hub-card-image">
                   <img
                     src={industry.image}
@@ -84,7 +84,7 @@ const featuredCount = featuredSlugs.size;
                   </h2>
                   <p class="hub-card-summary">{industry.summary}</p>
                   <a href={`/industries/${industry.slug}/`} class="hub-card-link">
-                    View industry →
+                    查看行业 →
                   </a>
                 </div>
               </article>
@@ -92,10 +92,10 @@ const featuredCount = featuredSlugs.size;
           </div>
 
           <div class="resource-note">
-            <strong>Procurement tip:</strong> For fleet or overhaul orders, send your parts list as early as possible so availability, alternatives, and freight can be checked together.
+            <strong>采购提示：</strong>对于船队或大修订单，请尽早发送零件清单，以便一并核查供货情况、替代方案与运费。
           </div>
 
-          <h2 class="hub-faq-heading">Engine Parts Industry FAQ</h2>
+          <h2 class="hub-faq-heading">发动机零件行业常见问题</h2>
           <div class="hub-faq-list">
             {industryFaqs.map((faq) => (
               <details class="hub-faq-item">
@@ -106,13 +106,13 @@ const featuredCount = featuredSlugs.size;
           </div>
 
           <p class="resource-related">
-            <a href="/products/mtu-spare-parts/">MTU spare parts</a>
+            <a href="/products/mtu-spare-parts/">MTU 备件</a>
             <span aria-hidden="true">·</span>
-            <a href="/products/cummins-parts/">Cummins parts</a>
+            <a href="/products/cummins-parts/">Cummins 零件</a>
             <span aria-hidden="true">·</span>
-            <a href="/products/deutz-parts/">DEUTZ parts</a>
+            <a href="/products/deutz-parts/">DEUTZ 零件</a>
             <span aria-hidden="true">·</span>
-            <a href="/contact/">Contact</a>
+            <a href="/contact/">联系我们</a>
           </p>
         </article>
       </div>
@@ -122,12 +122,12 @@ const featuredCount = featuredSlugs.size;
   <BlogCta
     stage="selection"
     topic="industries-index"
-    title="Check parts for your engine application"
-    text="Send part numbers, engine serial number, quantity, and destination. We confirm availability and compatibility before quotation."
-    primaryLabel="Send Parts Inquiry"
+    title="为您的发动机应用场景核对零件"
+    text="请提供零件号、发动机出厂编号、数量与目的地，我们将在报价前确认供货情况与适配性。"
+    primaryLabel="发送零件询价"
     primaryHref="/contact/?source=industries"
     primaryEvent="industries_index_rfq"
-    secondaryLabel="Parts guides"
+    secondaryLabel="零件指南"
     secondaryHref="/part-products/"
     secondaryEvent="industries_index_cases"
   />

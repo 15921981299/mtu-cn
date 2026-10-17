@@ -1,7 +1,16 @@
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
+import { createRequire } from 'node:module';
+import { dirname } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import test from 'node:test';
-import ts from 'typescript';
+
+// typescript is not hoisted under pnpm; resolve it from astro's dependency tree.
+const require = createRequire(import.meta.url);
+const tsEntry = require.resolve('typescript', {
+  paths: [dirname(require.resolve('astro/package.json'))],
+});
+const ts = await import(pathToFileURL(tsEntry).href);
 
 const html = path => readFileSync(new URL(`../dist/${path}/index.html`, import.meta.url), 'utf8');
 const loadData = async path => {
@@ -33,10 +42,10 @@ test('six Bing opportunity pages publish scoped evidence, truthful photos and di
       assert.ok(page.includes(`id="part-source-${source.id}"`), number);
     }
   }
-  assert.match(html('part-products/0031845201-oil-filter-spin-on'), /alternative-product dimensions/);
-  assert.match(html('part-products/x57508300091-fuel-filter-spin-on'), /marked X59408300151, not X57508300091/);
-  assert.match(html('part-products/x52808100004-fuel-delivery-pump'), /low-pressure fuel-pump group/);
-  assert.match(html('part-products/5410180233-diaphragm-for-oil-separator'), /item 5/);
+  assert.match(html('part-products/0031845201-oil-filter-spin-on'), /替代产品尺寸/);
+  assert.match(html('part-products/x57508300091-fuel-filter-spin-on'), /标有 X59408300151，而非 X57508300091/);
+  assert.match(html('part-products/x52808100004-fuel-delivery-pump'), /低压燃油泵组/);
+  assert.match(html('part-products/5410180233-diaphragm-for-oil-separator'), /第 5 项/);
   assert.match(html('case-studies'), /id="generator-service-filters"/);
 });
 
@@ -44,11 +53,11 @@ test('undirected and duplicate catalog references cannot become interchanges', a
   const { getPartReferences } = await loadData('../src/data/part-references.ts');
   const refs = getPartReferences({ partNumber: 'B002', replacementFor: ['A001', 'C003', 'B002'], crossReferences: [{ partNumber: 'A001', relationship: 'replaces' }, { partNumber: 'C003', relationship: 'reference' }] });
   assert.equal(refs.length, 2);
-  assert.equal(refs[0].label, 'Listed earlier number');
+  assert.equal(refs[0].label, '所列早期号码');
   assert.equal(refs[1].relationship, 'reference');
   const conflict = getPartReferences({ partNumber: 'B002', crossReferences: [{ partNumber: 'A001', relationship: 'replaces' }, { partNumber: 'A001', relationship: 'replaced-by' }] });
   assert.equal(conflict[0].relationship, 'reference');
-  assert.match(conflict[0].label, /Conflicting/);
+  assert.match(conflict[0].label, /冲突/);
 });
 
 test('all thirty priority parts have distinct quotation scope, evidence and RFQ context', async () => {
@@ -78,7 +87,7 @@ test('customer examples are anonymized and distinguish quote details from confir
   const pages = [html('products/mtu-spare-parts'), html('part-products/catalog/mtu-filters'), html('applications/marine-propulsion-engines'), html('guides/mtu-4000-overhaul-parts'), html('part-products/catalog/mtu-gasket-kits')];
   const joined = pages.join('');
   for (const example of quotationExamples) assert.ok(joined.includes(`data-quotation-example="${example.id}"`), example.id);
-  assert.match(joined, /completed delivery confirmed by Diesel Part Source/);
+  assert.match(joined, /均由柴油零件源完成交付/);
   assert.doesNotMatch(joined, /sales14@|Silas Mukarati|Omar Jabouri|RQ2610-65138|34,365\.50|RFQ-194155|RFQ 605272/);
   assert.match(html('part-products/x57508300091-fuel-filter-spin-on'), /16V4000G14F/);
   const cases = html('case-studies');

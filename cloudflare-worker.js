@@ -25,8 +25,8 @@ async function downloadDrawing(request, env, now = Date.now()) {
     'X-Content-Type-Options': 'nosniff',
   };
   const fail = (message, status) => new Response(message, { status, headers });
-  if (!['GET', 'HEAD'].includes(request.method)) return fail('Method not allowed', 405);
-  if (!env.RFQ_DOWNLOAD_SECRET || !env.R2_BUCKET) return fail('Download temporarily unavailable.', 503);
+  if (!['GET', 'HEAD'].includes(request.method)) return fail('请求方法不被允许', 405);
+  if (!env.RFQ_DOWNLOAD_SECRET || !env.R2_BUCKET) return fail('下载功能暂时不可用。', 503);
 
   const url = new URL(request.url);
   const key = url.searchParams.get('key') || '';
@@ -34,7 +34,7 @@ async function downloadDrawing(request, env, now = Date.now()) {
   const signature = url.searchParams.get('signature') || '';
   const nowSeconds = Math.floor(now / 1000);
   if (!key.startsWith('rfq/') || /[\r\n]/.test(key) || !/^\d{10}$/.test(expires) || !/^[a-f0-9]{64}$/.test(signature)) {
-    return fail('Invalid download link.', 403);
+    return fail('下载链接无效。', 403);
   }
   const valid = await crypto.subtle.verify(
     'HMAC',
@@ -42,13 +42,13 @@ async function downloadDrawing(request, env, now = Date.now()) {
     Uint8Array.from(signature.match(/../g), (byte) => parseInt(byte, 16)),
     textEncoder.encode(`${key}\n${expires}`),
   );
-  if (!valid) return fail('Invalid download link.', 403);
+  if (!valid) return fail('下载链接无效。', 403);
   if (Number(expires) <= nowSeconds || Number(expires) > nowSeconds + DOWNLOAD_TTL_SECONDS + 60) {
-    return fail('This download link has expired. Contact sales@dieselpartsource.com for assistance.', 410);
+    return fail('该下载链接已过期。请联系 sales@dieselpartsource.com 获取帮助。', 410);
   }
 
   const object = request.method === 'HEAD' ? await env.R2_BUCKET.head(key) : await env.R2_BUCKET.get(key);
-  if (!object) return fail('File not found.', 404);
+  if (!object) return fail('文件不存在。', 404);
   const filename = (object.customMetadata?.originalFilename || key.split('/').pop() || 'attachment').replace(/[\r\n\u0000-\u001f\u007f/\\]/g, '_');
   const encoded = encodeURIComponent(filename).replace(/[!'()*]/g, (char) => `%${char.charCodeAt(0).toString(16).toUpperCase()}`);
   return new Response(request.method === 'HEAD' ? null : object.body, {
@@ -74,24 +74,24 @@ async function downloadDrawing(request, env, now = Date.now()) {
  * listed as retired is guaranteed to have nothing served behind it.
  */
 const GONE_HTML = `<!doctype html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="noindex" />
-<title>Page removed | Diesel Part Source</title>
+<title>页面已移除 | 柴油零件源</title>
 </head>
 <body style="margin:0;font:16px/1.6 system-ui,-apple-system,'Segoe UI',sans-serif;color:#1f2933;background:#f7f9fb">
 <main style="max-width:640px;margin:0 auto;padding:64px 24px">
-<h1 style="font-size:24px;margin:0 0 12px">This page has been removed</h1>
-<p style="margin:0 0 20px">The model-page group it belonged to was retired, and there is no equivalent page to forward you to.</p>
-<p style="margin:0 0 8px"><strong>Looking for a part?</strong></p>
+<h1 style="font-size:24px;margin:0 0 12px">该页面已移除</h1>
+<p style="margin:0 0 20px">其所属的型号页组已下线，没有可跳转的等价页面。</p>
+<p style="margin:0 0 8px"><strong>正在查找零件？</strong></p>
 <ul style="margin:0 0 20px;padding-left:20px">
-<li><a href="/products/">Engine parts by series</a> &mdash; MTU main series and overhaul coverage</li>
-<li><a href="/part-products/">Part numbers</a> &mdash; look up a specific part number</li>
-<li><a href="/contact/">Send an inquiry</a> &mdash; part number, engine model, serial number, quantity, destination</li>
+<li><a href="/products/">按系列浏览发动机零件</a> —— MTU 主要系列与大修覆盖范围</li>
+<li><a href="/part-products/">零件号索引</a> —— 查询具体零件号</li>
+<li><a href="/contact/">发送询价</a> —— 零件号、发动机型号、出厂编号、数量、目的地</li>
 </ul>
-<p style="margin:0;color:#52606d;font-size:14px">If you followed a link you trust, email <a href="mailto:sales@dieselpartsource.com">sales@dieselpartsource.com</a> and we will point you to the right page.</p>
+<p style="margin:0;color:#52606d;font-size:14px">如果您通过可信链接到达本页，请发送邮件至 <a href="mailto:sales@dieselpartsource.com">sales@dieselpartsource.com</a>，我们会为您指引正确页面。</p>
 </main>
 </body>
 </html>`;
@@ -153,7 +153,7 @@ export default {
         return serveAssets(request, env);
       }
 
-      return new Response('Not found', { status: 404 });
+      return new Response('页面不存在', { status: 404 });
     }
 
     if (request.method === 'OPTIONS') {
@@ -179,11 +179,11 @@ export default {
       const submittedEmail = fd.get('email')?.toString().trim() || '';
       const submittedMessage = fd.get('message')?.toString().trim() || '';
       if (fd.get('website') || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(submittedEmail) || !submittedMessage) {
-        return new Response(JSON.stringify({ ok: false, message: 'Please provide a valid email and part details.' }), {
+        return new Response(JSON.stringify({ ok: false, message: '请提供有效的邮箱地址与零件详情。' }), {
           status: 400, headers: { 'Content-Type': 'application/json' },
         });
       }
-      const name = fd.get('name')?.toString() || '(not provided)';
+      const name = fd.get('name')?.toString() || '（未提供）';
       const email = submittedEmail;
       const company = fd.get('company')?.toString() || '-';
       const phone = fd.get('phone')?.toString() || '-';
@@ -195,12 +195,12 @@ export default {
       const message = submittedMessage;
       const source = fd.get('source')?.toString() || '-';
       const role = fd.get('role')?.toString() || '-';
-      const nda = fd.get('nda') ? 'Yes' : 'No';
+      const nda = fd.get('nda') ? '是' : '否';
       const attributionField = (key, limit = 500) => String(fd.get(key) || '').replace(/[\r\n\u0000-\u001f]/g, ' ').slice(0, limit) || '-';
       const inquiryId = crypto.randomUUID();
 
       // Store file to R2
-      let drawingInfo = 'No file';
+      let drawingInfo = '无附件';
       const drawing = fd.get('drawing');
 
       if (drawing && drawing instanceof File && drawing.size > 0) {
@@ -214,43 +214,43 @@ export default {
           });
           if (env.RFQ_DOWNLOAD_SECRET) {
             const downloadUrl = await createDownloadUrl(request, key, env.RFQ_DOWNLOAD_SECRET);
-            drawingInfo = `${drawing.name} (${fileSizeKB} KB)\nPrivate download (valid for 7 days): ${downloadUrl}`;
+            drawingInfo = `${drawing.name}（${fileSizeKB} KB）\n私密下载链接（7 天有效）：${downloadUrl}`;
           } else {
-            drawingInfo = `${drawing.name} (${fileSizeKB} KB) [private download not configured]`;
+            drawingInfo = `${drawing.name}（${fileSizeKB} KB）[未配置私密下载]`;
           }
-          console.log(`File stored: ${key} (${fileSizeKB} KB)`);
+          console.log(`文件已存储：${key}（${fileSizeKB} KB）`);
         } else {
-          drawingInfo = `${drawing.name} (${fileSizeKB} KB) [R2 not configured]`;
-          console.log('R2 not bound - file not stored');
+          drawingInfo = `${drawing.name}（${fileSizeKB} KB）[未配置 R2 存储]`;
+          console.log('未绑定 R2 —— 文件未存储');
         }
       }
 
       const emailBody = [
-        `Inquiry ID: ${inquiryId}`,
-        `Name:     ${name}`,
-        `Email:    ${email}`,
-        `Company:  ${company}`,
-        `Phone:    ${phone}`,
-        `Role:     ${role}`,
-        `Material: ${material}`,
-        `Quantity: ${quantity}`,
-        `Engine model:  ${engineModel}`,
-        `Engine serial: ${engineSerial}`,
-        `Destination:   ${country}`,
-        `Drawing:  ${drawingInfo}`,
-        `NDA:      ${nda}`,
-        `Source:   ${source}`,
-        `Inquiry page: ${attributionField('page_url')}`,
-        `Part number: ${attributionField('part_number', 100)}`,
-        `Inquiry context: ${attributionField('rfq_context', 300)}`,
-        `First landing page: ${attributionField('first_touch_page')}`,
-        `Entry source (browser-reported): ${attributionField('entry_source', 100)}`,
-        `Entry medium: ${attributionField('entry_medium', 100)}`,
-        `Referrer host: ${attributionField('referrer_host', 200)}`,
-        `Campaign: ${attributionField('entry_campaign', 100)}`,
-        `Page path: ${attributionField('touch_path', 1500)}`,
+        `询价编号：${inquiryId}`,
+        `姓名：     ${name}`,
+        `邮箱：     ${email}`,
+        `公司：     ${company}`,
+        `电话：     ${phone}`,
+        `角色：     ${role}`,
+        `材质：     ${material}`,
+        `数量：     ${quantity}`,
+        `发动机型号：${engineModel}`,
+        `出厂编号： ${engineSerial}`,
+        `目的国：   ${country}`,
+        `附件：     ${drawingInfo}`,
+        `保密协议： ${nda}`,
+        `来源：     ${source}`,
+        `询价页面： ${attributionField('page_url')}`,
+        `零件号：   ${attributionField('part_number', 100)}`,
+        `询价上下文：${attributionField('rfq_context', 300)}`,
+        `首次落地页：${attributionField('first_touch_page')}`,
+        `入口来源（浏览器上报）：${attributionField('entry_source', 100)}`,
+        `入口媒介： ${attributionField('entry_medium', 100)}`,
+        `引荐主机： ${attributionField('referrer_host', 200)}`,
+        `广告系列： ${attributionField('entry_campaign', 100)}`,
+        `页面路径： ${attributionField('touch_path', 1500)}`,
         '',
-        `Message:`,
+        '询价内容：',
         message,
       ].join('\n');
 
@@ -259,8 +259,8 @@ export default {
       const deliverEmail = typeof env.__sendEmail === 'function' ? env.__sendEmail : sendZohoEmail;
 
       if (!env.__sendEmail && !isZohoSmtpConfigured(env)) {
-        console.error('ZOHO_SMTP_PASS not configured');
-        return new Response(JSON.stringify({ ok: false, message: 'Email service not configured. Please email us at sales@dieselpartsource.com' }), {
+        console.error('未配置 ZOHO_SMTP_PASS');
+        return new Response(JSON.stringify({ ok: false, message: '邮件服务暂未配置。请直接发送邮件至 sales@dieselpartsource.com' }), {
           status: 503,
           headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
         });
@@ -269,63 +269,63 @@ export default {
       const subjectPart = attributionField('part_number', 60);
       const subjectParts = [
         subjectPart !== '-' ? subjectPart : '',
-        quantity !== '-' ? `Qty ${quantity}` : '',
+        quantity !== '-' ? `数量 ${quantity}` : '',
         country !== '-' ? country : '',
-        name !== '(not provided)' ? name : email,
+        name !== '（未提供）' ? name : email,
       ].filter(Boolean).map((part) => part.replace(/[\r\n]+/g, ' ').trim()).join(' | ');
 
       await deliverEmail(env, {
         to: env.RFQ_NOTIFICATION_EMAIL || 'admin@machiningsupplier.com',
-        subject: `New RFQ: ${subjectParts}`.slice(0, 180),
+        subject: `新询盘：${subjectParts}`.slice(0, 180),
         text: emailBody,
-        replyTo: email.includes('@') && email !== '(not provided)' ? email : undefined,
+        replyTo: email.includes('@') && email !== '（未提供）' ? email : undefined,
       });
-      console.log('Zoho SMTP: sales notification sent');
+      console.log('Zoho SMTP：销售通知已发送');
 
-      if (email.includes('@') && email !== '(not provided)') {
+      if (email.includes('@') && email !== '（未提供）') {
         const autoReplyBody = [
-          name === '(not provided)' ? 'Hello,' : `Hi ${name},`,
+          name === '（未提供）' ? '您好，' : `${name}，您好`,
           '',
-          'Thank you for submitting your engine parts inquiry to Diesel Part Source.',
+          '感谢您向柴油零件源提交发动机零件询价。',
           '',
-          'We have received your inquiry. Our parts team will review your part number, engine details, photos, quantity, and destination before quotation.',
+          '我们已收到您的询价。零件团队将在报价前核验您的零件号、发动机信息、照片、数量与目的地。',
           '',
-          'What happens next:',
-          '1. Part-number, engine model, and serial-number review',
-          '2. Availability, lead time, unit price, and shipping route check',
-          '3. Follow-up if replacement or compatibility details need confirmation',
+          '后续流程：',
+          '1. 零件号、发动机型号与出厂编号核验',
+          '2. 供货情况、交货期、单价与运输路线确认',
+          '3. 如需确认替换件或适配信息，我们会进一步与您联系',
           '',
-          'Helpful resources:',
-          '- MTU part numbers: https://dieselpartsource.com/part-products/',
-          '- Engine parts catalog: https://dieselpartsource.com/products/',
+          '实用资源：',
+          '- MTU 零件号索引：https://dieselpartsource.com/part-products/',
+          '- 发动机零件目录：https://dieselpartsource.com/products/',
           '',
-          'Questions before we reply? Email sales@dieselpartsource.com - we respond within one business day.',
+          '在我们回复前如有疑问，请发送邮件至 sales@dieselpartsource.com —— 我们在一个工作日内答复。',
           '',
-          'Best regards,',
-          'Diesel Part Source Parts Team',
+          '此致',
+          '柴油零件源 零件团队',
         ].join('\n');
 
         try {
           await deliverEmail(env, {
             to: email,
-            subject: 'We received your engine parts inquiry - Diesel Part Source',
+            subject: '我们已收到您的发动机零件询价 —— 柴油零件源',
             text: autoReplyBody,
             replyTo: SALES_EMAIL,
           });
-          console.log('Zoho SMTP: customer auto-reply sent');
+          console.log('Zoho SMTP：客户自动回复已发送');
         } catch (autoReplyErr) {
-          console.error('Customer auto-reply failed:', autoReplyErr.message);
+          console.error('客户自动回复发送失败：', autoReplyErr.message);
         }
       }
 
-      return new Response(JSON.stringify({ ok: true, inquiryId, message: `Thanks${name === '(not provided)' ? '' : ` ${name}`}! We'll reply to ${email} within one business day.` }), {
+      return new Response(JSON.stringify({ ok: true, inquiryId, message: `感谢${name === '（未提供）' ? '' : ` ${name}`}！我们将在一个工作日内回复至 ${email}。` }), {
         status: 200,
         headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
       });
 
     } catch (err) {
-      console.error('RFQ Error:', err.message);
-      return new Response(JSON.stringify({ ok: false, message: 'Something went wrong. Please email us at sales@dieselpartsource.com' }), {
+      console.error('询价处理出错：', err.message);
+      return new Response(JSON.stringify({ ok: false, message: '提交出现问题。请发送邮件至 sales@dieselpartsource.com' }), {
         status: 500,
         headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
       });

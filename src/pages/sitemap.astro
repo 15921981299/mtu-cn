@@ -12,57 +12,57 @@ import { breadcrumbSchema, site } from '../data/site';
 import '../styles/resource-page.css';
 
 const corePages = [
-  { href: '/', label: 'Home' },
-  { href: '/products/', label: 'Products' },
-  { href: '/capabilities/', label: 'Service & Support' },
-  { href: '/industries/', label: 'Industries' },
-  { href: '/applications/', label: 'Applications' },
-  { href: '/part-products/', label: 'Parts Guides' },
-  { href: '/certifications/', label: 'Certifications' },
-  { href: '/about/', label: 'About' },
-  { href: '/contact/', label: 'Send Parts Inquiry' },
+  { href: '/', label: '首页' },
+  { href: '/products/', label: '产品' },
+  { href: '/capabilities/', label: '服务与支持' },
+  { href: '/industries/', label: '行业' },
+  { href: '/applications/', label: '应用' },
+  { href: '/part-products/', label: '零件指南' },
+  { href: '/certifications/', label: '质量与认证' },
+  { href: '/about/', label: '关于我们' },
+  { href: '/contact/', label: '发送零件询价' },
 ];
 
 const toolPages = [
-  { href: '/products/mtu-spare-parts/mtu-part-number-lookup/', label: 'MTU Part Number Lookup' },
-  { href: '/products/mtu-spare-parts/mtu-engine-series-guide/', label: 'MTU Engine Series Guide' },
-  { href: '/products/mtu-2000-series-parts/marine-generator-service-parts/', label: 'MTU 2000 Marine & Generator Parts' },
-  { href: '/products/mtu-2000-series-parts/16v-2000-engine-parts/', label: 'MTU 16V 2000 Engine Parts' },
-  { href: '/products/mtu-2000-series-parts/mtu-m96l-engine-parts/', label: 'MTU 16V 2000 M96L Engine Parts' },
-  { href: '/series/mtu-396/', label: 'MTU 396 Series Hub' },
-  { href: '/series/mtu-2000/', label: 'MTU 2000 Series Hub' },
-  { href: '/series/mtu-396-variants/', label: 'MTU 396 Variant Decoder' },
-  { href: '/series/mtu-2000-variants/', label: 'MTU 2000 Variant Decoder' },
-  { href: '/series/mtu-1163/', label: 'MTU 1163 Series Hub' },
-  { href: '/series/mtu-1163-variants/', label: 'MTU 1163 Variant Decoder' },
-  { href: '/series/mtu-4000-variants/', label: 'MTU 4000 Variant Decoder' },
-  { href: '/series/16v2000m96/', label: 'MTU 16V 2000 M96 Spare Parts' },
-  { href: '/series/12v396te94/', label: 'MTU 12V 396 TE94 Spare Parts' },
-  { href: '/products/mtu-4000-series-parts/overhaul-parts/', label: 'MTU 4000 Overhaul Parts' },
-  { href: '/products/mtu-4000-series-parts/12v-4000-engine-parts/', label: 'MTU 12V 4000 Engine Parts' },
-  { href: '/products/mtu-4000-series-parts/16v-4000-engine-parts/', label: 'MTU 16V 4000 Engine Parts' },
-  { href: '/products/mtu-series-8000-engines/', label: 'MTU 8000 Series Engine Parts' },
-  { href: '/products/cummins-parts/service-kits-and-overhaul-parts/', label: 'Cummins Service Kits & Overhaul Parts' },
-  { href: '/products/deutz-parts/industrial-equipment-parts/', label: 'DEUTZ Industrial Equipment Parts' },
-  { href: '/llm-instructions/', label: 'LLM / AI Instructions' },
-  { href: '/guides/', label: 'Engine Parts Guides' },
-  { href: '/guides/how-to-read-mtu-parts-diagram/', label: 'How to Read an MTU Parts Diagram' },
-  { href: '/catalog/', label: 'MTU Parts Catalog PDF Downloads' },
-  { href: '/cross-reference/', label: 'Part Number Cross Reference' },
-  { href: '/part-number-index/', label: 'Part Number Index (EN · DE)' },
-  { href: '/products/mtu-spare-parts/mtu-genset-parts-by-power/', label: 'MTU Genset Parts by Power Rating' },
-  { href: '/products/mtu-spare-parts/mtu-overhaul-kits/', label: 'MTU Overhaul Kits (Top / In-Frame / Full)' },
-  { href: '/products/mtu-spare-parts/mtu-1600-series-parts/', label: 'MTU Series 1600 & F-Build Models' },
-  { href: '/products/mtu-spare-parts/mtu-legacy-gas-engine-parts/', label: 'MTU Legacy Series & Gas Engines' },
-  { href: '/engine-models/', label: 'Parts Lists by Engine Model' },
-  { href: '/how-to-source-mtu-parts/', label: 'Dealer or Independent Supplier?' },
+  { href: '/products/mtu-spare-parts/mtu-part-number-lookup/', label: 'MTU 零件号查询' },
+  { href: '/products/mtu-spare-parts/mtu-engine-series-guide/', label: 'MTU 发动机系列指南' },
+  { href: '/products/mtu-2000-series-parts/marine-generator-service-parts/', label: 'MTU 2000 船用与发电零件' },
+  { href: '/products/mtu-2000-series-parts/16v-2000-engine-parts/', label: 'MTU 16V 2000 发动机零件' },
+  { href: '/products/mtu-2000-series-parts/mtu-m96l-engine-parts/', label: 'MTU 16V 2000 M96L 发动机零件' },
+  { href: '/series/mtu-396/', label: 'MTU 396 系列中心页' },
+  { href: '/series/mtu-2000/', label: 'MTU 2000 系列中心页' },
+  { href: '/series/mtu-396-variants/', label: 'MTU 396 变型解码' },
+  { href: '/series/mtu-2000-variants/', label: 'MTU 2000 变型解码' },
+  { href: '/series/mtu-1163/', label: 'MTU 1163 系列中心页' },
+  { href: '/series/mtu-1163-variants/', label: 'MTU 1163 变型解码' },
+  { href: '/series/mtu-4000-variants/', label: 'MTU 4000 变型解码' },
+  { href: '/series/16v2000m96/', label: 'MTU 16V 2000 M96 备件' },
+  { href: '/series/12v396te94/', label: 'MTU 12V 396 TE94 备件' },
+  { href: '/products/mtu-4000-series-parts/overhaul-parts/', label: 'MTU 4000 大修零件' },
+  { href: '/products/mtu-4000-series-parts/12v-4000-engine-parts/', label: 'MTU 12V 4000 发动机零件' },
+  { href: '/products/mtu-4000-series-parts/16v-4000-engine-parts/', label: 'MTU 16V 4000 发动机零件' },
+  { href: '/products/mtu-series-8000-engines/', label: 'MTU 8000 系列发动机零件' },
+  { href: '/products/cummins-parts/service-kits-and-overhaul-parts/', label: 'Cummins 维修包与大修零件' },
+  { href: '/products/deutz-parts/industrial-equipment-parts/', label: 'DEUTZ 工业设备零件' },
+  { href: '/llm-instructions/', label: 'LLM / AI 说明' },
+  { href: '/guides/', label: '发动机零件指南' },
+  { href: '/guides/how-to-read-mtu-parts-diagram/', label: '如何阅读 MTU 零件图' },
+  { href: '/catalog/', label: 'MTU 零件目录 PDF 下载' },
+  { href: '/cross-reference/', label: '零件号交叉引用' },
+  { href: '/part-number-index/', label: '零件号索引（EN · DE）' },
+  { href: '/products/mtu-spare-parts/mtu-genset-parts-by-power/', label: '按功率分组的 MTU 发电机组零件' },
+  { href: '/products/mtu-spare-parts/mtu-overhaul-kits/', label: 'MTU 大修包（顶部 / 在架 / 全套）' },
+  { href: '/products/mtu-spare-parts/mtu-1600-series-parts/', label: 'MTU 1600 系列与 F 构型型号' },
+  { href: '/products/mtu-spare-parts/mtu-legacy-gas-engine-parts/', label: 'MTU 经典系列与气体发动机' },
+  { href: '/engine-models/', label: '按发动机型号列出的零件清单' },
+  { href: '/how-to-source-mtu-parts/', label: '分销商还是独立供应商？' },
 ];
 
 const termsPages = [
-  { href: '/terms/payment/', label: 'Payment Terms' },
-  { href: '/terms/shipping/', label: 'Shipping Terms' },
-  { href: '/terms/samples/', label: 'Sample Terms' },
-  { href: '/privacy/', label: 'Privacy Policy' },
+  { href: '/terms/payment/', label: '付款条款' },
+  { href: '/terms/shipping/', label: '运输条款' },
+  { href: '/terms/samples/', label: '样品条款' },
+  { href: '/privacy/', label: '隐私政策' },
 ];
 
 const capabilityLinks = services.map((s) => ({ href: `/capabilities/${s.slug}/`, label: s.title }));
@@ -80,34 +80,34 @@ const catalogLinks = mtuCatalogHubs.map((hub) => ({
 }));
 
 const sections = [
-  { title: 'Main Pages', items: corePages },
-  { title: 'Service & Support', items: capabilityLinks },
-  { title: 'Engine Parts', items: productLinks },
-  { title: 'Parts Guides', items: productSubLinks },
-  { title: 'MTU Parts Catalogs', items: catalogLinks },
-  { title: 'Industries', items: industryLinks },
-  { title: 'Applications', items: applicationLinks },
-  { title: 'Resources', items: toolPages },
-  { title: 'Terms & Policies', items: termsPages },
+  { title: '主要页面', items: corePages },
+  { title: '服务与支持', items: capabilityLinks },
+  { title: '发动机零件', items: productLinks },
+  { title: '零件指南', items: productSubLinks },
+  { title: 'MTU 零件目录', items: catalogLinks },
+  { title: '行业', items: industryLinks },
+  { title: '应用', items: applicationLinks },
+  { title: '资源', items: toolPages },
+  { title: '条款与政策', items: termsPages },
 ];
 
 const totalLinks = sections.reduce((sum, s) => sum + s.items.length, 0);
 ---
 
 <BaseLayout
-  title="Sitemap — Diesel Part Source"
-  description="Full HTML sitemap of Diesel Part Source — browse diesel engine parts, MTU parts guides, service support, industries, applications, and contact pages."
+  title="网站地图 — 柴油零件源"
+  description="柴油零件源 完整 HTML 网站地图——浏览柴油发动机零件、MTU 零件指南、服务支持、行业、应用与联系页面。"
   currentPath="/sitemap"
   jsonLd={breadcrumbSchema([
-    { name: 'Home', url: site.url },
-    { name: 'Sitemap', url: `${site.url}/sitemap/` },
+    { name: '首页', url: site.url },
+    { name: '网站地图', url: `${site.url}/sitemap/` },
   ])}
 >
   <BreadcrumbHero
-    title="Sitemap"
+    title="网站地图"
     trail={[
-      { label: 'Home', href: '/' },
-      { label: 'Sitemap' },
+      { label: '首页', href: '/' },
+      { label: '网站地图' },
     ]}
     variant="1"
   />
@@ -117,8 +117,7 @@ const totalLinks = sections.reduce((sum, s) => sum + s.items.length, 0);
       <div class="container">
         <article class="blog-details-content-block resource-page fade-in">
           <p class="resource-intro">
-            Every priority Diesel Part Source page in one place — {totalLinks} links across engine parts, service support,
-            industries, applications, resources, and terms.
+            柴油零件源 的全部重点页面汇集一处——共 {totalLinks} 个链接，涵盖发动机零件、服务支持、行业、应用、资源与条款。
           </p>
 
           {sections.map((section) => (

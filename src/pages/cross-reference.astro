@@ -6,6 +6,7 @@ import DetailRfqStrip from '../components/DetailRfqStrip.astro';
 import { mtuParts } from '../data/mtu-parts';
 import { getPartReferences } from '../data/part-references';
 import { breadcrumbSchema, faqSchema, site } from '../data/site';
+import { zhPartName } from '../data/part-names-zh';
 import '../styles/resource-page.css';
 
 /**
@@ -34,7 +35,7 @@ for (const part of mtuParts) {
       altNumber: normalize(cleaned),
       altDisplay: cleaned,
       partNumber: part.partNumber,
-      partName: part.name,
+      partName: zhPartName(part.name),
       slug: part.slug,
       relationship: rel,
     });
@@ -60,60 +61,54 @@ const groups = [...grouped.entries()]
 const pageUrl = `${site.url}/cross-reference/`;
 const faqItems = [
   {
-    question: 'How do I use this cross-reference list?',
+    question: '如何使用这份交叉引用清单？',
     answer:
-      'Match your marked number to the catalog record. Earlier and later labels describe the reference relative to the linked catalog part. Reference-only rows have no confirmed replacement direction. Open the part page for identification checks and send engine details before ordering.',
+      '将您标注的编号与目录记录对应。较早与较晚的标签描述该参考号相对于所链接目录零件的关系。仅作参考的行没有确认的替代方向。请打开零件页进行识别核查，并在下单前发送发动机详情。',
   },
   {
-    question: 'My part number is not listed. Can you still supply it?',
+    question: '我的零件号不在清单中，你们还能供应吗？',
     answer:
-      'Send the complete number, engine model and serial number for a sourcing check. Absence from this index does not establish availability or unavailability.',
+      '请发送完整编号、发动机型号与出厂编号，以便进行采购核查。未收入本索引并不说明有货或无货。',
   },
   {
-    question: 'Does an interchange reference mean the parts are identical?',
+    question: '互换参考号是否意味着零件完全相同？',
     answer:
-      'No. These are catalog history and related-number references, including imported public catalog data. They do not prove identical dimensions, condition or application. Confirm the exact offered number, engine serial range and any mating-part changes before substitution.',
+      '不是。这些是目录历史与相关编号参考，包括导入的公开目录数据。它们不能证明尺寸、状态或应用完全相同。替换前请确认所供确切编号、发动机出厂编号区间以及任何配合件变更。',
   },
 ];
 ---
 
 <BaseLayout
-  title="Part Number Cross Reference — MTU, Detroit Diesel & DEUTZ Alternatives"
-  description={`Check ${groups.length} catalog reference numbers, earlier and later part-number history. Follow linked part records and request application-specific replacement verification.`}
+  title="零件号交叉引用 — MTU、Detroit Diesel 与 DEUTZ 替代号"
+  description={`查询 ${groups.length} 个目录参考编号，以及较早与较晚的零件号历史。跟随所链接的零件记录，并申请针对具体应用的替代核验。`}
   currentPath="/cross-reference"
   jsonLd={[
     breadcrumbSchema([
-      { name: 'Home', url: site.url },
-      { name: 'Part Number Cross Reference', url: pageUrl },
+      { name: '首页', url: site.url },
+      { name: '零件号交叉引用', url: pageUrl },
     ]),
     faqSchema(faqItems),
   ]}
 >
   <FunnelPageView stage="comparison" label="cross-reference-index" />
   <BreadcrumbHero
-    title="Part Number Cross Reference"
-    trail={[{ label: 'Home', href: '/' }, { label: 'Part Number Cross Reference' }]}
+    title="零件号交叉引用"
+    trail={[{ label: '首页', href: '/' }, { label: '零件号交叉引用' }]}
     variant="2"
   />
 
   <div class="resource-page">
     <section class="resource-page-section">
       <p>
-        Have an OEM, superseded, or another supplier's part number? This index lists
-        <strong>{groups.length} catalog reference numbers</strong> linked to part records.
-        Earlier and later labels describe published catalog history; an undirected reference does
-        not establish interchangeability. Imported catalog data is an identification aid, not supplier-confirmed fitment.
+        手头有 OEM 号、被替代号或其他供应商的零件号？本索引列出
+        <strong>{groups.length} 个目录参考编号</strong>及其链接的零件记录。
+        较早与较晚的标签描述公开的目录历史；无方向参考不构成互换性认定。导入的目录数据仅作识别辅助，不代表经供应商确认的适配。
       </p>
       <p>
-        Type any part number fragment below to filter the list, then open the linked part page for
-        fitment, weight, HS code, and availability details. If your number is not listed, send it with
-        your engine model and serial number — we verify interchanges manually before quoting.
+        在下方输入任意零件号片段即可筛选列表，然后打开所链接的零件页查看适配、重量、HS 编码与供货情况。如果您的编号不在清单中，请连同发动机型号与出厂编号一并发来——我们报价前人工核验互换性。
       </p>
       <p>
-        Looking for the full list rather than an alternative number? The
-        <a href="/part-number-index/">part number index</a> covers every indexed number with English
-        and German designations. For generator-set engines organized by power rating, see
-        <a href="/products/mtu-spare-parts/mtu-genset-parts-by-power/">MTU genset parts by power rating</a>.
+        需要的是完整清单而非替代号？<a href="/part-number-index/">零件号索引</a>收录全部已索引编号，含英文与德文名称。对于按功率分组的发电机组发动机，请参阅<a href="/products/mtu-spare-parts/mtu-genset-parts-by-power/">按功率分组的 MTU 发电机组零件</a>。
       </p>
     </section>
 
@@ -122,20 +117,20 @@ const faqItems = [
         <input
           type="search"
           id="xref-filter-input"
-          placeholder="Type a part number, e.g. 4570500127 or A5410500227"
-          aria-label="Filter cross reference list"
+          placeholder="输入零件号片段，如 4570500127 或 A5410500227"
+          aria-label="筛选交叉引用列表"
           autocomplete="off"
         />
-        <span class="xref-filter__count" id="xref-count">{groups.length} references</span>
+        <span class="xref-filter__count" id="xref-count">{groups.length} 条引用</span>
       </div>
       <div class="xref-table-wrap">
         <table class="xref-table" id="xref-table">
           <thead>
             <tr>
-              <th scope="col">Your Part Number</th>
-              <th scope="col">Linked Catalog Number</th>
-              <th scope="col">Reference Relationship</th>
-              <th scope="col">Part</th>
+              <th scope="col">您的零件号</th>
+              <th scope="col">对应目录编号</th>
+              <th scope="col">引用关系</th>
+              <th scope="col">零件</th>
             </tr>
           </thead>
           <tbody>
@@ -154,14 +149,14 @@ const faqItems = [
           </tbody>
         </table>
         <p class="xref-empty" id="xref-empty" hidden>
-          No match in the catalog index. <a href="/contact/?source=xref-not-found" data-rfq-modal data-rfq-source="xref-not-found" data-rfq-context="Unlisted part-number verification">Send us the number</a> —
-          we check interchanges manually.
+          目录索引中无匹配项。<a href="/contact/?source=xref-not-found" data-rfq-modal data-rfq-source="xref-not-found" data-rfq-context="未收录零件号寻源核查">把编号发给我们</a>——
+          我们人工核查互换性。
         </p>
       </div>
     </section>
 
     <section class="resource-page-section">
-      <h2>Cross Reference FAQ</h2>
+      <h2>交叉引用常见问题</h2>
       {faqItems.map((item) => (
         <details class="resource-faq-item">
           <summary>{item.question}</summary>
@@ -171,10 +166,10 @@ const faqItems = [
     </section>
 
     <DetailRfqStrip
-      title="Can't find your number?"
-      text="Send the part number, engine model, and serial number. We verify interchange options and availability before quoting."
+      title="找不到您的编号？"
+      text="发送零件号、发动机型号与出厂编号。我们会在报价前核验互换选项与供货情况。"
       quoteHref="/contact/?source=cross-reference"
-      label="Check My Part Number"
+      label="核查我的零件号"
       modalSource="cross-reference"
     />
   </div>
@@ -197,7 +192,7 @@ const faqItems = [
       if (show) visible++;
     }
     if (empty) empty.hidden = visible > 0;
-    if (count) count.textContent = q ? `${visible} match${visible === 1 ? '' : 'es'}` : `${rows.length} references`;
+    if (count) count.textContent = q ? `${visible} 条匹配` : `${rows.length} 条引用`;
   });
 </script>
 

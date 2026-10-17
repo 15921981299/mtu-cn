@@ -6,10 +6,11 @@ import { services } from "../data/services";
 import { industries } from "../data/industries";
 import { itemListSchema, site, videoSchema } from "../data/site";
 import { isRealPartImage, mtuParts, searchPriorityPartNumbers } from "../data/mtu-parts";
+import { zhPartName, zhCategoryName } from '../data/part-names-zh';
 
 const homepageVideos = [
   videoSchema({
-    name: "Diesel Part Source 柴油机零件支持概览",
+    name: "柴油零件源 柴油机零件支持概览",
     description:
       "柴油发动机零件识别、库存核查、包装与全球交付支持概览。",
     thumbnailUrl: "https://img.youtube.com/vi/M7uJEbDD-_8/hqdefault.jpg",
@@ -373,14 +374,14 @@ const homepagePartNumberGroups = [
 ---
 
 <BaseLayout
-  title="MTU 发动机零件供应商 | Diesel Part Source"
+  title="MTU 发动机零件供应商 | 柴油零件源"
   description="总部位于上海的柴油发动机零件供应商，专注 MTU 发动机零件与备件。收录 800+ 个零件号，提供适配核验、库存核查与从上海出发的全球交付服务。"
   currentPath="/"
   jsonLd={[
     ...homepageVideos,
     itemListSchema(
       homepageHotParts.map((part) => ({
-        name: `${part.partNumber} ${part.name}`,
+        name: `${part.partNumber} ${zhPartName(part.name)}`,
         url: `${site.url}/part-products/${part.slug}/`,
       }))
     ),
@@ -610,7 +611,7 @@ const homepagePartNumberGroups = [
         ))}
       </div>
       <p class="quote-standard-note">
-        Diesel Part Source 是独立供应商。品牌名与零件号仅用于识别采购方的需求；最终报价会说明可行的采购路线与确认要求。
+        柴油零件源 是独立供应商。品牌名与零件号仅用于识别采购方的需求；最终报价会说明可行的采购路线与确认要求。
       </p>
     </div>
   </section>
@@ -744,7 +745,7 @@ const homepagePartNumberGroups = [
           <article class="popular-part-card">
             <a href={`/part-products/${part.slug}/`} class="popular-part-main-link">
               <span class="popular-part-number">{part.partNumber}</span>
-              <span class="popular-part-name">{part.name}</span>
+              <span class="popular-part-name">{zhPartName(part.name)}</span>
             </a>
             <dl class="popular-part-specs">
               <div>
@@ -753,7 +754,7 @@ const homepagePartNumberGroups = [
               </div>
               <div>
                 <dt>类别</dt>
-                <dd>{part.category}</dd>
+                <dd>{zhCategoryName(part.category)}</dd>
               </div>
               <div>
                 <dt>目录重量</dt>
@@ -779,7 +780,7 @@ const homepagePartNumberGroups = [
               href={`/contact/?source=hot-part-${part.slug}`}
               class="popular-part-rfq"
               data-rfq-modal
-              data-rfq-context={`${part.partNumber} ${part.name} - homepage hot part`}
+              data-rfq-context={`${part.partNumber} ${zhPartName(part.name)} - homepage hot part`}
               data-rfq-source={`hot-part-${part.slug}`}
             >查询价格与供货情况</a>
           </article>
@@ -801,7 +802,7 @@ const homepagePartNumberGroups = [
               <span class="featured-part-image">
                 <img
                   src={part.image}
-                  alt={part.imageAlt ?? `${part.partNumber} ${part.name}`}
+                  alt={part.imageAlt ?? `${part.partNumber} ${zhPartName(part.name)}`}
                   width="120"
                   height="90"
                   loading="lazy"
@@ -810,7 +811,7 @@ const homepagePartNumberGroups = [
               </span>
               <span class="featured-part-copy">
                 <strong>{part.partNumber}</strong>
-                <span>{part.name}</span>
+                <span>{zhPartName(part.name)}</span>
                 <small>{part.weightKg} · HS {part.hsCode}</small>
               </span>
             </a>
@@ -832,8 +833,8 @@ const homepagePartNumberGroups = [
                   <li>
                     <a href={`/part-products/${part.slug}/`}>
                       <strong>{part.partNumber}</strong>
-                      <span>{part.name}</span>
-                      <small>{part.category} · HS {part.hsCode}</small>
+                      <span>{zhPartName(part.name)}</span>
+                      <small>{zhCategoryName(part.category)} · HS {part.hsCode}</small>
                     </a>
                   </li>
                 ))}

@@ -10,6 +10,7 @@ import {
   mtuCatalogHubs,
   searchPriorityPartRank,
 } from '../../data/mtu-parts';
+import { zhCategoryName, zhEngineType, zhPartName, zhSeriesLabel } from '../../data/part-names-zh';
 
 const seriesHubs = mtuCatalogHubs.filter((h) => h.type === 'series');
 const categoryHubs = mtuCatalogHubs.filter((h) => h.type === 'category');
@@ -20,23 +21,23 @@ const pageUrl = `${site.url}/part-products/`;
 const priorityModelPages = [
   {
     href: '/products/mtu-2000-series-parts/16v-2000-engine-parts/',
-    title: 'MTU 16V 2000 Engine Parts',
-    summary: 'Marine, generator, rail, and industrial parts verified by complete model and serial number.',
+    title: 'MTU 16V 2000 发动机零件',
+    summary: '船用、发电、轨交与工业用件——经完整型号与出厂编号核验。',
   },
   {
     href: '/products/mtu-2000-series-parts/mtu-m96l-engine-parts/',
-    title: 'MTU 16V 2000 M96L Engine Parts',
-    summary: 'Marine propulsion and yacht-engine parts verified by full M96L serial and component reference.',
+    title: 'MTU 16V 2000 M96L 发动机零件',
+    summary: '船用推进与游艇发动机用件——对照完整 M96L 序列与部件参考号核验。',
   },
   {
     href: '/products/mtu-4000-series-parts/12v-4000-engine-parts/',
-    title: 'MTU 12V 4000 Engine Parts',
-    summary: 'Fuel, cooling, filter, sensor, turbocharger, and overhaul parts for 12V 4000 variants.',
+    title: 'MTU 12V 4000 发动机零件',
+    summary: '12V 4000 各变型的燃油、冷却、滤清、传感器、增压器与大修零件。',
   },
   {
     href: '/products/mtu-4000-series-parts/16v-4000-engine-parts/',
-    title: 'MTU 16V 4000 Engine Parts',
-    summary: 'Parts support for marine propulsion, locomotives, generators, and heavy industrial service.',
+    title: 'MTU 16V 4000 发动机零件',
+    summary: '面向船舶推进、机车、发电与重工业服务的零件支持。',
   },
 ];
 const priorityParts = [...mtuParts]
@@ -67,23 +68,23 @@ const priorityParts = [...mtuParts]
 ---
 
 <BaseLayout
-  title="MTU Engine Parts Online Catalog | Diesel Part Source"
-  description="Search the MTU engine parts online catalog by part number, engine series, or component category. Review available replacement references, fitment notes, weights, HS codes, and RFQ support."
+  title="MTU 发动机零件在线目录"
+  description="按零件号、发动机系列或零件类别检索 MTU 发动机零件在线目录。查看可用替换参考号、适配说明、重量、HS 编码与询价支持。"
   currentPath="/products"
   jsonLd={[
     breadcrumbSchema([
-      { name: 'Home', url: site.url },
-      { name: 'MTU Parts Catalog', url: pageUrl },
+      { name: '首页', url: site.url },
+      { name: 'MTU 零件目录', url: pageUrl },
     ]),
-    itemListSchema(mtuParts.map((part) => ({ name: `${part.partNumber} ${part.name}`, url: `${site.url}/part-products/${part.slug}/` }))),
+    itemListSchema(mtuParts.map((part) => ({ name: `${part.partNumber} ${zhPartName(part.name)}`, url: `${site.url}/part-products/${part.slug}/` }))),
   ]}
 >
   <FunnelPageView stage="selection" label="mtu-part-products-index" />
   <BreadcrumbHero
-    title="MTU Engine Parts<br>Catalog"
+    title="MTU 发动机零件<br>目录"
     trail={[
-      { label: 'Home', href: '/' },
-      { label: 'MTU Parts Catalog' },
+      { label: '首页', href: '/' },
+      { label: 'MTU 零件目录' },
     ]}
     variant="2"
   />
@@ -92,43 +93,43 @@ const priorityParts = [...mtuParts]
     <div class="section-gap bottom">
       <div class="container">
         <article class="blog-details-content-block resource-page fade-in">
-          <nav class="resource-nav" aria-label="Parts catalog navigation">
-            <a href="/part-products/" class="resource-nav-link active" aria-current="page">All Part Numbers</a>
-            <a href="/products/mtu-spare-parts/" class="resource-nav-link">MTU Spare Parts</a>
+          <nav class="resource-nav" aria-label="零件目录导航">
+            <a href="/part-products/" class="resource-nav-link active" aria-current="page">全部零件号</a>
+            <a href="/products/mtu-spare-parts/" class="resource-nav-link">MTU 备件</a>
             <a
               href="/contact/?source=part-products-nav"
               class="resource-nav-link resource-nav-all"
               data-rfq-modal
-              data-rfq-context="MTU parts catalog availability check"
+              data-rfq-context="MTU 零件目录供货核查"
               data-rfq-source="part-products-nav"
-            >Check Availability →</a>
+            >核查供货 →</a>
           </nav>
 
           <p class="resource-intro">
-            Search this MTU engine parts online catalog by series, component category, or exact part number. Each MTU spare-parts page includes available cross-references, applicable engine information, stock route, and ordering notes. Send your Excel or PDF parts list for a line-by-line availability check and quotation.
+            按发动机系列、零件类别或准确零件号检索本站 MTU 发动机零件目录。每个 MTU 备件页包含可用的交叉参考号、适用发动机信息、供货路线与订购须知。发送您的 Excel 或 PDF 零件清单，我们将逐项核查供货情况并报价。
           </p>
 
           <div class="resource-meta">
-            <span><strong>{mtuParts.length}</strong> part numbers</span>
-            <span><strong>{seriesHubs.length}</strong> engine series</span>
-            <span><strong>{categoryHubs.length}</strong> part categories</span>
+            <span><strong>{mtuParts.length}</strong> 个零件号</span>
+            <span><strong>{seriesHubs.length}</strong> 个发动机系列</span>
+            <span><strong>{categoryHubs.length}</strong> 个零件类别</span>
           </div>
 
-          <h2 style="margin-top: 36px;">High-Demand MTU Engine Models</h2>
+          <h2 style="margin-top: 36px;">高需求 MTU 发动机型号</h2>
           <div class="hub-grid part-products-grid">
             {priorityModelPages.map((model) => (
               <article class="hub-card">
                 <div class="hub-card-body">
                   <h3 class="hub-card-title"><a href={model.href}>{model.title}</a></h3>
                   <p class="hub-card-summary">{model.summary}</p>
-                  <a href={model.href} class="hub-card-link">View model parts →</a>
+                  <a href={model.href} class="hub-card-link">查看该型号零件 →</a>
                 </div>
               </article>
             ))}
           </div>
 
           <!-- Browse by Engine Series -->
-          <h2 style="margin-top: 36px;">Browse by Engine Series</h2>
+          <h2 style="margin-top: 36px;">按发动机系列浏览</h2>
           <div class="hub-grid part-products-grid">
             {seriesHubs.map((hub) => (
               <article class="hub-card">
@@ -137,14 +138,14 @@ const priorityParts = [...mtuParts]
                     <a href={`/part-products/catalog/${hub.slug}/`}>{hub.h1Title}</a>
                   </h3>
                   <p class="hub-card-summary">{hub.summary}</p>
-                  <a href={`/part-products/catalog/${hub.slug}/`} class="hub-card-link">Browse parts →</a>
+                  <a href={`/part-products/catalog/${hub.slug}/`} class="hub-card-link">浏览零件 →</a>
                 </div>
               </article>
             ))}
           </div>
 
           <!-- Browse by Category -->
-          <h2 style="margin-top: 36px;">Browse by Part Category</h2>
+          <h2 style="margin-top: 36px;">按零件类别浏览</h2>
           <div class="hub-grid part-products-grid">
             {categoryHubs.map((hub) => (
               <article class="hub-card">
@@ -153,27 +154,27 @@ const priorityParts = [...mtuParts]
                     <a href={`/part-products/catalog/${hub.slug}/`}>{hub.h1Title}</a>
                   </h3>
                   <p class="hub-card-summary">{hub.summary}</p>
-                  <a href={`/part-products/catalog/${hub.slug}/`} class="hub-card-link">Browse parts →</a>
+                  <a href={`/part-products/catalog/${hub.slug}/`} class="hub-card-link">浏览零件 →</a>
                 </div>
               </article>
             ))}
           </div>
 
           <div class="detail-rfq-strip" style="margin-top: 36px;">
-            <p>Have an Excel list? Send all part numbers together. We check availability line by line and quote practical shipping from Shanghai.</p>
+            <p>手头有 Excel 清单？请把所有零件号一并发来。我们逐项核查供货情况，并报从上海出发的实用运输方案。</p>
             <a
               href="/contact/?source=part-products"
               class="detail-rfq-link"
               data-rfq-modal
-              data-rfq-context="MTU Excel parts list inquiry"
+              data-rfq-context="MTU Excel 零件清单询价"
               data-rfq-source="part-products"
-            >Send Parts List</a>
+            >发送零件清单</a>
           </div>
 
           <section class="hub-section priority-parts-section" style="margin-top: 36px;">
             <header class="hub-section-header">
-              <h2>MTU Parts Receiving Search Demand</h2>
-              <p>Frequently surfaced part numbers are shown first, with real part images, unit weight, HS code, replacement references, and fitment notes where available.</p>
+              <h2>搜索需求较高的 MTU 零件</h2>
+              <p>经常被检索到的零件号排在前面；在有数据的情况下同时给出真实零件图片、单件重量、HS 编码、替换参考号与适配说明。</p>
             </header>
             <div class="priority-parts-grid">
               {priorityParts.map((part) => (
@@ -181,7 +182,7 @@ const priorityParts = [...mtuParts]
                   <div class="priority-part-media">
                     <img
                       src={part.image}
-                      alt={part.imageAlt ?? `${part.partNumber} ${part.name}`}
+                      alt={part.imageAlt ?? `${part.partNumber} ${zhPartName(part.name)}`}
                       width="220"
                       height="160"
                       loading="lazy"
@@ -190,12 +191,12 @@ const priorityParts = [...mtuParts]
                   </div>
                   <div class="priority-part-body">
                     <span class="priority-part-number">{part.partNumber}</span>
-                    <strong>{part.name}</strong>
+                    <strong>{zhPartName(part.name)}</strong>
                     <dl>
-                      <div><dt>Engine</dt><dd>{part.engineType ?? (part.series.length > 0 ? part.series.join(', ') : 'Serial check')}</dd></div>
-                      <div><dt>Weight</dt><dd>{part.weightKg}</dd></div>
+                      <div><dt>发动机</dt><dd>{part.engineType ? zhEngineType(part.engineType) : (part.series.length > 0 ? part.series.map((s) => zhSeriesLabel(s)).join('、') : '按出厂编号核验')}</dd></div>
+                      <div><dt>重量</dt><dd>{part.weightKg}</dd></div>
                       <div><dt>HS</dt><dd>{part.hsCode}</dd></div>
-                      <div><dt>Alt</dt><dd>{part.replacementFor?.slice(0, 2).join(', ') || 'Check by serial'}</dd></div>
+                      <div><dt>替代号</dt><dd>{part.replacementFor?.slice(0, 2).join(', ') || '按出厂编号核查'}</dd></div>
                     </dl>
                   </div>
                 </a>
@@ -206,19 +207,19 @@ const priorityParts = [...mtuParts]
           <!-- All Part Numbers -->
           <section class="hub-section" style="margin-top: 36px;">
             <header class="hub-section-header">
-              <h2>All MTU Part Numbers (A-Z)</h2>
-              <p>Complete index of {mtuParts.length} part number pages across {mtuPartCategories.length} categories and {mtuPartSeries.length} engine series.</p>
+              <h2>全部 MTU 零件号（A-Z）</h2>
+              <p>{mtuParts.length} 个零件号页面的完整索引，覆盖 {mtuPartCategories.length} 个类别与 {mtuPartSeries.length} 个发动机系列。</p>
             </header>
             <div class="hub-grid part-products-grid">
               {mtuParts.map((part) => (
                 <article class="hub-card">
                   <div class="hub-card-body">
-                    <p class="hub-card-meta">{part.category} · {part.series.join(', ')}</p>
+                    <p class="hub-card-meta">{zhCategoryName(part.category)} · {part.series.map((s) => zhSeriesLabel(s)).join('、')}</p>
                     <h3 class="hub-card-title">
-                      <a href={`/part-products/${part.slug}/`}>{part.partNumber} {part.name}</a>
+                      <a href={`/part-products/${part.slug}/`}>{part.partNumber} {zhPartName(part.name)}</a>
                     </h3>
                     <p class="hub-card-summary">{part.summary}</p>
-                    <a href={`/part-products/${part.slug}/`} class="hub-card-link">View part →</a>
+                    <a href={`/part-products/${part.slug}/`} class="hub-card-link">查看零件 →</a>
                   </div>
                 </article>
               ))}
@@ -226,7 +227,7 @@ const priorityParts = [...mtuParts]
           </section>
 
           <div class="resource-note">
-            Confirm MTU replacement parts with serial number and old-part photos before purchase.
+            购买 MTU 替换件前，请结合出厂编号与旧件照片确认。
           </div>
         </article>
       </div>

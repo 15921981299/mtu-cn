@@ -49,22 +49,29 @@ const OUT_DIR = resolve('public/downloads');
 const SITE = 'https://dieselpartsource.com';
 const PRODUCT_NAME = 'Diesel Part Source';
 
-/** Catalogs to produce. `series` empty = the complete catalog. */
+/**
+ * Catalogs to produce. `series` empty = the complete catalog.
+ * `title`/`heading`/`subtitle` stay English — they are written into the PDF
+ * (Latin-1 only). `zhHeading`/`zhSubtitle` are the zh-CN card copy shown on the
+ * HTML catalog page only.
+ */
 const CATALOGS = [
   {
     slug: 'MTU-Engine-Parts-Catalog-Complete',
     title: 'MTU Engine Parts Catalog — Complete Reference List (PDF)',
     heading: 'MTU Engine Parts — Complete Reference List',
     subtitle: 'All catalogued part numbers across every engine series we supply.',
+    zhHeading: 'MTU 发动机零件 — 完整参考清单',
+    zhSubtitle: '涵盖我们所供全部发动机系列的目录零件号。',
     series: [],
   },
-  { slug: 'MTU-2000-Series-Parts-Catalog', title: 'MTU 2000 Series Parts Catalog (PDF) — Part Numbers by System', heading: 'MTU 2000 Series Parts Catalog', subtitle: '12V, 16V and 18V 2000 series part numbers.', series: ['MTU 2000'] },
-  { slug: 'MTU-4000-Series-Parts-Catalog', title: 'MTU 4000 Series Parts Catalog (PDF) — Part Numbers by System', heading: 'MTU 4000 Series Parts Catalog', subtitle: '12V, 16V and 20V 4000 series part numbers.', series: ['MTU 4000'] },
-  { slug: 'MTU-396-Series-Parts-Catalog', title: 'MTU 396 Series Parts Catalog (PDF) — Part Numbers by System', heading: 'MTU 396 Series Parts Catalog', subtitle: '8V, 12V and 16V 396 series part numbers.', series: ['MTU 396'] },
-  { slug: 'MTU-1163-Series-Parts-Catalog', title: 'MTU 1163 Series Parts Catalog (PDF) — Part Numbers by System', heading: 'MTU 1163 Series Parts Catalog', subtitle: '12V, 16V and 20V 1163 series part numbers.', series: ['MTU 1163'] },
-  { slug: 'MTU-956-Series-Parts-Catalog', title: 'MTU 956 Series Parts Catalog (PDF) — Part Numbers by System', heading: 'MTU 956 Series Parts Catalog', subtitle: 'Medium-speed 956 series part numbers.', series: ['MTU 956'] },
-  { slug: 'MTU-538-Series-Parts-Catalog', title: 'MTU 538 Series Parts Catalog (PDF) — Part Numbers by System', heading: 'MTU 538 Series Parts Catalog', subtitle: 'High-speed marine 538 series part numbers.', series: ['MTU 538'] },
-  { slug: 'MTU-595-Series-Parts-Catalog', title: 'MTU 595 Series Parts Catalog (PDF) — Part Numbers by System', heading: 'MTU 595 Series Parts Catalog', subtitle: 'Heavy-duty 595 series part numbers.', series: ['MTU 595'] },
+  { slug: 'MTU-2000-Series-Parts-Catalog', title: 'MTU 2000 Series Parts Catalog (PDF) — Part Numbers by System', heading: 'MTU 2000 Series Parts Catalog', subtitle: '12V, 16V and 18V 2000 series part numbers.', zhHeading: 'MTU 2000 系列零件目录', zhSubtitle: '12V、16V 与 18V 2000 系列零件号。', series: ['MTU 2000'] },
+  { slug: 'MTU-4000-Series-Parts-Catalog', title: 'MTU 4000 Series Parts Catalog (PDF) — Part Numbers by System', heading: 'MTU 4000 Series Parts Catalog', subtitle: '12V, 16V and 20V 4000 series part numbers.', zhHeading: 'MTU 4000 系列零件目录', zhSubtitle: '12V、16V 与 20V 4000 系列零件号。', series: ['MTU 4000'] },
+  { slug: 'MTU-396-Series-Parts-Catalog', title: 'MTU 396 Series Parts Catalog (PDF) — Part Numbers by System', heading: 'MTU 396 Series Parts Catalog', subtitle: '8V, 12V and 16V 396 series part numbers.', zhHeading: 'MTU 396 系列零件目录', zhSubtitle: '8V、12V 与 16V 396 系列零件号。', series: ['MTU 396'] },
+  { slug: 'MTU-1163-Series-Parts-Catalog', title: 'MTU 1163 Series Parts Catalog (PDF) — Part Numbers by System', heading: 'MTU 1163 Series Parts Catalog', subtitle: '12V, 16V and 20V 1163 series part numbers.', zhHeading: 'MTU 1163 系列零件目录', zhSubtitle: '12V、16V 与 20V 1163 系列零件号。', series: ['MTU 1163'] },
+  { slug: 'MTU-956-Series-Parts-Catalog', title: 'MTU 956 Series Parts Catalog (PDF) — Part Numbers by System', heading: 'MTU 956 Series Parts Catalog', subtitle: 'Medium-speed 956 series part numbers.', zhHeading: 'MTU 956 系列零件目录', zhSubtitle: '中速 956 系列零件号。', series: ['MTU 956'] },
+  { slug: 'MTU-538-Series-Parts-Catalog', title: 'MTU 538 Series Parts Catalog (PDF) — Part Numbers by System', heading: 'MTU 538 Series Parts Catalog', subtitle: 'High-speed marine 538 series part numbers.', zhHeading: 'MTU 538 系列零件目录', zhSubtitle: '高速船用 538 系列零件号。', series: ['MTU 538'] },
+  { slug: 'MTU-595-Series-Parts-Catalog', title: 'MTU 595 Series Parts Catalog (PDF) — Part Numbers by System', heading: 'MTU 595 Series Parts Catalog', subtitle: 'Heavy-duty 595 series part numbers.', zhHeading: 'MTU 595 系列零件目录', zhSubtitle: '重载 595 系列零件号。', series: ['MTU 595'] },
 ];
 
 // ---------------------------------------------------------------------------
@@ -464,6 +471,8 @@ async function main() {
       title: catalog.title,
       heading: catalog.heading,
       subtitle: catalog.subtitle,
+      zhHeading: catalog.zhHeading,
+      zhSubtitle: catalog.zhSubtitle,
       series: catalog.series.join(', ') || 'All engine series',
       parts: rows.length,
       pages: pages.length,

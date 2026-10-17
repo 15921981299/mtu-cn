@@ -11,14 +11,14 @@ const OLD_SERIES = new Set(['183', '331', '396', '538', '595', '956', '1163']);
 
 /** Application letters of the current naming system (2000, 4000, 1600, 8000 ...). */
 const APPLICATION: Record<string, string> = {
-  M: 'marine',
-  G: 'diesel generator set',
-  L: 'gas generator set',
-  R: 'rail',
-  S: 'industrial, variable speed',
-  P: 'oil and gas',
-  C: 'mining',
-  A: 'agricultural',
+  M: '船用（marine）',
+  G: '柴油发电机组（diesel generator set）',
+  L: '燃气发电机组（gas generator set）',
+  R: '轨道交通（rail）',
+  S: '工业（变速，industrial）',
+  P: '油气（oil and gas）',
+  C: '矿用（mining）',
+  A: '农业（agricultural）',
 };
 
 export type EngineModel = {
@@ -46,31 +46,31 @@ export const parseModels = (text: string | undefined): EngineModel[] => {
 export const modelApplication = (model: EngineModel): string | undefined => {
   if (!OLD_SERIES.has(model.series)) return APPLICATION[model.letters];
   const group = Number(model.group);
-  return group === 3 ? 'generator sets' : [5, 6, 7, 9].includes(group) ? 'marine' : undefined;
+  return group === 3 ? '发电机组（generator sets）' : [5, 6, 7, 9].includes(group) ? '船用（marine）' : undefined;
 };
 
 /** Plain-language reading of a model code. Unknown letters are named, not guessed. */
 export const describeModel = (model: EngineModel): string => {
-  const layout = `${model.cylinders} cylinders ${model.arrangement === 'V' ? 'in V arrangement' : 'in line'}`;
-  const bits = [layout, `Series ${model.series}`];
+  const layout = `${model.cylinders} 缸${model.arrangement === 'V' ? 'V 型' : '直列'}布置`;
+  const bits = [layout, `${model.series} 系列`];
   if (OLD_SERIES.has(model.series)) {
-    bits.push(model.letters.startsWith('T') ? `turbocharged, charge-air code ${model.letters}` : `charging and cooling code ${model.letters}`);
+    bits.push(model.letters.startsWith('T') ? `涡轮增压，增压空气代码 ${model.letters}` : `增压与冷却代码 ${model.letters}`);
     const group = Number(model.group);
-    const use = group === 3 ? ' (generator sets)' : [5, 6, 7, 9].includes(group) ? ' (marine)' : '';
-    bits.push(`application group ${model.group}${use}`, `build ${model.build}`);
+    const use = group === 3 ? '（发电机组）' : [5, 6, 7, 9].includes(group) ? '（船用）' : '';
+    bits.push(`应用组 ${model.group}${use}`, `构型 ${model.build}`);
   } else {
     const application = APPLICATION[model.letters];
-    bits.push(application ? `${application} application (${model.letters})` : `application code ${model.letters}`);
-    bits.push(`subgroup ${model.group}`, `build generation ${model.build}`);
+    bits.push(application ? `${application}应用（${model.letters}）` : `应用代码 ${model.letters}`);
+    bits.push(`子组 ${model.group}`, `构型代次 ${model.build}`);
   }
-  if (model.suffix === 'L') bits.push('increased rating (L)');
-  else if (model.suffix) bits.push(`rating variant ${model.suffix}`);
-  return bits.join(', ');
+  if (model.suffix === 'L') bits.push('功率提升（L）');
+  else if (model.suffix) bits.push(`功率变型 ${model.suffix}`);
+  return bits.join('，');
 };
 
 /** Group/build column label for spec tables: old series encode the application in the group digit. */
 export const modelBuildLabel = (model: EngineModel): string =>
-  OLD_SERIES.has(model.series) ? `build ${model.build}` : `subgroup ${model.group}, build ${model.build}`;
+  OLD_SERIES.has(model.series) ? `构型 ${model.build}` : `子组 ${model.group}，构型 ${model.build}`;
 
 export type ModelGroup = {
   slug: string;
@@ -132,13 +132,13 @@ const buildGroups = (): ModelGroup[] => {
       const cylinders = [...new Set(models.map((model) => `${model.cylinders}${model.arrangement}`))];
       const codes = [...new Set(models.map((model) => `${model.letters}${model.group}${model.build}${model.suffix}`))].sort();
       const prefix = cylinders.length === 1 ? `${cylinders[0]} ` : '';
-      const codeLabel = codes.length <= 3 ? codes.join(', ') : `${codes[0]} to ${codes[codes.length - 1]}`;
+      const codeLabel = codes.length <= 3 ? codes.join(', ') : `${codes[0]} 至 ${codes[codes.length - 1]}`;
       let slug = `mtu-${prefix.trim() ? `${prefix.trim()}-` : ''}${group.series}-${codes.length <= 3 ? codes.join('-') : `${codes[0]}-to-${codes[codes.length - 1]}`}-parts`.toLowerCase();
       while (usedSlugs.has(slug)) slug = `${slug}-${group.models.length}`;
       usedSlugs.add(slug);
       const parts = [...group.slugs].map((slug) => bySlug.get(slug)!).filter(Boolean)
         .sort((a, b) => a.category.localeCompare(b.category) || a.partNumber.localeCompare(b.partNumber));
-      return { slug, title: `MTU ${prefix}${group.series} ${codeLabel} Parts List`, series: group.series, models, parts };
+      return { slug, title: `MTU ${prefix}${group.series} ${codeLabel} 零件清单`, series: group.series, models, parts };
     })
     .sort((a, b) => Number(a.series) - Number(b.series) || b.parts.length - a.parts.length);
 };

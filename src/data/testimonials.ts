@@ -14,33 +14,33 @@ export type Testimonial = {
 export const testimonials: Testimonial[] = [
   {
     summary:
-      'Buys MTU 2000 and 4000 series spare parts from our team under a supply contract. The feedback focused on delivery dates and part quality matching the contract terms, and on continuing the supply relationship over the next years.',
+      '通过供应合同向我方团队采购 MTU 2000 与 4000 系列备件。反馈集中于交货日期、与合同条款相符的零件质量，以及未来数年继续供应关系。',
     name: 'Ramazan',
-    role: 'Fleet operator',
-    country: 'Turkey',
-    scope: 'MTU 2000 and 4000 marine spare parts under supply contract',
+    role: '船队运营方',
+    country: '土耳其',
+    scope: '供应合同项下的 MTU 2000 与 4000 船用备件',
   },
   {
     summary:
-      'Has sourced MTU marine diesel engine spare parts through our team for commercial vessels since 2019. Fast delivery, original parts, and after-sales support were named as the reasons for keeping us as a supplier.',
+      '自 2019 年起通过我方团队为商船采购 MTU 船用柴油发动机备件。快速交货、原厂件与售后服务被列为保留我们为供应商的原因。',
     name: 'David Joe',
-    role: 'Marine engineer',
-    country: 'Malaysia',
-    scope: 'MTU marine diesel engine spare parts since 2019',
+    role: '轮机工程师',
+    country: '马来西亚',
+    scope: '2019 年以来的 MTU 船用柴油发动机备件',
   },
   {
     summary:
-      'A long-time buyer of MTU spare parts who now orders exclusively through us. He highlighted original parts, reliable delivery times, and a straightforward working relationship.',
+      'MTU 备件的老买方，现独家通过我们订购。他强调了原厂件、可靠的交货时间与直接顺畅的合作关系。',
     name: 'Luis López Palancar',
-    role: 'Manager',
-    country: 'Spain',
-    scope: 'Repeat MTU spare-parts orders',
+    role: '经理',
+    country: '西班牙',
+    scope: '重复订购的 MTU 备件',
   },
 ];
 
 /** Named sales contact shown on contact/about pages. */
 export const salesContact = {
   name: 'Leo',
-  role: 'export sales for MTU and diesel engine parts',
-  languages: 'English and Chinese',
+  role: 'MTU 与柴油发动机零件出口销售',
+  languages: '英语与中文',
 };

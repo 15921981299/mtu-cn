@@ -4,42 +4,38 @@ import BreadcrumbHero from '../components/BreadcrumbHero.astro';
 import FunnelPageView from '../components/FunnelPageView.astro';
 import DetailRfqStrip from '../components/DetailRfqStrip.astro';
 import { mtuParts } from '../data/mtu-parts';
-import { germanCategoryName, germanPartName, germanSeriesName } from '../data/part-names-de';
+import { zhCategoryName, zhPartNameBilingual, zhSeriesLabel } from '../data/part-names-zh';
 import { breadcrumbSchema, faqSchema, site } from '../data/site';
 import '../styles/resource-page.css';
 
 /**
  * Flat index of every indexed MTU part number, one row per part.
  *
- * The German column exists because a large share of the fleet that searches
- * for these parts works in German (Germany, Austria, Switzerland, much of
- * the East European fleet), and every competitor parts list carries a
- * DESIGNATION(DE) column. Ours did not — which meant German-language part
- * searches had no reason to land here.
+ * 中文站索引：每行给出中文品名与英文原名（中英混排）、零件类别与发动机系列。
+ * 品名中文译名由 part-names-zh 词典生成，英文原名保留以便对照旧零件清单。
  */
 
 type Row = {
   partNumber: string;
   name: string;
-  nameDe: string;
+  nameZh: string;
   category: string;
-  categoryDe: string;
+  categoryZh: string;
   series: string;
-  seriesDe: string;
+  seriesZh: string;
   slug: string;
 };
 
 const rows: Row[] = mtuParts.map((part) => {
   const series = part.series.join(', ');
-  const seriesDe = part.series.map(germanSeriesName).join(', ');
   return {
     partNumber: part.partNumber,
     name: part.name,
-    nameDe: germanPartName(part.name),
+    nameZh: zhPartNameBilingual(part.name),
     category: part.category,
-    categoryDe: germanCategoryName(part.category),
+    categoryZh: zhCategoryName(part.category),
     series,
-    seriesDe,
+    seriesZh: series ? part.series.map((s) => zhSeriesLabel(s)).join('、') : '',
     slug: part.slug,
   };
 });
@@ -54,7 +50,7 @@ const seriesFilters = [...seriesCounts.entries()]
   .map(([label, count]) => ({ label, count }))
   .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
 
-const translatedCount = rows.filter((r) => r.nameDe && r.nameDe !== r.name).length;
+const zhCount = rows.filter((r) => r.nameZh && r.nameZh !== r.name).length;
 
 // URL-query support for ?q= — the header search form submits here (it is also
 // the SearchAction target). NOTE: the build is static, so at build time there is
@@ -66,10 +62,10 @@ const normQuery = rawQuery.toUpperCase().replace(/[^A-Z0-9]/g, '');
 const hasServerQuery = normQuery.length >= 2;
 const rowMatchesQuery = (row: Row): boolean => {
   if (!hasServerQuery) return true;
-  const key = `${row.partNumber} ${row.name} ${row.nameDe} ${row.category} ${row.categoryDe} ${row.series} ${row.seriesDe}`
-    .toUpperCase()
-    .replace(/[^A-Z0-9]/g, '');
-  return key.includes(normQuery);
+  const key = `${row.partNumber} ${row.name} ${row.nameZh} ${row.category} ${row.categoryZh} ${row.series} ${row.seriesZh}`
+    .toUpperCase();
+  if (key.includes(rawQuery.toUpperCase())) return true;
+  return key.replace(/[^A-Z0-9]/g, '').includes(normQuery);
 };
 // All rows stay in the DOM; non-matching ones are hidden with inline CSS so the
 // client filter can still reveal them when the query is cleared.
@@ -78,64 +74,61 @@ const visibleRowCount = rows.filter(rowMatchesQuery).length;
 const pageUrl = `${site.url}/part-number-index/`;
 const faqItems = [
   {
-    question: 'What is this part number index?',
+    question: '这个零件号索引是什么？',
     answer:
-      'A flat list of every MTU part number indexed on this site, with the English designation, a German designation, the component category, and the engine series. Filter by any fragment — part number, name, category, or series — then open the part page for fitment, weight, HS code, and availability details.',
+      '本站已收录的全部 MTU 零件号平面列表，每行包含中文品名与英文原名、零件类别和发动机系列。可按任意片段筛选——零件号、品名、类别或系列——然后打开对应零件页查看适配说明、重量、HS 编码与供货情况。',
   },
   {
-    question: 'Why is there a German designation column?',
+    question: '为什么同时列出中文品名和英文原名？',
     answer:
-      'MTU is a German brand and much of the fleet works in German. Every printed MTU parts list carries a German designation column, so we publish standard technical German terms alongside the English names to make identification easier. These are standard translations for search and identification support; the manufacturer’s printed parts list and the engine serial number remain authoritative for ordering.',
+      'MTU 零件清单与行业资料以英文为主，中文品名用于本站检索与识别参考，英文原名便于您对照现有零件清单与旧件标识。品名译名仅作识别支持；订购时以零件上的编号与发动机铭牌为准。',
   },
   {
-    question: 'My part number is not in the index. Can you still supply it?',
+    question: '索引里没有我的零件号，你们还能供吗？',
     answer:
-      'Send the complete number, engine model, and serial number for a sourcing check. Absence from this index does not establish availability or unavailability — the index covers the catalog data published on this site, not the full MTU spare-parts range.',
+      '请发送完整零件号、发动机型号与出厂编号，我们做寻源核查。未列入本索引不代表有货或无货——索引仅覆盖本站已发布的目录数据，并非 MTU 全部备件范围。',
   },
   {
-    question: 'A designation looks wrong for my part. What should I do?',
+    question: '品名看起来与我的零件不符，怎么办？',
     answer:
-      'Trust the number on the part and the engine nameplate, not the text label. Send us photos of the part marking, the nameplate, and the installation position, and we will verify the reference before quoting.',
+      '请以零件上的编号和发动机铭牌为准，不要以文字标签为准。发送零件标识、铭牌与安装位置照片，我们将在报价前核验该参考号。',
   },
 ];
 ---
 
 <BaseLayout
-  title={hasServerQuery ? `"${rawQuery}" — MTU Part Number Index Results` : "MTU Part Number Index — All Series, English & German Designations"}
+  title={hasServerQuery ? `“${rawQuery}”——MTU 零件号索引搜索结果` : 'MTU 零件号索引——全系列零件号与中英文品名'}
   description={hasServerQuery
-    ? `${visibleRows.length} MTU part numbers matching "${rawQuery}" in the part number index, with English and German designations, component category, and engine series.`
-    : `Flat index of ${rows.length} MTU part numbers with English and German designations, component category, and engine series. Filter by number, name, or series, then open the part page for fitment and availability.`}
+    ? `零件号索引中匹配“${rawQuery}”的 ${visibleRowCount} 个 MTU 零件号，含中文品名、英文原名、零件类别与发动机系列。`
+    : `收录 ${rows.length} 个 MTU 零件号的平面索引，含中文品名、英文原名、零件类别与发动机系列。可按零件号、品名或系列筛选，再打开零件页查看适配与供货情况。`}
   currentPath="/part-number-index"
   noindex={hasServerQuery}
   jsonLd={[
     breadcrumbSchema([
-      { name: 'Home', url: site.url },
-      { name: 'Part Number Index', url: pageUrl },
+      { name: '首页', url: site.url },
+      { name: '零件号索引', url: pageUrl },
     ]),
     faqSchema(faqItems),
   ]}
 >
   <FunnelPageView stage="comparison" label="part-number-index" />
   <BreadcrumbHero
-    title="MTU Part Number Index"
-    trail={[{ label: 'Home', href: '/' }, { label: 'Part Number Index' }]}
+    title="MTU 零件号索引"
+    trail={[{ label: '首页', href: '/' }, { label: '零件号索引' }]}
     variant="2"
   />
 
   <div class="resource-page">
     <section class="resource-page-section">
       <p>
-        Every MTU part number indexed on this site in one filterable list —
-        <strong>{rows.length} part numbers</strong> across {seriesFilters.length} engine-series
-        labels, from Series 183 to Series 8000. Each row carries the English designation, a
-        <strong>German designation</strong> ({translatedCount} of {rows.length} differ from the
-        English name), the component category, and the engine series.
+        本站已收录的全部 MTU 零件号汇总为一张可筛选的列表——
+        <strong>{rows.length} 个零件号</strong>，覆盖 {seriesFilters.length} 个发动机系列标签，
+        从 183 系列到 8000 系列。每行包含中文品名与英文原名（其中 {zhCount} 条与英文原名不同）、
+        零件类别与发动机系列。
       </p>
       <p>
-        Type any fragment below to filter — part number, English or German name, category, or
-        series — then open the linked part page for fitment notes, weight, HS code, and availability.
-        The German designations are standard technical terms published for identification support;
-        the number on the part and the engine nameplate remain authoritative.
+        在下方输入任意片段即可筛选——零件号、中文或英文品名、类别、系列——然后打开链接的零件页查看
+        适配说明、重量、HS 编码与供货情况。中文品名仅作识别支持；零件上的编号与发动机铭牌始终是最终依据。
       </p>
     </section>
 
@@ -144,26 +137,25 @@ const faqItems = [
         <input
           type="search"
           id="pn-filter-input"
-          placeholder="Type a part number, name, or category, e.g. 52407500064, Ölfilter, injector"
-          aria-label="Filter part number index"
+          placeholder="输入零件号、品名或类别，如 52407500064、曲轴、喷油器"
+          aria-label="筛选零件号索引"
           autocomplete="off"
           value={rawQuery}
         />
         <span class="xref-filter__count" id="pn-count">
-          {hasServerQuery ? `${visibleRowCount} of ${rows.length} part numbers` : `${rows.length} part numbers`}
+          {hasServerQuery ? `${visibleRowCount} / ${rows.length} 个零件号` : `${rows.length} 个零件号`}
         </span>
       </div>
       {hasServerQuery && (
         <p class="pn-server-query">
-          <strong>{visibleRowCount}</strong> part {visibleRowCount === 1 ? 'number' : 'numbers'} matching
-          <strong> “{rawQuery}”</strong> — open a row for fitment notes, weight, HS code, and availability.
+          匹配 <strong>“{rawQuery}”</strong> 的 <strong>{visibleRowCount}</strong> 个零件号——打开任意行查看适配说明、重量、HS 编码与供货情况。
         </p>
       )}
-      <div class="pn-series-chips" id="pn-series-chips" role="group" aria-label="Filter by engine series">
-        <button type="button" class="pn-chip is-active" data-series="">All series</button>
+      <div class="pn-series-chips" id="pn-series-chips" role="group" aria-label="按发动机系列筛选">
+        <button type="button" class="pn-chip is-active" data-series="">全部系列</button>
         {seriesFilters.map((s) => (
-          <button type="button" class="pn-chip" data-series={s.label} title={germanSeriesName(s.label)}>
-            {s.label} <span class="pn-chip__count">{s.count}</span>
+          <button type="button" class="pn-chip" data-series={s.label} title={zhSeriesLabel(s.label)}>
+            {zhSeriesLabel(s.label)} <span class="pn-chip__count">{s.count}</span>
           </button>
         ))}
       </div>
@@ -171,11 +163,11 @@ const faqItems = [
         <table class="xref-table pn-table" id="pn-table">
           <thead>
             <tr>
-              <th scope="col">Part Number</th>
-              <th scope="col">Designation (EN)</th>
-              <th scope="col">Designation (DE)</th>
-              <th scope="col">Category</th>
-              <th scope="col">Engine Series</th>
+              <th scope="col">零件号</th>
+              <th scope="col">品名（中文）</th>
+              <th scope="col">品名（English）</th>
+              <th scope="col">类别</th>
+              <th scope="col">发动机系列</th>
             </tr>
           </thead>
           <tbody>
@@ -183,22 +175,20 @@ const faqItems = [
               const show = rowMatchesQuery(row);
               return (
               <tr
-                data-pn-key={`${row.partNumber} ${row.name} ${row.nameDe} ${row.category} ${row.categoryDe} ${row.series} ${row.seriesDe}`}
+                data-pn-key={`${row.partNumber} ${row.name} ${row.nameZh} ${row.category} ${row.categoryZh} ${row.series} ${row.seriesZh}`}
                 data-pn-series={row.series}
                 style={show ? undefined : 'display:none'}
               >
                 <td>
                   <a href={`/part-products/${row.slug}/`}>{row.partNumber}</a>
                 </td>
-                <td>{row.name}</td>
-                <td class="pn-de">{row.nameDe}</td>
+                <td>{row.nameZh}</td>
+                <td class="pn-de">{row.name}</td>
                 <td>
-                  {row.category}
-                  {row.categoryDe !== row.category && <span class="pn-cell-de">{row.categoryDe}</span>}
+                  {row.categoryZh}
                 </td>
                 <td>
-                  {row.series}
-                  {row.seriesDe !== row.series && <span class="pn-cell-de">{row.seriesDe}</span>}
+                  {row.seriesZh || row.series || '按出厂编号核验'}
                 </td>
               </tr>
               );
@@ -206,14 +196,14 @@ const faqItems = [
           </tbody>
         </table>
         <p class="xref-empty" id="pn-empty" hidden={visibleRowCount > 0}>
-          No match in the part number index. <a href="/contact/?source=pn-index-not-found" data-rfq-modal data-rfq-source="pn-index-not-found" data-rfq-context="Unlisted part number sourcing check">Send us the number</a> —
-          we check availability manually before quoting.
+          零件号索引中未找到匹配项。<a href="/contact/?source=pn-index-not-found" data-rfq-modal data-rfq-source="pn-index-not-found" data-rfq-context="未收录零件号寻源核查">把零件号发给我们</a>——
+          我们将在报价前人工核查供货情况。
         </p>
       </div>
     </section>
 
     <section class="resource-page-section">
-      <h2>Part Number Index FAQ</h2>
+      <h2>零件号索引常见问题</h2>
       {faqItems.map((item) => (
         <details class="resource-faq-item">
           <summary>{item.question}</summary>
@@ -223,10 +213,10 @@ const faqItems = [
     </section>
 
     <DetailRfqStrip
-      title="Don't see your part number here? Just ask."
-      text="Send the complete part number, engine model, and serial number. We verify the reference and availability before quoting — absence from this index does not mean the part is unavailable."
+      title="这里没有找到您的零件号？直接问我们。"
+      text="发送完整零件号、发动机型号与出厂编号。我们将在报价前核验参考号与供货情况——未列入本索引不代表该件无货。"
       quoteHref="/contact/?source=part-number-index"
-      label="Send My Part Number"
+      label="发送我的零件号"
       modalSource="part-number-index"
     />
   </div>
@@ -244,12 +234,15 @@ const faqItems = [
   const norm = (value: string) => value.toUpperCase().replace(/[^A-Z0-9]/g, '');
 
   function applyFilters() {
-    const q = norm(input?.value ?? '');
+    const raw = (input?.value ?? '').trim();
+    const q = norm(raw);
+    const qUpper = raw.toUpperCase();
     let visible = 0;
     for (const row of rows) {
-      const key = norm((row as HTMLElement).dataset.pnKey ?? '');
+      const key = ((row as HTMLElement).dataset.pnKey ?? '').toUpperCase();
+      // 中文子串匹配（品名检索）+ 字母数字归一化匹配（零件号片段检索）
+      const matchesText = !raw || key.includes(qUpper) || (q.length > 0 && norm(key).includes(q));
       const series = (row as HTMLElement).dataset.pnSeries ?? '';
-      const matchesText = !q || key.includes(q);
       const matchesSeries = !activeSeries || series.split(', ').includes(activeSeries);
       const show = matchesText && matchesSeries;
       row.style.display = show ? '' : 'none';
@@ -257,9 +250,9 @@ const faqItems = [
     }
     if (empty) empty.hidden = visible > 0;
     if (count) {
-      count.textContent = q || activeSeries
-        ? `${visible} of ${rows.length} part numbers`
-        : `${rows.length} part numbers`;
+      count.textContent = raw || activeSeries
+        ? `${visible} / ${rows.length} 个零件号`
+        : `${rows.length} 个零件号`;
     }
   }
 
@@ -380,12 +373,6 @@ const faqItems = [
 
   .pn-de {
     color: #475569;
-  }
-
-  .pn-cell-de {
-    display: block;
-    font-size: 0.82em;
-    color: #64748b;
   }
 
   .xref-empty {

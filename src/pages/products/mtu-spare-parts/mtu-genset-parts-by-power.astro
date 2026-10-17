@@ -6,6 +6,7 @@ import DetailRfqStrip from '../../../components/DetailRfqStrip.astro';
 import { isPartPageIndexable, mtuParts, type MtuPart } from '../../../data/mtu-parts';
 import { modelApplication, parseModels } from '../../../data/engine-models';
 import { breadcrumbSchema, faqSchema, site } from '../../../data/site';
+import { zhPartName } from '../../../data/part-names-zh';
 import '../../../styles/resource-page.css';
 
 /**
@@ -206,7 +207,7 @@ const faqItems = [
                 {parts.map((part) => (
                   <li>
                     <a href={`/part-products/${part.slug}/`}>{part.partNumber}</a>
-                    <span>{part.name}</span>
+                    <span>{zhPartName(part.name)}</span>
                   </li>
                 ))}
               </ul>

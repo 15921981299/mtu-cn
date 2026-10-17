@@ -1,5 +1,6 @@
 export const site = {
-  name: 'Diesel Part Source',
+  // 中文站品牌名：展示层统一「柴油零件源」，英文名经 defaultDescription / legalNameEn 保留
+  name: '柴油零件源',
   company: {
     legalName: 'Shanghai Diesel Part Source Co., Ltd.',
     legalNameEn: 'Shanghai Diesel Part Source Co., Ltd.',
@@ -10,13 +11,13 @@ export const site = {
      * from here, so an address change can never leave the site half-updated.
      */
     address: {
-      streetAddress: 'Room 401, No. 655 Jialin Road, Pudong New Area',
-      addressLocality: 'Shanghai',
-      addressRegion: 'Shanghai',
+      streetAddress: '上海市浦东新区佳林路 655 号 401 室',
+      addressLocality: '上海市',
+      addressRegion: '上海市',
       postalCode: '201206',
       addressCountry: 'CN',
       /** One-line form for visible NAP text. */
-      singleLine: 'Room 401, No. 655 Jialin Road, Pudong New Area, Shanghai, 201206, China',
+      singleLine: '中国上海市浦东新区佳林路 655 号 401 室，邮编 201206',
     },
   },
   url: 'https://dieselpartsource.com',
@@ -102,7 +103,7 @@ export const site = {
     },
   },
   defaultDescription:
-    '柴油零件源（Diesel Part Source）为船用、工业、轨交与发电应用提供经核验的 MTU、Detroit Diesel、Cummins 与 DEUTZ 发动机配件采购服务，自上海全球交付。',
+    '柴油零件源（柴油零件源）为船用、工业、轨交与发电应用提供经核验的 MTU、Detroit Diesel、Cummins 与 DEUTZ 发动机配件采购服务，自上海全球交付。',
 };
 
 const organizationLogoUrl = `${site.url}${site.logo.default}`;

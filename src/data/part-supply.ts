@@ -30,8 +30,8 @@ export type PartSupplyInfo = {
 
 const placeholder = (_partNumber: string): PartSupplyInfo => ({
   stockStatus: 'check',
-  stockNote: 'Availability confirmed after inquiry',
-  leadTime: 'Stock or sourcing route confirmed after inquiry',
+  stockNote: '供货情况询价后确认',
+  leadTime: '库存或寻源路线询价后确认',
   realPhotos: [],
 });
 

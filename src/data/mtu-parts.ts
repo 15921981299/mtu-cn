@@ -2,6 +2,7 @@ import { catalogPartDetailsByPartNumber, catalogPartDetailsBySlug, catalogPartSe
 
 import { applySearchPartContent, partSearchContent } from './part-search-content';
 import { sentencePartName, standardPartName } from './part-names';
+import { zhCategoryName, zhEngineType, zhPartName, zhSeriesLabel } from './part-names-zh';
 
 export type MtuPart = {
   slug: string;
@@ -131,144 +132,144 @@ const categoryDefaults: Record<string, {
   dimensions: string;
 }> = {
   'Turbocharging': {
-    summary: 'Turbocharger component for MTU engines — verified by part number and engine serial number before quotation.',
-    description: 'Turbocharger parts operate under high thermal and mechanical loads. We verify each part number against your engine serial number to confirm fitment across MTU series. Replacement and OEM-alternative options are quoted with lead time and shipping route.',
-    stockStatus: 'Checked by part number — new, OEM-alternative, or reman options quoted per inquiry',
-    applications: ['Marine propulsion', 'Power generation', 'Locomotive engines', 'Heavy equipment'],
-    weightKg: 'Confirmed with quotation',
+    summary: 'MTU 发动机涡轮增压器（Turbocharger）配件——报价前按零件号与发动机出厂编号核验。',
+    description: '涡轮增压器（Turbocharger）配件在高热载与高机械载荷下工作。我们对照您的发动机出厂编号核验每个零件号，以确认在 MTU 各系列上的适配性。替换件与原厂配套替代（OEM-alternative）方案均随交货期与运输路线一并报价。',
+    stockStatus: '按零件号核查——新件、原厂配套替代件或再制造件按询价报价',
+    applications: ['船舶推进', '发电', '机车发动机', '重型设备'],
+    weightKg: '报价时确认',
     hsCode: '8414.90',
-    leadTime: 'Stock: 3-7 working days. Special order: 2-4 weeks. Reman: quoted per core availability.',
-    dimensions: 'Varies by turbocharger model — quoted on inquiry with engine and turbo serial numbers',
+    leadTime: '现货：3–7 个工作日；特殊订货：2–4 周；再制造件：按旧芯供应情况报价。',
+    dimensions: '因增压器型号而异——询价时请提供发动机与增压器编号',
   },
   'Filters': {
-    summary: 'MTU filter element — oil, fuel, air, or coolant. Part-number verification confirms compatibility.',
-    description: 'Filters are high-frequency consumables in any MTU maintenance program. We stock common filter references and can source application-specific elements. Bulk quantities available for fleet and service-company programs.',
-    stockStatus: 'Common references in stock — confirmed after part-number check',
-    applications: ['Scheduled maintenance', 'Fleet service programs', 'Marine engine rooms', 'Generator servicing'],
-    weightKg: 'Confirmed with quotation',
+    summary: 'MTU 滤清器滤芯——机油、燃油、空气或冷却液。零件号核验确认适配性。',
+    description: '滤清器是 MTU 维护计划中的高频易损件。我们常备常用滤清器参考号，并可寻源特定应用滤芯。面向船队与服务公司计划可提供批量数量。',
+    stockStatus: '常用参考号有库存——零件号核对后确认',
+    applications: ['定期保养', '船队服务计划', '船舶机舱', '发电机组维修'],
+    weightKg: '报价时确认',
     hsCode: '8421.23',
-    leadTime: 'Common references: 2-5 working days. Bulk orders: 1-2 weeks.',
-    dimensions: 'Varies by filter type — spin-on cartridges typically 80-150mm OD x 150-300mm L',
+    leadTime: '常用参考号：2–5 个工作日；批量订单：1–2 周。',
+    dimensions: '因滤清器类型而异——旋装式滤芯外径通常 80–150mm、长度 150–300mm',
   },
   'Fuel system': {
-    summary: 'MTU fuel-system component — injectors, pumps, valves, lines. Verified by engine model and serial number.',
-    description: 'Fuel-system parts directly affect combustion quality, emissions compliance, and fuel economy. We confirm fitment by engine model and serial number. OEM and OEM-alternative options available; reman options quoted where applicable.',
-    stockStatus: 'Checked per part number and engine application',
-    applications: ['Marine diesel engines', 'Power generation sets', 'Rail traction engines', 'Industrial equipment'],
-    weightKg: 'Confirmed with quotation',
+    summary: 'MTU 燃油系统配件——喷油器、泵、阀、管路。经发动机型号与出厂编号核验。',
+    description: '燃油系统配件直接影响燃烧质量、排放合规与燃油经济性。我们按发动机型号与出厂编号确认适配。可提供原厂配套（OEM）与原厂配套替代件；适用时再制造件亦可报价。',
+    stockStatus: '按零件号与发动机应用逐项核查',
+    applications: ['船用柴油发动机', '发电机组', '轨道交通牵引发动机', '工业设备'],
+    weightKg: '报价时确认',
     hsCode: '8413.30',
-    leadTime: 'New OEM: 5-10 working days. Reman exchange: 3-7 working days after core approval. OEM-alternative: 3-7 working days.',
-    dimensions: 'Confirmed by part number with quotation',
+    leadTime: '新原厂件：5–10 个工作日；再制造置换：旧芯确认后 3–7 个工作日；原厂配套替代件：3–7 个工作日。',
+    dimensions: '报价时按零件号确认',
   },
   'Sensors and electrical': {
-    summary: 'MTU sensor, solenoid, or electrical component — verified by connector type and engine installation.',
-    description: 'Electrical and sensor parts require precise matching — connector type, thread size, and signal range all vary by engine installation. We cross-check your part number against the engine serial number to avoid mismatch.',
-    stockStatus: 'Quoted after part-number and connector check',
-    applications: ['Engine monitoring systems', 'Control panels', 'Retrofit and upgrade projects'],
-    weightKg: 'Confirmed with quotation',
+    summary: 'MTU 传感器、电磁阀或电气元件——经接头类型与发动机安装形式核验。',
+    description: '电气与传感器配件需要精确匹配——接头类型、螺纹尺寸与信号量程随发动机安装形式而异。我们对照发动机出厂编号交叉核验您的零件号，避免错配。',
+    stockStatus: '零件号与接头核对后报价',
+    applications: ['发动机监控系统', '控制柜', '改造与升级项目'],
+    weightKg: '报价时确认',
     hsCode: '9032.89',
-    leadTime: 'Common sensors: 3-7 working days. Special-range or legacy sensors: 1-3 weeks.',
-    dimensions: 'Sensors typically M12-M18 thread, 40-120mm length; solenoid valves vary — quoted on inquiry',
+    leadTime: '常用传感器：3–7 个工作日；特殊量程或老型号传感器：1–3 周。',
+    dimensions: '传感器通常为 M12–M18 螺纹、长 40–120mm；电磁阀不一——询价时确认',
   },
   'Pistons and liners': {
-    summary: 'MTU piston, liner, or ring set — size grade and engine series must match exactly.',
-    description: 'Pistons, liners, and rings are size-graded components. Incorrect grade selection causes premature wear or seizure. We verify size code, engine series, and serial number before quotation. OEM and OEM-alternative grades available.',
-    stockStatus: 'Quoted by size grade and series — OEM and alternative options',
-    applications: ['Major overhaul', 'In-frame rebuild', 'Marine engine service', 'Industrial engine repair'],
-    weightKg: 'Confirmed with quotation',
+    summary: 'MTU 活塞、缸套或活塞环组——尺寸等级与发动机系列必须精确匹配。',
+    description: '活塞、缸套与活塞环均为分尺寸等级零件。等级选错会导致早期磨损或咬缸。报价前我们核验尺寸代码、发动机系列与出厂编号。可提供原厂配套与原厂配套替代等级。',
+    stockStatus: '按尺寸等级与系列报价——原厂与替代方案可选',
+    applications: ['大修', '就车翻新', '船用发动机维修', '工业发动机维修'],
+    weightKg: '报价时确认',
     hsCode: '8409.99',
-    leadTime: 'Standard size grades: 5-10 working days. Non-standard grades: 2-6 weeks.',
-    dimensions: 'Confirmed by part number with quotation',
+    leadTime: '标准尺寸等级：5–10 个工作日；非标准等级：2–6 周。',
+    dimensions: '报价时按零件号确认',
   },
   'Valve train': {
-    summary: 'MTU valve-train component — valves, springs, guides, tappets. Part number and engine series verified.',
-    description: 'Valve-train wear directly affects compression, fuel efficiency, and exhaust emissions. We confirm part number, engine series, and installation position before quotation. Kits available for cylinder-head overhaul programs.',
-    stockStatus: 'Quoted per part number — kit pricing available for overhaul quantities',
-    applications: ['Cylinder-head overhaul', 'Marine engine maintenance', 'Power generation service'],
-    weightKg: 'Confirmed with quotation',
+    summary: 'MTU 配气机构配件——气门、弹簧、导管、挺柱。零件号与发动机系列已经核验。',
+    description: '配气机构磨损直接影响压缩比、燃油效率与排放。报价前我们确认零件号、发动机系列与安装位置。缸盖大修计划可提供套件。',
+    stockStatus: '按零件号报价——大修批量可享套件价',
+    applications: ['缸盖大修', '船用发动机保养', '发电服务'],
+    weightKg: '报价时确认',
     hsCode: '8409.91',
-    leadTime: 'Common valves/springs: 3-7 working days. Full kit quantities: 1-2 weeks.',
-    dimensions: 'Confirmed by part number with quotation',
+    leadTime: '常用气门/弹簧：3–7 个工作日；整套数量：1–2 周。',
+    dimensions: '报价时按零件号确认',
   },
   'Bearings': {
-    summary: 'MTU bearing — crankshaft, connecting rod, camshaft, or thrust. Size grade must match engine specification.',
-    description: 'Bearings are precision-graded components. Undersize, standard, and oversize grades available. We verify engine serial number to confirm the correct grade before quotation.',
-    stockStatus: 'Quoted by size grade — standard grades more readily available',
-    applications: ['Engine overhaul', 'Crankshaft service', 'Marine and industrial engines'],
-    weightKg: 'Confirmed with quotation',
+    summary: 'MTU 轴承——曲轴、连杆、凸轮轴或推力轴承。尺寸等级必须与发动机规格一致。',
+    description: '轴承是精密分等级零件，可提供小尺寸、标准与加大等级。报价前我们核验发动机出厂编号以确认正确等级。',
+    stockStatus: '按尺寸等级报价——标准等级更易供货',
+    applications: ['发动机大修', '曲轴维修', '船用与工业发动机'],
+    weightKg: '报价时确认',
     hsCode: '8483.30',
-    leadTime: 'Standard size grades: 3-7 working days. Undersize/oversize grades: 1-3 weeks.',
-    dimensions: 'Confirmed by part number with quotation',
+    leadTime: '标准尺寸等级：3–7 个工作日；小尺寸/加大等级：1–3 周。',
+    dimensions: '报价时按零件号确认',
   },
   'Gaskets and seals': {
-    summary: 'MTU gasket or seal — cylinder head, exhaust, oil, water. Correct material grade confirmed before quotation.',
-    description: 'Gaskets and seals are application-specific — material grade, thickness, and shape all vary by engine installation. We confirm part number against engine series and recommend full gasket kits for overhaul projects.',
-    stockStatus: 'Common gaskets in stock — special grades quoted per inquiry',
-    applications: ['Overhaul kits', 'Marine service', 'Industrial maintenance', 'Generator repair'],
-    weightKg: 'Confirmed with quotation',
+    summary: 'MTU 垫片或密封件——缸盖、排气、机油、水路。报价前确认正确的材料等级。',
+    description: '垫片与密封件按应用而定——材料等级、厚度与形状随发动机安装形式而异。我们对照发动机系列确认零件号，并为大修项目推荐整套垫片包。',
+    stockStatus: '常用垫片有库存——特殊等级按询价报价',
+    applications: ['大修包', '船用服务', '工业维护', '发电机组维修'],
+    weightKg: '报价时确认',
     hsCode: '8484.10',
-    leadTime: 'Common gaskets/O-rings: 2-5 working days. Special material grades: 1-3 weeks.',
-    dimensions: 'Individual gaskets vary by application; complete kits quoted with full parts list',
+    leadTime: '常用垫片/O 型圈：2–5 个工作日；特殊材料等级：1–3 周。',
+    dimensions: '单个垫片因应用而异；整套包按完整零件清单报价',
   },
   'Cooling system': {
-    summary: 'MTU cooling-system component — pumps, thermostats, hoses, flanges. Verified by engine model and installation.',
-    description: 'Cooling-system parts vary by engine application — marine (raw-water or keel-cooled), industrial (radiator), or rail. We confirm the correct variant by engine model and serial number.',
-    stockStatus: 'Quoted per part number and engine application',
-    applications: ['Marine cooling systems', 'Industrial radiator systems', 'Generator cooling'],
-    weightKg: 'Confirmed with quotation',
+    summary: 'MTU 冷却系统配件——水泵、节温器、软管、法兰。经发动机型号与安装形式核验。',
+    description: '冷却系统配件因发动机应用而异——船用（开式海水冷却或舷外冷却）、工业（散热器）或轨交。我们按发动机型号与出厂编号确认正确变型。',
+    stockStatus: '按零件号与发动机应用报价',
+    applications: ['船用冷却系统', '工业散热器系统', '发电机组冷却'],
+    weightKg: '报价时确认',
     hsCode: '8419.50',
-    leadTime: 'Pumps: 5-15 working days depending on model. Impellers: 2-5 working days. Thermostats: 3-7 working days.',
-    dimensions: 'Confirmed by part number with quotation',
+    leadTime: '水泵：视型号 5–15 个工作日；叶轮：2–5 个工作日；节温器：3–7 个工作日。',
+    dimensions: '报价时按零件号确认',
   },
   'Lubrication': {
-    summary: 'MTU lubrication-system component — pumps, coolers, nozzles, separators. Part number and series verified.',
-    description: 'Lubrication parts are critical to engine life. We verify every part number against your engine serial number and can quote complete lube-system kits for major service intervals.',
-    stockStatus: 'Quoted per part number — kit options available',
-    applications: ['Marine engines', 'Industrial engines', 'Generator maintenance'],
-    weightKg: 'Confirmed with quotation',
+    summary: 'MTU 润滑系统配件——油泵、冷却器、喷嘴、分离器。零件号与系列已经核验。',
+    description: '润滑配件关乎发动机寿命。我们对照您的发动机出厂编号核验每个零件号，并可按主要保养周期报整套润滑系统包。',
+    stockStatus: '按零件号报价——可选套件',
+    applications: ['船用发动机', '工业发动机', '发电机组保养'],
+    weightKg: '报价时确认',
     hsCode: '8413.30',
-    leadTime: 'Oil pumps and coolers: 5-15 working days. Spray nozzles and separators: 3-7 working days.',
-    dimensions: 'Confirmed by part number with quotation',
+    leadTime: '机油泵与冷却器：5–15 个工作日；喷嘴与分离器：3–7 个工作日。',
+    dimensions: '报价时按零件号确认',
   },
   'Drive components': {
-    summary: 'MTU drive component — bolts, nuts, washers, clamps, couplings. Verified by engine assembly position.',
-    description: 'Drive and fastening components must match the engine assembly revision. We verify part numbers against the latest parts catalog for your engine serial number.',
-    stockStatus: 'Common fasteners in stock — special items quoted per inquiry',
-    applications: ['Engine assembly', 'Marine propulsion', 'Industrial drives', 'Generator sets'],
-    weightKg: 'Confirmed with quotation',
+    summary: 'MTU 传动元件——螺栓、螺母、垫圈、卡箍、联轴器。经发动机装配位置核验。',
+    description: '传动与紧固元件必须与发动机装配版本一致。我们对照您发动机出厂编号对应的最新零件目录核验零件号。',
+    stockStatus: '常用紧固件有库存——特殊件按询价报价',
+    applications: ['发动机装配', '船舶推进', '工业传动', '发电机组'],
+    weightKg: '报价时确认',
     hsCode: '7318.15',
-    leadTime: 'Common fasteners: 2-5 working days. Special bolts/couplings: 1-3 weeks.',
-    dimensions: 'Fasteners M6-M24 typical; couplings vary by shaft size — quoted on inquiry',
+    leadTime: '常用紧固件：2–5 个工作日；特殊螺栓/联轴器：1–3 周。',
+    dimensions: '紧固件通常为 M6–M24；联轴器随轴径而异——询价时确认',
   },
   'Air and intake': {
-    summary: 'MTU air and intake component — filters, hoses, manifolds. Verified by engine model.',
-    description: 'Air-system parts must match the engine intake configuration. We confirm part numbers by engine model and can quote complete air-filter service kits.',
-    stockStatus: 'Filter elements commonly in stock — special items quoted',
-    applications: ['Marine engine rooms', 'Industrial sites', 'Generator enclosures'],
-    weightKg: 'Confirmed with quotation',
+    summary: 'MTU 进气系统配件——滤清器、软管、歧管。经发动机型号核验。',
+    description: '进气系统配件必须与发动机进气配置一致。我们按发动机型号确认零件号，并可报整套空气滤清器保养包。',
+    stockStatus: '滤芯常有库存——特殊件报价待确认',
+    applications: ['船舶机舱', '工业现场', '发电机组罩壳'],
+    weightKg: '报价时确认',
     hsCode: '8421.31',
-    leadTime: 'Filter elements: 2-5 working days. Intake manifolds and hoses: 1-3 weeks.',
-    dimensions: 'Confirmed by part number with quotation',
+    leadTime: '滤芯：2–5 个工作日；进气歧管与软管：1–3 周。',
+    dimensions: '报价时按零件号确认',
   },
   'Engine components': {
-    summary: 'MTU engine component — verified by part number, engine model, and serial number.',
-    description: 'General engine components are verified against your engine serial number and the latest MTU parts catalog revision. We confirm fitment, stock status, and shipping options before quotation.',
-    stockStatus: 'Quoted per part number after engine verification',
-    applications: ['Marine service', 'Industrial maintenance', 'Power generation', 'Rail traction'],
-    weightKg: 'Confirmed with quotation',
+    summary: 'MTU 发动机组件——按零件号、发动机型号与出厂编号核验。',
+    description: '通用发动机组件对照您的发动机出厂编号与最新版 MTU 零件目录核验。报价前我们确认适配性、库存状态与运输方案。',
+    stockStatus: '发动机核验后按零件号报价',
+    applications: ['船用服务', '工业维护', '发电', '轨道交通牵引'],
+    weightKg: '报价时确认',
     hsCode: '8409.99',
-    leadTime: 'Quoted per part number after engine verification — typically 3-15 working days.',
-    dimensions: 'Varies by component — quoted on inquiry with part number and engine model',
+    leadTime: '发动机核验后按零件号报价——通常 3–15 个工作日。',
+    dimensions: '因零件而异——询价时请提供零件号与发动机型号',
   },
   'Control components': {
-    summary: 'MTU engine control component — governor, actuator, or monitoring device. Verified by engine configuration.',
-    description: 'Control components are configuration-specific. We verify your part number and engine serial number to confirm the correct control-system variant.',
-    stockStatus: 'Quoted per part number and engine configuration',
-    applications: ['Engine control systems', 'Marine automation', 'Generator control panels'],
-    weightKg: 'Confirmed with quotation',
+    summary: 'MTU 发动机控制元件——调速器、执行器或监测设备。经发动机构型核验。',
+    description: '控制元件随构型而定。我们核验您的零件号与发动机出厂编号，以确认正确的控制系统变型。',
+    stockStatus: '按零件号与发动机构型报价',
+    applications: ['发动机控制系统', '船舶自动化', '发电机组控制屏'],
+    weightKg: '报价时确认',
     hsCode: '9032.89',
-    leadTime: 'Quoted per part number — typically 5-15 working days depending on configuration.',
-    dimensions: 'Governors and actuators vary by model — quoted on inquiry with engine serial number',
+    leadTime: '按零件号报价——视构型通常 5–15 个工作日。',
+    dimensions: '调速器与执行器随型号而异——询价时请提供发动机出厂编号',
   },
 };
 
@@ -338,7 +339,7 @@ const publicPartSpecs: Record<string, Partial<CatalogPartSeed>> = {
   '8490740063': { engineType: 'MTU 956/1163', dimensions: 'N/A', weightKg: '3.086 KG', hsCode: '84139100', natoNumber: '2910123890394' },
   'EX52407500064': { engineType: 'MTU 4000', dimensions: 'N/A', weightKg: '1.873 KG', hsCode: '84099900', natoNumber: 'N/A' },
   'X57508300091': { engineType: 'MTU 4000', dimensions: 'N/A', weightKg: '1.288 KG', hsCode: '84212300', natoNumber: '2910124051513' },
-  '8495340000': { engineType: 'MTU 956/1163', dimensions: 'For valve block 0005342732', weightKg: '0.650 KG', hsCode: '84812090', natoNumber: '4810123693952' },
+  '8495340000': { engineType: 'MTU 956/1163', dimensions: '用于阀块 0005342732', weightKg: '0.650 KG', hsCode: '84812090', natoNumber: '4810123693952' },
   '0005342732': { engineType: 'MTU 956/1163', dimensions: 'N/A', weightKg: '6.234 KG', hsCode: '84811005', natoNumber: '4810123604998' },
   '5840300917': { engineType: 'MTU 1163', dimensions: 'N/A', weightKg: '28.888 KG', hsCode: '84099900', natoNumber: '2805124101245' },
   '0080375619': { engineType: 'MTU 1163', dimensions: 'N/A', weightKg: '0.210 KG', hsCode: '84099900', natoNumber: '2815123580495' },
@@ -402,12 +403,12 @@ const publicPartSpecs: Record<string, Partial<CatalogPartSeed>> = {
 };
 
 const inferEngineType = (series: readonly string[]) =>
-  series.length > 0 ? series.map((item) => item.replace(/^MTU\s*/i, 'MTU ')).join('/') : 'Verify by engine serial number';
+  series.length > 0 ? series.map((item) => item.replace(/^MTU\s*/i, 'MTU ')).join('/') : '按发动机出厂编号核验';
 
 const inferLeadTime = (category: string) =>
   category === 'Filters' || category === 'Gaskets and seals'
-    ? 'Common references are usually checked fastest'
-    : 'Quoted by stock, replacement route, and destination';
+    ? '常用参考号通常核查最快'
+    : '按库存、替换路线与目的地报价';
 
 /**
  * 类目兜底摘要：注入料号+品名+系列，避免整类目共享同一句字节级文本
@@ -432,18 +433,18 @@ const createCatalogPart = (part: CatalogPartSeed): MtuPart => {
     summary: part.summary ?? buildCatalogSummary(part, cat.summary),
     description: part.description ?? cat.description,
     image: inferTextMatchedPartImage(part),
-    availability: 'Stock, replacement status, lead time, and shipping route confirmed after inquiry.',
+    availability: '库存、替换状态、交货期与运输路线均在询价后确认。',
     stockStatus: part.stockStatus ?? cat.stockStatus,
     applications: cat.applications,
     notes: [
-      `For ${part.partNumber}, confirm engine model, serial number, required quantity, and destination before ordering.`,
-      `If ${part.partNumber} markings or replacement status are unclear, send old-part photos or nameplate details.`,
+      `订购 ${part.partNumber} 前，请确认发动机型号、出厂编号、所需数量与收货地。`,
+      `如 ${part.partNumber} 的标识或替换状态不明确，请发送旧件照片或铭牌信息。`,
     ],
     replacementFor,
     weightKg: part.weightKg ?? spec.weightKg ?? cat.weightKg,
     hsCode: part.hsCode ?? spec.hsCode ?? cat.hsCode,
     leadTime: part.leadTime ?? spec.leadTime ?? inferLeadTime(part.category),
-    dimensions: part.dimensions ?? spec.dimensions ?? 'Confirm by part number, old-part photo, or catalog drawing',
+    dimensions: part.dimensions ?? spec.dimensions ?? '按零件号、旧件照片或目录图纸确认',
     engineType: part.engineType ?? spec.engineType ?? inferEngineType(part.series),
     natoNumber: part.natoNumber ?? spec.natoNumber ?? 'N/A',
     applicableEngines: part.applicableEngines ?? spec.applicableEngines ?? inferEngineType(part.series),
@@ -1309,11 +1310,11 @@ const mtuPartsRaw: MtuPart[] = [
     name: 'Valve Guide Inlet, Size 1',
     series: ['MTU 595', 'MTU 956', 'MTU 1163'],
     category: 'Valve train',
-    summary: 'MTU valve guide inquiry support for inlet-side service and overhaul work.',
+    summary: 'MTU 进气门导管询价支持——面向进气侧保养与大修作业。',
     image: partImage,
-    availability: 'Check stock and replacement status by engine serial number.',
-    applications: ['Marine propulsion', 'Shipyard overhaul', 'Power generation'],
-    notes: ['Confirm cylinder head configuration before ordering.', 'Send old part photos when size marking is unclear.'],
+    availability: '按发动机出厂编号核查库存与替换状态。',
+    applications: ['船舶推进', '船厂大修', '发电'],
+    notes: ['订购前确认缸盖构型。', '尺寸标识不清时请发送旧件照片。'],
   },
   {
     slug: 'x54707700072-relief-valve-for-4-cyl-hp-pump',
@@ -1321,11 +1322,11 @@ const mtuPartsRaw: MtuPart[] = [
     name: 'Relief Valve for 4-Cylinder HP Pump',
     series: [],
     category: 'Fuel system',
-    summary: 'Relief valve sourcing for MTU high-pressure fuel pump service.',
+    summary: 'MTU 高压燃油泵保养用溢流阀寻源。',
     image: partImage,
-    availability: 'Quoted by pump model, engine series, and destination.',
-    applications: ['Marine engines', 'Generator sets', 'Industrial power units'],
-    notes: ['Verify pump configuration and fuel-system version.', 'Include engine model and serial number in the inquiry.'],
+    availability: '按泵型号、发动机系列与目的地报价。',
+    applications: ['船用发动机', '发电机组', '工业动力机组'],
+    notes: ['请核验泵构型与燃油系统版本。', '询价时请提供发动机型号与出厂编号。'],
   },
   {
     slug: 'x00e50207217-pressure-sensor',
@@ -1333,11 +1334,11 @@ const mtuPartsRaw: MtuPart[] = [
     name: 'Pressure Sensor',
     series: [],
     category: 'Sensors and electrical',
-    summary: 'MTU pressure sensor availability check with part-number and connector verification.',
+    summary: 'MTU 压力传感器供货核查——经零件号与接头核验。',
     image: partImage,
-    availability: 'Often requested for urgent service; confirm by part number and photo.',
-    applications: ['Marine propulsion', 'Power generation', 'Rail maintenance'],
-    notes: ['Send connector photo and installed location if possible.', 'Check supersession before shipment.'],
+    availability: '紧急保养常用件；按零件号与照片确认。',
+    applications: ['船舶推进', '发电', '轨道交通维修'],
+    notes: ['如可能请提供接头照片与安装位置。', '发货前核查替代关系。'],
   },
   {
     slug: 'x00e50207196-pressure-sensor',
@@ -1345,11 +1346,11 @@ const mtuPartsRaw: MtuPart[] = [
     name: 'Pressure Sensor',
     series: [],
     category: 'Sensors and electrical',
-    summary: 'Pressure sensor inquiry page for MTU service teams and procurement buyers.',
+    summary: '面向 MTU 服务团队与采购客户的压力传感器询价页。',
     image: partImage,
-    availability: 'Stock or sourcing route confirmed after serial-number check.',
-    applications: ['Generator engines', 'Industrial engines', 'Marine auxiliary engines'],
-    notes: ['Confirm whether the old part has a superseded reference.', 'Photos reduce wrong-sensor risk.'],
+    availability: '经出厂编号核查后确认库存或寻源路线。',
+    applications: ['发电发动机', '工业发动机', '船用辅机'],
+    notes: ['请确认旧件是否有被替代参考号。', '提供照片可降低错配风险。'],
   },
   {
     slug: '0005357533-speed-sensor',
@@ -1357,11 +1358,11 @@ const mtuPartsRaw: MtuPart[] = [
     name: 'Speed Sensor',
     series: ['MTU 396', 'MTU 4000'],
     category: 'Sensors and electrical',
-    summary: 'MTU speed sensor support for control, monitoring, and engine protection systems.',
+    summary: 'MTU 转速传感器——用于控制、监测与发动机保护系统。',
     image: partImage,
-    availability: 'Check by sensor part number, engine model, and cable/connector details.',
-    applications: ['Marine engines', 'Rail engines', 'Power generation'],
-    notes: ['Confirm cable length and connector type.', 'Send nameplate or old sensor markings.'],
+    availability: '按传感器零件号、发动机型号与电缆/接头细节核查。',
+    applications: ['船用发动机', '轨交发动机', '发电'],
+    notes: ['确认电缆长度与接头类型。', '请发送铭牌或旧传感器标识。'],
   },
   {
     slug: '0005357433-speed-sensor',
@@ -1369,11 +1370,11 @@ const mtuPartsRaw: MtuPart[] = [
     name: 'Speed Sensor',
     series: ['MTU 396', 'MTU 4000'],
     category: 'Sensors and electrical',
-    summary: 'Speed sensor sourcing for MTU engine monitoring and replacement work.',
+    summary: 'MTU 发动机监测与更换用转速传感器寻源。',
     image: partImage,
-    availability: 'Quoted by stock, replacement option, and shipping destination.',
-    applications: ['Shipyards', 'Generator maintenance', 'Fleet service'],
-    notes: ['Send the old sensor photo before purchase.', 'Check compatibility against engine serial number.'],
+    availability: '按库存、替换选项与运输目的地报价。',
+    applications: ['船厂', '发电机组维修', '船队服务'],
+    notes: ['购买前请发送旧传感器照片。', '对照发动机出厂编号核查适配性。'],
   },
   {
     slug: '5841800143-oil-spray-nozzle',
@@ -1381,11 +1382,11 @@ const mtuPartsRaw: MtuPart[] = [
     name: 'Oil Spray Nozzle',
     series: ['MTU 595', 'MTU 956', 'MTU 1163'],
     category: 'Lubrication',
-    summary: 'Oil spray nozzle support for MTU lubrication and overhaul maintenance.',
+    summary: 'MTU 润滑与大修保养用机油喷嘴支持。',
     image: partImage,
-    availability: 'Available routes checked by series and required quantity.',
-    applications: ['Marine propulsion', 'Major overhaul', 'Power plant service'],
-    notes: ['Verify installed position and engine series.', 'Best ordered with related seals or gaskets.'],
+    availability: '按系列与所需数量核查可行路线。',
+    applications: ['船舶推进', '大修', '电厂服务'],
+    notes: ['核验安装位置与发动机系列。', '建议与相关密封件或垫片一同订购。'],
   },
   {
     slug: '0005862709-repair-kit',
@@ -1393,11 +1394,11 @@ const mtuPartsRaw: MtuPart[] = [
     name: 'Repair Kit',
     series: [],
     category: 'Repair kits',
-    summary: 'MTU repair kit inquiry support for planned service and urgent maintenance.',
+    summary: 'MTU 修理包询价支持——面向计划保养与紧急维修。',
     image: partImage,
-    availability: 'Kit contents and lead time confirmed before quotation.',
-    applications: ['Service workshops', 'Shipyards', 'Generator maintenance'],
-    notes: ['Confirm kit scope before purchase.', 'Send engine model and repair location details.'],
+    availability: '报价前确认包内容物与交货期。',
+    applications: ['维修车间', '船厂', '发电机组维修'],
+    notes: ['购买前确认修理包范围。', '请提供发动机型号与维修位置细节。'],
   },
   {
     slug: 'e0070960299-exhaust-turbocharger',
@@ -1405,11 +1406,11 @@ const mtuPartsRaw: MtuPart[] = [
     name: 'Exhaust Turbocharger',
     series: [],
     category: 'Turbocharging',
-    summary: 'Exhaust turbocharger sourcing for MTU marine and generator engines.',
+    summary: 'MTU 船用与发电发动机废气涡轮增压器寻源。',
     image: partImage,
-    availability: 'New, replacement, or repair option quoted by application.',
-    applications: ['Marine propulsion', 'Generator sets', 'Industrial engines'],
-    notes: ['Confirm engine rating and turbocharger plate.', 'Shipping size and packing affect delivery route.'],
+    availability: '按应用报新件、替换或维修选项。',
+    applications: ['船舶推进', '发电机组', '工业发动机'],
+    notes: ['确认发动机功率标定与增压器铭牌。', '运输尺寸与包装影响发货路线。'],
   },
   {
     slug: 'e0070960399-exhaust-turbocharger',
@@ -1417,11 +1418,11 @@ const mtuPartsRaw: MtuPart[] = [
     name: 'Exhaust Turbocharger',
     series: [],
     category: 'Turbocharging',
-    summary: 'MTU turbocharger availability check with application and rating verification.',
+    summary: 'MTU 增压器供货核查——经应用与功率标定核验。',
     image: partImage,
-    availability: 'Quoted after checking rating, flange, and replacement route.',
-    applications: ['Vessels', 'Power generation', 'Industrial equipment'],
-    notes: ['Send turbocharger nameplate photo.', 'Include required delivery date for downtime orders.'],
+    availability: '核验标定、法兰与替换路线后报价。',
+    applications: ['船舶', '发电', '工业设备'],
+    notes: ['请发送增压器铭牌照片。', '停机订单请注明要求交期。'],
   },
   {
     slug: 'ex53620700005-87-seawater-pump',
@@ -1429,11 +1430,11 @@ const mtuPartsRaw: MtuPart[] = [
     name: 'Seawater Pump',
     series: [],
     category: 'Cooling system',
-    summary: 'Seawater pump support for MTU marine cooling systems.',
+    summary: 'MTU 船用冷却系统海水泵支持。',
     image: partImage,
-    availability: 'Check by pump reference, engine model, and vessel location.',
-    applications: ['Marine propulsion', 'Auxiliary engines', 'Shipyard repair'],
-    notes: ['Photos of old pump and ports help confirm fit.', 'Ask for gasket and seal requirements together.'],
+    availability: '按泵参考号、发动机型号与船舶位置核查。',
+    applications: ['船舶推进', '辅机', '船厂维修'],
+    notes: ['旧泵与接口照片有助于确认适配。', '请一并提出垫片与密封件需求。'],
   },
   {
     slug: 'x52808100014-fuel-delivery-pump',
@@ -1441,11 +1442,11 @@ const mtuPartsRaw: MtuPart[] = [
     name: 'Fuel Delivery Pump',
     series: [],
     category: 'Fuel system',
-    summary: 'MTU fuel delivery pump sourcing for service and repair.',
+    summary: 'MTU 燃油输送泵寻源——面向保养与维修。',
     image: partImage,
-    availability: 'Quoted by engine serial number and stock route.',
-    applications: ['Marine', 'Generator', 'Industrial engine service'],
-    notes: ['Confirm pump reference on the old part.', 'Check related fuel lines or seals when replacing.'],
+    availability: '按发动机出厂编号与库存路线报价。',
+    applications: ['船用', '发电', '工业发动机维修'],
+    notes: ['确认旧件上的泵参考号。', '更换时检查相关燃油管或密封件。'],
   },
   {
     slug: '5240780824-conn-fuel-rail-rear',
@@ -1453,11 +1454,11 @@ const mtuPartsRaw: MtuPart[] = [
     name: 'Connector, Fuel Rail Rear',
     series: [],
     category: 'Fuel system',
-    summary: 'Fuel rail connector inquiry support for MTU fuel-system maintenance.',
+    summary: 'MTU 燃油系统保养用燃油轨接头询价支持。',
     image: partImage,
-    availability: 'Line-item stock check available for overhaul lists.',
-    applications: ['Marine engines', 'Power generation', 'Fleet maintenance'],
-    notes: ['Verify rear rail configuration.', 'Send complete fuel-system list for consolidated quotation.'],
+    availability: '大修清单可逐项核查库存。',
+    applications: ['船用发动机', '发电', '船队保养'],
+    notes: ['核验后轨构型。', '发送完整燃油系统清单以获得合并报价。'],
   },
   {
     slug: 'x59407700023-hp-fuel-line',
@@ -1465,11 +1466,11 @@ const mtuPartsRaw: MtuPart[] = [
     name: 'HP Fuel Line',
     series: [],
     category: 'Fuel system',
-    summary: 'High-pressure fuel line sourcing for MTU 4000 service work.',
+    summary: 'MTU 4000 保养用高压燃油管寻源。',
     image: partImage,
-    availability: 'Checked by cylinder position, engine serial number, and required quantity.',
-    applications: ['MTU 4000 marine engines', 'Generator maintenance', 'Industrial engines'],
-    notes: ['Confirm exact line position.', 'Do not substitute without serial-number verification.'],
+    availability: '按缸位、发动机出厂编号与所需数量核查。',
+    applications: ['MTU 4000 船用发动机', '发电机组维修', '工业发动机'],
+    notes: ['确认确切油管位置。', '未经出厂编号核验不得代用。'],
   },
   {
     slug: '5552035639-flange',
@@ -1477,11 +1478,11 @@ const mtuPartsRaw: MtuPart[] = [
     name: 'Flange',
     series: ['MTU 396', 'MTU 595'],
     category: 'Cooling system',
-    summary: 'MTU flange inquiry support for cooling and fluid-circuit service.',
+    summary: 'MTU 法兰询价支持——面向冷却与液体回路保养。',
     image: partImage,
-    availability: 'Confirmed by part number and old-part photo.',
-    applications: ['Shipyard repair', 'Industrial engine service', 'Generator engines'],
-    notes: ['Send mating part information when possible.', 'Confirm gasket needs before shipment.'],
+    availability: '经零件号与旧件照片确认。',
+    applications: ['船厂维修', '工业发动机维修', '发电发动机'],
+    notes: ['如可能请提供配合件信息。', '发货前确认垫片需求。'],
   },
   {
     slug: 'x58720700002-coolant-pump-shaft',
@@ -1489,11 +1490,11 @@ const mtuPartsRaw: MtuPart[] = [
     name: 'Coolant Pump Shaft',
     series: [],
     category: 'Cooling system',
-    summary: 'Coolant pump shaft support for MTU pump repair and overhaul.',
+    summary: 'MTU 水泵维修与大修用水泵轴支持。',
     image: partImage,
-    availability: 'Availability checked by pump assembly and engine series.',
-    applications: ['Marine engines', 'Power plants', 'Repair workshops'],
-    notes: ['Confirm pump assembly reference.', 'Ask for seals and bearings in the same inquiry.'],
+    availability: '按泵总成与发动机系列核查供货。',
+    applications: ['船用发动机', '电厂', '维修车间'],
+    notes: ['确认泵总成参考号。', '请在同一询价中提出密封件与轴承需求。'],
   },
   {
     slug: '5590982680-gasket',
@@ -1501,11 +1502,11 @@ const mtuPartsRaw: MtuPart[] = [
     name: 'Gasket',
     series: ['MTU 396', 'MTU 595', 'MTU 956'],
     category: 'Gaskets and seals',
-    summary: 'MTU gasket sourcing for maintenance kits and overhaul lists.',
+    summary: 'MTU 垫片寻源——面向保养包与大修清单。',
     image: partImage,
-    availability: 'Good candidate for consolidated shipment with other service parts.',
-    applications: ['Overhaul work', 'Routine service', 'Marine maintenance'],
-    notes: ['Confirm engine series and installed position.', 'Send full gasket list for faster quote.'],
+    availability: '适合与其他保养件合并发货。',
+    applications: ['大修', '例行保养', '船用维修'],
+    notes: ['确认发动机系列与安装位置。', '发送完整垫片清单以加快报价。'],
   },
   {
     slug: '0001750080-gasket',
@@ -1513,11 +1514,11 @@ const mtuPartsRaw: MtuPart[] = [
     name: 'Gasket',
     series: ['MTU 183', 'MTU 396', 'MTU 4000'],
     category: 'Gaskets and seals',
-    summary: 'Gasket availability check for MTU service and repair requirements.',
+    summary: 'MTU 保养与维修用垫片供货核查。',
     image: partImage,
-    availability: 'Stock and replacement status checked after inquiry.',
-    applications: ['Service kits', 'Generator maintenance', 'Shipyard service'],
-    notes: ['Part-number verification prevents wrong gasket selection.', 'Quantity and destination affect packing route.'],
+    availability: '询价后核查库存与替换状态。',
+    applications: ['保养包', '发电机组维修', '船厂服务'],
+    notes: ['零件号核验可避免垫片错选。', '数量与目的地影响包装路线。'],
   },
   {
     slug: '5370780038-damper-strip',
@@ -1525,11 +1526,11 @@ const mtuPartsRaw: MtuPart[] = [
     name: 'Damper Strip',
     series: ['MTU 396', 'MTU 538'],
     category: 'Fuel system',
-    summary: 'Damper strip support for MTU fuel and engine assembly service.',
+    summary: 'MTU 燃油与发动机装配保养用阻尼条支持。',
     image: partImage,
-    availability: 'Checked by engine series and required quantity.',
-    applications: ['Marine service', 'Industrial maintenance', 'Legacy engine support'],
-    notes: ['Legacy series may require replacement confirmation.', 'Photos help when old markings are worn.'],
+    availability: '按发动机系列与所需数量核查。',
+    applications: ['船用服务', '工业维修', '老机型支持'],
+    notes: ['老系列可能需要替换确认。', '旧标识磨损时照片有帮助。'],
   },
   {
     slug: '5500530025-spring-retainer',
@@ -1537,11 +1538,11 @@ const mtuPartsRaw: MtuPart[] = [
     name: 'Spring Retainer',
     series: ['MTU 396', 'MTU 595'],
     category: 'Valve train',
-    summary: 'Spring retainer sourcing for MTU cylinder-head and valve-train work.',
+    summary: 'MTU 缸盖与配气机构作业用弹簧座寻源。',
     image: partImage,
-    availability: 'Quoted by stock or sourcing option.',
-    applications: ['Cylinder-head repair', 'Major overhaul', 'Marine engines'],
-    notes: ['Confirm matching valve-train parts.', 'Send quantities by cylinder count.'],
+    availability: '按库存或寻源选项报价。',
+    applications: ['缸盖维修', '大修', '船用发动机'],
+    notes: ['确认配套配气机构零件。', '请按缸数提供数量。'],
   },
   {
     slug: '5550630180-gasket',
@@ -1549,11 +1550,11 @@ const mtuPartsRaw: MtuPart[] = [
     name: 'Gasket',
     series: ['MTU 396', 'MTU 595'],
     category: 'Gaskets and seals',
-    summary: 'MTU gasket inquiry page for planned maintenance and repair.',
+    summary: 'MTU 垫片询价页——面向计划保养与维修。',
     image: partImage,
-    availability: 'Line-item availability confirmed before quotation.',
-    applications: ['Shipyards', 'Service companies', 'Power generation'],
-    notes: ['Confirm exact part number against the manual.', 'Best quoted with other service-kit items.'],
+    availability: '报价前逐项确认供货情况。',
+    applications: ['船厂', '服务公司', '发电'],
+    notes: ['请对照手册确认准确零件号。', '建议与其他保养包件一并报价。'],
   },
   {
     slug: '8492500001-coupling',
@@ -1561,11 +1562,11 @@ const mtuPartsRaw: MtuPart[] = [
     name: 'Coupling',
     series: ['MTU 4000', 'MTU 8000'],
     category: 'Drive components',
-    summary: 'Coupling sourcing for MTU engine drive and auxiliary systems.',
+    summary: 'MTU 发动机传动与辅助系统联轴器寻源。',
     image: partImage,
-    availability: 'Quoted by dimensions, old part photo, and engine application.',
-    applications: ['Marine propulsion', 'Power generation', 'Industrial drives'],
-    notes: ['Confirm mating equipment and installed position.', 'Packing size may affect freight choice.'],
+    availability: '按尺寸、旧件照片与发动机应用报价。',
+    applications: ['船舶推进', '发电', '工业传动'],
+    notes: ['确认配合设备与安装位置。', '包装尺寸可能影响运费选择。'],
   },
   {
     slug: '0005354330-temperature-sensor',
@@ -1573,11 +1574,11 @@ const mtuPartsRaw: MtuPart[] = [
     name: 'Temperature Sensor',
     series: [],
     category: 'Sensors and electrical',
-    summary: 'Temperature sensor availability check for MTU monitoring and protection systems.',
+    summary: 'MTU 监测与保护系统用温度传感器供货核查。',
     image: partImage,
-    availability: 'Check stock by part number, connector, and engine serial number.',
-    applications: ['Marine', 'Generator', 'Rail and industrial engines'],
-    notes: ['Send connector photo.', 'Check supersession and installation point.'],
+    availability: '按零件号、接头与发动机出厂编号核查库存。',
+    applications: ['船用', '发电', '轨交与工业发动机'],
+    notes: ['请发送接头照片。', '核查替代关系与安装点。'],
   },
   {
     slug: 'x50441600048-air-hose',
@@ -1585,11 +1586,11 @@ const mtuPartsRaw: MtuPart[] = [
     name: 'Air Hose',
     series: [],
     category: 'Air and intake',
-    summary: 'MTU air hose support for charge-air and intake system service.',
+    summary: 'MTU 充气与进气系统保养用空气软管支持。',
     image: partImage,
-    availability: 'Availability confirmed by hose shape, old part photo, and part number.',
-    applications: ['Marine engines', 'Industrial engines', 'Generator sets'],
-    notes: ['Photos are useful because hose routing varies.', 'Ask for clamps or sleeves together.'],
+    availability: '经软管形状、旧件照片与零件号确认供货。',
+    applications: ['船用发动机', '工业发动机', '发电机组'],
+    notes: ['软管走向各异，照片很有用。', '请一并提出卡箍或护套需求。'],
   },
   {
     slug: '4441410480-gasket',
@@ -1597,281 +1598,281 @@ const mtuPartsRaw: MtuPart[] = [
     name: 'Gasket',
     series: ['MTU 396', 'MTU 493'],
     category: 'Gaskets and seals',
-    summary: 'Legacy MTU gasket sourcing for repair and maintenance programs.',
+    summary: '老型号 MTU 垫片寻源——面向维修与保养计划。',
     image: partImage,
-    availability: 'Legacy-part availability checked by engine series and quantity.',
-    applications: ['Legacy marine engines', 'Industrial service', 'Repair workshops'],
-    notes: ['Check superseded numbers before ordering.', 'Send old gasket or manual reference when possible.'],
+    availability: '按发动机系列与数量核查老型号供货。',
+    applications: ['老型号船用发动机', '工业服务', '维修车间'],
+    notes: ['订购前核查被替代号。', '如可能请发送旧垫片或手册参考。'],
   },
   // ═══════════════════════════════════════════════
   // ENRICHED VERIFIED PARTS (real data from supplier catalogs)
   // ═══════════════════════════════════════════════
   ...([
     // ── MTU 4000 Overhaul Parts ──
-    { partNumber: '5240113410', name: 'Cylinder Liner Size 0', series: [], category: 'Pistons and liners', stockStatus: 'Standard grade — common stock item, confirmed after engine serial check', replacementFor: ['5240113510', '5240114210'], hsCode: '8409.99', applicableEngines: '12V 4000 M70, 16V 4000 M90, 20V 4000 M93', commonFailureScenarios: ['Cavitation erosion on water-jacket side', 'Wear ridge at top ring travel — check at major overhaul', 'Scuffing from coolant contamination'], orderingNotes: 'Always verify size grade (0/1/2) via engine serial number before ordering. Replace liner, piston rings, and sealing rings as a set.' },
-    { partNumber: '5240103420', name: 'Cylinder Head Assembly', series: [], category: 'Cylinder heads', stockStatus: 'Checked by engine variant — OEM and alternative options quoted', replacementFor: [], hsCode: '8409.91' },
-    { partNumber: '5240161580', name: 'Cylinder Head Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item — typically in stock', replacementFor: ['5240160380'], hsCode: '8484.10', applicableEngines: '12V/16V/20V 4000 series — all variants', commonFailureScenarios: ['External coolant leak at cylinder head joint', 'Combustion gas blow-by into cooling system', 'Oil contamination in coolant from failed gasket'], orderingNotes: 'Replace as a complete set (one per cylinder). Always replace head bolts at the same time.' },
-    { partNumber: '5240303917', name: 'Piston Assembly', series: [], category: 'Pistons and liners', stockStatus: 'Quoted by size grade — OEM and alternative grades available', replacementFor: [], hsCode: '8409.99' },
-    { partNumber: '5240372525', name: 'Piston Crown', series: [], category: 'Pistons and liners', stockStatus: 'Quoted by engine serial and crown part number', replacementFor: [], hsCode: '8409.99' },
-    { partNumber: '5240300215', name: 'Piston Skirt', series: [], category: 'Pistons and liners', stockStatus: 'Quoted with matching crown — kit options available', replacementFor: [], hsCode: '8409.99' },
+    { partNumber: '5240113410', name: 'Cylinder Liner Size 0', series: [], category: 'Pistons and liners', stockStatus: '标准等级——常备库存件，经出厂编号核查后确认', replacementFor: ['5240113510', '5240114210'], hsCode: '8409.99', applicableEngines: '12V 4000 M70, 16V 4000 M90, 20V 4000 M93', commonFailureScenarios: ['水套侧气蚀侵蚀', '顶环行程处磨损台阶——大修时检查', '冷却液污染导致拉伤'], orderingNotes: '订购前务必经发动机出厂编号核验尺寸等级（0/1/2）。缸套、活塞环与密封环应整组更换。' },
+    { partNumber: '5240103420', name: 'Cylinder Head Assembly', series: [], category: 'Cylinder heads', stockStatus: '按发动机变型核查——原厂与替代件均可报价', replacementFor: [], hsCode: '8409.91' },
+    { partNumber: '5240161580', name: 'Cylinder Head Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件——通常有库存', replacementFor: ['5240160380'], hsCode: '8484.10', applicableEngines: '12V/16V/20V 4000 series — all variants', commonFailureScenarios: ['缸盖结合面外部冷却液泄漏', '燃烧气体窜入冷却系统', '垫片失效导致机油污染冷却液'], orderingNotes: '整组更换（每缸一件）。同时务必更换缸盖螺栓。' },
+    { partNumber: '5240303917', name: 'Piston Assembly', series: [], category: 'Pistons and liners', stockStatus: '按尺寸等级报价——原厂与替代等级可选', replacementFor: [], hsCode: '8409.99' },
+    { partNumber: '5240372525', name: 'Piston Crown', series: [], category: 'Pistons and liners', stockStatus: '按发动机出厂编号与活塞顶零件号报价', replacementFor: [], hsCode: '8409.99' },
+    { partNumber: '5240300215', name: 'Piston Skirt', series: [], category: 'Pistons and liners', stockStatus: '与配套活塞顶一并报价——可选套件', replacementFor: [], hsCode: '8409.99' },
     { partNumber: '0120370618', name: 'Oil Control Ring', series: [], category: 'Pistons and liners', stockStatus: 'Standard ring set — commonly in stock', replacementFor: [], hsCode: '8409.99' },
-    { partNumber: '0120370819', name: 'Taper Face Compression Ring', series: [], category: 'Pistons and liners', stockStatus: 'Standard ring set item', replacementFor: [], hsCode: '8409.99' },
-    { partNumber: '0080375819', name: 'Rectangular Section Ring', series: [], category: 'Pistons and liners', stockStatus: 'Standard ring set item', replacementFor: [], hsCode: '8409.99' },
-    { partNumber: '5240383710', name: 'Conrod Bearing Upper Half', series: [], category: 'Bearings', stockStatus: 'Quoted by size grade (STD/0.25/0.50/0.75)', replacementFor: ['5240384110'], hsCode: '8483.30' },
-    { partNumber: '5240382711', name: 'Conrod Bearing Lower Half', series: [], category: 'Bearings', stockStatus: 'Quoted by size grade', replacementFor: ['5240384210'], hsCode: '8483.30' },
-    { partNumber: '5240380471', name: 'Conrod Bolt', series: ['MTU 4000'], category: 'Drive components', stockStatus: 'Commonly in stock — always replaced as a set', replacementFor: [], hsCode: '7318.15' },
-    { partNumber: '5240334901', name: 'Crankshaft Bearing Upper', series: [], category: 'Bearings', stockStatus: 'Quoted by size grade', replacementFor: ['5240336602'], hsCode: '8483.30' },
-    { partNumber: '5240335602', name: 'Crankshaft Bearing Lower', series: [], category: 'Bearings', stockStatus: 'Quoted by size grade', replacementFor: ['5240336702'], hsCode: '8483.30' },
-    { partNumber: '5240332730', name: 'Crankshaft Bearing Driving End', series: [], category: 'Bearings', stockStatus: 'Quoted by engine serial number', replacementFor: [], hsCode: '8483.30' },
-    { partNumber: '5240332630', name: 'Crankshaft Bearing Free End', series: [], category: 'Bearings', stockStatus: 'Quoted by engine serial number', replacementFor: [], hsCode: '8483.30' },
-    { partNumber: '5240530301', name: 'Inlet Valve', series: [], category: 'Valve train', stockStatus: 'Common overhaul item — standard grade in stock', replacementFor: ['X52404100226'], hsCode: '8409.91' },
-    { partNumber: '5240530305', name: 'Exhaust Valve', series: [], category: 'Valve train', stockStatus: 'Common overhaul item — standard grade in stock', replacementFor: ['5240530805', '5240530905'], hsCode: '8409.91' },
-    { partNumber: '5240530152', name: 'Valve Spring Inner', series: [], category: 'Valve train', stockStatus: 'Commonly in stock — kit pricing available', replacementFor: ['5240530122'], hsCode: '8409.91' },
-    { partNumber: '5240530120', name: 'Valve Spring Outer', series: ['MTU 4000'], category: 'Valve train', stockStatus: 'Commonly in stock — kit pricing available', replacementFor: [], hsCode: '8409.91' },
-    { partNumber: '0000534335', name: 'Valve Rotator', series: [], category: 'Valve train', stockStatus: 'Quoted per unit or full set', replacementFor: [], hsCode: '8409.91' },
-    { partNumber: '0000530926', name: 'Valve Collet', series: [], category: 'Valve train', stockStatus: 'Small part — commonly in stock', replacementFor: [], hsCode: '8409.91' },
-    { partNumber: '5240160069', name: 'Cylinder Head Bolt', series: [], category: 'Drive components', stockStatus: 'Always replaced as a set during overhaul', replacementFor: ['5249900701'], hsCode: '7318.15' },
-    { partNumber: '5240160153', name: 'Injector Sleeve', series: [], category: 'Fuel system', stockStatus: 'Checked by part number — replaced during injector service', replacementFor: [], hsCode: '8413.30' },
-    { partNumber: '5240500930', name: 'Push Rod', series: [], category: 'Valve train', stockStatus: 'Quoted per unit or set', replacementFor: ['X52405400013'], hsCode: '8409.91' },
+    { partNumber: '0120370819', name: 'Taper Face Compression Ring', series: [], category: 'Pistons and liners', stockStatus: '标准活塞环组件', replacementFor: [], hsCode: '8409.99' },
+    { partNumber: '0080375819', name: 'Rectangular Section Ring', series: [], category: 'Pistons and liners', stockStatus: '标准活塞环组件', replacementFor: [], hsCode: '8409.99' },
+    { partNumber: '5240383710', name: 'Conrod Bearing Upper Half', series: [], category: 'Bearings', stockStatus: '按尺寸等级报价（标准/0.25/0.50/0.75）', replacementFor: ['5240384110'], hsCode: '8483.30' },
+    { partNumber: '5240382711', name: 'Conrod Bearing Lower Half', series: [], category: 'Bearings', stockStatus: '按尺寸等级报价', replacementFor: ['5240384210'], hsCode: '8483.30' },
+    { partNumber: '5240380471', name: 'Conrod Bolt', series: ['MTU 4000'], category: 'Drive components', stockStatus: '常有库存——始终整组更换', replacementFor: [], hsCode: '7318.15' },
+    { partNumber: '5240334901', name: 'Crankshaft Bearing Upper', series: [], category: 'Bearings', stockStatus: '按尺寸等级报价', replacementFor: ['5240336602'], hsCode: '8483.30' },
+    { partNumber: '5240335602', name: 'Crankshaft Bearing Lower', series: [], category: 'Bearings', stockStatus: '按尺寸等级报价', replacementFor: ['5240336702'], hsCode: '8483.30' },
+    { partNumber: '5240332730', name: 'Crankshaft Bearing Driving End', series: [], category: 'Bearings', stockStatus: '按发动机出厂编号报价', replacementFor: [], hsCode: '8483.30' },
+    { partNumber: '5240332630', name: 'Crankshaft Bearing Free End', series: [], category: 'Bearings', stockStatus: '按发动机出厂编号报价', replacementFor: [], hsCode: '8483.30' },
+    { partNumber: '5240530301', name: 'Inlet Valve', series: [], category: 'Valve train', stockStatus: '常用大修件——标准等级有库存', replacementFor: ['X52404100226'], hsCode: '8409.91' },
+    { partNumber: '5240530305', name: 'Exhaust Valve', series: [], category: 'Valve train', stockStatus: '常用大修件——标准等级有库存', replacementFor: ['5240530805', '5240530905'], hsCode: '8409.91' },
+    { partNumber: '5240530152', name: 'Valve Spring Inner', series: [], category: 'Valve train', stockStatus: '常有库存——可报套件价', replacementFor: ['5240530122'], hsCode: '8409.91' },
+    { partNumber: '5240530120', name: 'Valve Spring Outer', series: ['MTU 4000'], category: 'Valve train', stockStatus: '常有库存——可报套件价', replacementFor: [], hsCode: '8409.91' },
+    { partNumber: '0000534335', name: 'Valve Rotator', series: [], category: 'Valve train', stockStatus: '按件或整组报价', replacementFor: [], hsCode: '8409.91' },
+    { partNumber: '0000530926', name: 'Valve Collet', series: [], category: 'Valve train', stockStatus: '小件——常有库存', replacementFor: [], hsCode: '8409.91' },
+    { partNumber: '5240160069', name: 'Cylinder Head Bolt', series: [], category: 'Drive components', stockStatus: '大修时始终整组更换', replacementFor: ['5249900701'], hsCode: '7318.15' },
+    { partNumber: '5240160153', name: 'Injector Sleeve', series: [], category: 'Fuel system', stockStatus: '按零件号核查——喷油器保养时更换', replacementFor: [], hsCode: '8413.30' },
+    { partNumber: '5240500930', name: 'Push Rod', series: [], category: 'Valve train', stockStatus: '按件或按组报价', replacementFor: ['X52405400013'], hsCode: '8409.91' },
     // ── MTU 4000 Turbocharger ──
-    { partNumber: '5110804420', name: 'Turbine Wheel', series: [], category: 'Turbocharging', stockStatus: 'Checked by turbocharger serial number — new and reman options', replacementFor: ['5110800220', '5110800420'], hsCode: '8414.90' },
-    { partNumber: '5110803201', name: 'Bearing Housing', series: [], category: 'Turbocharging', stockStatus: 'Quoted by turbo model and serial', replacementFor: [], hsCode: '8414.90' },
-    { partNumber: '5110850060', name: 'Piston Ring for Turbocharger', series: [], category: 'Turbocharging', stockStatus: 'Small part — commonly in stock', replacementFor: ['5090850060'], hsCode: '8414.90' },
+    { partNumber: '5110804420', name: 'Turbine Wheel', series: [], category: 'Turbocharging', stockStatus: '按增压器出厂编号核查——新件与再制造件可选', replacementFor: ['5110800220', '5110800420'], hsCode: '8414.90' },
+    { partNumber: '5110803201', name: 'Bearing Housing', series: [], category: 'Turbocharging', stockStatus: '按增压器型号与出厂编号报价', replacementFor: [], hsCode: '8414.90' },
+    { partNumber: '5110850060', name: 'Piston Ring for Turbocharger', series: [], category: 'Turbocharging', stockStatus: '小件——常有库存', replacementFor: ['5090850060'], hsCode: '8414.90' },
     // ── MTU 4000 Fuel System ──
-    { partNumber: 'EX52407500064', name: 'Injector', series: [], category: 'Fuel system', stockStatus: 'Checked by injector part number and engine serial — new and reman', replacementFor: [], hsCode: '8413.30', applicableEngines: '12V/16V 4000 M70, M90, M93 — common rail variants', commonFailureScenarios: ['Uneven fuel delivery causing cylinder imbalance', 'Nozzle tip carbon fouling at high hours', 'Internal leakage raising return-flow volume'], orderingNotes: 'Send injector serial number for reman exchange. New OEM and OEM-alternative both available.' },
-    { partNumber: 'X57508300091', name: 'Fuel Filter Spin-On', series: [], category: 'Filters', stockStatus: 'Common consumable — typically in stock', replacementFor: [], hsCode: '8421.23' },
-    { partNumber: '5240160153', name: 'Tube Injector', series: [], category: 'Fuel system', stockStatus: 'Quoted per unit', replacementFor: [], hsCode: '8413.30' },
+    { partNumber: 'EX52407500064', name: 'Injector', series: [], category: 'Fuel system', stockStatus: '按喷油器零件号与发动机出厂编号核查——新件与再制造件', replacementFor: [], hsCode: '8413.30', applicableEngines: '12V/16V 4000 M70, M90, M93 — common rail variants', commonFailureScenarios: ['燃油供给不均导致缸间不均衡', '高工时后喷嘴头部积碳', '内部泄漏使回油量升高'], orderingNotes: '再制造置换请提供喷油器出厂编号。新原厂件与原厂配套替代件均可提供。' },
+    { partNumber: 'X57508300091', name: 'Fuel Filter Spin-On', series: [], category: 'Filters', stockStatus: '常用耗材——通常有库存', replacementFor: [], hsCode: '8421.23' },
+    { partNumber: '5240160153', name: 'Tube Injector', series: [], category: 'Fuel system', stockStatus: '按件报价', replacementFor: [], hsCode: '8413.30' },
     // ── MTU 4000 Cooling ──
-    { partNumber: '5062000601', name: 'Coolant Pump', series: [], category: 'Cooling system', stockStatus: 'Checked by engine application — new and reman options', replacementFor: [], hsCode: '8413.30' },
-    { partNumber: '5582040406', name: 'Impeller', series: [], category: 'Cooling system', stockStatus: 'Common service item — typically in stock', replacementFor: ['5802040806'], hsCode: '8413.30' },
-    { partNumber: '5240980281', name: 'Hose', series: [], category: 'Cooling system', stockStatus: 'Quoted by part number and engine installation', replacementFor: [], hsCode: '4009.31' },
+    { partNumber: '5062000601', name: 'Coolant Pump', series: [], category: 'Cooling system', stockStatus: '按发动机应用核查——新件与再制造件可选', replacementFor: [], hsCode: '8413.30' },
+    { partNumber: '5582040406', name: 'Impeller', series: [], category: 'Cooling system', stockStatus: '常用保养件——通常有库存', replacementFor: ['5802040806'], hsCode: '8413.30' },
+    { partNumber: '5240980281', name: 'Hose', series: [], category: 'Cooling system', stockStatus: '按零件号与发动机安装形式报价', replacementFor: [], hsCode: '4009.31' },
     // ── MTU 4000 Filters ──
-    { partNumber: '5241840501', name: 'Lube Oil Full Flow Filter', series: [], category: 'Filters', stockStatus: 'Common consumable — bulk quantities available', replacementFor: [], hsCode: '8421.23' },
-    { partNumber: '0031845201', name: 'Oil Filter Spin-On', series: [], category: 'Filters', stockStatus: 'High-volume consumable — typically in stock', replacementFor: ['0031845301'], hsCode: '8421.23' },
-    { partNumber: '0020922801', name: 'Fuel Filter Spin-On', series: [], category: 'Filters', stockStatus: 'High-volume consumable — typically in stock', replacementFor: ['0020921901'], hsCode: '8421.23' },
+    { partNumber: '5241840501', name: 'Lube Oil Full Flow Filter', series: [], category: 'Filters', stockStatus: '常用耗材——可批量供货', replacementFor: [], hsCode: '8421.23' },
+    { partNumber: '0031845201', name: 'Oil Filter Spin-On', series: [], category: 'Filters', stockStatus: '高频耗材——通常有库存', replacementFor: ['0031845301'], hsCode: '8421.23' },
+    { partNumber: '0020922801', name: 'Fuel Filter Spin-On', series: [], category: 'Filters', stockStatus: '高频耗材——通常有库存', replacementFor: ['0020921901'], hsCode: '8421.23' },
     // ── MTU 4000 Seals ──
-    { partNumber: '5241420780', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item — typically in stock', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '5241870380', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '5241880180', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: 'X52404200052', name: 'Seal Ring', series: ['MTU 4000'], category: 'Gaskets and seals', stockStatus: 'Small consumable — typically in stock', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '5241420780', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件——通常有库存', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '5241870380', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '5241880180', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: 'X52404200052', name: 'Seal Ring', series: ['MTU 4000'], category: 'Gaskets and seals', stockStatus: '小型耗材——通常有库存', replacementFor: [], hsCode: '8484.10' },
 
     // ── MTU 2000 Overhaul Parts ──
-    { partNumber: '5410160920', name: 'Cylinder Head Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item — typically in stock', replacementFor: ['5500160420'], hsCode: '8484.10' },
-    { partNumber: '5310160021', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '5419970645', name: 'Sealing Ring', series: [], category: 'Gaskets and seals', stockStatus: 'Small consumable — typically in stock', replacementFor: ['5419970545'], hsCode: '8484.10' },
-    { partNumber: '5501871280', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '5220980080', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '5411420180', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '5410530020', name: 'Valve Spring', series: [], category: 'Valve train', stockStatus: 'Common overhaul item — kit pricing available', replacementFor: ['5500530020'], hsCode: '8409.91' },
-    { partNumber: '5500530401', name: 'Inlet Valve', series: [], category: 'Valve train', stockStatus: 'Common overhaul item — standard grade in stock', replacementFor: [], hsCode: '8409.91' },
-    { partNumber: '5410500227', name: 'Exhaust Valve', series: ['MTU 396'], category: 'Valve train', stockStatus: 'Common overhaul item — standard grade in stock', replacementFor: ['5500500227', '4420500227'], hsCode: '8409.91' },
-    { partNumber: '5410540505', name: 'Push Rod', series: [], category: 'Valve train', stockStatus: 'Quoted per unit or set', replacementFor: [], hsCode: '8409.91' },
-    { partNumber: '5419900304', name: 'Rocker Shaft Bolt', series: [], category: 'Drive components', stockStatus: 'Quoted as set for cylinder-head work', replacementFor: [], hsCode: '7318.15' },
+    { partNumber: '5410160920', name: 'Cylinder Head Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件——通常有库存', replacementFor: ['5500160420'], hsCode: '8484.10' },
+    { partNumber: '5310160021', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '5419970645', name: 'Sealing Ring', series: [], category: 'Gaskets and seals', stockStatus: '小型耗材——通常有库存', replacementFor: ['5419970545'], hsCode: '8484.10' },
+    { partNumber: '5501871280', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '5220980080', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '5411420180', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '5410530020', name: 'Valve Spring', series: [], category: 'Valve train', stockStatus: '常用大修件——可报套件价', replacementFor: ['5500530020'], hsCode: '8409.91' },
+    { partNumber: '5500530401', name: 'Inlet Valve', series: [], category: 'Valve train', stockStatus: '常用大修件——标准等级有库存', replacementFor: [], hsCode: '8409.91' },
+    { partNumber: '5410500227', name: 'Exhaust Valve', series: ['MTU 396'], category: 'Valve train', stockStatus: '常用大修件——标准等级有库存', replacementFor: ['5500500227', '4420500227'], hsCode: '8409.91' },
+    { partNumber: '5410540505', name: 'Push Rod', series: [], category: 'Valve train', stockStatus: '按件或按组报价', replacementFor: [], hsCode: '8409.91' },
+    { partNumber: '5419900304', name: 'Rocker Shaft Bolt', series: [], category: 'Drive components', stockStatus: '缸盖作业按组报价', replacementFor: [], hsCode: '7318.15' },
     // ── MTU 2000 Fuel System ──
-    { partNumber: 'X53507500012', name: 'Injector', series: [], category: 'Fuel system', stockStatus: 'Checked by injector PN and engine serial — new and reman options', replacementFor: [], hsCode: '8413.30', applicableEngines: '8V/12V/16V/18V 2000 M84, M91, M93, M94, M96', commonFailureScenarios: ['Nozzle coking from low-load operation', 'Injector body internal wear at 12,000-15,000 hours', 'Sealing surface leakage causing compression loss'], orderingNotes: 'Reman exchange program available — core return required. New OEM-alternative injectors also quoted. Send engine serial and injector part number.' },
-    { partNumber: 'X53508200001', name: 'Low Pressure Fuel Pump', series: [], category: 'Fuel system', stockStatus: 'Checked by pump PN — new and reman options', replacementFor: [], hsCode: '8413.30' },
-    { partNumber: 'E0060704101', name: 'High Pressure Pump', series: [], category: 'Fuel system', stockStatus: 'Quoted by engine serial — OEM and alternative options', replacementFor: [], hsCode: '8413.30' },
-    { partNumber: '5360900250', name: 'Fuel Delivery Pump', series: [], category: 'Fuel system', stockStatus: 'Checked by engine application', replacementFor: [], hsCode: '8413.30' },
-    { partNumber: '5360702032', name: 'Fuel Line', series: [], category: 'Fuel system', stockStatus: 'Quoted by part number and engine installation', replacementFor: [], hsCode: '8413.30' },
-    { partNumber: '5501801015', name: 'Pressure Relief Valve', series: [], category: 'Fuel system', stockStatus: 'Quoted per unit', replacementFor: ['5501801115'], hsCode: '8481.40' },
+    { partNumber: 'X53507500012', name: 'Injector', series: [], category: 'Fuel system', stockStatus: '按喷油器零件号与发动机出厂编号核查——新件与再制造件可选', replacementFor: [], hsCode: '8413.30', applicableEngines: '8V/12V/16V/18V 2000 M84, M91, M93, M94, M96', commonFailureScenarios: ['低负荷运行导致喷嘴结焦', '喷油器体内磨损（12,000–15,000 小时）', '密封面泄漏导致压缩损失'], orderingNotes: '可走再制造置换——需退回旧芯。新原厂配套替代喷油器亦可报价。请提供发动机出厂编号与喷油器零件号。' },
+    { partNumber: 'X53508200001', name: 'Low Pressure Fuel Pump', series: [], category: 'Fuel system', stockStatus: '按泵零件号核查——新件与再制造件可选', replacementFor: [], hsCode: '8413.30' },
+    { partNumber: 'E0060704101', name: 'High Pressure Pump', series: [], category: 'Fuel system', stockStatus: '按发动机出厂编号报价——原厂与替代件可选', replacementFor: [], hsCode: '8413.30' },
+    { partNumber: '5360900250', name: 'Fuel Delivery Pump', series: [], category: 'Fuel system', stockStatus: '按发动机应用核查', replacementFor: [], hsCode: '8413.30' },
+    { partNumber: '5360702032', name: 'Fuel Line', series: [], category: 'Fuel system', stockStatus: '按零件号与发动机安装形式报价', replacementFor: [], hsCode: '8413.30' },
+    { partNumber: '5501801015', name: 'Pressure Relief Valve', series: [], category: 'Fuel system', stockStatus: '按件报价', replacementFor: ['5501801115'], hsCode: '8481.40' },
     // ── MTU 2000 Injector Parts ──
-    { partNumber: '0030176421', name: 'Nozzle Holder with Nozzle', series: [], category: 'Fuel system', stockStatus: 'Checked by injector PN — new and reman options', replacementFor: ['0040175021'], hsCode: '8413.30' },
-    { partNumber: '0010175412', name: 'Nozzle', series: [], category: 'Fuel system', stockStatus: 'Common injector service part', replacementFor: [], hsCode: '8413.30' },
+    { partNumber: '0030176421', name: 'Nozzle Holder with Nozzle', series: [], category: 'Fuel system', stockStatus: '按喷油器零件号核查——新件与再制造件可选', replacementFor: ['0040175021'], hsCode: '8413.30' },
+    { partNumber: '0010175412', name: 'Nozzle', series: [], category: 'Fuel system', stockStatus: '喷油器常用保养件', replacementFor: [], hsCode: '8413.30' },
     // ── MTU 2000 Cooling ──
-    { partNumber: 'X00022524', name: 'Impeller', series: [], category: 'Cooling system', stockStatus: 'Common service item — typically in stock', replacementFor: ['X00008653'], hsCode: '8413.30' },
-    { partNumber: '5502003201', name: 'Seawater Pump', series: [], category: 'Cooling system', stockStatus: 'Checked by pump model — new and reman options', replacementFor: [], hsCode: '8413.70' },
-    { partNumber: '5502002002', name: 'Drive Shaft', series: [], category: 'Drive components', stockStatus: 'Quoted by part number', replacementFor: [], hsCode: '8483.10' },
-    { partNumber: '5502040906', name: 'Impeller', series: [], category: 'Cooling system', stockStatus: 'Common service item — typically in stock', replacementFor: [], hsCode: '8413.30' },
-    { partNumber: '5502030060', name: 'Sight Glass', series: [], category: 'Cooling system', stockStatus: 'Small part — commonly in stock', replacementFor: [], hsCode: '7017.90' },
+    { partNumber: 'X00022524', name: 'Impeller', series: [], category: 'Cooling system', stockStatus: '常用保养件——通常有库存', replacementFor: ['X00008653'], hsCode: '8413.30' },
+    { partNumber: '5502003201', name: 'Seawater Pump', series: [], category: 'Cooling system', stockStatus: '按泵型号核查——新件与再制造件可选', replacementFor: [], hsCode: '8413.70' },
+    { partNumber: '5502002002', name: 'Drive Shaft', series: [], category: 'Drive components', stockStatus: '按零件号报价', replacementFor: [], hsCode: '8483.10' },
+    { partNumber: '5502040906', name: 'Impeller', series: [], category: 'Cooling system', stockStatus: '常用保养件——通常有库存', replacementFor: [], hsCode: '8413.30' },
+    { partNumber: '5502030060', name: 'Sight Glass', series: [], category: 'Cooling system', stockStatus: '小件——常有库存', replacementFor: [], hsCode: '7017.90' },
     // ── MTU 2000 Filters ──
-    { partNumber: '5501800016', name: 'Oil Filter Element', series: ['MTU 396'], category: 'Filters', stockStatus: 'Availability checked per inquiry', replacementFor: [], weightKg: '0.658 KG', hsCode: '84212300' },
-    { partNumber: '0010928801', name: 'Fuel Prefilter', series: [], category: 'Filters', stockStatus: 'Common consumable — typically in stock', replacementFor: [], hsCode: '8421.23' },
-    { partNumber: '0030944304', name: 'Air Filter', series: [], category: 'Filters', stockStatus: 'Common consumable — bulk quantities available', replacementFor: ['0030947404', '0030948104'], hsCode: '8421.31' },
-    { partNumber: '0180944502', name: 'Prefilter', series: [], category: 'Filters', stockStatus: 'Common consumable item', replacementFor: [], hsCode: '8421.31' },
-    { partNumber: '0170942502', name: 'Air Filter', series: [], category: 'Filters', stockStatus: 'Common consumable — typically in stock', replacementFor: [], hsCode: '8421.31' },
-    { partNumber: '5360900001', name: 'Air Filter', series: [], category: 'Filters', stockStatus: 'Common consumable item', replacementFor: [], hsCode: '8421.31' },
+    { partNumber: '5501800016', name: 'Oil Filter Element', series: ['MTU 396'], category: 'Filters', stockStatus: '按询价逐项核查供货', replacementFor: [], weightKg: '0.658 KG', hsCode: '84212300' },
+    { partNumber: '0010928801', name: 'Fuel Prefilter', series: [], category: 'Filters', stockStatus: '常用耗材——通常有库存', replacementFor: [], hsCode: '8421.23' },
+    { partNumber: '0030944304', name: 'Air Filter', series: [], category: 'Filters', stockStatus: '常用耗材——可批量供货', replacementFor: ['0030947404', '0030948104'], hsCode: '8421.31' },
+    { partNumber: '0180944502', name: 'Prefilter', series: [], category: 'Filters', stockStatus: '常用耗材', replacementFor: [], hsCode: '8421.31' },
+    { partNumber: '0170942502', name: 'Air Filter', series: [], category: 'Filters', stockStatus: '常用耗材——通常有库存', replacementFor: [], hsCode: '8421.31' },
+    { partNumber: '5360900001', name: 'Air Filter', series: [], category: 'Filters', stockStatus: '常用耗材', replacementFor: [], hsCode: '8421.31' },
     // ── MTU 2000 Bearings ──
-    { partNumber: '5500511710', name: 'Camshaft Bearing', series: [], category: 'Bearings', stockStatus: 'Quoted by size grade', replacementFor: [], hsCode: '8483.30' },
-    { partNumber: '4420302240', name: 'Main Bearing', series: [], category: 'Bearings', stockStatus: 'Quoted by size grade (STD/0.25/0.50)', replacementFor: [], hsCode: '8483.30' },
-    { partNumber: '5700510150', name: 'Bushing', series: [], category: 'Bearings', stockStatus: 'Quoted per unit', replacementFor: ['5500550550', '5240550550'], hsCode: '8483.30' },
+    { partNumber: '5500511710', name: 'Camshaft Bearing', series: [], category: 'Bearings', stockStatus: '按尺寸等级报价', replacementFor: [], hsCode: '8483.30' },
+    { partNumber: '4420302240', name: 'Main Bearing', series: [], category: 'Bearings', stockStatus: '按尺寸等级报价（标准/0.25/0.50）', replacementFor: [], hsCode: '8483.30' },
+    { partNumber: '5700510150', name: 'Bushing', series: [], category: 'Bearings', stockStatus: '按件报价', replacementFor: ['5500550550', '5240550550'], hsCode: '8483.30' },
     // ── MTU 2000 Lubrication ──
-    { partNumber: '5500100061', name: 'Oil Separator', series: [], category: 'Lubrication', stockStatus: 'Quoted per unit — OEM and alternative options', replacementFor: ['5410100163'], hsCode: '8421.29' },
-    { partNumber: '4221880001', name: 'Oil Cooler', series: [], category: 'Lubrication', stockStatus: 'Checked by engine model — new and reman options', replacementFor: ['0021882301'], hsCode: '8419.50' },
-    { partNumber: '4231801101', name: 'Oil Pump', series: [], category: 'Lubrication', stockStatus: 'Checked by pump PN — new and reman options', replacementFor: [], hsCode: '8413.30' },
-    { partNumber: '5361800515', name: 'Oil Pressure Relief Valve', series: [], category: 'Lubrication', stockStatus: 'Quoted per unit', replacementFor: [], hsCode: '8481.40' },
+    { partNumber: '5500100061', name: 'Oil Separator', series: [], category: 'Lubrication', stockStatus: '按件报价——原厂与替代件可选', replacementFor: ['5410100163'], hsCode: '8421.29' },
+    { partNumber: '4221880001', name: 'Oil Cooler', series: [], category: 'Lubrication', stockStatus: '按发动机型号核查——新件与再制造件可选', replacementFor: ['0021882301'], hsCode: '8419.50' },
+    { partNumber: '4231801101', name: 'Oil Pump', series: [], category: 'Lubrication', stockStatus: '按泵零件号核查——新件与再制造件可选', replacementFor: [], hsCode: '8413.30' },
+    { partNumber: '5361800515', name: 'Oil Pressure Relief Valve', series: [], category: 'Lubrication', stockStatus: '按件报价', replacementFor: [], hsCode: '8481.40' },
     // ── MTU 2000 Sensors ──
-    { partNumber: '0005358233', name: 'Speed Sensor', series: [], category: 'Sensors and electrical', stockStatus: 'Common sensor — typically in stock', replacementFor: ['0005357933', '0005357633'], hsCode: '9032.89' },
-    { partNumber: '0035352531', name: 'Pressure Sensor', series: [], category: 'Sensors and electrical', stockStatus: 'Common sensor — typically in stock', replacementFor: ['0035352731', '0035351731', '0035352931'], hsCode: '9032.89' },
-    { partNumber: '0005356430', name: 'Temperature Sensor', series: [], category: 'Sensors and electrical', stockStatus: 'Common sensor — typically in stock', replacementFor: [], hsCode: '9032.89' },
-    { partNumber: '0005355103', name: 'Level Monitor', series: [], category: 'Sensors and electrical', stockStatus: 'Quoted by part number and connector type', replacementFor: ['0005355303'], hsCode: '9032.89' },
-    { partNumber: '5205304531', name: 'Pressure Sensor', series: ['MTU 4000'], category: 'Sensors and electrical', stockStatus: 'Common sensor — typically in stock', replacementFor: [], hsCode: '9032.89' },
-    { partNumber: '0045426917', name: 'Temperature Monitor', series: [], category: 'Sensors and electrical', stockStatus: 'Quoted by part number', replacementFor: [], hsCode: '9032.89' },
-    { partNumber: '0001536132', name: 'Pressure Monitor', series: [], category: 'Sensors and electrical', stockStatus: 'Quoted by part number', replacementFor: [], hsCode: '9032.89' },
-    { partNumber: '5205304131', name: 'Travel Sensor', series: [], category: 'Sensors and electrical', stockStatus: 'Quoted by engine application', replacementFor: [], hsCode: '9032.89' },
+    { partNumber: '0005358233', name: 'Speed Sensor', series: [], category: 'Sensors and electrical', stockStatus: '常用传感器——通常有库存', replacementFor: ['0005357933', '0005357633'], hsCode: '9032.89' },
+    { partNumber: '0035352531', name: 'Pressure Sensor', series: [], category: 'Sensors and electrical', stockStatus: '常用传感器——通常有库存', replacementFor: ['0035352731', '0035351731', '0035352931'], hsCode: '9032.89' },
+    { partNumber: '0005356430', name: 'Temperature Sensor', series: [], category: 'Sensors and electrical', stockStatus: '常用传感器——通常有库存', replacementFor: [], hsCode: '9032.89' },
+    { partNumber: '0005355103', name: 'Level Monitor', series: [], category: 'Sensors and electrical', stockStatus: '按零件号与接头类型报价', replacementFor: ['0005355303'], hsCode: '9032.89' },
+    { partNumber: '5205304531', name: 'Pressure Sensor', series: ['MTU 4000'], category: 'Sensors and electrical', stockStatus: '常用传感器——通常有库存', replacementFor: [], hsCode: '9032.89' },
+    { partNumber: '0045426917', name: 'Temperature Monitor', series: [], category: 'Sensors and electrical', stockStatus: '按零件号报价', replacementFor: [], hsCode: '9032.89' },
+    { partNumber: '0001536132', name: 'Pressure Monitor', series: [], category: 'Sensors and electrical', stockStatus: '按零件号报价', replacementFor: [], hsCode: '9032.89' },
+    { partNumber: '5205304131', name: 'Travel Sensor', series: [], category: 'Sensors and electrical', stockStatus: '按发动机应用报价', replacementFor: [], hsCode: '9032.89' },
     // ── MTU 2000 Turbocharger ──
-    { partNumber: '5310900337', name: 'Charge Air Line', series: [], category: 'Turbocharging', stockStatus: 'Quoted by part number and engine variant', replacementFor: [], hsCode: '8414.90' },
-    { partNumber: '5120850560', name: 'Piston Ring for Turbocharger', series: [], category: 'Turbocharging', stockStatus: 'Small part — commonly in stock', replacementFor: ['5100850060'], hsCode: '8414.90' },
-    { partNumber: '5361420025', name: 'Diffuser Exhaust', series: [], category: 'Turbocharging', stockStatus: 'Quoted by turbo model', replacementFor: [], hsCode: '8414.90' },
+    { partNumber: '5310900337', name: 'Charge Air Line', series: [], category: 'Turbocharging', stockStatus: '按零件号与发动机变型报价', replacementFor: [], hsCode: '8414.90' },
+    { partNumber: '5120850560', name: 'Piston Ring for Turbocharger', series: [], category: 'Turbocharging', stockStatus: '小件——常有库存', replacementFor: ['5100850060'], hsCode: '8414.90' },
+    { partNumber: '5361420025', name: 'Diffuser Exhaust', series: [], category: 'Turbocharging', stockStatus: '按增压器型号报价', replacementFor: [], hsCode: '8414.90' },
     // ── MTU 2000 Cylinder Head ──
-    { partNumber: '5610105420', name: 'Cylinder Head', series: [], category: 'Cylinder heads', stockStatus: 'Quoted by engine variant — OEM and alternative options', replacementFor: [], hsCode: '8409.91' },
-    { partNumber: '5500100330', name: 'Cylinder Head Cover', series: [], category: 'Cylinder heads', stockStatus: 'Quoted by engine variant', replacementFor: ['5500160405'], hsCode: '8409.91' },
-    { partNumber: '5500530232', name: 'Valve Seat Insert Exhaust', series: [], category: 'Valve train', stockStatus: 'Quoted by size grade', replacementFor: [], hsCode: '8409.91' },
-    { partNumber: '5500531231', name: 'Valve Seat Insert Inlet', series: [], category: 'Valve train', stockStatus: 'Quoted by size grade', replacementFor: [], hsCode: '8409.91' },
-    { partNumber: '5500500225', name: 'Roller Tappet', series: [], category: 'Valve train', stockStatus: 'Quoted per unit or set', replacementFor: [], hsCode: '8409.91' },
-    { partNumber: '4760500025', name: 'Tappet', series: [], category: 'Valve train', stockStatus: 'Quoted per unit', replacementFor: [], hsCode: '8409.91' },
-    { partNumber: '5500500333', name: 'Rocker Arm Inlet', series: [], category: 'Valve train', stockStatus: 'Quoted per unit', replacementFor: [], hsCode: '8409.91' },
-    { partNumber: '5500500334', name: 'Rocker Arm Exhaust', series: [], category: 'Valve train', stockStatus: 'Quoted per unit', replacementFor: [], hsCode: '8409.91' },
+    { partNumber: '5610105420', name: 'Cylinder Head', series: [], category: 'Cylinder heads', stockStatus: '按发动机变型报价——原厂与替代件可选', replacementFor: [], hsCode: '8409.91' },
+    { partNumber: '5500100330', name: 'Cylinder Head Cover', series: [], category: 'Cylinder heads', stockStatus: '按发动机变型报价', replacementFor: ['5500160405'], hsCode: '8409.91' },
+    { partNumber: '5500530232', name: 'Valve Seat Insert Exhaust', series: [], category: 'Valve train', stockStatus: '按尺寸等级报价', replacementFor: [], hsCode: '8409.91' },
+    { partNumber: '5500531231', name: 'Valve Seat Insert Inlet', series: [], category: 'Valve train', stockStatus: '按尺寸等级报价', replacementFor: [], hsCode: '8409.91' },
+    { partNumber: '5500500225', name: 'Roller Tappet', series: [], category: 'Valve train', stockStatus: '按件或按组报价', replacementFor: [], hsCode: '8409.91' },
+    { partNumber: '4760500025', name: 'Tappet', series: [], category: 'Valve train', stockStatus: '按件报价', replacementFor: [], hsCode: '8409.91' },
+    { partNumber: '5500500333', name: 'Rocker Arm Inlet', series: [], category: 'Valve train', stockStatus: '按件报价', replacementFor: [], hsCode: '8409.91' },
+    { partNumber: '5500500334', name: 'Rocker Arm Exhaust', series: [], category: 'Valve train', stockStatus: '按件报价', replacementFor: [], hsCode: '8409.91' },
 
     // ── MTU 396 Overhaul Parts ──
-    { partNumber: '5320110110', name: 'Cylinder Liner', series: [], category: 'Pistons and liners', stockStatus: 'Quoted by size grade — standard grade commonly available', replacementFor: [], hsCode: '8409.99' },
-    { partNumber: '5320100130', name: 'Cylinder Head Cover', series: ['MTU 396'], category: 'Cylinder heads', stockStatus: 'Quoted by engine variant', replacementFor: [], hsCode: '8409.91' },
-    { partNumber: '5410500227', name: 'Exhaust Valve', series: ['MTU 396'], category: 'Valve train', stockStatus: 'Common overhaul item — standard grade in stock', replacementFor: ['5110200278'], hsCode: '8409.91' },
-    { partNumber: '4570530001', name: 'Inlet Valve', series: ['MTU 396'], category: 'Valve train', stockStatus: 'Common overhaul item — standard grade in stock', replacementFor: [], hsCode: '8409.91' },
-    { partNumber: '5410370220', name: 'Piston Pin', series: [], category: 'Pistons and liners', stockStatus: 'Quoted by size grade', replacementFor: [], hsCode: '8409.99' },
-    { partNumber: '5410380250', name: 'Conrod Bushing', series: [], category: 'Pistons and liners', stockStatus: 'Quoted by size grade', replacementFor: [], hsCode: '8409.99' },
-    { partNumber: '5320530020', name: 'Valve Spring', series: ['MTU 396'], category: 'Valve train', stockStatus: 'Common overhaul item — kit pricing available', replacementFor: [], hsCode: '8409.91' },
-    { partNumber: '5410530225', name: 'Valve Spring Retainer', series: [], category: 'Valve train', stockStatus: 'Quoted per unit or set', replacementFor: [], hsCode: '8409.91' },
-    { partNumber: '5410530226', name: 'Valve Collet', series: [], category: 'Valve train', stockStatus: 'Small part — commonly in stock', replacementFor: [], hsCode: '8409.91' },
-    { partNumber: '5410530532', name: 'Valve Seat Insert Exhaust', series: [], category: 'Valve train', stockStatus: 'Quoted by size grade', replacementFor: [], hsCode: '8409.91' },
-    { partNumber: '5410532131', name: 'Valve Seat Insert Inlet', series: [], category: 'Valve train', stockStatus: 'Quoted by size grade', replacementFor: [], hsCode: '8409.91' },
-    { partNumber: '5410532730', name: 'Valve Guide', series: [], category: 'Valve train', stockStatus: 'Quoted per unit or set', replacementFor: [], hsCode: '8409.91' },
+    { partNumber: '5320110110', name: 'Cylinder Liner', series: [], category: 'Pistons and liners', stockStatus: '按尺寸等级报价——标准等级常供', replacementFor: [], hsCode: '8409.99' },
+    { partNumber: '5320100130', name: 'Cylinder Head Cover', series: ['MTU 396'], category: 'Cylinder heads', stockStatus: '按发动机变型报价', replacementFor: [], hsCode: '8409.91' },
+    { partNumber: '5410500227', name: 'Exhaust Valve', series: ['MTU 396'], category: 'Valve train', stockStatus: '常用大修件——标准等级有库存', replacementFor: ['5110200278'], hsCode: '8409.91' },
+    { partNumber: '4570530001', name: 'Inlet Valve', series: ['MTU 396'], category: 'Valve train', stockStatus: '常用大修件——标准等级有库存', replacementFor: [], hsCode: '8409.91' },
+    { partNumber: '5410370220', name: 'Piston Pin', series: [], category: 'Pistons and liners', stockStatus: '按尺寸等级报价', replacementFor: [], hsCode: '8409.99' },
+    { partNumber: '5410380250', name: 'Conrod Bushing', series: [], category: 'Pistons and liners', stockStatus: '按尺寸等级报价', replacementFor: [], hsCode: '8409.99' },
+    { partNumber: '5320530020', name: 'Valve Spring', series: ['MTU 396'], category: 'Valve train', stockStatus: '常用大修件——可报套件价', replacementFor: [], hsCode: '8409.91' },
+    { partNumber: '5410530225', name: 'Valve Spring Retainer', series: [], category: 'Valve train', stockStatus: '按件或按组报价', replacementFor: [], hsCode: '8409.91' },
+    { partNumber: '5410530226', name: 'Valve Collet', series: [], category: 'Valve train', stockStatus: '小件——常有库存', replacementFor: [], hsCode: '8409.91' },
+    { partNumber: '5410530532', name: 'Valve Seat Insert Exhaust', series: [], category: 'Valve train', stockStatus: '按尺寸等级报价', replacementFor: [], hsCode: '8409.91' },
+    { partNumber: '5410532131', name: 'Valve Seat Insert Inlet', series: [], category: 'Valve train', stockStatus: '按尺寸等级报价', replacementFor: [], hsCode: '8409.91' },
+    { partNumber: '5410532730', name: 'Valve Guide', series: [], category: 'Valve train', stockStatus: '按件或按组报价', replacementFor: [], hsCode: '8409.91' },
     // ── MTU 396 Bearings ──
-    { partNumber: '5410330605', name: 'Crankshaft Bearing Size 0-0', series: [], category: 'Bearings', stockStatus: 'Quoted by size grade', replacementFor: ['5410337101'], hsCode: '8483.30' },
-    { partNumber: '5090200512', name: 'Thrust Bearing', series: [], category: 'Bearings', stockStatus: 'Checked by engine serial', replacementFor: ['5110200412'], hsCode: '8483.30' },
-    { partNumber: '5110252210', name: 'Bearing', series: [], category: 'Bearings', stockStatus: 'Quoted by size grade', replacementFor: [], hsCode: '8483.30' },
-    { partNumber: '5370550050', name: 'Bushing', series: [], category: 'Bearings', stockStatus: 'Quoted per unit', replacementFor: [], hsCode: '8483.30' },
+    { partNumber: '5410330605', name: 'Crankshaft Bearing Size 0-0', series: [], category: 'Bearings', stockStatus: '按尺寸等级报价', replacementFor: ['5410337101'], hsCode: '8483.30' },
+    { partNumber: '5090200512', name: 'Thrust Bearing', series: [], category: 'Bearings', stockStatus: '按发动机出厂编号核查', replacementFor: ['5110200412'], hsCode: '8483.30' },
+    { partNumber: '5110252210', name: 'Bearing', series: [], category: 'Bearings', stockStatus: '按尺寸等级报价', replacementFor: [], hsCode: '8483.30' },
+    { partNumber: '5370550050', name: 'Bushing', series: [], category: 'Bearings', stockStatus: '按件报价', replacementFor: [], hsCode: '8483.30' },
     // ── MTU 396 Lubrication ──
-    { partNumber: '5410100163', name: 'Oil Separator', series: ['MTU 396'], category: 'Lubrication', stockStatus: 'Quoted per unit — OEM and alternative options', replacementFor: [], hsCode: '8421.29' },
-    { partNumber: '5321800001', name: 'Oil Pump', series: [], category: 'Lubrication', stockStatus: 'Checked by pump PN — new and reman options', replacementFor: [], hsCode: '8413.30' },
-    { partNumber: '5321800143', name: 'Oil Spray Nozzle', series: [], category: 'Lubrication', stockStatus: 'Small part — commonly in stock', replacementFor: [], hsCode: '8409.99' },
+    { partNumber: '5410100163', name: 'Oil Separator', series: ['MTU 396'], category: 'Lubrication', stockStatus: '按件报价——原厂与替代件可选', replacementFor: [], hsCode: '8421.29' },
+    { partNumber: '5321800001', name: 'Oil Pump', series: [], category: 'Lubrication', stockStatus: '按泵零件号核查——新件与再制造件可选', replacementFor: [], hsCode: '8413.30' },
+    { partNumber: '5321800143', name: 'Oil Spray Nozzle', series: [], category: 'Lubrication', stockStatus: '小件——常有库存', replacementFor: [], hsCode: '8409.99' },
     // ── MTU 396 Fuel ──
-    { partNumber: '5320700246', name: 'Relief Valve', series: ['MTU 396'], category: 'Fuel system', stockStatus: 'Quoted per unit', replacementFor: [], hsCode: '8481.40' },
-    { partNumber: '5410180233', name: 'Diaphragm for Oil Separator', series: [], category: 'Gaskets and seals', stockStatus: 'Small consumable — typically in stock', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '5320700246', name: 'Relief Valve', series: ['MTU 396'], category: 'Fuel system', stockStatus: '按件报价', replacementFor: [], hsCode: '8481.40' },
+    { partNumber: '5410180233', name: 'Diaphragm for Oil Separator', series: [], category: 'Gaskets and seals', stockStatus: '小型耗材——通常有库存', replacementFor: [], hsCode: '8484.10' },
     // ── MTU 396 Filters ──
-    { partNumber: '5320900001', name: 'Air Filter', series: [], category: 'Filters', stockStatus: 'Common consumable — typically in stock', replacementFor: [], hsCode: '8421.31' },
-    { partNumber: '0000921705', name: 'Filter Element', series: [], category: 'Filters', stockStatus: 'Common consumable — bulk quantities available', replacementFor: [], hsCode: '8421.23' },
+    { partNumber: '5320900001', name: 'Air Filter', series: [], category: 'Filters', stockStatus: '常用耗材——通常有库存', replacementFor: [], hsCode: '8421.31' },
+    { partNumber: '0000921705', name: 'Filter Element', series: [], category: 'Filters', stockStatus: '常用耗材——可批量供货', replacementFor: [], hsCode: '8421.23' },
     // ── MTU 396 Cooling ──
-    { partNumber: '5592010307', name: 'Impeller', series: [], category: 'Cooling system', stockStatus: 'Common service item — typically in stock', replacementFor: [], hsCode: '8413.30' },
-    { partNumber: '5110812603', name: 'Heat Shield', series: [], category: 'Turbocharging', stockStatus: 'Quoted by turbo model', replacementFor: ['5110820226', '5120820226'], hsCode: '8414.90' },
+    { partNumber: '5592010307', name: 'Impeller', series: [], category: 'Cooling system', stockStatus: '常用保养件——通常有库存', replacementFor: [], hsCode: '8413.30' },
+    { partNumber: '5110812603', name: 'Heat Shield', series: [], category: 'Turbocharging', stockStatus: '按增压器型号报价', replacementFor: ['5110820226', '5120820226'], hsCode: '8414.90' },
     // ── MTU 396 Seals / Gaskets ──
-    { partNumber: '5532031580', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item — typically in stock', replacementFor: ['5532030080'], hsCode: '8484.10' },
-    { partNumber: '5372030880', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '5320160221', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '5320980080', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '5320140022', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '5550630180', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item — typically in stock', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '4571410080', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '0029977940', name: 'Sealing Ring', series: [], category: 'Gaskets and seals', stockStatus: 'Small consumable — bulk quantities available', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '0000170660', name: 'Ce Ring', series: [], category: 'Gaskets and seals', stockStatus: 'Small consumable — typically in stock', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '5532031580', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件——通常有库存', replacementFor: ['5532030080'], hsCode: '8484.10' },
+    { partNumber: '5372030880', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '5320160221', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '5320980080', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '5320140022', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '5550630180', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件——通常有库存', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '4571410080', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '0029977940', name: 'Sealing Ring', series: [], category: 'Gaskets and seals', stockStatus: '小型耗材——可批量供货', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '0000170660', name: 'Ce Ring', series: [], category: 'Gaskets and seals', stockStatus: '小型耗材——通常有库存', replacementFor: [], hsCode: '8484.10' },
     // ── MTU 396 Sensors ──
-    { partNumber: '0005353960', name: 'Thermocouple', series: [], category: 'Sensors and electrical', stockStatus: 'Checked by connector type and engine variant', replacementFor: [], hsCode: '9032.89' },
-    { partNumber: '8495340000', name: 'Solenoid Valve', series: [], category: 'Sensors and electrical', stockStatus: 'Quoted by part number — OEM and alternative options', replacementFor: ['0005342732'], hsCode: '8481.80' },
+    { partNumber: '0005353960', name: 'Thermocouple', series: [], category: 'Sensors and electrical', stockStatus: '按接头类型与发动机变型核查', replacementFor: [], hsCode: '9032.89' },
+    { partNumber: '8495340000', name: 'Solenoid Valve', series: [], category: 'Sensors and electrical', stockStatus: '按零件号报价——原厂与替代件可选', replacementFor: ['0005342732'], hsCode: '8481.80' },
 
     // ── MTU 595 Overhaul Parts ──
-    { partNumber: '5840111810', name: 'Cylinder Liner Size 0', series: [], category: 'Pistons and liners', stockStatus: 'Quoted by size grade', replacementFor: [], hsCode: '8409.99' },
-    { partNumber: '5840300917', name: 'Piston', series: [], category: 'Pistons and liners', stockStatus: 'Quoted by size grade — OEM and alternative options', replacementFor: [], hsCode: '8409.99' },
-    { partNumber: '5840300020-42', name: 'Connecting Rod', series: [], category: 'Pistons and liners', stockStatus: 'Quoted by engine serial', replacementFor: [], hsCode: '8409.99' },
-    { partNumber: '5840300615', name: 'Piston Skirt', series: [], category: 'Pistons and liners', stockStatus: 'Quoted with matching piston crown', replacementFor: [], hsCode: '8409.99' },
-    { partNumber: '5840371625', name: 'Piston Crown', series: [], category: 'Pistons and liners', stockStatus: 'Quoted by engine serial and crown PN', replacementFor: [], hsCode: '8409.99' },
-    { partNumber: '5840530129', name: 'Valve Guide Inlet Size 0', series: [], category: 'Valve train', stockStatus: 'Quoted by size grade', replacementFor: [], hsCode: '8409.91' },
-    { partNumber: '5840900595', name: '2/2-Way Solenoid Valve', series: [], category: 'Sensors and electrical', stockStatus: 'Quoted by part number', replacementFor: ['5840980257'], hsCode: '8481.80' },
-    { partNumber: '5840900054', name: 'Valve Housing', series: [], category: 'Valve train', stockStatus: 'Quoted by engine variant', replacementFor: [], hsCode: '8409.91' },
-    { partNumber: '5840700632-87', name: 'HP Fuel Line', series: [], category: 'Fuel system', stockStatus: 'Quoted by part number and engine installation', replacementFor: [], hsCode: '8413.30' },
-    { partNumber: '5840782802', name: 'Supply Pipe', series: [], category: 'Fuel system', stockStatus: 'Quoted by part number', replacementFor: [], hsCode: '8413.30' },
-    { partNumber: '5841400344', name: 'Flange', series: [], category: 'Cooling system', stockStatus: 'Quoted by part number', replacementFor: ['8490740063'], hsCode: '8419.50' },
-    { partNumber: '5841800175', name: 'Oil Thermostat', series: [], category: 'Lubrication', stockStatus: 'Quoted by engine application', replacementFor: [], hsCode: '9032.10' },
-    { partNumber: '5842040714', name: 'Coolant Pump Shaft', series: [], category: 'Cooling system', stockStatus: 'Quoted by pump model', replacementFor: [], hsCode: '8413.30' },
-    { partNumber: '5842032780', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '5842040180', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '5840111810', name: 'Cylinder Liner Size 0', series: [], category: 'Pistons and liners', stockStatus: '按尺寸等级报价', replacementFor: [], hsCode: '8409.99' },
+    { partNumber: '5840300917', name: 'Piston', series: [], category: 'Pistons and liners', stockStatus: '按尺寸等级报价——原厂与替代件可选', replacementFor: [], hsCode: '8409.99' },
+    { partNumber: '5840300020-42', name: 'Connecting Rod', series: [], category: 'Pistons and liners', stockStatus: '按发动机出厂编号报价', replacementFor: [], hsCode: '8409.99' },
+    { partNumber: '5840300615', name: 'Piston Skirt', series: [], category: 'Pistons and liners', stockStatus: '与配套活塞顶一并报价', replacementFor: [], hsCode: '8409.99' },
+    { partNumber: '5840371625', name: 'Piston Crown', series: [], category: 'Pistons and liners', stockStatus: '按发动机出厂编号与活塞顶零件号报价', replacementFor: [], hsCode: '8409.99' },
+    { partNumber: '5840530129', name: 'Valve Guide Inlet Size 0', series: [], category: 'Valve train', stockStatus: '按尺寸等级报价', replacementFor: [], hsCode: '8409.91' },
+    { partNumber: '5840900595', name: '2/2-Way Solenoid Valve', series: [], category: 'Sensors and electrical', stockStatus: '按零件号报价', replacementFor: ['5840980257'], hsCode: '8481.80' },
+    { partNumber: '5840900054', name: 'Valve Housing', series: [], category: 'Valve train', stockStatus: '按发动机变型报价', replacementFor: [], hsCode: '8409.91' },
+    { partNumber: '5840700632-87', name: 'HP Fuel Line', series: [], category: 'Fuel system', stockStatus: '按零件号与发动机安装形式报价', replacementFor: [], hsCode: '8413.30' },
+    { partNumber: '5840782802', name: 'Supply Pipe', series: [], category: 'Fuel system', stockStatus: '按零件号报价', replacementFor: [], hsCode: '8413.30' },
+    { partNumber: '5841400344', name: 'Flange', series: [], category: 'Cooling system', stockStatus: '按零件号报价', replacementFor: ['8490740063'], hsCode: '8419.50' },
+    { partNumber: '5841800175', name: 'Oil Thermostat', series: [], category: 'Lubrication', stockStatus: '按发动机应用报价', replacementFor: [], hsCode: '9032.10' },
+    { partNumber: '5842040714', name: 'Coolant Pump Shaft', series: [], category: 'Cooling system', stockStatus: '按泵型号报价', replacementFor: [], hsCode: '8413.30' },
+    { partNumber: '5842032780', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '5842040180', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件', replacementFor: [], hsCode: '8484.10' },
 
     // ── MTU 956 / 1163 Parts ──
-    { partNumber: '5550105141', name: 'Cylinder Head with Valve', series: ['MTU 956', 'MTU 1163'], category: 'Cylinder heads', stockStatus: 'Quoted by engine variant — OEM and alternative options', replacementFor: [], hsCode: '8409.91' },
-    { partNumber: '5550161420', name: 'Cylinder Head Gasket', series: ['MTU 956', 'MTU 1163'], category: 'Gaskets and seals', stockStatus: 'Common service item — typically in stock', replacementFor: ['5550162320', '5550162420'], hsCode: '8484.10' },
-    { partNumber: '5550302160', name: 'Conrod Bearing Size 0-0', series: ['MTU 956', 'MTU 1163'], category: 'Bearings', stockStatus: 'Quoted by size grade', replacementFor: [], hsCode: '8483.30' },
-    { partNumber: '5550307540', name: 'Crankshaft Bearing Size 0-0', series: ['MTU 956', 'MTU 1163'], category: 'Bearings', stockStatus: 'Quoted by size grade', replacementFor: ['5550330130'], hsCode: '8483.30' },
-    { partNumber: '5550530105', name: 'Exhaust Valve', series: ['MTU 956', 'MTU 1163'], category: 'Valve train', stockStatus: 'Common overhaul item — standard grade in stock', replacementFor: [], hsCode: '8409.91' },
-    { partNumber: '5550100051', name: 'Nozzle Holder with Nozzle', series: ['MTU 956', 'MTU 1163'], category: 'Fuel system', stockStatus: 'Checked by injector PN — new and reman options', replacementFor: ['5550100651', '5550102451'], hsCode: '8413.30' },
-    { partNumber: '5552010005', name: 'Coolant Pump Shaft', series: ['MTU 956', 'MTU 1163'], category: 'Cooling system', stockStatus: 'Quoted by pump model', replacementFor: ['5562010105'], hsCode: '8413.30' },
-    { partNumber: '5592010007', name: 'Impeller', series: ['MTU 956', 'MTU 1163'], category: 'Cooling system', stockStatus: 'Common service item — typically in stock', replacementFor: ['5592010307'], hsCode: '8413.30' },
-    { partNumber: '8490740063', name: 'Flange', series: ['MTU 956', 'MTU 1163'], category: 'Cooling system', stockStatus: 'Quoted by part number', replacementFor: ['5841400344'], hsCode: '8419.50' },
-    { partNumber: '5551800015', name: 'Pressure Limiting Valve', series: ['MTU 956', 'MTU 1163'], category: 'Fuel system', stockStatus: 'Quoted per unit', replacementFor: [], hsCode: '8481.40' },
-    { partNumber: '5550101251', name: 'Oil Spray Nozzle', series: ['MTU 956', 'MTU 1163'], category: 'Lubrication', stockStatus: 'Small part — commonly in stock', replacementFor: [], hsCode: '8409.99' },
-    { partNumber: '5551800122', name: 'Oil Line', series: ['MTU 956', 'MTU 1163'], category: 'Lubrication', stockStatus: 'Quoted by part number', replacementFor: [], hsCode: '8409.99' },
-    { partNumber: '5582040406', name: 'Impeller', series: ['MTU 956', 'MTU 1163'], category: 'Cooling system', stockStatus: 'Common service item — typically in stock', replacementFor: ['5802040806'], hsCode: '8413.30' },
-    { partNumber: '5552030388', name: 'Slide Valve', series: ['MTU 956', 'MTU 1163'], category: 'Control components', stockStatus: 'Quoted per unit', replacementFor: [], hsCode: '8481.20' },
+    { partNumber: '5550105141', name: 'Cylinder Head with Valve', series: ['MTU 956', 'MTU 1163'], category: 'Cylinder heads', stockStatus: '按发动机变型报价——原厂与替代件可选', replacementFor: [], hsCode: '8409.91' },
+    { partNumber: '5550161420', name: 'Cylinder Head Gasket', series: ['MTU 956', 'MTU 1163'], category: 'Gaskets and seals', stockStatus: '常用保养件——通常有库存', replacementFor: ['5550162320', '5550162420'], hsCode: '8484.10' },
+    { partNumber: '5550302160', name: 'Conrod Bearing Size 0-0', series: ['MTU 956', 'MTU 1163'], category: 'Bearings', stockStatus: '按尺寸等级报价', replacementFor: [], hsCode: '8483.30' },
+    { partNumber: '5550307540', name: 'Crankshaft Bearing Size 0-0', series: ['MTU 956', 'MTU 1163'], category: 'Bearings', stockStatus: '按尺寸等级报价', replacementFor: ['5550330130'], hsCode: '8483.30' },
+    { partNumber: '5550530105', name: 'Exhaust Valve', series: ['MTU 956', 'MTU 1163'], category: 'Valve train', stockStatus: '常用大修件——标准等级有库存', replacementFor: [], hsCode: '8409.91' },
+    { partNumber: '5550100051', name: 'Nozzle Holder with Nozzle', series: ['MTU 956', 'MTU 1163'], category: 'Fuel system', stockStatus: '按喷油器零件号核查——新件与再制造件可选', replacementFor: ['5550100651', '5550102451'], hsCode: '8413.30' },
+    { partNumber: '5552010005', name: 'Coolant Pump Shaft', series: ['MTU 956', 'MTU 1163'], category: 'Cooling system', stockStatus: '按泵型号报价', replacementFor: ['5562010105'], hsCode: '8413.30' },
+    { partNumber: '5592010007', name: 'Impeller', series: ['MTU 956', 'MTU 1163'], category: 'Cooling system', stockStatus: '常用保养件——通常有库存', replacementFor: ['5592010307'], hsCode: '8413.30' },
+    { partNumber: '8490740063', name: 'Flange', series: ['MTU 956', 'MTU 1163'], category: 'Cooling system', stockStatus: '按零件号报价', replacementFor: ['5841400344'], hsCode: '8419.50' },
+    { partNumber: '5551800015', name: 'Pressure Limiting Valve', series: ['MTU 956', 'MTU 1163'], category: 'Fuel system', stockStatus: '按件报价', replacementFor: [], hsCode: '8481.40' },
+    { partNumber: '5550101251', name: 'Oil Spray Nozzle', series: ['MTU 956', 'MTU 1163'], category: 'Lubrication', stockStatus: '小件——常有库存', replacementFor: [], hsCode: '8409.99' },
+    { partNumber: '5551800122', name: 'Oil Line', series: ['MTU 956', 'MTU 1163'], category: 'Lubrication', stockStatus: '按零件号报价', replacementFor: [], hsCode: '8409.99' },
+    { partNumber: '5582040406', name: 'Impeller', series: ['MTU 956', 'MTU 1163'], category: 'Cooling system', stockStatus: '常用保养件——通常有库存', replacementFor: ['5802040806'], hsCode: '8413.30' },
+    { partNumber: '5552030388', name: 'Slide Valve', series: ['MTU 956', 'MTU 1163'], category: 'Control components', stockStatus: '按件报价', replacementFor: [], hsCode: '8481.20' },
 
     // ── MTU 183 Parts ──
-    { partNumber: '0031845201', name: 'Oil Filter Spin-On', series: [], category: 'Filters', stockStatus: 'High-volume consumable — typically in stock', replacementFor: ['0031845301'], hsCode: '8421.23' },
+    { partNumber: '0031845201', name: 'Oil Filter Spin-On', series: [], category: 'Filters', stockStatus: '高频耗材——通常有库存', replacementFor: ['0031845301'], hsCode: '8421.23' },
 
     // ── Common O-Rings & Small Parts (MTU multi-series) ──
-    { partNumber: '700429260000', name: 'O-Ring', series: [], category: 'Gaskets and seals', stockStatus: 'Small consumable — bulk quantities available', replacementFor: ['0019972348', '0089977545'], hsCode: '8484.10' },
-    { partNumber: '700429050003', name: 'O-Ring', series: [], category: 'Gaskets and seals', stockStatus: 'Small consumable — typically in stock', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '8699970213', name: 'O-Ring', series: [], category: 'Gaskets and seals', stockStatus: 'Small consumable — typically in stock', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '700429021000', name: 'O-Ring', series: [], category: 'Gaskets and seals', stockStatus: 'Small consumable — bulk quantities available', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: 'XP51529700004', name: 'Rotary Seal', series: [], category: 'Gaskets and seals', stockStatus: 'Small consumable — typically in stock', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: 'XP51529700005', name: 'O-Ring', series: [], category: 'Gaskets and seals', stockStatus: 'Small consumable — typically in stock', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '0000180680', name: 'Gasket', series: ['MTU 396', 'MTU 4000'], category: 'Gaskets and seals', stockStatus: 'Common service item — typically in stock', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '007603016105', name: 'Copper Sealing Ring', series: [], category: 'Gaskets and seals', stockStatus: 'Small consumable — typically in stock', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '0000530826', name: 'Valve Collet', series: [], category: 'Valve train', stockStatus: 'Small part — commonly in stock', replacementFor: ['0000530126'], hsCode: '8409.91' },
-    { partNumber: '0000530361', name: 'Valve Stem Seal', series: [], category: 'Gaskets and seals', stockStatus: 'Small consumable — commonly in stock', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '3669900240', name: 'Washer Valve Spring', series: ['MTU 396'], category: 'Valve train', stockStatus: 'Small part — commonly in stock', replacementFor: [], hsCode: '8409.91' },
-    { partNumber: '8699970499', name: 'Radial-Lip Shaft Seal', series: [], category: 'Gaskets and seals', stockStatus: 'Quoted per unit', replacementFor: ['8699970497', '8699970498'], hsCode: '8484.10' },
-    { partNumber: '0009953502', name: 'Clamp', series: [], category: 'Drive components', stockStatus: 'Small part — commonly in stock', replacementFor: [], hsCode: '7318.19' },
+    { partNumber: '700429260000', name: 'O-Ring', series: [], category: 'Gaskets and seals', stockStatus: '小型耗材——可批量供货', replacementFor: ['0019972348', '0089977545'], hsCode: '8484.10' },
+    { partNumber: '700429050003', name: 'O-Ring', series: [], category: 'Gaskets and seals', stockStatus: '小型耗材——通常有库存', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '8699970213', name: 'O-Ring', series: [], category: 'Gaskets and seals', stockStatus: '小型耗材——通常有库存', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '700429021000', name: 'O-Ring', series: [], category: 'Gaskets and seals', stockStatus: '小型耗材——可批量供货', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: 'XP51529700004', name: 'Rotary Seal', series: [], category: 'Gaskets and seals', stockStatus: '小型耗材——通常有库存', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: 'XP51529700005', name: 'O-Ring', series: [], category: 'Gaskets and seals', stockStatus: '小型耗材——通常有库存', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '0000180680', name: 'Gasket', series: ['MTU 396', 'MTU 4000'], category: 'Gaskets and seals', stockStatus: '常用保养件——通常有库存', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '007603016105', name: 'Copper Sealing Ring', series: [], category: 'Gaskets and seals', stockStatus: '小型耗材——通常有库存', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '0000530826', name: 'Valve Collet', series: [], category: 'Valve train', stockStatus: '小件——常有库存', replacementFor: ['0000530126'], hsCode: '8409.91' },
+    { partNumber: '0000530361', name: 'Valve Stem Seal', series: [], category: 'Gaskets and seals', stockStatus: '小型耗材——常有库存', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '3669900240', name: 'Washer Valve Spring', series: ['MTU 396'], category: 'Valve train', stockStatus: '小件——常有库存', replacementFor: [], hsCode: '8409.91' },
+    { partNumber: '8699970499', name: 'Radial-Lip Shaft Seal', series: [], category: 'Gaskets and seals', stockStatus: '按件报价', replacementFor: ['8699970497', '8699970498'], hsCode: '8484.10' },
+    { partNumber: '0009953502', name: 'Clamp', series: [], category: 'Drive components', stockStatus: '小件——常有库存', replacementFor: [], hsCode: '7318.19' },
     // ── Additional MTU 2000 Engine Components ──
-    { partNumber: '5311550215', name: 'Belt Pulley for Generator', series: [], category: 'Drive components', stockStatus: 'Quoted by engine application', replacementFor: [], hsCode: '8483.50' },
-    { partNumber: '5360320014', name: 'Sleeve Wear Front Crankshaft', series: [], category: 'Engine components', stockStatus: 'Quoted by engine serial', replacementFor: [], hsCode: '8409.99' },
-    { partNumber: '5500160597', name: 'Clamp', series: [], category: 'Drive components', stockStatus: 'Small part — commonly in stock', replacementFor: [], hsCode: '7318.19' },
-    { partNumber: 'X00027830', name: 'Cylinder Liner Size 0 C23', series: ['MTU 4000'], category: 'Pistons and liners', stockStatus: 'Quoted by size grade', replacementFor: [], hsCode: '8409.99' },
-    { partNumber: '5240530830', name: 'Valve Guide', series: [], category: 'Valve train', stockStatus: 'Quoted per unit or set', replacementFor: [], hsCode: '8409.91' },
-    { partNumber: '5240382550', name: 'Bushing Conrod Size 0', series: [], category: 'Pistons and liners', stockStatus: 'Quoted by size grade', replacementFor: ['5240382650'], hsCode: '8409.99' },
+    { partNumber: '5311550215', name: 'Belt Pulley for Generator', series: [], category: 'Drive components', stockStatus: '按发动机应用报价', replacementFor: [], hsCode: '8483.50' },
+    { partNumber: '5360320014', name: 'Sleeve Wear Front Crankshaft', series: [], category: 'Engine components', stockStatus: '按发动机出厂编号报价', replacementFor: [], hsCode: '8409.99' },
+    { partNumber: '5500160597', name: 'Clamp', series: [], category: 'Drive components', stockStatus: '小件——常有库存', replacementFor: [], hsCode: '7318.19' },
+    { partNumber: 'X00027830', name: 'Cylinder Liner Size 0 C23', series: ['MTU 4000'], category: 'Pistons and liners', stockStatus: '按尺寸等级报价', replacementFor: [], hsCode: '8409.99' },
+    { partNumber: '5240530830', name: 'Valve Guide', series: [], category: 'Valve train', stockStatus: '按件或按组报价', replacementFor: [], hsCode: '8409.91' },
+    { partNumber: '5240382550', name: 'Bushing Conrod Size 0', series: [], category: 'Pistons and liners', stockStatus: '按尺寸等级报价', replacementFor: ['5240382650'], hsCode: '8409.99' },
     // ── Additional MTU 2000 Gaskets ──
-    { partNumber: '4471870180', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item — typically in stock', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '0000160119', name: 'Sealing Ring', series: [], category: 'Gaskets and seals', stockStatus: 'Small consumable — typically in stock', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '4420160420', name: 'Cylinder Head Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item — typically in stock', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '4420150060', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '4420110059', name: 'Tombak Ring', series: [], category: 'Gaskets and seals', stockStatus: 'Small consumable', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '5030210580', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '5532031280', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '5541870180', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '5700150380', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '5362030180', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '5502010280', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '5760550180', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '5760550280', name: 'Profile Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Quoted by part number', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '5730110180', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '4471870180', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件——通常有库存', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '0000160119', name: 'Sealing Ring', series: [], category: 'Gaskets and seals', stockStatus: '小型耗材——通常有库存', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '4420160420', name: 'Cylinder Head Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件——通常有库存', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '4420150060', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '4420110059', name: 'Tombak Ring', series: [], category: 'Gaskets and seals', stockStatus: '小型耗材', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '5030210580', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '5532031280', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '5541870180', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '5700150380', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '5362030180', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '5502010280', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '5760550180', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '5760550280', name: 'Profile Gasket', series: [], category: 'Gaskets and seals', stockStatus: '按零件号报价', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '5730110180', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件', replacementFor: [], hsCode: '8484.10' },
     // ── MTU 2000 Additional Sensors/Electrical ──
-    { partNumber: '0001536720', name: 'Speed Sensor', series: [], category: 'Sensors and electrical', stockStatus: 'Common sensor — typically in stock', replacementFor: ['0005357333', '0005357833'], hsCode: '9032.89' },
-    { partNumber: '5205304069', name: 'Speed Transmitter', series: [], category: 'Sensors and electrical', stockStatus: 'Quoted by part number', replacementFor: [], hsCode: '9032.89' },
-    { partNumber: '5255380580', name: 'Memory Module', series: [], category: 'Sensors and electrical', stockStatus: 'Quoted by engine serial and ECU version', replacementFor: [], hsCode: '9032.89' },
+    { partNumber: '0001536720', name: 'Speed Sensor', series: [], category: 'Sensors and electrical', stockStatus: '常用传感器——通常有库存', replacementFor: ['0005357333', '0005357833'], hsCode: '9032.89' },
+    { partNumber: '5205304069', name: 'Speed Transmitter', series: [], category: 'Sensors and electrical', stockStatus: '按零件号报价', replacementFor: [], hsCode: '9032.89' },
+    { partNumber: '5255380580', name: 'Memory Module', series: [], category: 'Sensors and electrical', stockStatus: '按发动机出厂编号与 ECU 版本报价', replacementFor: [], hsCode: '9032.89' },
     // ── MTU 2000 Drive Components ──
-    { partNumber: '5501800106', name: 'Idler Gear', series: [], category: 'Drive components', stockStatus: 'Quoted by engine variant', replacementFor: [], hsCode: '8483.40' },
-    { partNumber: '5272010505', name: 'Shaft Water Pump', series: [], category: 'Drive components', stockStatus: 'Quoted by pump model', replacementFor: [], hsCode: '8483.10' },
-    { partNumber: '5502040176', name: 'Plate Control Washer', series: [], category: 'Drive components', stockStatus: 'Small part — commonly in stock', replacementFor: [], hsCode: '7318.22' },
-    { partNumber: '5502010276', name: 'Thrust Washer', series: [], category: 'Drive components', stockStatus: 'Quoted per unit', replacementFor: [], hsCode: '7318.22' },
-    { partNumber: '5760110062', name: 'Thrust Washer', series: [], category: 'Drive components', stockStatus: 'Quoted per unit', replacementFor: [], hsCode: '7318.22' },
-    { partNumber: '5360330262', name: 'Thrust Washer', series: [], category: 'Drive components', stockStatus: 'Quoted per unit', replacementFor: [], hsCode: '7318.22' },
-    { partNumber: '5802040072', name: 'Nut', series: [], category: 'Drive components', stockStatus: 'Small part — commonly in stock', replacementFor: [], hsCode: '7318.16' },
-    { partNumber: '5769900619', name: 'Stress Bolt', series: [], category: 'Drive components', stockStatus: 'Always replaced as a set', replacementFor: ['5809900819'], hsCode: '7318.15' },
-    { partNumber: '5249900605', name: 'Bolt Hex Cap', series: [], category: 'Drive components', stockStatus: 'Small part — commonly in stock', replacementFor: [], hsCode: '7318.15' },
+    { partNumber: '5501800106', name: 'Idler Gear', series: [], category: 'Drive components', stockStatus: '按发动机变型报价', replacementFor: [], hsCode: '8483.40' },
+    { partNumber: '5272010505', name: 'Shaft Water Pump', series: [], category: 'Drive components', stockStatus: '按泵型号报价', replacementFor: [], hsCode: '8483.10' },
+    { partNumber: '5502040176', name: 'Plate Control Washer', series: [], category: 'Drive components', stockStatus: '小件——常有库存', replacementFor: [], hsCode: '7318.22' },
+    { partNumber: '5502010276', name: 'Thrust Washer', series: [], category: 'Drive components', stockStatus: '按件报价', replacementFor: [], hsCode: '7318.22' },
+    { partNumber: '5760110062', name: 'Thrust Washer', series: [], category: 'Drive components', stockStatus: '按件报价', replacementFor: [], hsCode: '7318.22' },
+    { partNumber: '5360330262', name: 'Thrust Washer', series: [], category: 'Drive components', stockStatus: '按件报价', replacementFor: [], hsCode: '7318.22' },
+    { partNumber: '5802040072', name: 'Nut', series: [], category: 'Drive components', stockStatus: '小件——常有库存', replacementFor: [], hsCode: '7318.16' },
+    { partNumber: '5769900619', name: 'Stress Bolt', series: [], category: 'Drive components', stockStatus: '始终整组更换', replacementFor: ['5809900819'], hsCode: '7318.15' },
+    { partNumber: '5249900605', name: 'Bolt Hex Cap', series: [], category: 'Drive components', stockStatus: '小件——常有库存', replacementFor: [], hsCode: '7318.15' },
     // ── MTU 396 Additional Parts ──
-    { partNumber: '5592001001/31', name: 'Coolant Pump', series: [], category: 'Cooling system', stockStatus: 'Checked by pump model — new and reman options', replacementFor: [], hsCode: '8413.30' },
-    { partNumber: '5100200212', name: 'Thrust Bearing', series: [], category: 'Bearings', stockStatus: 'Quoted by size grade', replacementFor: ['5090200512'], hsCode: '8483.30' },
-    { partNumber: '5500706932', name: 'Leak Off Line', series: [], category: 'Fuel system', stockStatus: 'Quoted by part number', replacementFor: [], hsCode: '8413.30' },
-    { partNumber: '5500110559', name: 'O-Ring', series: [], category: 'Gaskets and seals', stockStatus: 'Small consumable — typically in stock', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '5550160071', name: 'Plug', series: [], category: 'Fasteners and retaining rings', stockStatus: 'Small part — commonly in stock', replacementFor: [], hsCode: '8409.99' },
-    { partNumber: '5590981585', name: 'Support Plate', series: [], category: 'Engine components', stockStatus: 'Quoted per unit', replacementFor: [], hsCode: '8409.99' },
-    { partNumber: '5562030980', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: '0002036946', name: 'Cooler Plate', series: [], category: 'Cooling system', stockStatus: 'Quoted by engine model', replacementFor: [], hsCode: '8419.50' },
-    { partNumber: '23504304', name: 'Bearing', series: [], category: 'Bearings', stockStatus: 'Quoted by size grade', replacementFor: [], hsCode: '8483.30' },
-    { partNumber: '23523615', name: 'Clamp', series: [], category: 'Drive components', stockStatus: 'Small part — commonly in stock', replacementFor: [], hsCode: '7318.19' },
-    { partNumber: '000625900175', name: 'Grooved Ball Bearing', series: [], category: 'Bearings', stockStatus: 'Quoted per unit', replacementFor: ['0059812225'], hsCode: '8482.10' },
-    { partNumber: '0005330760', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: 'Common service item', replacementFor: [], hsCode: '8484.10' },
-    { partNumber: 'XP52807300012', name: 'Thermocouple', series: [], category: 'Sensors and electrical', stockStatus: 'Checked by connector type', replacementFor: [], hsCode: '9032.89' },
-    { partNumber: '0009922130', name: 'Clamping Element', series: [], category: 'Drive components', stockStatus: 'Quoted per unit', replacementFor: [], hsCode: '7318.19' },
-    { partNumber: '0020371319', name: 'Rectangular Ring', series: [], category: 'Pistons and liners', stockStatus: 'Quoted per unit', replacementFor: [], hsCode: '8409.99' },
-    { partNumber: '0080375619', name: 'Rectangular-Section Ring', series: [], category: 'Pistons and liners', stockStatus: 'Standard ring set item', replacementFor: [], hsCode: '8409.99' },
-    { partNumber: '0080370018', name: 'Oil Control Ring', series: [], category: 'Pistons and liners', stockStatus: 'Standard ring set item', replacementFor: [], hsCode: '8409.99' },
-    { partNumber: '0002040479', name: 'Cup Seal', series: [], category: 'Gaskets and seals', stockStatus: 'Small consumable', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '5592001001/31', name: 'Coolant Pump', series: [], category: 'Cooling system', stockStatus: '按泵型号核查——新件与再制造件可选', replacementFor: [], hsCode: '8413.30' },
+    { partNumber: '5100200212', name: 'Thrust Bearing', series: [], category: 'Bearings', stockStatus: '按尺寸等级报价', replacementFor: ['5090200512'], hsCode: '8483.30' },
+    { partNumber: '5500706932', name: 'Leak Off Line', series: [], category: 'Fuel system', stockStatus: '按零件号报价', replacementFor: [], hsCode: '8413.30' },
+    { partNumber: '5500110559', name: 'O-Ring', series: [], category: 'Gaskets and seals', stockStatus: '小型耗材——通常有库存', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '5550160071', name: 'Plug', series: [], category: 'Fasteners and retaining rings', stockStatus: '小件——常有库存', replacementFor: [], hsCode: '8409.99' },
+    { partNumber: '5590981585', name: 'Support Plate', series: [], category: 'Engine components', stockStatus: '按件报价', replacementFor: [], hsCode: '8409.99' },
+    { partNumber: '5562030980', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: '0002036946', name: 'Cooler Plate', series: [], category: 'Cooling system', stockStatus: '按发动机型号报价', replacementFor: [], hsCode: '8419.50' },
+    { partNumber: '23504304', name: 'Bearing', series: [], category: 'Bearings', stockStatus: '按尺寸等级报价', replacementFor: [], hsCode: '8483.30' },
+    { partNumber: '23523615', name: 'Clamp', series: [], category: 'Drive components', stockStatus: '小件——常有库存', replacementFor: [], hsCode: '7318.19' },
+    { partNumber: '000625900175', name: 'Grooved Ball Bearing', series: [], category: 'Bearings', stockStatus: '按件报价', replacementFor: ['0059812225'], hsCode: '8482.10' },
+    { partNumber: '0005330760', name: 'Gasket', series: [], category: 'Gaskets and seals', stockStatus: '常用保养件', replacementFor: [], hsCode: '8484.10' },
+    { partNumber: 'XP52807300012', name: 'Thermocouple', series: [], category: 'Sensors and electrical', stockStatus: '按接头类型核查', replacementFor: [], hsCode: '9032.89' },
+    { partNumber: '0009922130', name: 'Clamping Element', series: [], category: 'Drive components', stockStatus: '按件报价', replacementFor: [], hsCode: '7318.19' },
+    { partNumber: '0020371319', name: 'Rectangular Ring', series: [], category: 'Pistons and liners', stockStatus: '按件报价', replacementFor: [], hsCode: '8409.99' },
+    { partNumber: '0080375619', name: 'Rectangular-Section Ring', series: [], category: 'Pistons and liners', stockStatus: '标准活塞环组件', replacementFor: [], hsCode: '8409.99' },
+    { partNumber: '0080370018', name: 'Oil Control Ring', series: [], category: 'Pistons and liners', stockStatus: '标准活塞环组件', replacementFor: [], hsCode: '8409.99' },
+    { partNumber: '0002040479', name: 'Cup Seal', series: [], category: 'Gaskets and seals', stockStatus: '小型耗材', replacementFor: [], hsCode: '8484.10' },
   ] as const).map((p) => {
     const seed = p as CatalogPartSeed & { commonFailureScenarios?: string[]; orderingNotes?: string };
     const cat = categoryDefaults[seed.category] ?? categoryDefaults['Engine components'];
@@ -1886,12 +1887,12 @@ const mtuPartsRaw: MtuPart[] = [
       summary: cat.summary,
       description: cat.description,
       image: inferTextMatchedPartImage(seed),
-      availability: 'Stock, replacement status, lead time, and shipping route confirmed after inquiry.',
+      availability: '库存、替换状态、交货期与运输路线均在询价后确认。',
       stockStatus: seed.stockStatus ?? cat.stockStatus,
       applications: cat.applications,
       notes: [
-        'Confirm engine model, serial number, required quantity, and destination before ordering.',
-        'Send old part photos or nameplate details when markings or replacement status are unclear.',
+        '订购前请确认发动机型号、出厂编号、所需数量与收货地。',
+        '标识或替换状态不明确时，请发送旧件照片或铭牌信息。',
       ],
       replacementFor,
       weightKg: spec.weightKg ?? seed.weightKg ?? cat.weightKg,
@@ -1900,7 +1901,7 @@ const mtuPartsRaw: MtuPart[] = [
       orderingNotes: seed.orderingNotes ?? undefined,
       applicableEngines: spec.applicableEngines ?? seed.applicableEngines ?? inferEngineType(seed.series),
       leadTime: spec.leadTime ?? seed.leadTime ?? inferLeadTime(seed.category),
-      dimensions: spec.dimensions ?? seed.dimensions ?? 'Confirm by part number, old-part photo, or catalog drawing',
+      dimensions: spec.dimensions ?? seed.dimensions ?? '按零件号、旧件照片或目录图纸确认',
       engineType: spec.engineType ?? seed.engineType ?? inferEngineType(seed.series),
       natoNumber: spec.natoNumber ?? seed.natoNumber ?? 'N/A',
     } satisfies MtuPart;
@@ -1966,110 +1967,110 @@ const highValuePartNumbers = new Set<string>([
 
 const highValueScenarios: Record<string, string[]> = {
   'Fuel system': [
-    'fuel pressure is unstable, injector balance is poor, or the engine shows hard-start symptoms',
-    'the old part number is superseded and the correct replacement route needs confirmation',
-    'fleet operators need a verified spare before scheduled engine service',
+    '燃油压力不稳定、喷油器均衡性差或发动机出现启动困难症状',
+    '旧零件号已被替代，需确认正确的替换路线',
+    '船队客户需要在计划保养前备妥经过核验的备件',
   ],
   'Filters': [
-    'oil, fuel, or air filter intervals are due and bulk replenishment is required',
-    'filter restriction, water contamination, or pressure drop is found during service',
-    'mixed filter lists need line-by-line confirmation before dispatch',
+    '机油、燃油或空气滤清器保养周期已到，需要批量补充',
+    '保养中发现滤清器压差超标、水分污染或压力下降',
+    '混合滤清器清单需要在发货前逐项核对',
   ],
   'Sensors and electrical': [
-    'alarm history points to a speed, pressure, temperature, or level signal fault',
-    'connector type, signal range, or ECU version must be matched before replacement',
-    'a vessel or generator set needs an urgent electrical spare to reduce downtime',
+    '报警历史指向转速、压力、温度或液位信号故障',
+    '更换前必须匹配接头类型、信号量程或 ECU 版本',
+    '船舶或发电机组急需电气备件以缩短停机时间',
   ],
   'Gaskets and seals': [
-    'oil, coolant, or exhaust leakage is found during inspection',
-    'the engine is opened for overhaul and one-time-use seals must be replaced',
-    'material grade, thickness, or sealing position must be confirmed before order',
+    '检查中发现机油、冷却液或排气泄漏',
+    '发动机解体大修，一次性密封件必须更换',
+    '下单前必须确认材料等级、厚度或密封位置',
   ],
   'Cooling system': [
-    'coolant temperature is high, seawater flow is weak, or pump wear is visible',
-    'pump, impeller, flange, or cooler parts are needed for scheduled maintenance',
-    'marine and generator installations require the correct cooling-system variant',
+    '冷却液温度偏高、海水流量不足或水泵可见磨损',
+    '计划保养需要水泵、叶轮、法兰或冷却器零件',
+    '船用与发电安装需要正确的冷却系统变型',
   ],
   'Pistons and liners': [
-    'compression loss, liner wear, scoring, or high oil consumption is reported',
-    'size grade must match the engine overhaul specification',
-    'a major overhaul list needs matched piston, ring, liner, and bearing references',
+    '反馈压缩损失、缸套磨损拉伤或机油消耗偏高',
+    '尺寸等级必须与发动机大修规格一致',
+    '大修清单需要活塞、活塞环、缸套与轴承参考号配套',
   ],
   'Bearings': [
-    'crankshaft, conrod, camshaft, or thrust bearing clearance is outside service limits',
-    'standard or size-grade selection must be checked before quoting',
-    'major overhaul parts are being purchased as a matched set',
+    '曲轴、连杆、凸轮轴或推力轴承间隙超出使用极限',
+    '报价前必须核查标准或尺寸等级选择',
+    '大修零件正以配套组方式采购',
   ],
   'Valve train': [
-    'compression loss, valve-seat wear, or abnormal exhaust temperature is found',
-    'cylinder-head overhaul requires matched valves, guides, springs, and collets',
-    'installation position and engine series must be confirmed before dispatch',
+    '发现压缩损失、气门座磨损或排气温度异常',
+    '缸盖大修需要配套的气门、导管、弹簧与锁夹',
+    '发货前必须确认安装位置与发动机系列',
   ],
   'Turbocharging': [
-    'boost pressure, exhaust temperature, or turbocharger vibration is outside normal range',
-    'wheel, seal, bearing, or housing compatibility must be checked against turbo model',
-    'a reman or replacement turbo route is being evaluated for urgent downtime',
+    '增压压力、排气温度或增压器振动超出正常范围',
+    '叶轮、密封、轴承或壳体兼容性须对照增压器型号核查',
+    '正在评估再制造或替换增压器路线以应对紧急停机',
   ],
   'Lubrication': [
-    'oil pressure, oil temperature, or lube-system contamination requires service',
-    'pump, cooler, nozzle, or separator references must be verified by engine model',
-    'overhaul buyers need lubrication items quoted with the main parts list',
+    '机油压力、油温或润滑系统污染需要保养',
+    '油泵、冷却器、喷嘴或分离器参考号须按发动机型号核验',
+    '大修客户需要润滑件与主件清单一并报价',
   ],
   'Drive components': [
-    'bolts, clamps, washers, couplings, or small hardware are replaced during assembly',
-    'single-use fasteners need confirmation by assembly position',
-    'service teams need small parts included with the main overhaul shipment',
+    '装配过程中更换螺栓、卡箍、垫圈、联轴器或小型紧固件',
+    '一次性紧固件需按装配位置确认',
+    '服务团队需要小型件随大修主件一同发货',
   ],
   'Engine components': [
-    'the part is part of a scheduled overhaul or urgent downtime repair',
-    'the old number, engine serial number, and installation position need cross-checking',
-    'buyers need a verified replacement option before arranging international shipping',
+    '该零件属于计划大修或紧急停机维修',
+    '旧号、发动机出厂编号与安装位置需要交叉核对',
+    '采购方需要在安排国际运输前获得经过核验的替换选项',
   ],
 };
 
 const highValueQuoteChecklist = (part: MtuPart, seriesText: string) => [
-  `Exact part number: ${part.partNumber}`,
-  `Part name or assembly position: ${part.name}`,
-  `Engine model / series: ${seriesText}`,
-  'Engine serial number from nameplate',
-  'Old-part photo showing number, connector, port, or size marking',
-  'Required quantity and whether partial shipment is acceptable',
-  'Destination country, delivery deadline, and preferred shipping method',
+  `准确零件号：${part.partNumber}`,
+  `零件名称或装配位置：${zhPartName(part.name)}`,
+  `发动机型号 / 系列：${seriesText}`,
+  '铭牌上的发动机出厂编号',
+  '旧件照片（显示零件号、接头、接口或尺寸标识）',
+  '所需数量以及是否接受分批发货',
+  '目的国、交货期限与期望的运输方式',
 ];
 
 const highValueFaqs = (part: MtuPart, seriesText: string, scenarios: string[]) => {
   const replacementText = part.replacementFor && part.replacementFor.length > 0
-    ? `${part.partNumber} may relate to ${part.replacementFor.join(', ')}. Final replacement status is checked against the engine serial number before quote.`
-    : `${part.partNumber} is checked for supersession before quote. If there is a newer or reman route, we confirm it with the engine serial number and old-part photo.`;
+    ? `${part.partNumber} 可能与 ${part.replacementFor.join('、')} 相关。最终替换状态在报价前对照发动机出厂编号核定。`
+    : `${part.partNumber} 在报价前进行替代关系核查。如存在更新型号或再制造路线，我们将结合发动机出厂编号与旧件照片予以确认。`;
 
   return [
     {
-      question: `Does ${part.partNumber} fit ${seriesText}?`,
-      answer: `${part.partNumber} ${part.name} is checked against ${seriesText}. Final fitment depends on the engine serial number, rating, and installation position.`,
+      question: `${part.partNumber} 适用于 ${seriesText} 吗？`,
+      answer: `${part.partNumber}（${zhPartName(part.name)}）已对照 ${seriesText} 核验。最终适配性取决于发动机出厂编号、功率标定与安装位置。`,
     },
     {
-      question: `What information is needed to quote ${part.partNumber}?`,
-      answer: `Send the part number, engine model, engine serial number, old-part photo, quantity, destination country, and required delivery date. This lets us confirm stock route, packing, and shipping options.`,
+      question: `报价 ${part.partNumber} 需要提供哪些信息？`,
+      answer: `请提供零件号、发动机型号、出厂编号、旧件照片、数量、目的国与要求交期。据此我们确认库存路线、包装与运输方案。`,
     },
     {
-      question: `Can you check alternatives or superseded numbers for ${part.partNumber}?`,
+      question: `能否核查 ${part.partNumber} 的替代件或被替代号？`,
       answer: replacementText,
     },
     {
-      question: `When is ${part.partNumber} usually replaced?`,
-      answer: scenarios.join('; ') + '.',
+      question: `${part.partNumber} 通常在什么情况下需要更换？`,
+      answer: scenarios.join('；') + '。',
     },
   ];
 };
 
 const inferHighValueApplication = (part: MtuPart): string => {
-  const hasSpecificEngineType = part.engineType && !/^Verify by engine serial number$/i.test(part.engineType);
-  const hasSpecificApplicableEngines = part.applicableEngines && !/^Verify by engine serial number$/i.test(part.applicableEngines);
+  const hasSpecificEngineType = part.engineType && !/^按发动机出厂编号核验$/.test(part.engineType);
+  const hasSpecificApplicableEngines = part.applicableEngines && !/^按发动机出厂编号核验$/.test(part.applicableEngines);
 
   if (part.series.length > 0) return part.series.join(', ');
-  if (hasSpecificEngineType) return part.engineType!;
+  if (hasSpecificEngineType) return zhEngineType(part.engineType!);
   if (hasSpecificApplicableEngines) return part.applicableEngines!;
-  return 'MTU engine serial-number verified applications';
+  return '经发动机出厂编号核验的 MTU 应用';
 };
 
 const inferNameSpecificScenarios = (part: MtuPart, fallback: string[]) => {
@@ -2077,51 +2078,51 @@ const inferNameSpecificScenarios = (part: MtuPart, fallback: string[]) => {
 
   if (name.includes('filter') || name.includes('strainer')) {
     return [
-      'scheduled service interval is due and the filter list needs line-by-line confirmation',
-      'restriction, contamination, or pressure-drop alarms point to filter replacement',
-      'fleet buyers need the same filter reference packed for repeated maintenance jobs',
+      '计划保养周期已到，滤清器清单需逐项确认',
+      '压差、污染或压力下降报警提示需要更换滤清器',
+      '船队客户需要同一滤清器参考号配套包装，用于重复性保养作业',
     ];
   }
   if (name.includes('sensor') || name.includes('monitor') || name.includes('tachometer') || name.includes('actuator') || name.includes('solenoid')) {
     return [
-      'ECU alarms, unstable signal readings, or intermittent shutdown events require electrical diagnosis',
-      'connector, voltage, signal range, and installation position must match the old part',
-      'urgent replacement is needed to restore engine monitoring or control functions',
+      'ECU 报警、信号读数不稳或间歇性停机需要电气诊断',
+      '接头、电压、信号量程与安装位置必须与旧件一致',
+      '急需更换以恢复发动机监测或控制功能',
     ];
   }
   if (name.includes('gasket') || name.includes('seal') || name.includes('o ring') || name.includes('o-ring') || name.includes('ring sealing')) {
     return [
-      'oil, coolant, air, or exhaust leakage is found during inspection',
-      'the engine is opened for overhaul and one-time-use sealing parts must be replaced',
-      'material, section shape, and sealing position need confirmation from the old part or catalog drawing',
+      '检查中发现机油、冷却液、空气或排气泄漏',
+      '发动机解体大修，一次性密封件必须更换',
+      '材料、截面形状与密封位置需对照旧件或目录图纸确认',
     ];
   }
   if (name.includes('bearing')) {
     return [
-      'bearing clearance, surface scoring, or abnormal crankshaft/camshaft wear is found during overhaul',
-      'standard or size-grade selection must be confirmed before shipment',
-      'buyers need matched bearing references for the same overhaul kit',
+      '大修中发现轴承间隙、表面拉伤或曲轴/凸轮轴异常磨损',
+      '发货前必须确认标准或尺寸等级选择',
+      '客户需要同一大修包配套的轴承参考号',
     ];
   }
   if (name.includes('valve') || name.includes('nozzle') || name.includes('injector')) {
     return [
-      'combustion quality, fuel delivery, compression, or exhaust temperature is outside normal range',
-      'installation position and matched mating parts must be checked before replacement',
-      'overhaul buyers need verified valve, nozzle, injector, or pump references before dispatch',
+      '燃烧质量、燃油供给、压缩或排气温度超出正常范围',
+      '更换前必须核查安装位置与配套配合件',
+      '大修客户需要在发货前获得经过核验的气门、喷嘴、喷油器或泵参考号',
     ];
   }
   if (name.includes('pump') || name.includes('impeller') || name.includes('cooler')) {
     return [
-      'coolant, seawater, fuel, or oil flow is weak or temperature is above normal range',
-      'flange, port, drive, and installation variant must match the existing assembly',
-      'scheduled marine or generator maintenance requires a verified replacement route',
+      '冷却液、海水、燃油或机油流量不足，或温度高于正常范围',
+      '法兰、接口、驱动与安装变型必须与现有总成匹配',
+      '计划中的船用或发电保养需要经过核验的替换路线',
     ];
   }
   if (name.includes('ring') || name.includes('liner') || name.includes('piston')) {
     return [
-      'compression loss, liner scoring, high blow-by, or oil consumption is reported',
-      'size grade and matched cylinder components must be confirmed for the overhaul scope',
-      'a major overhaul list needs piston, ring, liner, and bearing references checked together',
+      '反馈压缩损失、缸套拉伤、下窜气偏高或机油消耗异常',
+      '必须按大修范围确认尺寸等级与配套缸内零件',
+      '大修清单需要活塞、活塞环、缸套与轴承参考号一并核查',
     ];
   }
 
@@ -2133,34 +2134,34 @@ const enrichHighValuePart = (part: MtuPart): MtuPart => {
 
   const seriesText = inferHighValueApplication(part);
   const scenarios = inferNameSpecificScenarios(part, highValueScenarios[part.category] ?? highValueScenarios['Engine components']);
-  const hasSpecificApplicableEngines = part.applicableEngines && !/^Verify by engine serial number$/i.test(part.applicableEngines);
+  const hasSpecificApplicableEngines = part.applicableEngines && !/^按发动机出厂编号核验$/.test(part.applicableEngines);
   const applicationText = hasSpecificApplicableEngines
     ? part.applicableEngines!
-    : `${seriesText}; final fitment is confirmed by engine serial number and parts-catalog position.`;
+    : `${seriesText}；最终适配性经发动机出厂编号与零件目录位置确认。`;
 
   // 第二句按真实数据变化（类目 + NATO + 替代号数量），避免 700+ 页共享同一字节级句子
   const natoRef = part.natoNumber && !/^n\/a$/i.test(part.natoNumber.trim()) ? part.natoNumber.trim() : '';
   const recordBits: string[] = [];
   if (natoRef) recordBits.push(`NATO ${natoRef}`);
   if (part.replacementFor && part.replacementFor.length > 0) {
-    recordBits.push(`${part.replacementFor.length} superseded reference${part.replacementFor.length > 1 ? 's' : ''} traced`);
+    recordBits.push(`追溯 ${part.replacementFor.length} 个被替代参考号`);
   }
-  const recordText = recordBits.length > 0 ? ` ${recordBits.join('; ')} on record.` : '';
+  const recordText = recordBits.length > 0 ? ` 档案记录：${recordBits.join('；')}。` : '';
 
   return {
     ...part,
-    summary: part.hasCatalogDetails ? part.summary : `${part.partNumber} ${part.name}. Request a part-number and engine-serial check before quotation.${recordText}`,
+    summary: part.hasCatalogDetails ? part.summary : `${part.partNumber} ${zhPartName(part.name)}。报价前请提供零件号与发动机出厂编号进行核验。${recordText}`,
     description: part.description,
     commonFailureScenarios: part.commonFailureScenarios ?? scenarios,
-    orderingNotes: part.orderingNotes ?? `For ${part.partNumber}, send the engine model, serial number, quantity, old-part photo, and destination country. We will confirm whether the item is OEM, OEM-alternative, reman, or superseded before quotation.`,
+    orderingNotes: part.orderingNotes ?? `订购 ${part.partNumber} 请提供发动机型号、出厂编号、数量、旧件照片与目的国。报价前我们将确认该件为原厂配套（OEM）、原厂配套替代件、再制造件还是已被替代。`,
     applicableEngines: applicationText,
-    leadTime: part.leadTime ?? 'Priority stock check; fastest available OEM, OEM-alternative, or reman route quoted per inquiry',
+    leadTime: part.leadTime ?? '优先核查库存；按询价报最快的原厂配套、原厂配套替代或再制造路线',
     quoteChecklist: part.quoteChecklist ?? highValueQuoteChecklist(part, seriesText),
     faqs: part.faqs ?? highValueFaqs(part, seriesText, part.commonFailureScenarios ?? scenarios),
-    imageAlt: part.imageAlt ?? `${part.partNumber} ${part.name} - MTU ${part.category} catalog reference`,
+    imageAlt: part.imageAlt ?? `${part.partNumber} ${zhPartName(part.name)}——MTU ${zhCategoryName(part.category)}目录参考`,
     notes: Array.from(new Set([
       ...part.notes,
-      'Priority item: part number, supersession, and export packing details are checked before quote.',
+      '优先项：报价前核验零件号、替代关系与出口包装细节。',
     ])),
   };
 };
@@ -2171,7 +2172,7 @@ const seriesPhrase = (series: string[]) =>
   series.length === 0 ? 'MTU' : series.length === 1 ? series[0] : `${series.slice(0, -1).join(', ')} and ${series[series.length - 1]}`;
 
 const catalogImageAlt = (part: MtuPart, series: string[]) =>
-  `${standardPartName(part.name)} ${part.partNumber} for ${seriesPhrase(series)} engines`;
+  `${zhPartName(part.name)}（${standardPartName(part.name)}）${part.partNumber}——适用于 ${seriesPhrase(series)} 发动机`;
 
 /** Built from catalog facts so part pages never reuse third-party description text. */
 const catalogDescription = (
@@ -2185,26 +2186,25 @@ const catalogDescription = (
   const assembly = detail.sourceDescription.match(/original\s+(.+?)\s+parts\s+\S/i)?.[1];
   const sentences: string[] = [];
 
-  const article = /^[aeiou]|^(HP|LP|NTC)\b/i.test(name) ? 'an' : 'a';
-  const where = model ? `the MTU ${model.toUpperCase()}` : `${seriesPhrase(series)} engines`;
+  const where = model ? `MTU ${model.toUpperCase()}` : `${seriesPhrase(series)} 系列发动机`;
   sentences.push(
     assembly
-      ? `${part.partNumber} is ${article} ${name} from the ${readableName(assembly)} group of ${where}.`
-      : `${part.partNumber} is ${article} ${name} catalogued for ${where}.`,
+      ? `${part.partNumber} 是${where}的${readableName(assembly)}组${zhPartName(part.name)}（${name}）。`
+      : `${part.partNumber} 是为${where}目录收录的${zhPartName(part.name)}（${name}）。`,
   );
 
   const replaces = crossReferences.filter((ref) => ref.relationship === 'replaces').map((ref) => ref.partNumber);
   const replacedBy = crossReferences.filter((ref) => ref.relationship === 'replaced-by').map((ref) => ref.partNumber);
   if (replaces.length > 0) {
-    sentences.push(`It is the later number for ${replaces.slice(0, 4).join(', ')}${replaces.length > 4 ? ` and ${replaces.length - 4} more earlier references` : ''}, so lists quoting ${replaces.length === 1 ? 'that number' : 'those numbers'} are normally supplied as ${part.partNumber}.`);
+    sentences.push(`它是 ${replaces.slice(0, 4).join('、')}${replaces.length > 4 ? ` 等另外 ${replaces.length - 4} 个更早参考号` : ''} 的后续号，清单中引用${replaces.length === 1 ? '该号' : '这些号'}的通常以 ${part.partNumber} 供货。`);
   }
   if (replacedBy.length > 0) {
-    sentences.push(`Catalog history lists ${replacedBy[0]} as its later number; we check whether the later part can be fitted alone or needs related parts changed with it.`);
+    sentences.push(`目录沿革记载 ${replacedBy[0]} 为其后续号；我们会核查该后续件能否单独装配，还是需要同时更换相关零件。`);
   }
 
   const weight = detail.weightKg.trim();
   if (weight && !/^n\/a$/i.test(weight)) {
-    sentences.push(`The catalog unit weight is ${weight.toLowerCase()}, which we use to estimate freight before quoting.`);
+    sentences.push(`目录单件重量为 ${weight.toLowerCase()}，我们据此在报价前估算运费。`);
   }
   return sentences.join(' ');
 };
@@ -2238,7 +2238,7 @@ const applyCatalogDetails = (part: MtuPart): MtuPart => {
     imageAlt: catalogImageAlt(part, uniqueSeries),
     hasCatalogDetails: true,
     series: uniqueSeries,
-    summary: `${part.partNumber} ${part.name}. Listed in ${uniqueSeries.join(', ') || 'MTU'} catalog references; confirm installation and current availability before ordering.`,
+    summary: `${part.partNumber} ${zhPartName(part.name)}。收录于 ${uniqueSeries.map((s) => zhSeriesLabel(s)).join('、') || 'MTU'} 目录参考；订购前请确认安装位置与当前供货情况。`,
     description: catalogDescription(part, detail, uniqueSeries, crossReferences),
     engineType: usable(detail.engineType),
     applicableEngines: usable(detail.applicableEngines),
@@ -2301,7 +2301,7 @@ const mergePartVariants = (variants: MtuPart[]): MtuPart => {
   merged.applications = Array.from(new Set(all.flatMap((part) => part.applications)));
   merged.notes = Array.from(new Set([
     ...all.flatMap((part) => part.notes),
-    ...(rest.length > 0 ? [`Also catalogued as: ${rest.map((part) => part.name).join('; ')}.`] : []),
+    ...(rest.length > 0 ? [`另收录为：${rest.map((part) => part.name).join('；')}。`] : []),
   ]));
 
   const replacementFor = Array.from(new Set(all.flatMap((part) => part.replacementFor ?? [])));
@@ -2311,7 +2311,7 @@ const mergePartVariants = (variants: MtuPart[]): MtuPart => {
   if (bestImage) merged.image = bestImage.image;
 
   // Variants are ranked best-first, so the first filled value is the richest one.
-  const isGeneratedCatalogText = (value: string) => value.startsWith(`${primary.partNumber} is `);
+  const isGeneratedCatalogText = (value: string) => value.startsWith(`${primary.partNumber} 是`);
   const description = all
     .map((part) => part.description?.trim())
     .filter((value): value is string => Boolean(value))
@@ -2400,9 +2400,9 @@ const applyStandardName = (part: MtuPart): MtuPart => {
     imageAlt: swapOptional(part.imageAlt),
     orderingNotes: swapOptional(part.orderingNotes),
     notes: part.notes.flatMap((note) => {
-      if (!note.startsWith('Also catalogued as: ')) return [swap(note)];
-      const variants = [...new Set(note.slice(20, -1).split('; ').map(standardPartName))].filter((variant) => variant !== name);
-      return variants.length > 0 ? [`Also catalogued as: ${variants.join('; ')}.`] : [];
+      if (!note.startsWith('另收录为：')) return [swap(note)];
+      const variants = [...new Set(note.slice(5, -1).split('；').map(standardPartName))].filter((variant) => variant !== name);
+      return variants.length > 0 ? [`另收录为：${variants.join('；')}。`] : [];
     }),
     quoteChecklist: part.quoteChecklist?.map(swap),
     commonFailureScenarios: part.commonFailureScenarios?.map(swap),
@@ -2465,10 +2465,10 @@ export function isPartPageIndexable(part: MtuPart): boolean {
   const hasSpecificDescription =
     Boolean(part.description?.trim()) && !genericPartDescriptions.has(part.description!.trim());
   const hasSpecificEngine =
-    Boolean(part.engineType?.trim()) && !/^Verify by engine serial number$/i.test(part.engineType!);
+    Boolean(part.engineType?.trim()) && !/^按发动机出厂编号核验$/.test(part.engineType!);
   const hasSpecificFitment =
     Boolean(part.applicableEngines?.trim()) &&
-    !/^Verify by engine serial number$/i.test(part.applicableEngines!);
+    !/^按发动机出厂编号核验$/.test(part.applicableEngines!);
   const hasSpecificHsCode =
     Boolean(part.hsCode?.trim()) && !/varies|confirm|quoted|n\/a/i.test(part.hsCode!);
   const hasCrossReferences = Boolean(part.replacementFor?.length);
@@ -2571,400 +2571,400 @@ const manualMtuCatalogHubs: MtuCatalogHub[] = [
   // ── Series Hubs ──
   {
     slug: 'mtu-2000-series',
-    title: 'MTU 2000 Series Parts Catalog',
-    h1Title: 'MTU 2000 Series Engine Parts',
-    summary: 'Complete parts catalog for MTU 2000 series diesel engines — marine, industrial, generator, and rail applications.',
-    description: 'Browse MTU 2000 series parts by category: pistons, liners, bearings, valves, gaskets, fuel system, cooling, turbocharging, sensors, and filters. Each part is verified by part number and engine serial number before quotation.',
+    title: 'MTU 2000 系列零件目录',
+    h1Title: 'MTU 2000 系列发动机零件',
+    summary: 'MTU 2000 系列柴油发动机完整零件目录——适用于船用、工业、发电与轨交应用。',
+    description: '按类别浏览 MTU 2000 系列零件：活塞、缸套、轴承、气门、垫片、燃油系统、冷却系统、涡轮增压、传感器与滤清器。每件零件在报价前均按零件号与发动机出厂编号核验。',
     searchTopics: [
       {
-        title: 'MTU 16V 2000 Engine Parts',
-        description: 'Parts support for 16V 2000 marine, generator, rail, and industrial engines, checked by full model and serial number.',
+        title: 'MTU 16V 2000 发动机零件',
+        description: '为 16V 2000 船用、发电、轨交与工业发动机提供零件支持，按完整型号与出厂编号核验。',
         href: '/products/mtu-2000-series-parts/16v-2000-engine-parts/',
       },
       {
-        title: 'MTU 16V 2000 M96L Engine Parts',
-        description: 'Marine propulsion and yacht-engine parts checked against the complete M96L serial and component references.',
+        title: 'MTU 16V 2000 M96L 发动机零件',
+        description: '船用推进与游艇发动机零件，按完整的 M96L 序列号与部件编号核验。',
         href: '/products/mtu-2000-series-parts/mtu-m96l-engine-parts/',
       },
       {
-        title: 'MTU 2000 Marine Engine Parts',
-        description: 'Service and overhaul parts for propulsion, auxiliary-power, and onboard generator applications.',
+        title: 'MTU 2000 船用发动机零件',
+        description: '适用于推进、辅助动力与船载发电机组的保养件与大修件。',
         href: '/products/mtu-2000-series-parts/marine-generator-service-parts/',
       },
     ],
-    longDescription: `The MTU 2000 series is one of the most widely deployed diesel engine families in the world, powering everything from fast ferries and naval vessels to generator sets and locomotives. Available in 8V, 12V, 16V, and 18V configurations across multiple power ratings (M84, M91, M93, M94, M96), these engines share a common parts architecture that makes maintenance programs predictable — but also demanding when parts are needed urgently.
+    longDescription: `MTU 2000 系列是全球装用范围最广的柴油发动机系列之一，从快速渡轮、海军舰艇到发电机组与机车均有采用。该系列提供 8V、12V、16V 与 18V 构型，覆盖多个功率等级（M84、M91、M93、M94、M96）；各机型共享通用的零件架构，使维护计划具有可预期性——但在零件急需时，也对供货响应提出更高要求。
 
-    Catalog listings identify part numbers and component families, but they do not establish fitment for every engine build. The complete model, serial number, and installation position are needed to check the offered replacement. Public catalog references are distinguished from confirmed measurements and current supply information.
+    目录清单标明零件号与部件族，但并不能确定其适用于每一台发动机的构型。核对所供替换件，需要完整的型号、出厂编号与安装位置。公开目录编号应与经确认的实测数据和当前供货信息区分开来。
 
-    Catalog references include cylinder-head gaskets, fuel injectors, service filters, sensors, and sealing components. Stock, dimensions, supplied condition, and lead time are confirmed for the exact reference in the quotation, rather than inferred from a series name.
+    目录编号包括缸垫、燃油喷油器、保养滤清器、传感器与密封件。库存、尺寸、供货状态与交货期均在报价中按确切编号确认，而非仅凭系列名称推断。
 
-    If you are maintaining a fleet of MTU 2000 engines — whether in a shipyard, a power plant, or a rail depot — send us your parts list and engine serial numbers. We check availability line by line and quote practical shipping from Shanghai to your destination.`,
+    无论您在船厂、电厂还是铁路机务段维护 MTU 2000 发动机机群，都欢迎将零件清单与发动机出厂编号发送给我们。我们逐项核对供货情况，并报出自上海发往目的地的可行运输方案。`,
     type: 'series',
     partFilter: (p) => p.series.some((s) => s.includes('2000')),
   },
   {
     slug: 'mtu-4000-series',
-    title: 'MTU 4000 Series Parts Catalog',
-    h1Title: 'MTU 4000 Series Engine Parts',
-    summary: 'Complete parts catalog for MTU 4000 series diesel engines — marine propulsion, power generation, locomotive, and heavy equipment.',
-    description: 'Browse MTU 4000 series parts by category: cylinder liners, pistons, cylinder heads, bearings, valves, gaskets, fuel injection, cooling pumps, turbochargers, sensors, and filters. OEM and alternative options available.',
+    title: 'MTU 4000 系列零件目录',
+    h1Title: 'MTU 4000 系列发动机零件',
+    summary: 'MTU 4000 系列柴油发动机完整零件目录——适用于船用推进、发电、机车与重型设备。',
+    description: '按类别浏览 MTU 4000 系列零件：气缸套、活塞、气缸盖、轴承、气门、垫片、燃油喷射、冷却水泵、涡轮增压器、传感器与滤清器。可提供原厂配套（OEM）与原厂配套替代件选项。',
     searchTopics: [
       {
-        title: 'MTU 12V 4000 Engine Parts',
-        description: 'Fuel, cooling, filtration, sensor, turbocharger, and overhaul parts checked by exact 12V 4000 variant.',
+        title: 'MTU 12V 4000 发动机零件',
+        description: '燃油、冷却、滤清、传感器、涡轮增压器与大修零件，按确切的 12V 4000 变型核验。',
         href: '/products/mtu-4000-series-parts/12v-4000-engine-parts/',
       },
       {
-        title: 'MTU 16V 4000 Engine Parts',
-        description: 'Parts support for 16V 4000 marine, locomotive, generator, and heavy industrial applications.',
+        title: 'MTU 16V 4000 发动机零件',
+        description: '为 16V 4000 船用、机车、发电与重型工业应用提供零件支持。',
         href: '/products/mtu-4000-series-parts/16v-4000-engine-parts/',
       },
       {
-        title: 'MTU 4000 Overhaul Parts',
-        description: 'Graded internal components and consolidated overhaul lists with line-by-line verification.',
+        title: 'MTU 4000 大修零件',
+        description: '按尺寸分级的内部零部件与整合后的大修清单，逐项核验。',
         href: '/products/mtu-4000-series-parts/overhaul-parts/',
       },
     ],
-    longDescription: `The MTU 4000 series represents the top tier of MTU's high-speed diesel engine range, with power outputs from 1,500 kW to over 4,300 kW in 12V, 16V, and 20V configurations. These engines are found in the world's most demanding applications: fast naval vessels, superyachts, offshore supply vessels, mission-critical data center generators, and heavy-haul locomotives.
+    longDescription: `MTU 4000 系列位居 MTU 高速柴油发动机系列的顶端，12V、16V 与 20V 构型的功率输出自 1,500 kW 至 4,300 kW 以上。这些发动机见于全球要求最严苛的应用场景：高速海军舰艇、超级游艇、海洋工程供应船、任务关键型数据中心发电机组与重载机车。
 
-    Cylinder liners, pistons, and bearings require size-grade and installation checks. Catalog references are starting points for identification, not proof of compatibility with every MTU 4000 build. The quotation should state the exact offered number and condition, including any replacement or exchange terms.
+    气缸套、活塞与轴承需按尺寸等级与安装状态核对。目录编号只是识别的起点，并不能证明与每一台 MTU 4000 构型兼容。报价应写明所供的确切编号与状态，包括任何替代或换货条款。
 
-    For injector, pump, and control-component inquiries, retain the complete reference including prefixes and suffixes. For an overhaul, identify each component and size grade separately. Availability and shipping lead time depend on the offered item and are confirmed with the quotation.
+    就喷油器、泵与控制元件询价时，请保留含前、后缀的完整编号。进行大修时，请分别标明每个部件及其尺寸等级。供货情况与发货货期取决于所供货物，并随报价一并确认。
 
-    For major overhauls, we recommend sending a complete parts list with engine serial numbers. We verify each line item, flag any superseded part numbers, and quote shipping from Shanghai via express courier, air freight, or sea freight depending on urgency and part dimensions.`,
+    进行大型大修时，我们建议提交附发动机出厂编号的完整零件清单。我们会逐项核验、标出任何已被替代的零件号，并根据紧急程度与零件尺寸，报出自上海发出的快递、空运或海运方案。`,
     type: 'series',
     partFilter: (p) => p.series.some((s) => s.includes('4000')),
   },
   {
     slug: 'mtu-396-series',
-    title: 'MTU 396 Series Parts Catalog',
-    h1Title: 'MTU 396 Series Engine Parts',
-    summary: 'Parts catalog for legacy MTU 396 series engines — marine, industrial, and power generation applications.',
-    description: 'Browse MTU 396 series parts including cylinder liners, pistons, bearings, valves, gaskets, fuel system, cooling, and turbocharger components. Legacy and superseded part numbers supported.',
+    title: 'MTU 396 系列零件目录',
+    h1Title: 'MTU 396 系列发动机零件',
+    summary: '老款 MTU 396 系列发动机零件目录——适用于船用、工业与发电应用。',
+    description: '浏览 MTU 396 系列零件，包括气缸套、活塞、轴承、气门、垫片、燃油系统、冷却与涡轮增压器部件。支持老款及已被替代的零件号。',
     type: 'series',
     partFilter: (p) => p.series.some((s) => s.includes('396')),
-    longDescription: `For an MTU 396 parts request, retain the full nameplate designation and serial number. Legacy installations can have changed components, so include the number on the installed item as well as any old invoice or parts-list reference.
+    longDescription: `提交 MTU 396 零件询价时，请保留铭牌所示的完整型号名称与出厂编号。老款装机可能已更换过部件，因此请一并提供所装件上的编号，以及任何旧发票或旧零件清单上的编号。
 
-    Because the 396 series is now a legacy platform, OEM-route availability can be inconsistent. This is where our verification process adds value: we check each part number against your engine serial number, confirm whether superseded references apply, and quote OEM, OEM-alternative, reman, or replacement options with transparent lead times. Common 396 series requests include cylinder liners (5320110110), cylinder head covers (5320100130), exhaust valves (5410500227), inlet valves (4570530001), valve springs (5320530020), main and thrust bearings, oil pumps (5321800001), oil separators (5410100163), and turbocharger turbine wheels (5110800220/5110804420).
+    由于 396 系列现已属老款平台，原厂配套（OEM）渠道的供货情况可能不稳定。这正是我们核验流程的价值所在：我们按您的发动机出厂编号核对每个零件号，确认是否适用已被替代的编号，并就原厂配套（OEM）、原厂配套替代件、再制造件或替代件选项报价，同时给出明确的交货期。MTU 396 系列的常见询价包括气缸套（5320110110）、气门室盖（5320100130）、排气门（5410500227）、进气门（4570530001）、气门弹簧（5320530020）、主轴承与推力轴承、机油泵（5321800001）、机油分离器（5410100163）以及涡轮增压器涡轮（5110800220/5110804420）。
 
-    For major overhauls, we recommend sending a complete parts list organized by engine serial number. Legacy engines often have running changes that affect part number compatibility — our verification step catches these before shipment.`,
+    进行大型大修时，我们建议提交按发动机出厂编号整理的完整零件清单。老款发动机常有影响零件号兼容性的运行变更——我们的核验步骤会在发货前将这些问题逐一识别。`,
   },
   {
     slug: 'mtu-595-series',
-    title: 'MTU 595 Series Parts Catalog',
-    h1Title: 'MTU 595 Series Engine Parts',
-    summary: 'Parts catalog for MTU 595 series engines — heavy-duty marine and industrial power units.',
-    description: 'Browse MTU 595 series parts: cylinder liners, pistons, connecting rods, gaskets, fuel lines, solenoid valves, cooling pumps, and turbocharger components.',
+    title: 'MTU 595 系列零件目录',
+    h1Title: 'MTU 595 系列发动机零件',
+    summary: 'MTU 595 系列发动机零件目录——重型船用与工业动力装置。',
+    description: '浏览 MTU 595 系列零件：气缸套、活塞、连杆、垫片、燃油管路、电磁阀、冷却水泵与涡轮增压器部件。',
     type: 'series',
     partFilter: (p) => p.series.some((s) => s.includes('595')),
-    longDescription: `The MTU 595 series is a heavy-duty, high-output diesel engine platform designed for the most demanding marine and industrial applications. With bore sizes exceeding 200mm and power outputs per cylinder that place it firmly in the medium-speed engine category, the 595 series is found in naval combatants, large offshore supply vessels, and base-load power stations where reliability is non-negotiable.
+    longDescription: `MTU 595 系列是面向最严苛船用与工业应用的重型、高输出柴油发动机平台。其缸径超过 200 mm，单缸功率输出使其稳居中速发动机范畴；595 系列见于海军作战舰艇、大型海洋工程供应船与基荷电站——在这些场合，可靠性没有妥协余地。
 
-    Parts for the 595 series reflect its heavy engineering heritage: cylinder liners weighing over 50 kg, pistons with separate crowns and skirts (5840371625 crown, 5840300615 skirt), connecting rods built for extreme cylinder pressures, and fuel systems operating at high injection pressures with HP fuel lines (5840700632-87) and solenoid valves (5840900595, 5840980257). Every component is size-graded and serial-number-specific.
+    595 系列的零件体现了其重型工程传承：重量超过 50 kg 的气缸套，活塞顶与活塞裙分离式活塞（活塞顶 5840371625、活塞裙 5840300615），按极高气缸压力设计的连杆，以及在高喷射压力下工作、配高压（HP）燃油管路（5840700632-87）与电磁阀（5840900595、5840980257）的燃油系统。每个部件均按尺寸分级，并与出厂编号一一对应。
 
-    Because 595 series engines often serve in continuous-duty applications, parts traceability and documentation requirements can be stringent. We support part-number verification with engine serial numbers, provide HS codes and approximate weights for freight planning, and can quote with material certificates where required.`,
+    由于 595 系列发动机常用于连续运转工况，零件的可追溯性与单证要求可能十分严格。我们支持按发动机出厂编号核验零件号，提供 HS 编码与大致重量以便规划运输，并可在需要时随报价提供材质证书。`,
   },
   {
     slug: 'mtu-956-series',
-    title: 'MTU 956 Series Parts Catalog',
-    h1Title: 'MTU 956 Series Engine Parts',
-    summary: 'Parts catalog for MTU 956 series engines — marine and heavy industrial applications.',
-    description: 'Browse MTU 956 series parts: cylinder heads, gaskets, bearings, valves, injectors, cooling pumps, impellers, oil nozzles, and fuel system components.',
+    title: 'MTU 956 系列零件目录',
+    h1Title: 'MTU 956 系列发动机零件',
+    summary: 'MTU 956 系列发动机零件目录——船用与重型工业应用。',
+    description: '浏览 MTU 956 系列零件：气缸盖、垫片、轴承、气门、喷油器、冷却水泵、叶轮、机油喷嘴与燃油系统部件。',
     type: 'series',
     partFilter: (p) => p.series.some((s) => s.includes('956')),
-    longDescription: `The MTU 956 series is a proven workhorse in the medium-speed diesel segment, powering naval vessels, commercial ships, and heavy industrial installations. It shares many design characteristics with the 1163 series, and parts frequently cross-reference between the two families. Cylinder heads (5550105141), gaskets (5550161420), bearings (5550302160, 5550307540), and cooling system components (5552010005) are among the most commonly requested parts.
+    longDescription: `MTU 956 系列是中速柴油机领域久经验证的主力机型，为海军舰艇、商船与重型工业装置提供动力。它与 1163 系列共享许多设计特征，两个系列的零件经常可交叉引用。气缸盖（5550105141）、垫片（5550161420）、轴承（5550302160、5550307540）与冷却系统部件（5552010005）均属最常被询价的零件。
 
-    For 956 series engines still in active duty, parts availability can vary by region and engine variant. We verify each part number against your engine serial number, check for supersessions, and quote both OEM and OEM-alternative options. Marine-specific components like seawater pump impellers (5592010007) and oil spray nozzles (5550101251) are high-demand items where we typically maintain stock references.`,
+    对于仍在服役的 956 系列发动机，零件供货情况可能因地区与发动机变型而异。我们按您的发动机出厂编号核验每个零件号、检查替代关系，并就原厂配套（OEM）与原厂配套替代件选项报价。海水泵叶轮（5592010007）与机油喷嘴（5550101251）等船用专用部件属高频需求件，我们通常备有相应的库存编号。`,
   },
   {
     slug: 'mtu-1163-series',
-    title: 'MTU 1163 Series Parts Catalog',
-    h1Title: 'MTU 1163 Series Engine Parts',
-    summary: 'Parts catalog for MTU 1163 series engines — high-output marine propulsion.',
-    description: 'Browse MTU 1163 series parts: cylinder heads, bearings, valves, cooling system, fuel system, gaskets, and seals.',
+    title: 'MTU 1163 系列零件目录',
+    h1Title: 'MTU 1163 系列发动机零件',
+    summary: 'MTU 1163 系列发动机零件目录——高输出船用推进。',
+    description: '浏览 MTU 1163 系列零件：气缸盖、轴承、气门、冷却系统、燃油系统、垫片与密封件。',
     type: 'series',
     partFilter: (p) => p.series.some((s) => s.includes('1163')),
-    longDescription: `MTU 1163 parts requests need the full engine designation, serial number and installation position. Catalog references include cylinder-head components, main bearings (5550330130), connecting rod bearings (5550302160) and cooling pump shafts (5562010105). Treat each reference as a separate identification task rather than a universally compatible 1163 part.
+    longDescription: `MTU 1163 零件询价需要完整的发动机型号名称、出厂编号与安装位置。目录编号包括缸盖部件、主轴承（5550330130）、连杆轴承（5550302160）与冷却泵轴（5562010105）。每个编号都应作为独立的识别任务对待，而非通用于所有 1163 发动机的零件。
 
-    Some public records list references under both 1163 and 956. That does not prove fitment across both families. Provide the engine serial number, installed component marking and drawing revision for an application-specific check. Access to a current manufacturer catalog and current stock is not established by this public listing.`,
+    部分公开记录将同一编号同时列于 1163 与 956 系列之下，但这并不能证明其通用于两个系列。进行针对具体应用的核对时，请提供发动机出厂编号、所装部件标记与图纸版本。本公开目录并不代表可访问最新的原厂产品目录与当前库存。`,
   },
 
   // ── Category Hubs ──
   {
     slug: 'mtu-filters',
-    title: 'MTU Oil, Fuel & Air Filters | Parts Catalog',
-    h1Title: 'MTU Oil, Fuel, Air & Coolant Filters',
-    summary: 'MTU filter elements for scheduled maintenance and overhaul — oil filters, fuel filters, air filters, and coolant filters.',
-    description: 'Compare MTU oil, fuel, air, and coolant filter references by installed number and engine application. Send a single filter number or a mixed service list for availability and shipping checks.',
+    title: 'MTU 机油、燃油与空气滤清器零件目录',
+    h1Title: 'MTU 机油、燃油、空气与冷却液滤清器',
+    summary: '适用于定期保养与大修的 MTU 滤芯——涵盖机油滤清器、燃油滤清器、空气滤清器和冷却液滤清器。',
+    description: '按机上零件号与发动机应用场景对比 MTU 机油、燃油、空气及冷却液滤清器型号。可发送单个滤清器零件号或混合保养清单，以核查供货情况与发货安排。',
     searchTopics: [
       {
-        title: 'MTU Oil Filters',
-        description: 'Spin-on oil filters and replaceable filter cartridges for routine service and fleet replenishment.',
+        title: 'MTU 机油滤清器',
+        description: '旋装式机油滤清器与可更换滤芯，适用于日常保养与机群补给。',
       },
       {
-        title: 'MTU Fuel Filters',
-        description: 'Primary and secondary fuel filters selected by exact part number and engine application.',
+        title: 'MTU 燃油滤清器',
+        description: '按确切零件号与发动机应用选型的一级与二级燃油滤清器。',
       },
       {
-        title: 'MTU Air Filters',
-        description: 'Air-filter elements and intake filtration references for marine, generator, and industrial engines.',
+        title: 'MTU 空气滤清器',
+        description: '适用于船用、发电与工业发动机的空气滤清器滤芯及进气过滤型号。',
       },
     ],
-    longDescription: `Oil-filter references include 0031845201 and 0031845301; fuel-filter references include X57508300091 and 0020922801. Air filters such as 0030944304 and replaceable elements such as 0000925105 require different mounting and sealing checks.
+    longDescription: `机油滤清器（Oil Filter）型号包括 0031845201 与 0031845301；燃油滤清器型号包括 X57508300091 与 0020922801。空气滤清器如 0030944304，可更换滤芯如 0000925105，安装方式与密封检查要求各不相同。
 
-    For spin-on filters, confirm the mounting thread, sealing-ring dimensions, canister diameter, and height. For cartridge elements, include the housing number, end-cap arrangement, and filtration rating. A matching outer diameter or engine series alone does not establish interchangeability.
+    对于旋装式滤清器，需确认安装螺纹、密封环尺寸、滤筒直径与高度；对于筒式滤芯，请提供壳体型号、端盖形式与过滤精度。仅凭外径相同或发动机系列相同，不能认定可互换。
 
-    Keep the installed number in your inquiry even when a newer reference is listed. X57508300091 has X59408300151 listed as a later catalog number, while 0020922801 has X00012879. Each replacement needs an application check.
+    询价时请保留机上现有零件号，即使目录中已列出更新型号：X57508300091 在目录中的后续型号为 X59408300151，0020922801 的后续型号为 X00012879。每个替代号均需进行适用性核查。
 
-    Send part numbers, quantities, and destination to start an inquiry. Add label photos or a datasheet request when dimensions are unclear. Service intervals follow the engine's maintenance documentation and operating conditions.`,
+    询价请提供零件号、数量与目的地；如尺寸不明确，可附上标签照片或索取数据表。保养周期遵循发动机的维护文件与运行工况。`,
     type: 'category',
     partFilter: (p) => p.category === 'Filters',
   },
   {
     slug: 'mtu-injectors',
-    title: 'MTU Injectors & Nozzle Parts | Parts Catalog',
-    h1Title: 'MTU Engine Injectors & Nozzle Parts',
-    summary: 'MTU injectors, nozzle holders, nozzle elements, and related injection parts verified by stamped reference and engine serial number.',
-    description: 'Browse MTU injector and nozzle references for 2000, 4000, 396, 595, and 956 series engines. New, OEM-alternative, and remanufactured routes are quoted only after the stamped injector number, complete engine model, and serial number have been checked.',
+    title: 'MTU 喷油器与喷嘴零件目录',
+    h1Title: 'MTU 发动机喷油器与喷嘴零件',
+    summary: 'MTU 喷油器、喷嘴座、喷嘴芯及相关喷射零件，均按壳体压印编号与发动机出厂编号核验。',
+    description: '浏览适用于 2000、4000、396、595 与 956 系列发动机的 MTU 喷油器与喷嘴型号。新原厂配套（OEM）件、原厂配套替代件与再制造件路线，仅在核验喷油器压印编号、完整发动机型号与出厂编号后报价。',
     searchTopics: [
       {
-        title: 'MTU Engine Injectors',
-        description: 'New, OEM-alternative, and reman injector routes verified by stamped reference and engine serial number.',
+        title: 'MTU 发动机喷油器',
+        description: '新件、原厂配套替代件与再制造喷油器路线，按压印编号与发动机出厂编号核验。',
       },
       {
-        title: 'MTU Fuel Pumps',
-        description: 'High-pressure and low-pressure fuel pumps checked against model, rating, and installation position.',
+        title: 'MTU 燃油泵',
+        description: '高压与低压燃油泵，按型号、功率等级与安装位置核验。',
         href: '/part-products/catalog/mtu-fuel-pumps/',
       },
       {
-        title: 'MTU Injector Identification',
-        description: 'Use the complete body marking, connector, nozzle reference, engine model, and serial number to separate nearby injector variants.',
+        title: 'MTU 喷油器鉴别',
+        description: '通过完整的壳体标记、连接器、喷嘴型号、发动机型号与出厂编号，区分相近的喷油器变体。',
       },
     ],
-    longDescription: `MTU common-rail and unit-pump injection systems operate at extreme pressure. Injector performance directly affects combustion balance, exhaust temperature, fuel consumption, and emissions. A single underperforming injector can cause hard starting, rough running, excessive smoke, increased return flow, or a cylinder-temperature deviation.
+    longDescription: `MTU 共轨（Common-rail）与单体泵（Unit-pump）喷射系统在极高压力下运行。喷油器性能直接影响燃烧均衡、排气温度、燃油消耗与排放。单个喷油器性能不良即可导致启动困难、运转不稳、排烟过量、回油量增大或缸温偏差。
 
-    This page is limited to injectors, nozzle holders, nozzle elements, and directly related injection components. We supply new OEM, OEM-alternative, and professionally remanufactured routes when available. A remanufactured option should be supported by a traceable test process and clearly identified as remanufactured in the quotation.
+    本页仅涵盖喷油器、喷嘴座、喷嘴芯及直接相关的喷射部件。可供货渠道包括新原厂配套（OEM）件、原厂配套替代件与专业再制造件，视供货情况而定。再制造件应具备可追溯的测试流程，并在报价中明确标注为再制造件。
 
-    References include EX52407500064 for MTU 4000 catalog applications and X53507500012 for MTU 2000 catalog applications. Send the complete number stamped on the injector body, including prefixes, plus connector and nozzle-end photos. Multiple variants can exist within one engine series because of power rating, emissions configuration, or production revision.
+    涉及的型号包括适用于 MTU 4000 目录应用的 EX52407500064，以及适用于 MTU 2000 目录应用的 X53507500012。请提供喷油器壳体上压印的完整编号（含前缀），并附上连接器与喷嘴端照片。同一发动机系列内可能因功率等级、排放配置或生产版本不同而存在多个变体。
 
-    For injector dimensions in millimeters or inches, request the offered unit's drawing or measurements with clearly identified endpoints. The EX52407500064 page does not yet publish verified dimensions. For a remanufactured option, ask what test documentation and core-return conditions apply.
+    如需喷油器的毫米或英寸尺寸，请索取所报产品的图纸或标注了明确端点的测量数据。EX52407500064 页面尚未发布经核验的尺寸。对于再制造件，请询问适用的测试文件与旧件返还条件。
 
-    If the fault relates to supply pressure rather than injection quality, use the dedicated MTU fuel-pump catalog. Pump quotations require the pump label, drive arrangement, installation position, engine model, and serial number.`,
+    如故障与供油压力相关而非喷射质量，请查阅 MTU 燃油泵专题目录。燃油泵询价需提供油泵铭牌、传动形式、安装位置、发动机型号与出厂编号。`,
     type: 'category',
     partFilter: (p) => p.category === 'Fuel system' && /(injector|nozzle)/i.test(p.name),
   },
   {
     slug: 'mtu-fuel-pumps',
-    title: 'MTU Fuel Pumps | High & Low Pressure Parts Catalog',
-    h1Title: 'MTU Fuel Pumps',
-    summary: 'MTU high-pressure fuel pumps, low-pressure feed pumps, hand pumps, and delivery-pump references for marine, generator, rail, and industrial engines.',
-    description: 'Browse MTU fuel pump references and send the pump nameplate, complete engine model, serial number, installation position, and required quantity for compatibility verification before quotation.',
+    title: 'MTU 燃油泵零件目录——高压与低压',
+    h1Title: 'MTU 燃油泵',
+    summary: 'MTU 高压燃油泵、低压供油泵、手泵与输油泵型号，适用于船用、发电、轨道交通与工业发动机。',
+    description: '浏览 MTU 燃油泵型号；报价前请提供油泵铭牌、完整发动机型号、出厂编号、安装位置与所需数量，以完成适配性核验。',
     searchTopics: [
       {
-        title: 'MTU High-Pressure Fuel Pumps',
-        description: 'High-pressure pump assemblies checked by pump label, engine rating, emissions configuration, and serial number.',
+        title: 'MTU 高压燃油泵',
+        description: '高压泵总成，按油泵铭牌、发动机功率等级、排放配置与出厂编号核验。',
       },
       {
-        title: 'MTU Low-Pressure Fuel Pumps',
-        description: 'Feed and delivery pumps verified by inlet and outlet arrangement, drive type, and engine application.',
+        title: 'MTU 低压燃油泵',
+        description: '供油泵与输油泵，按进出油口布置、传动形式与发动机应用场景核验。',
       },
       {
-        title: 'MTU Injectors and Nozzles',
-        description: 'Injection components have a separate catalog so injector and pump search intent remains clear.',
+        title: 'MTU 喷油器与喷嘴',
+        description: '喷射部件设有独立目录，以便喷油器与燃油泵的检索意图保持清晰。',
         href: '/part-products/catalog/mtu-injectors/',
       },
     ],
-    longDescription: `An MTU fuel pump must be matched by more than the engine series. High-pressure pumps, low-pressure feed pumps, hand-priming pumps, and delivery pumps differ by pressure range, drive arrangement, port orientation, engine rating, and production revision. Ordering from a shortened engine description can result in a pump that mounts correctly but does not meet the required pressure or control specification.
+    longDescription: `MTU 燃油泵的适配不能仅凭发动机系列确定。高压泵、低压供油泵、手压泵与输油泵在压力范围、传动形式、油口朝向、发动机功率等级与生产版本上各有不同。仅凭简化的发动机描述下单，可能买到安装无误但压力或控制规格不达标的油泵。
 
-    This catalog focuses only on fuel-pump references, including X53508200001 low-pressure fuel pump, E0060704101 high-pressure fuel pump, X52808100014 fuel delivery pump, X53608200005 low-pressure fuel pump, and related delivery-pump assemblies. Availability can include new OEM, OEM-alternative, remanufactured, or replacement routes, with the supply condition stated clearly in the quotation.
+    本目录仅聚焦燃油泵型号，包括 X53508200001 低压燃油泵、E0060704101 高压燃油泵、X52808100014 输油泵、X53608200005 低压燃油泵及相关输油泵总成。供货渠道可包括新原厂配套（OEM）件、原厂配套替代件、再制造件或替代件，报价中将明确注明供货状态。
 
-    Common pump-related service symptoms include difficult priming, low rail or supply pressure, power loss under load, abnormal pump noise, external leakage, and pressure faults that remain after filters and control valves have been checked. These symptoms do not prove that the pump itself has failed, so a diagnostic code, measured pressure, and existing pump label are useful before ordering.
+    油泵相关的常见故障现象包括：预压困难、轨压或供油压力低、负载下功率下降、油泵异响、外部泄漏，以及在滤清器与控制阀检查完毕后仍存在的压力故障。这些现象并不能证明油泵本身已经失效，因此下单前提供故障码、实测压力与现有油泵铭牌信息将很有帮助。
 
-    For an RFQ, send the complete pump number, engine model and serial number, pump nameplate photo, inlet and outlet orientation, quantity, destination, and required delivery date. For a remanufactured route, also confirm whether a serviceable core is available.`,
+    询价（RFQ）请提供完整油泵编号、发动机型号与出厂编号、油泵铭牌照片、进出油口朝向、数量、目的地与要求的交货期。如选择再制造件路线，还请确认是否具备可再制造的旧件。`,
     type: 'category',
     partFilter: (p) => /fuel/i.test(`${p.name} ${p.category}`) && /pump/i.test(p.name),
   },
   {
     slug: 'mtu-turbocharger-parts',
-    title: 'MTU Turbocharger Parts — Turbine Wheels, Housings, Seals | Parts Catalog',
-    h1Title: 'MTU Turbocharger Components',
-    summary: 'MTU turbocharger parts — turbine wheels, bearing housings, heat shields, piston rings, and compressor wheels.',
-    description: 'Turbocharger components operate under high thermal and mechanical loads. We verify each part number against your turbocharger serial number. New, OEM-alternative, and remanufactured options quoted per inquiry for MTU 2000, 4000, and 396 series engines.',
+    title: 'MTU 涡轮增压器零件目录——涡轮、壳体与密封件',
+    h1Title: 'MTU 涡轮增压器部件',
+    summary: 'MTU 涡轮增压器零件——涡轮、轴承壳体、隔热罩、活塞环与压气机叶轮。',
+    description: '涡轮增压器部件在极高的热负荷与机械负荷下运行。我们对照您的增压器出厂编号逐一核验每个零件号。针对 MTU 2000、4000 与 396 系列发动机的新件、原厂配套替代件与再制造件方案，按询价逐一报价。',
     searchTopics: [
       {
-        title: 'MTU Turbochargers',
-        description: 'Complete turbocharger and reman routes checked by turbo nameplate, engine application, and power rating.',
+        title: 'MTU 涡轮增压器',
+        description: '增压器整机与再制造路线，按增压器铭牌、发动机应用与功率等级核验。',
       },
       {
-        title: 'MTU Turbocharger Parts',
-        description: 'Turbine wheels, compressor wheels, bearing housings, heat shields, piston rings, and sealing components.',
+        title: 'MTU 涡轮增压器零件',
+        description: '涡轮、压气机叶轮、轴承壳体、隔热罩、活塞环与密封部件。',
       },
     ],
     type: 'category',
     partFilter: (p) => p.category === 'Turbocharging',
-    longDescription: `Separate a complete turbocharger from a rotating assembly, wheel, housing or sealing component. Request the turbocharger nameplate and complete assembly reference; an engine family alone does not identify the installed turbocharger build.
+    longDescription: `请将完整的涡轮增压器（Turbocharger）与旋转总成、叶轮、壳体或密封部件区分开来。请提供增压器铭牌与完整总成型号；仅凭发动机系列无法确定机上所装的增压器构型。
 
-    Our turbocharger parts catalog covers the complete rotating assembly: turbine wheels (5110804420, 5110800220, 5110800420), compressor wheels (5090251301), bearing housings (5110803201), piston ring seals (5110850060, 5120850560), heat shields (5110812603, 5110820226), and diffusers (5361420025). We verify each part number against your turbocharger nameplate — not just the engine serial — because turbocharger variants within the same engine series can differ by application, power rating, and emissions certification.
+    我们的涡轮增压器零件目录覆盖完整旋转总成：涡轮（5110804420、5110800220、5110800420）、压气机叶轮（5090251301）、轴承壳体（5110803201）、活塞环密封件（5110850060、5120850560）、隔热罩（5110812603、5110820226）与扩压器（5361420025）。我们对照您的增压器铭牌——而非仅发动机出厂编号——逐一核验零件号，因为同一发动机系列内的增压器变体可能因应用场景、功率等级与排放认证而异。
 
-    Common failure modes include foreign-object damage to turbine blades from intake debris or exhaust manifold fragments, bearing housing bore wear causing radial play and oil leakage into the exhaust stream, and heat shield cracking from thermal cycling on engines with frequent start-stop duty cycles. We quote new OEM, OEM-alternative, and remanufactured options with transparent lead times.`,
+    常见故障模式包括：进气异物或排气歧管碎屑造成的涡轮叶片异物损伤；轴承壳体孔磨损导致径向间隙并伴随机油漏入排气流；以及频繁启停工况下热循环导致的隔热罩开裂。我们为新件、原厂配套替代件与再制造件方案提供交货期透明的报价。`,
   },
   {
     slug: 'mtu-sensors',
-    title: 'MTU Sensors & Electrical Components | Parts Catalog',
-    h1Title: 'MTU Sensors & Electrical Parts',
-    summary: 'MTU sensors and electrical components — speed sensors, pressure sensors, temperature sensors, level monitors, and solenoid valves.',
-    description: 'Electrical and sensor parts require precise matching — connector type, thread size, and signal range vary by engine installation. We cross-check part numbers against engine serial numbers for MTU 2000, 4000, 396, and 595 series.',
+    title: 'MTU 传感器与电气元件零件目录',
+    h1Title: 'MTU 传感器与电气零件',
+    summary: 'MTU 传感器与电气元件——转速传感器、压力传感器、温度传感器、液位监测器与电磁阀。',
+    description: '电气与传感器零件需要精确匹配——连接器类型、螺纹规格与信号范围因发动机装机而异。针对 MTU 2000、4000、396 与 595 系列，我们对照发动机出厂编号交叉核验零件号。',
     type: 'category',
     partFilter: (p) => p.category === 'Sensors and electrical',
-    longDescription: `This catalog includes speed sensors such as 0005357633, pressure sensors such as 0035352231 and X00E50214075, temperature sensor 0005356430, and level monitor X00E50203659. Choose by the complete component marking and measuring position, not by connector appearance alone.
+    longDescription: `本目录包括转速传感器（Speed Sensor）如 0005357633、压力传感器如 0035352231 与 X00E50214075、温度传感器 0005356430 及液位监测器 X00E50203659。选型请依据完整的部件标记与测量位置，不能仅凭连接器外观判断。
 
-    Catalog history lists X00E50214075 as a later number for 0035352231 and X00E50203659 as a later number for 0005355103. These records need an engine-specific check. Similar numbers, including 0005356633 and 0005357633, must not be assumed interchangeable.
+    目录沿革显示，X00E50214075 是 0035352231 的后续型号，X00E50203659 是 0005355103 的后续型号。这些记录需按具体发动机核验。相近编号（如 0005356633 与 0005357633）不得假定为可互换。
 
-    Include the pressure range or temperature characteristic where marked, connector pin arrangement, mounting thread, and cable or probe length. An alarm alone does not identify a failed sensor; wiring and system diagnosis should accompany the parts request when available.
+    如标有压力量程或温度特性，请一并提供；另请提供连接器针脚布置、安装螺纹及线缆或探杆长度。仅凭报警不能判定传感器失效；如有可能，零件询价请附上线束与系统诊断信息。
 
-    Send a number and quantity to start. Photos, engine serial number, and any required drawing help resolve missing specifications before a replacement is quoted.`,
+    询价请先提供零件号与数量。照片、发动机出厂编号及所需图纸，有助于在报价替代件之前补齐缺失的规格信息。`,
   },
   {
     slug: 'mtu-starter-motors-alternators',
-    title: 'MTU Starter Motors & Alternators | Parts Catalog',
-    h1Title: 'MTU Starter Motors & Alternators',
-    summary: 'MTU electric starter motors, alternators, charging generators, and related electrical drive references verified by voltage, mounting, and engine application.',
-    description: 'Browse MTU starter and alternator references for marine, generator, rail, and industrial engines. Confirm voltage, rotation, mounting flange, terminal layout, pulley or drive arrangement, and engine serial number before quotation.',
+    title: 'MTU 起动机与交流发电机零件目录',
+    h1Title: 'MTU 起动机与交流发电机',
+    summary: 'MTU 电动起动机、交流发电机、充电发电机及相关电气传动型号，均按电压、安装形式与发动机应用核验。',
+    description: '浏览适用于船用、发电、轨道交通与工业发动机的 MTU 起动机与交流发电机型号。报价前请确认电压、旋向、安装法兰、端子布置、皮带轮或传动形式及发动机出厂编号。',
     searchTopics: [
       {
-        title: 'MTU Starter Motors',
-        description: 'Electric starters checked by system voltage, rotation direction, pinion, flange, terminal layout, and engine application.',
+        title: 'MTU 起动机',
+        description: '电动起动机，按系统电压、旋转方向、驱动齿轮、法兰、端子布置与发动机应用核验。',
       },
       {
-        title: 'MTU Alternators',
-        description: 'Charging alternators and generators checked by output rating, pulley or coupling, mounting position, and connector arrangement.',
+        title: 'MTU 交流发电机',
+        description: '充电用交流发电机与发电机，按输出功率、皮带轮或联轴器、安装位置与连接器布置核验。',
       },
       {
-        title: 'Electrical Identification',
-        description: 'Send the complete unit label and clear photos; voltage alone is not enough to confirm interchangeability.',
+        title: '电气件鉴别',
+        description: '请提供完整的整机铭牌与清晰照片；仅凭电压不足以确认可互换性。',
       },
     ],
-    longDescription: `MTU starter motors and alternators are installation-specific electrical assemblies. Units used on marine propulsion engines, generator sets, locomotives, and industrial power units can differ in system voltage, rotation direction, mounting flange, pinion or pulley arrangement, terminal position, output rating, and environmental protection. A visually similar unit should not be treated as interchangeable without checking these fields.
+    longDescription: `MTU 起动机（Starter）与交流发电机（Alternator）属于依装机而异的电气总成。用于船用推进发动机、发电机组、机车与工业动力装置的整机，在系统电压、旋转方向、安装法兰、驱动齿轮或皮带轮布置、端子位置、输出功率与防护等级上可能各不相同。未经逐项核验，外观相近的整机不得视为可互换。
 
-    This catalog covers electric starter and charging references such as X59417200010 starter electric, X52421300004 alternator, X51621300033 generator, and 0071548102 three-phase generator. The available route may be new OEM, OEM-alternative, professionally remanufactured, or a verified replacement, with condition and warranty information identified before order confirmation.
+    本目录涵盖电动起动与充电相关型号，如 X59417200010 电动起动机、X52421300004 交流发电机、X51621300033 发电机及 0071548102 三相发电机。可供货渠道包括新原厂配套（OEM）件、原厂配套替代件、专业再制造件或经验证的替代件；订单确认前将明确状态与保修信息。
 
-    Common starter complaints include slow cranking, intermittent engagement, pinion or solenoid faults, overheating, and voltage drop under load. Alternator complaints include low charging voltage, unstable output, bearing noise, belt or pulley wear, and regulator faults. Before replacing an assembly, verify batteries, cables, grounds, belts, and control signals so an installation fault is not mistaken for a failed unit.
+    起动机的常见反馈包括起动缓慢、偶发性啮合不良、驱动齿轮或电磁阀故障、过热及负载下电压跌落。交流发电机的常见反馈包括充电电压低、输出不稳、轴承异响、皮带或皮带轮磨损及调节器故障。更换整机前，请先核查蓄电池、线缆、接地、皮带与控制信号，以免将安装问题误判为整机失效。
 
-    For quotation, send the complete label number, engine model and serial number, system voltage, mounting and terminal photos, quantity, destination, and required delivery date. For alternators, include output rating and pulley details; for starters, include rotation and pinion information when available.`,
+    询价请提供完整铭牌编号、发动机型号与出厂编号、系统电压、安装与端子照片、数量、目的地及要求的交货期。交流发电机请附输出功率与皮带轮详情；起动机请尽可能提供旋向与驱动齿轮信息。`,
     type: 'category',
     partFilter: (p) => p.category === 'Starting and charging' || /(starter|alternator|three phase generator)/i.test(p.name),
   },
   {
     slug: 'mtu-gasket-kits',
-    title: 'MTU Gaskets & Seal Kits | Parts Catalog',
-    h1Title: 'MTU Gaskets, Seals & O-Rings',
-    summary: 'MTU gaskets and seals — cylinder head gaskets, O-rings, sealing rings, shaft seals, and complete gasket kits.',
-    description: 'Request individual MTU gaskets or an itemized overhaul sealing list. Confirm material, thickness, shape and installation position; stock and kit contents are checked for each quotation.',
+    title: 'MTU 垫片与密封套件零件目录',
+    h1Title: 'MTU 垫片、密封件与 O 型圈',
+    summary: 'MTU 垫片与密封件——气缸盖垫片（缸垫）、O 型圈、密封环、轴封及成套垫片组。',
+    description: '可单独申购 MTU 垫片，也可提供逐项列出的大修密封件清单。请确认材质、厚度、形状与安装位置；库存与套件内容将在每笔报价中逐一核查。',
     type: 'category',
     partFilter: (p) => p.category === 'Gaskets and seals',
-    longDescription: `Gaskets, seals, and O-rings may be the smallest parts on an MTU engine by weight, but they are among the most consequential. A failed cylinder head gasket can pressurize the cooling system and cause overheating within minutes. A leaking turbocharger oil seal can empty the oil sump into the exhaust. A deteriorated O-ring on a fuel injector sleeve can allow combustion gas into the fuel return circuit. Every gasket and seal in this catalog has been selected because it serves a critical containment function.
+    longDescription: `垫片（Gasket）、密封件（Seal）与 O 型圈（O-ring）就重量而言或许是 MTU 发动机上最小的零件，但其重要性却居于前列。气缸盖垫片失效可在数分钟内使冷却系统带压并导致过热；涡轮增压器油封泄漏可将油底壳的机油排入排气系统；燃油喷油器衬套上的 O 型圈老化可令燃烧气体进入回油回路。本目录中的每一款垫片与密封件，都因其承担关键的封闭功能而入选。
 
-    Catalog references include cylinder head gaskets (5240161580, 5410160920, 5550161420), O-rings (700429260000, 700429050003), shaft seals (8699970499, XP51529700004), sealing rings (007603016105) and valve stem seals (0000530361). Current stock and material grades remain subject to supplier confirmation. A gasket-set quote must identify its contents and quantities; a kit label alone does not establish complete coverage or a lower price.`,
+    目录型号包括气缸盖垫片（5240161580、5410160920、5550161420）、O 型圈（700429260000、700429050003）、轴封（8699970499、XP51529700004）、密封环（007603016105）与气门油封（0000530361）。现有库存与材质等级仍以供应商确认为准。垫片组报价必须列明所含件号与数量；仅凭套件名称不能证明覆盖完整或价格更优。`,
   },
   {
     slug: 'mtu-pistons-liners',
-    title: 'MTU Pistons, Liners & Rings | Parts Catalog',
-    h1Title: 'MTU Pistons, Cylinder Liners & Ring Sets',
-    summary: 'MTU piston assemblies, cylinder liners, piston rings, piston pins, and connecting rod components.',
-    description: 'MTU piston, liner and ring references need component markings, size-grade documentation and engine serial-number checks. Supply condition and available grades are confirmed for the offered number.',
+    title: 'MTU 活塞、缸套与活塞环零件目录',
+    h1Title: 'MTU 活塞、气缸套与活塞环组',
+    summary: 'MTU 活塞总成、气缸套、活塞环、活塞销及连杆部件。',
+    description: 'MTU 活塞、缸套与活塞环型号需要部件标记、尺寸等级文件及发动机出厂编号核验。所报型号的供货状态与可选等级将在报价中确认。',
     type: 'category',
     partFilter: (p) => p.category === 'Pistons and liners',
-    longDescription: `The piston-and-liner assembly is the heart of every MTU engine's combustion system. These are size-graded, precision-machined components where clearance between the piston skirt and cylinder liner is measured in hundredths of a millimeter. An incorrect size grade — even one step off — leads to scuffing, excessive oil consumption, or in severe cases, piston seizure. This is not a commodity part; it is an engineered assembly where the price of a mistake is measured in engine hours lost.
+    longDescription: `活塞与缸套（Piston & Liner）总成是每台 MTU 发动机燃烧系统的核心。这些零件按尺寸等级分组、精密加工，活塞裙部与气缸套之间的间隙以百分之一毫米计量。尺寸等级差一级——哪怕只差一级——就会导致拉缸、机油消耗过量，严重时甚至活塞抱死。这不是普通商品件，而是经过工程设计的组合部件；一旦选错，代价以损失的发动机运行小时计算。
 
-    Catalog references include cylinder liners (5240113410, 5320110110, 5840111810), pistons (5240303917, 5840300917), ring components (0120370618, 0090375019, 0080375819) and piston pins (5410370220). Request the included components and mating grades explicitly. Do not assume every grade code means a universal oversize increment; confirm it against the applicable drawing and offered unit.`,
+    目录型号包括气缸套（5240113410、5320110110、5840111810）、活塞（5240303917、5840300917）、活塞环部件（0120370618、0090375019、0080375819）与活塞销（5410370220）。请明确说明所需包含的部件与配合等级。不要假定每个等级代码都对应统一的加大尺寸级别；请对照适用图纸与所报产品确认。`,
   },
   {
     slug: 'mtu-valve-train',
-    title: 'MTU Valve Train Parts — Valves, Springs, Guides, Tappets | Parts Catalog',
-    h1Title: 'MTU Valve Train Components',
-    summary: 'MTU valve train parts — inlet and exhaust valves, valve springs, spring retainers, collets, guides, tappets, and push rods.',
-    description: 'Valve train wear directly affects compression, fuel efficiency, and exhaust emissions. We supply individual components and complete cylinder-head overhaul kits for MTU 2000, 4000, 396, and 595 series. Kit pricing available for overhaul quantities.',
+    title: 'MTU 配气机构零件目录——气门、弹簧、导管与挺柱',
+    h1Title: 'MTU 配气机构部件',
+    summary: 'MTU 配气机构零件——进气门与排气门、气门弹簧、弹簧座、锁夹、导管、挺柱与推杆。',
+    description: '配气机构磨损直接影响气缸压力、燃油效率与排气排放。我们为 MTU 2000、4000、396 与 595 系列提供单个部件与完整的气缸盖大修包；按大修批量可提供套件价格。',
     type: 'category',
     partFilter: (p) => p.category === 'Valve train',
   },
   {
     slug: 'mtu-bearings',
-    title: 'MTU Engine Bearings — Crankshaft, Conrod, Camshaft, Thrust | Parts Catalog',
-    h1Title: 'MTU Engine Bearings',
-    summary: 'MTU bearings — crankshaft main bearings, connecting rod bearings, camshaft bearings, thrust bearings, and bushings.',
-    description: 'Compare MTU main, connecting-rod, camshaft and thrust-bearing references. Specify shell position, grade markings, measured journal size and shaft repair history; available grades are checked per inquiry.',
+    title: 'MTU 发动机轴承零件目录——曲轴、连杆、凸轮轴与推力轴承',
+    h1Title: 'MTU 发动机轴承',
+    summary: 'MTU 轴承——曲轴主轴承、连杆轴承、凸轮轴轴承、推力轴承与衬套。',
+    description: '对比 MTU 主轴承、连杆轴承、凸轮轴轴承与推力轴承型号。请注明轴瓦位置、等级标记、实测轴颈尺寸与曲轴修磨史；可选等级将在每笔询价中核查。',
     type: 'category',
     partFilter: (p) => p.category === 'Bearings',
-    longDescription: `MTU engine bearings — crankshaft main bearings, connecting rod bearings, camshaft bearings, and thrust washers — are precision-graded components manufactured to tolerances that determine oil film thickness, load distribution, and ultimately engine life. A bearing set that is one size grade off will not "almost work"; it will wipe within the first hours of operation and take the crankshaft journal with it.
+    longDescription: `MTU 发动机轴承（Bearing）——曲轴主轴承、连杆轴承、凸轮轴轴承与推力垫——属于精密分级零件，其制造公差决定油膜厚度、载荷分布，并最终决定发动机寿命。轴承组差一个尺寸等级不会「勉强能用」；它会在运行最初几小时内烧瓦，并连带损伤曲轴轴颈。
 
-    Catalog references include main-bearing shells (5240334901, 5240335602, 5410330605), connecting-rod bearing components (5240383710, 5240382711, 5550302160), camshaft bearings (5240510110) and thrust components (5090200512, 5110200412, 5360330262). Confirm shell position and grade using applicable documentation and workshop measurements. No universal undersize increments or current stock grades are established by this catalog.`,
+    目录型号包括主轴承轴瓦（5240334901、5240335602、5410330605）、连杆轴承部件（5240383710、5240382711、5550302160）、凸轮轴轴承（5240510110）与推力部件（5090200512、5110200412、5360330262）。请依据适用文件与车间测量结果确认轴瓦位置与等级。本目录不设定统一的缩小尺寸级别或现有库存等级。`,
   },
   {
     slug: 'mtu-cylinder-heads',
-    title: 'MTU Cylinder Heads & Covers | Parts Catalog',
-    h1Title: 'MTU Cylinder Heads and Covers',
-    summary: 'MTU cylinder heads, head assemblies, head covers and valve heads — referenced by engine series and build, checked by part number and serial number.',
-    description: 'Browse MTU cylinder-head references for marine, generator, rail and industrial engines. Head assemblies, bare heads and covers are quoted against the exact part number, engine serial number, and installation position.',
+    title: 'MTU 气缸盖与气门室盖零件目录',
+    h1Title: 'MTU 气缸盖与气门室盖',
+    summary: 'MTU 气缸盖、缸盖总成、气门室盖与气门头部——按发动机系列与构型索引，经零件号与出厂编号核验。',
+    description: '浏览适用于船用、发电、轨道交通与工业发动机的 MTU 气缸盖型号。缸盖总成、裸缸盖与气门室盖的报价，均以确切零件号、发动机出厂编号与安装位置为依据。',
     type: 'category',
     partFilter: (p) => p.category === 'Cylinder heads',
-    longDescription: `The cylinder head is the most consequential single assembly on an MTU engine: it carries the valves, injector sleeves, and the fire deck seal, and it sets the compression that everything downstream depends on. A head that has been overheated even once may hold pressure today and crack under load next season — so head enquiries are quoted against the exact part number, engine serial number, and service history, not against a series name alone.
+    longDescription: `气缸盖（Cylinder Head）是 MTU 发动机上最为关键的单体总成：它承载气门、喷油器衬套与火力面密封，并决定下游一切部件所依赖的气缸压力。一只曾经历过过热的缸盖，今天或许还能保持压力，下一个赛季就可能在高负载下开裂——因此缸盖询价以确切零件号、发动机出厂编号与维修履历为依据，而非仅凭系列名称。
 
-    Catalog references include complete head assemblies, bare heads, head covers, and valve-head components across Series 2000, 4000, 396, 956 and 1163 applications. When requesting a quotation, state whether the unit is required bare, assembled with valves, or with the injector sleeves fitted, and include the build code from the nameplate so the correct variant is identified before order confirmation.
+    目录型号涵盖 2000、4000、396、956 与 1163 系列应用中的完整缸盖总成、裸缸盖、气门室盖及气门头部部件。询价时请注明所需为裸缸盖、带气门装配的缸盖，还是已装喷油器衬套的缸盖，并提供铭牌上的构型代码，以便在订单确认前识别正确的变体。
 
-    For overhaul programs, send the full parts list together with the engine model and serial number; heads are usually quoted alongside the gasket set, valve-train components, and injector sleeves that the same job consumes.`,
+    对于大修项目，请随附发动机型号与出厂编号一并发送完整零件清单；缸盖通常与同一作业所需的垫片组、配气机构部件及喷油器衬套一并报价。`,
   },
   {
     slug: 'mtu-fasteners-retaining-rings',
-    title: 'MTU Fasteners & Retaining Rings | Parts Catalog',
-    h1Title: 'MTU Fasteners and Retaining Rings',
-    summary: 'MTU bolts, screws, shims, snap rings, retaining rings and locking hardware — torque-to-yield stretch bolts quoted as single-use items.',
-    description: 'MTU fasteners and retaining hardware by part number. Stretch bolts are single-use torque-to-yield items; grade markings and installation position are confirmed before quotation.',
+    title: 'MTU 紧固件与卡环零件目录',
+    h1Title: 'MTU 紧固件与卡环',
+    summary: 'MTU 螺栓、螺钉、调整垫片、卡环、挡圈与锁紧件——塑性域拉伸螺栓按一次性使用件报价。',
+    description: 'MTU 紧固件与挡圈类零件按零件号检索。拉伸螺栓属于一次性使用的塑性域（Torque-to-yield）螺栓；报价前将确认强度等级标记与安装位置。',
     type: 'category',
     partFilter: (p) => p.category === 'Fasteners and retaining rings',
-    longDescription: `Fasteners on a high-speed diesel are not commodity hardware. Cylinder-head bolts, connecting-rod bolts and main-bearing bolts on MTU engines are torque-to-yield (stretch) items: they are tightened to a specified elongation, they deform permanently on first installation, and they are single-use by design. Re-installing a used stretch bolt is one of the most common causes of head-gasket failure and joint relaxation, so overhaul quotations treat them as consumables rather than reusable stock.
+    longDescription: `高速柴油机上的紧固件并非普通五金。MTU 发动机的气缸盖螺栓、连杆螺栓与主轴承螺栓属于塑性域（Torque-to-yield）拉伸件：它们按规定的伸长量拧紧，在首次安装时即发生永久变形，按设计一次性使用。重复安装使用过的拉伸螺栓，是缸垫失效与结合面松脱最常见的原因之一，因此大修报价将其视为易损件，而非可复用库存。
 
-    Catalog references include hex screws, grub and adjusting screws, banjo and hollow screws, shims, snap rings, retaining rings, circlip kits, locking plates, and threaded plugs across Series 2000, 4000, 396, 956, 1163 and 183 applications. Grade markings, thread form, length, and installation position are confirmed per inquiry, because visually similar bolts from adjacent builds differ in both specification and torque figure.
+    目录型号涵盖 2000、4000、396、956、1163 与 183 系列应用中的六角螺钉、紧定与调节螺钉、banjo 接头与空心螺钉、调整垫片、卡环、挡圈、卡环套件、锁片与螺塞。强度等级标记、螺纹形式、长度与安装位置按询价逐一确认——因为相邻构型中外观相近的螺栓，其规格与扭矩数值可能并不相同。
 
-    Send the part number, engine model and serial number, and the joint the fastener belongs to — head, rod, main-bearing cap, or cover — so the correct single-use specification is quoted rather than a generic equivalent.`,
+    请提供零件号、发动机型号与出厂编号，以及该紧固件所属的结合部位——缸盖、连杆、主轴承盖或盖板——以便报价正确的一次性使用规格，而非通用等效件。`,
   },
   {
     slug: 'mtu-tools-service-supplies',
-    title: 'MTU Special Tools & Service Supplies | Parts Catalog',
-    h1Title: 'MTU Special Tools and Service Supplies',
-    summary: 'MTU service tools and assembly supplies — pullers, barring tools, setting mandrels, removal devices, gauges, and assembly compounds.',
-    description: 'MTU workshop tools and service supplies referenced by tool number. Barring devices, setting mandrels and pullers are checked by tool number and engine application before quotation.',
+    title: 'MTU 专用工具与服务耗材零件目录',
+    h1Title: 'MTU 专用工具与服务耗材',
+    summary: 'MTU 维修工具与装配辅料——拉马、盘车工具、定位心轴、拆卸装置、量具与装配涂剂。',
+    description: 'MTU 车间工具与服务耗材按工具号索引。盘车装置、定位心轴与拉马在报价前按工具号与发动机应用核验。',
     type: 'category',
     partFilter: (p) => p.category === 'Tools and supplies',
-    longDescription: `Several MTU operations cannot be done correctly without the factory tool: turning the engine to top dead centre with the barring device, setting injector height with the mandrel, pulling a sleeve or a pulley without loading the housing, or recording compression with the press recorder. These tools are identified by tool number (the F-prefix series) rather than by engine part number, and a substitute improvised in a workshop usually damages the very component it is meant to service.
+    longDescription: `MTU 的若干项操作离开原厂工具便无法正确完成：用盘车装置将发动机转到上止点、用心轴设定喷油器高度、在不使壳体受载的前提下拆下衬套或皮带轮、用压力记录仪记录气缸压力。这些工具以工具号（F 前缀系列）标识，而非发动机零件号；车间里临时凑合的代用件，往往会损坏其本想保养的部件本身。
 
-    Catalog references include barring tools and devices, pullers, fitting-removal devices, setting mandrels, milling cutters, feeler gauges, compression recorders, tool kits, assembly pastes and sealants across Series 2000, 4000, 396, 956, 1163 and legacy 183 applications. When requesting a quotation, send the tool number stamped on the unit together with the engine model it is used on — tool numbers are reused across builds, and the engine application is what pins down the correct variant.
+    目录型号涵盖 2000、4000、396、956、1163 系列及老旧 183 系列应用中的盘车工具与装置、拉马、拆装工具、定位心轴、铣刀、塞尺、气缸压力记录仪、工具套件、装配膏与密封剂。询价时请提供工具上压印的工具号及其所配发动机型号——工具号在不同构型间存在复用，正是发动机应用才能锁定正确的变体。
 
-    For a planned overhaul, ask for the tool list alongside the parts list: the same job usually needs the barring device, the setting mandrel, and at least one puller, and ordering them together avoids a workshop stoppage mid-job.`,
+    计划大修时，请连同零件清单一并索取工具清单：同一作业通常需要盘车装置、定位心轴与至少一件拉马，将它们一并下单，可避免作业中途因工具短缺而停工。`,
   },
   {
     slug: 'mtu-cooling-system',
-    title: 'MTU Cooling System Parts — Pumps, Impellers, Thermostats | Parts Catalog',
-    h1Title: 'MTU Cooling System Components',
-    summary: 'MTU cooling system parts — coolant pumps, seawater pumps, impellers, thermostats, flanges, hoses, and heat exchangers.',
-    description: 'Cooling system parts vary by engine application — marine (raw-water or keel-cooled), industrial (radiator), or rail. We confirm the correct variant by engine model and serial number for MTU 2000, 4000, 396, 595, and 956 series.',
+    title: 'MTU 冷却系统零件目录——水泵、叶轮与节温器',
+    h1Title: 'MTU 冷却系统部件',
+    summary: 'MTU 冷却系统零件——冷却水泵、海水泵、叶轮、节温器、法兰、软管与热交换器。',
+    description: '冷却系统零件因发动机应用而异——船用（开式海水冷却或舷外冷却）、工业（散热器）或轨道交通。针对 MTU 2000、4000、396、595 与 956 系列，我们按发动机型号与出厂编号确认正确的变体。',
     searchTopics: [
       {
-        title: 'MTU Coolant Pumps',
-        description: 'Engine coolant pumps, shafts, seals, housings, and related replacement components.',
+        title: 'MTU 冷却水泵',
+        description: '发动机冷却水泵、泵轴、密封件、壳体及相关更换部件。',
       },
       {
-        title: 'MTU Seawater Pumps and Impellers',
-        description: 'Marine raw-water pump parts selected by engine model and cooling-system configuration.',
+        title: 'MTU 海水泵与叶轮',
+        description: '按发动机型号与冷却系统配置选型的船用海水泵零件。',
       },
       {
-        title: 'MTU Thermostats',
-        description: 'Thermostats and temperature-control parts for marine, generator, rail, and industrial installations.',
+        title: 'MTU 节温器',
+        description: '适用于船用、发电、轨道交通与工业装机的节温器与温控部件。',
       },
     ],
     type: 'category',
     partFilter: (p) => p.category === 'Cooling system',
-    longDescription: `MTU engine cooling systems are application-specific — a marine engine running on raw-water cooling through a keel cooler requires different pump and thermostat configurations than an industrial engine on a closed-loop radiator or a rail engine with split-circuit cooling. Ordering the wrong cooling-system variant is one of the most common parts-matching errors because the same engine series can have multiple cooling configurations.
+    longDescription: `MTU 发动机冷却系统依应用而定——采用开式冷却并经舷外冷却器换热的船用发动机，与采用闭式循环散热器的工业发动机或采用分区冷却的轨交发动机，所需的水泵与节温器配置各不相同。订购错误的冷却系统变体是最常见的零件选配失误之一，因为同一发动机系列可能存在多种冷却配置。
 
-    Our cooling system catalog covers coolant pumps (5062000601, 5592001001/31), seawater pumps (5502003201), impellers (X00022524, 5582040406, 5592010007, 5592010307), thermostats (5841800175), coolant pump shafts (5552010005, 5842040714), flanges (8490740063), and sight glasses (5502030060). For each inquiry, we confirm the correct variant by engine model, serial number, and application type. Common replacement triggers include impeller wear from abrasive cooling water, pump shaft seal leakage, and thermostat sticking in the open or closed position.`,
+    我们的冷却系统目录涵盖冷却水泵（5062000601、5592001001/31）、海水泵（5502003201）、叶轮（X00022524、5582040406、5592010007、5592010307）、节温器（5841800175）、冷却水泵轴（5552010005、5842040714）、法兰（8490740063）与观察镜（5502030060）。每笔询价均按发动机型号、出厂编号与应用类型确认正确的变体。常见的更换诱因包括：磨蚀性冷却水造成的叶轮磨损、泵轴密封泄漏，以及节温器卡在开启或关闭位置。`,
   },
 ];
 
@@ -2983,19 +2983,19 @@ const categoryCatalogTargets = [
 ] as const;
 
 const categoryTitleMap: Record<string, string> = {
-  'Fuel system': 'Fuel System',
-  'Filters': 'Filters',
-  'Gaskets and seals': 'Gaskets and Seals',
-  'Pistons and liners': 'Pistons, Liners and Rings',
-  'Valve train': 'Valve Train',
-  'Bearings': 'Engine Bearings',
-  'Turbocharging': 'Turbocharger Parts',
-  'Cooling system': 'Cooling System',
-  'Sensors and electrical': 'Sensors and Electrical',
-  'Cylinder heads': 'Cylinder Heads',
-  'Fasteners and retaining rings': 'Fasteners and Retaining Rings',
-  'Tools and supplies': 'Special Tools and Supplies',
-  'Starting and charging': 'Starters and Alternators',
+  'Fuel system': '燃油系统',
+  'Filters': '滤清器',
+  'Gaskets and seals': '垫片与密封件',
+  'Pistons and liners': '活塞、缸套与活塞环',
+  'Valve train': '配气机构',
+  'Bearings': '发动机轴承',
+  'Turbocharging': '涡轮增压器零件',
+  'Cooling system': '冷却系统',
+  'Sensors and electrical': '传感器与电气元件',
+  'Cylinder heads': '气缸盖',
+  'Fasteners and retaining rings': '紧固件与卡环',
+  'Tools and supplies': '专用工具与耗材',
+  'Starting and charging': '起动机与发电机',
 };
 
 const generatedSeriesCategoryHubs: MtuCatalogHub[] = seriesCatalogTargets.flatMap((series) =>
@@ -3013,11 +3013,11 @@ const generatedSeriesCategoryHubs: MtuCatalogHub[] = seriesCatalogTargets.flatMa
       const cleanSeries = series.replace('MTU ', '');
       return {
         slug: `${seriesSlug}-${categorySlug}-parts`,
-        title: `${series} ${categoryTitle} Parts Catalog`,
-        h1Title: `${series} ${categoryTitle} Parts`,
-        summary: `${count} ${series} ${categoryTitle.toLowerCase()} part numbers for RFQ, availability checks, and serial-number verification.`,
-        description: `Browse ${series} ${categoryTitle.toLowerCase()} part numbers. This catalog page groups exact part-number pages by engine series and category so buyers can prepare cleaner RFQs for ${cleanSeries} service, overhaul, and maintenance work.`,
-        longDescription: `${series} ${categoryTitle.toLowerCase()} parts are checked by exact part number, engine serial number, replacement status, and shipping destination before quotation.\n\nUse this page when your inquiry is narrower than the full ${series} catalog but broader than one single part number. The representative list below helps procurement teams compare available references, weight and HS code data, and related part pages before sending a consolidated request.`,
+        title: `${series} ${categoryTitle}零件目录`,
+        h1Title: `${series} ${categoryTitle}零件`,
+        summary: `${count} 个 ${series} ${categoryTitle}零件号——用于询价、供货核查与出厂编号核验。`,
+        description: `浏览 ${series} ${categoryTitle}零件号。本目录页按发动机系列与品类归并准确的零件号页面，便于采购方为 ${cleanSeries} 保养、大修与维修工作准备更清晰的询价清单。`,
+        longDescription: `${series} ${categoryTitle}零件在报价前按准确零件号、发动机出厂编号、替换状态与运输目的地逐项核验。\n\n当您的询价范围小于完整的 ${series} 目录、又大于单个零件号时，请使用本页。下方代表性清单可帮助采购团队在发送合并询价前，比对可用参考号、重量与 HS 编码数据以及相关零件页面。`,
         type: 'category',
         partFilter: (part: MtuPart) => part.series.includes(series) && part.category === category,
       } satisfies MtuCatalogHub;

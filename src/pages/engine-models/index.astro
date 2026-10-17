@@ -13,33 +13,33 @@ const totalModels = modelGroups.reduce((sum, group) => sum + group.models.length
 
 const jsonLd = [
   breadcrumbSchema([
-    { name: 'Home', url: site.url },
-    { name: 'MTU Engine Parts Lists', url: pageUrl },
+    { name: '首页', url: site.url },
+    { name: 'MTU 发动机零件清单', url: pageUrl },
   ]),
   itemListSchema(modelGroups.map((group) => ({ name: group.title, url: `${site.url}/engine-models/${group.slug}/` }))),
 ];
 ---
 
 <BaseLayout
-  title="MTU Engine Parts Lists by Model | Diesel Part Source"
+  title="MTU 发动机型号零件清单 | 柴油零件源"
   noTitleSuffix
-  description={`Parts lists for ${totalModels} MTU engine models across Series ${[...bySeries.keys()].join(', ')}, grouped by model family with superseded numbers.`}
+  description={`收录 ${totalModels} 个 MTU 发动机型号的零件清单，覆盖 ${[...bySeries.keys()].join(', ')} 等系列，按型号家族分组，并注明旧零件号。`}
   currentPath="/engine-models"
   jsonLd={jsonLd}
 >
-  <BreadcrumbHero title="MTU Engine Parts Lists by Model" trail={[{ label: 'Home', href: '/' }, { label: 'Engine Parts Lists' }]} variant="1" />
+  <BreadcrumbHero title="MTU 发动机型号零件清单" trail={[{ label: '首页', href: '/' }, { label: '发动机零件清单' }]} variant="1" />
 
-  <DetailPageShell intro="Find parts by the model code on your engine data plate. Models that share almost the same parts list are grouped on one page, so you see every part number for your model family in one place, sorted by system.">
+  <DetailPageShell intro="请对照发动机铭牌上的型号（model code）查找零件。零件清单几乎相同的型号集中收录于同一页面，同一型号家族的全部零件号一处可见，并按系统分类排列。">
     <p>
-      Start with the full model code, for example 16V 4000 M90 or 12V 396 TE94. The cylinder count and series narrow the family, while the application letters and build digits decide which version of a part fits. Each list links to the individual part pages, where fitment notes, earlier numbers, and parts usually ordered together are shown.
+      请从完整型号代码入手，例如 16V 4000 M90 或 12V 396 TE94。气缸数与系列用于锁定家族，应用字母与构型数字决定适配（fitment）的零件版本。每个清单均链接至具体零件页面，其中标注适配说明、旧零件号以及常配套采购的零件。
     </p>
     {[...bySeries.entries()].map(([series, groups]) => (
       <section class="hub-section">
-        <h2>MTU Series {series}</h2>
+        <h2>MTU {series} 系列</h2>
         <ul>
           {groups.map((group) => (
             <li>
-              <a href={`/engine-models/${group.slug}/`}>{group.title}</a>: {group.parts.length} part numbers for {group.models.map((model) => model.code).join(', ')}
+              <a href={`/engine-models/${group.slug}/`}>{group.title}</a>：{group.parts.length} 个零件号，覆盖 {group.models.map((model) => model.code).join(', ')}
             </li>
           ))}
         </ul>

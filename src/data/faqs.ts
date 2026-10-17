@@ -1,42 +1,42 @@
 export const faqs = [
   {
-    question: 'What engine brands do you supply parts for?',
+    question: '你们供应哪些发动机品牌的零件？',
     answer:
-      'Diesel Part Source supplies parts for MTU, Detroit Diesel, Cummins, and DEUTZ diesel engines. MTU full-series support is our core focus, including 183, 331, 396, 493, 538, 595, 956, 1163, 2000, 4000, and 8000 series engines.',
+      '柴油零件源 供应 MTU、Detroit Diesel、Cummins 与 DEUTZ 柴油发动机的零件。MTU 全系列支持是我们的核心重点，包括 183、331、396、493、538、595、956、1163、2000、4000 与 8000 系列发动机。',
   },
   {
-    question: 'Do you supply OEM or verified engine parts?',
+    question: '你们供应 OEM 或经核验的发动机零件吗？',
     answer:
-      'We quote OEM, OEM-alternative, reman, repaired, or replacement routes depending on availability and buyer requirements. Send the engine model, serial number, part number, and photos so the available route can be clearly identified before quotation.',
+      '我们视供货情况与买方要求，报价 OEM、OEM 替代、再制造、修复或替换路线。请发送发动机型号、出厂编号、零件号与照片，以便在报价前清晰识别可用路线。',
   },
   {
-    question: 'What information should I include in an inquiry?',
+    question: '询价时应包含哪些信息？',
     answer:
-      'Please include engine brand, engine model, serial number, part number, quantity, destination country, and target delivery date. Photos of the nameplate or old part are very helpful when the part number is unclear.',
+      '请包含发动机品牌、发动机型号、出厂编号、零件号、数量、目的国与目标交货日期。零件号不明时，铭牌或旧件照片非常有用。',
   },
   {
-    question: 'Can you help identify MTU parts if I do not know the exact part number?',
+    question: '如果我不知道确切的零件号，你们能帮忙识别 MTU 零件吗？',
     answer:
-      'Yes. Send the MTU engine series, serial number, nameplate photo, and old part photos or markings. Our team will help confirm the likely part and avoid mismatched shipments.',
+      '可以。请发送 MTU 发动机系列、出厂编号、铭牌照片及旧件照片或标记。我们的团队将帮助确认可能的零件，避免不匹配的发货。',
   },
   {
-    question: 'How fast can you ship?',
+    question: '你们发货有多快？',
     answer:
-      'Stock items can move quickly by express courier or air freight. Special or low-volume items are quoted by availability. Tell us your deadline and destination so we can recommend the fastest practical shipping route.',
+      '有库存的件可通过快递或空运快速发出。特殊或小批量件按供货情况报价。请告知您的期限与目的地，以便我们推荐最快的可行发运路线。',
   },
   {
-    question: 'Do you ship internationally?',
+    question: '你们可以国际发货吗？',
     answer:
-      'Yes. We ship worldwide from Shanghai and support customers in marine, industrial, rail, power generation, shipyard, and repair markets. Export packing and shipment tracking are arranged with the order.',
+      '可以。我们从上海全球发货，服务船用、工业、轨交、发电、船厂与维修市场客户。出口包装与发运跟踪随订单安排。',
   },
   {
-    question: 'Can you quote a full spare-parts list?',
+    question: '可以整份备件清单报价吗？',
     answer:
-      'Yes. Shipyards, fleet operators, and maintenance companies can send consolidated parts lists. We will check availability, confirm replacement options where needed, and quote shipment timing.',
+      '可以。船厂、船队运营方与保养公司可发送合并零件清单。我们将核查供货情况、需要时确认替换选项，并报出发运时间。',
   },
   {
-    question: 'Which industries do you serve?',
+    question: '你们服务哪些行业？',
     answer:
-      'We serve marine fleets, industrial engine users, power generation operators, railway maintenance teams, shipyards, repair companies, energy suppliers, and other users of MTU, Cummins, DEUTZ, and Detroit Diesel engines.',
+      '我们服务船队、工业发动机用户、发电运营方、铁路维护团队、船厂、维修公司、能源供应商，以及 MTU、Cummins、DEUTZ 与 Detroit Diesel 发动机的其他用户。',
   },
 ] as const;

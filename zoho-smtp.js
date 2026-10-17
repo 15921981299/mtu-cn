@@ -1,5 +1,5 @@
 export const SALES_EMAIL = 'sales@dieselpartsource.com';
-const FROM_NAME = 'Diesel Part Source';
+const FROM_NAME = '柴油零件源';
 
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
@@ -76,7 +76,8 @@ function escapeData(body) {
 
 function buildMessage({ from, to, replyTo, subject, text }) {
   const headers = [
-    `From: ${FROM_NAME} <${from}>`,
+    // FROM_NAME 含中文，按 RFC 2047 编码，避免原始 UTF-8 头被中转服务器改写
+    `From: ${encodeHeader(FROM_NAME)} <${from}>`,
     `To: ${to}`,
     replyTo ? `Reply-To: ${replyTo}` : null,
     `Subject: ${encodeHeader(subject)}`,

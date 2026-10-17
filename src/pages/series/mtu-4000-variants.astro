@@ -7,79 +7,79 @@ import FaqSection from '../../components/FaqSection.astro';
 import { breadcrumbSchema, itemListSchema, faqSchema, site } from '../../data/site';
 import '../../styles/resource-page.css';
 
-const title = 'MTU 4000 Variant Decoder';
-const seoTitle = 'MTU 4000 Variant Decoder — M05 / M03 / C05 / R03 / R04 / T05 Versions & M-Duty Notation';
-const description = 'Decode the MTU 4000 designation: application versions (M05 / M03 / C05 / R03 / R04 / T05), the M-duty notation (M53 → M93), and bore/stroke differences by version. Per-model power table and part-identification guide for the 12V / 16V / 20V family.';
+const title = 'MTU 4000 变型解读';
+const seoTitle = 'MTU 4000 变型解读 — M05 / M03 / C05 / R03 / R04 / T05 版本与 M 用途标识';
+const description = '解读 MTU 4000 型号：应用版本（M05 / M03 / C05 / R03 / R04 / T05）、M 用途标识（M53 → M93）及各版本缸径/行程差异。附分型号功率表与零件识别指南，覆盖 12V / 16V / 20V 家族。';
 const pageUrl = `${site.url}/series/mtu-4000-variants/`;
 const quoteHref = `/contact/?source=mtu-4000-variants`;
 
 const verRows = [
-  { ver: 'M05', app: 'Marine main propulsion & onboard power', cyl: '12V / 16V / 20V', emis: 'IMO III, EPA T4', note: 'Core marine version; 1500–3200 kW.' },
-  { ver: 'M05-N', app: 'Gas', cyl: '8V / 16V', emis: 'IMO III, EPA T4, EU V', note: 'Spark-ignited gas variant of M05.' },
-  { ver: 'M03', app: 'Yacht', cyl: '12V / 16V / 20V', emis: 'IMO II, EPA T2', note: 'Yacht-rated, 1920–4300 kW.' },
-  { ver: 'C05', app: 'Mining', cyl: '12V / 16V', emis: 'EPA T4', note: 'Continuous-duty mining version.' },
-  { ver: 'R03', app: 'Rail', cyl: '20V', emis: 'UIC IIIA, EU IIIA', note: 'Rail push-pull / locomotive; 2700–3300 kW.' },
-  { ver: 'R04', app: 'Rail', cyl: '12V / 16V', emis: 'UIC IIIA, EU IIIB', note: 'Later rail version; 1500–2400 kW.' },
-  { ver: 'T05', app: 'Oil & gas frac', cyl: '12V / 16V', emis: 'EPA T4', note: 'Frac-duty version; 1680–2240 kW.' },
+  { ver: 'M05', app: '船用主推进与船载电源', cyl: '12V / 16V / 20V', emis: 'IMO III, EPA T4', note: '核心船用版本；1500–3200 kW。' },
+  { ver: 'M05-N', app: '气体', cyl: '8V / 16V', emis: 'IMO III, EPA T4, EU V', note: 'M05 的火花点火气体变型。' },
+  { ver: 'M03', app: '游艇', cyl: '12V / 16V / 20V', emis: 'IMO II, EPA T2', note: '游艇功率档，1920–4300 kW。' },
+  { ver: 'C05', app: '矿用', cyl: '12V / 16V', emis: 'EPA T4', note: '连续工况矿用版本。' },
+  { ver: 'R03', app: '轨交', cyl: '20V', emis: 'UIC IIIA, EU IIIA', note: '轨交推挽 / 机车；2700–3300 kW。' },
+  { ver: 'R04', app: '轨交', cyl: '12V / 16V', emis: 'UIC IIIA, EU IIIB', note: '后续轨交版本；1500–2400 kW。' },
+  { ver: 'T05', app: '油气压裂', cyl: '12V / 16V', emis: 'EPA T4', note: '压裂工况版本；1680–2240 kW。' },
 ];
 
 const dutyRows = [
-  { duty: 'M53 / M63', profile: 'Light', app: 'Yachts, light workboats', note: 'Lower permitted annual full-load hours; lighter-duty internals.' },
-  { duty: 'M73 / M73L', profile: 'Commercial', app: 'Fast ferries, offshore, commercial craft', note: 'Higher full-load profile; heavier-section conrod / crank than M53.' },
-  { duty: 'M90', profile: 'Heavy', app: 'Patrol craft, fast ferries', note: 'Sustained high output; heavier internals than M73.' },
-  { duty: 'M93 / M93L', profile: 'Naval', app: 'OPVs, fast attack, frigates, corvettes', note: 'Most demanding full-power hours; heaviest-section conrod / crank of the family.' },
+  { duty: 'M53 / M63', profile: '轻载', app: '游艇、轻型工作艇', note: '允许的年满负荷小时数较低；内部件负荷较轻。' },
+  { duty: 'M73 / M73L', profile: '商用', app: '高速渡轮、海上作业、商用船', note: '满负荷曲线更高；连杆 / 曲轴截面比 M53 更重。' },
+  { duty: 'M90', profile: '重载', app: '巡逻艇、高速渡轮', note: '持续高输出；内部件比 M73 更重。' },
+  { duty: 'M93 / M93L', profile: '海军', app: '近海巡逻舰、快速攻击艇、护卫舰、轻型护卫舰', note: '满功率小时数要求最高；全家族中连杆 / 曲轴截面最重。' },
 ];
 
 const boreRows = [
-  { ver: 'M-family (M05 / M53 / M63 / M73 / M90 / M93)', bore: '165 / 190 mm', note: 'Most marine M-duty versions.' },
-  { ver: 'R-family (R03 / R04 rail)', bore: '170 / 210 mm', note: 'Rail versions use a longer stroke.' },
-  { ver: 'C05 / T05', bore: '170 / 190 mm', note: 'Mining & frac versions.' },
+  { ver: 'M 家族（M05 / M53 / M63 / M73 / M90 / M93）', bore: '165 / 190 mm', note: '多数船用 M 用途版本。' },
+  { ver: 'R 家族（R03 / R04 轨交）', bore: '170 / 210 mm', note: '轨交版本行程更长。' },
+  { ver: 'C05 / T05', bore: '170 / 190 mm', note: '矿用与压裂版本。' },
 ];
 
 const modelRows = [
-  { desig: '12V 4000 M53 / M63', out: '1100–1500 kW', rpm: '1800', app: 'Yacht, patrol, small ferry' },
-  { desig: '12V 4000 M73', out: '~1600 kW', rpm: '1800', app: 'Commercial, offshore' },
-  { desig: '12V 4000 M90', out: '~1800 kW', rpm: '1800', app: 'Patrol, fast ferry' },
-  { desig: '16V 4000 M53 / M63', out: '1450–2000 kW', rpm: '1800', app: 'Large yacht, fast ferry' },
-  { desig: '16V 4000 M73', out: '~2200 kW', rpm: '1800', app: 'Fast ferry, offshore' },
-  { desig: '16V 4000 M90', out: '~2400 kW', rpm: '1800', app: 'Fast ferry, patrol craft' },
-  { desig: '16V 4000 M93L', out: '~3000 kW', rpm: '1800', app: 'Naval OPV, fast attack' },
-  { desig: '20V 4000 M53 / M63', out: '1800–2500 kW', rpm: '1800', app: 'Large yacht, fast ferry' },
-  { desig: '20V 4000 M90', out: '~3600 kW', rpm: '1800', app: 'Patrol, frigate auxiliary' },
-  { desig: '20V 4000 M93', out: '~4300 kW', rpm: '1800', app: 'Naval frigate, corvette' },
+  { desig: '12V 4000 M53 / M63', out: '1100–1500 kW', rpm: '1800', app: '游艇、巡逻、小型渡轮' },
+  { desig: '12V 4000 M73', out: '约 1600 kW', rpm: '1800', app: '商用、海上作业' },
+  { desig: '12V 4000 M90', out: '约 1800 kW', rpm: '1800', app: '巡逻、高速渡轮' },
+  { desig: '16V 4000 M53 / M63', out: '1450–2000 kW', rpm: '1800', app: '大型游艇、高速渡轮' },
+  { desig: '16V 4000 M73', out: '约 2200 kW', rpm: '1800', app: '高速渡轮、海上作业' },
+  { desig: '16V 4000 M90', out: '约 2400 kW', rpm: '1800', app: '高速渡轮、巡逻艇' },
+  { desig: '16V 4000 M93L', out: '约 3000 kW', rpm: '1800', app: '海军近海巡逻舰、快速攻击艇' },
+  { desig: '20V 4000 M53 / M63', out: '1800–2500 kW', rpm: '1800', app: '大型游艇、高速渡轮' },
+  { desig: '20V 4000 M90', out: '约 3600 kW', rpm: '1800', app: '巡逻、护卫舰辅助' },
+  { desig: '20V 4000 M93', out: '约 4300 kW', rpm: '1800', app: '海军护卫舰、轻型护卫舰' },
 ];
 
 const listItems = [
-  { name: 'MTU 4000 M-duty notation M53 to M93', url: pageUrl },
-  { name: 'MTU 4000 M05 marine version', url: pageUrl },
-  { name: 'MTU 4000 R03 R04 rail versions', url: pageUrl },
-  { name: 'MTU 4000 20V M93 naval', url: pageUrl },
+  { name: 'MTU 4000 M 用途标识 M53 至 M93', url: pageUrl },
+  { name: 'MTU 4000 M05 船用版本', url: pageUrl },
+  { name: 'MTU 4000 R03 R04 轨交版本', url: pageUrl },
+  { name: 'MTU 4000 20V M93 海军', url: pageUrl },
 ];
 
 const faqItems = [
   {
-    question: 'What does the 4000 version letter mean (M05 / M03 / C05 / R03 / R04 / T05)?',
-    answer: 'The letter+number identifies the application version: M05 = marine main propulsion & onboard power, M03 = yacht, C05 = mining, R03 / R04 = rail (locomotive), T05 = oil & gas frac. Each version carries its own emission certification and duty profile, which decide the correct parts.',
+    question: '4000 的版本字母代表什么（M05 / M03 / C05 / R03 / R04 / T05）？',
+    answer: '字母+数字标识应用版本：M05 = 船用主推进与船载电源，M03 = 游艇，C05 = 矿用，R03 / R04 = 轨交（机车），T05 = 油气压裂。每个版本有各自的排放认证与用途曲线，决定正确的零件。',
   },
   {
-    question: 'What does the M-duty number mean (M53, M73, M90, M93)?',
-    answer: 'The M-duty notation tracks the permitted annual full-load operating profile. M53 / M63 are light-duty (yachts), M73 / M73L commercial, M90 heavy (patrol / fast ferry), and M93 / M93L the most demanding naval duty. A higher M-number uses heavier-section connecting rods and crankshaft than a same-cylinder-count M53 block, so the duty suffix is required to quote internals correctly.',
+    question: 'M 用途数字代表什么（M53、M73、M90、M93）？',
+    answer: 'M 用途标识对应允许的年满负荷运行曲线。M53 / M63 为轻载（游艇），M73 / M73L 商用，M90 重载（巡逻 / 高速渡轮），M93 / M93L 为要求最高的海军用途。数字越大，连杆与曲轴截面越重——即使气缸数相同。因此内部件报价必须依据用途后缀。',
   },
   {
-    question: 'Do all 4000 engines share the same bore and stroke?',
-    answer: 'No. The M-family marine versions run 165 / 190 mm; the R-family rail versions run 170 / 210 mm (longer stroke); C05 / T05 run 170 / 190 mm. The bore/stroke therefore changes which liners, pistons and seals you need — confirm the version before ordering.',
+    question: '所有 4000 发动机的缸径与行程都一样吗？',
+    answer: '不一样。M 家族船用版本为 165 / 190 mm；R 家族轨交版本为 170 / 210 mm（行程更长）；C05 / T05 为 170 / 190 mm。缸径/行程直接决定缸套、活塞与密封件——订购前请先确认版本。',
   },
   {
-    question: 'Is there one 4000 overhaul gasket set?',
-    answer: 'No. The required seals depend on the version (M/R/C/T), the M-duty, the cylinder count, and the serial number. Verified references from the Series 2000 family (e.g. liner seals 5410110059, 0229974948) show the format, but the full 4000 kit must be confirmed against your engine.',
+    question: '4000 有通用的大修垫片组吗？',
+    answer: '没有。所需密封件取决于版本（M/R/C/T）、M 用途、气缸数与出厂编号。2000 系列的已核验参考（如缸套密封件 5410110059、0229974948）仅示意格式，4000 整套垫片必须对照您的发动机确认。',
   },
 ];
 
 const jsonLd = [
   breadcrumbSchema([
-    { name: 'Home', url: site.url },
-    { name: 'MTU Spare Parts', url: `${site.url}/products/mtu-spare-parts/` },
-    { name: 'MTU 4000 Series Parts', url: `${site.url}/products/mtu-4000-series-parts/` },
+    { name: '首页', url: site.url },
+    { name: 'MTU 备件', url: `${site.url}/products/mtu-spare-parts/` },
+    { name: 'MTU 4000 系列配件', url: `${site.url}/products/mtu-4000-series-parts/` },
     { name: title, url: pageUrl },
   ]),
   itemListSchema(listItems),
@@ -97,19 +97,19 @@ const jsonLd = [
   <BreadcrumbHero
     title={title}
     trail={[
-      { label: 'Home', href: '/' },
-      { label: 'MTU Spare Parts', href: '/products/mtu-spare-parts/' },
-      { label: 'MTU 4000 Series Parts', href: '/products/mtu-4000-series-parts/' },
+      { label: '首页', href: '/' },
+      { label: 'MTU 备件', href: '/products/mtu-spare-parts/' },
+      { label: 'MTU 4000 系列配件', href: '/products/mtu-4000-series-parts/' },
       { label: title },
     ]}
     variant="1"
   />
 
-  <DetailPageShell intro="The MTU 4000 designation carries two codes that decide your parts list: the application version (M05 / M03 / C05 / R03 / R04 / T05) and the M-duty notation (M53 → M93). Together they set the emission certification, duty profile, bore/stroke and — critically — the internal section of the connecting rods and crankshaft. This decoder explains both, the per-model power table, and which parts differ by build.">
+  <DetailPageShell intro="MTU 4000 的型号包含两组决定零件清单的代码：应用版本（M05 / M03 / C05 / R03 / R04 / T05）与 M 用途标识（M53 → M93）。两者共同决定排放认证、用途曲线、缸径/行程——更关键的是连杆与曲轴的内部截面。本解读页面讲解这两组代码、分型号功率表，以及哪些零件随构型而异。">
     <img
       slot="hero"
       src="/images/mtu-engine-parts-hero.webp"
-      alt="MTU 4000 variant decoder"
+      alt="MTU 4000 变型解读"
       width="1400"
       height="692"
       loading="eager"
@@ -118,26 +118,26 @@ const jsonLd = [
     />
 
     <div class="resource-meta">
-      <span><strong>Section</strong> MTU 4000</span>
-      <span><strong>Cyl.</strong> 8V / 12V / 16V / 20V</span>
-      <span><strong>Versions</strong> M05 / M03 / C05 / R03 / R04 / T05</span>
-      <span><strong>Delivery</strong> Global shipping</span>
+      <span><strong>系列</strong> MTU 4000</span>
+      <span><strong>气缸</strong> 8V / 12V / 16V / 20V</span>
+      <span><strong>版本</strong> M05 / M03 / C05 / R03 / R04 / T05</span>
+      <span><strong>运输</strong> 全球运输</span>
     </div>
 
     <DetailRfqStrip
       quoteHref={quoteHref}
-      title="Decode your 4000 & request parts"
-      text="Send the full designation (e.g. 16V4000M93L), serial number, and the number marked on the old part."
+      title="解读您的 4000 并询价"
+      text="请提供完整型号（例如 16V4000M93L）、出厂编号及旧件上标注的号码。"
       secondaryHref="/products/mtu-4000-series-parts/"
-      secondaryLabel="MTU 4000 parts hub"
+      secondaryLabel="MTU 4000 配件专区"
     />
 
-    <h2>1. Application version decoder</h2>
-    <p>The letter+number after "4000" identifies the application version and its emission certification. This is the first code to read off the identification plate.</p>
+    <h2>1. 应用版本解读</h2>
+    <p>「4000」之后的字母+数字标识应用版本及其排放认证。这是从识别铭牌上应读取的第一组代码。</p>
     <div class="resource-table-wrap">
       <table class="resource-table">
         <thead>
-          <tr><th>Version</th><th>Application</th><th>Cylinders</th><th>Emission</th><th>Note</th></tr>
+          <tr><th>版本</th><th>应用</th><th>气缸</th><th>排放</th><th>备注</th></tr>
         </thead>
         <tbody>
           {verRows.map((r) => (
@@ -153,12 +153,12 @@ const jsonLd = [
       </table>
     </div>
 
-    <h2>2. M-duty notation (M53 → M93)</h2>
-    <p>The M-duty number tracks the permitted annual full-load operating profile. A higher number means a more demanding duty and <strong>heavier-section connecting rods and crankshaft</strong> — even on the same cylinder count. This is why a 16V4000M93 block is not the same internally as a 16V4000M53.</p>
+    <h2>2. M 用途标识（M53 → M93）</h2>
+    <p>M 用途数字对应允许的年满负荷运行曲线。数字越大，用途要求越高，<strong>连杆与曲轴截面越重</strong>——即使气缸数相同。这正是 16V4000M93 机体内部与 16V4000M53 不同的原因。</p>
     <div class="resource-table-wrap">
       <table class="resource-table">
         <thead>
-          <tr><th>Duty</th><th>Profile</th><th>Typical application</th><th>Note</th></tr>
+          <tr><th>用途</th><th>曲线</th><th>典型应用</th><th>备注</th></tr>
         </thead>
         <tbody>
           {dutyRows.map((r) => (
@@ -173,12 +173,12 @@ const jsonLd = [
       </table>
     </div>
 
-    <h2>3. Bore &amp; stroke by version</h2>
-    <p>Not every 4000 shares the same bore and stroke. The marine M-family and the rail R-family differ, which changes liners, pistons and seals.</p>
+    <h2>3. 按版本的缸径与行程</h2>
+    <p>并非所有 4000 的缸径与行程都相同。船用 M 家族与轨交 R 家族不同，这直接改变缸套、活塞与密封件。</p>
     <div class="resource-table-wrap">
       <table class="resource-table">
         <thead>
-          <tr><th>Version group</th><th>Bore × Stroke</th><th>Note</th></tr>
+          <tr><th>版本组</th><th>缸径 × 行程</th><th>备注</th></tr>
         </thead>
         <tbody>
           {boreRows.map((r) => (
@@ -192,11 +192,11 @@ const jsonLd = [
       </table>
     </div>
 
-    <h2>4. Per-model power table</h2>
+    <h2>4. 分型号功率表</h2>
     <div class="resource-table-wrap">
       <table class="resource-table">
         <thead>
-          <tr><th>Model</th><th>Output</th><th>Rated speed</th><th>Primary application</th></tr>
+          <tr><th>型号</th><th>功率</th><th>额定转速</th><th>主要应用</th></tr>
         </thead>
         <tbody>
           {modelRows.map((r) => (
@@ -210,26 +210,26 @@ const jsonLd = [
         </tbody>
       </table>
     </div>
-    <p class="resource-note">Figures are representative of the family; confirm exact rating, version and M-duty against the engine identification plate before ordering.</p>
+    <p class="resource-note">表中数值为家族代表值；订购前请以发动机识别铭牌核对确切功率、版本与 M 用途。</p>
 
-    <h2>5. How to identify your exact 4000 part</h2>
+    <h2>5. 如何识别您的确切 4000 零件</h2>
     <ul class="resource-list">
-      <li><strong>Complete designation</strong> (e.g. <code>16V4000M93L</code>)</li>
-      <li><strong>Version + M-duty</strong> — M05/M03/C05/R03/R04/T05 and M53→M93 change the parts</li>
-      <li><strong>Engine serial number</strong> from the identification plate</li>
-      <li><strong>Old-part number</strong> — the marking on the component beats any photo title</li>
-      <li><strong>Photo of the identification plate</strong> where available</li>
+      <li><strong>完整型号</strong>（例如 <code>16V4000M93L</code>）</li>
+      <li><strong>版本 + M 用途</strong>——M05/M03/C05/R03/R04/T05 与 M53→M93 改变零件</li>
+      <li>识别铭牌上的<strong>发动机出厂编号</strong></li>
+      <li><strong>旧件零件号</strong>——部件上的标记胜过任何照片说明</li>
+      <li>尽可能提供<strong>识别铭牌照片</strong></li>
     </ul>
 
-    <h2>6. MTU series cluster</h2>
+    <h2>6. MTU 系列集群</h2>
     <div class="hub-grid">
-      <a class="hub-card" href="/products/mtu-4000-series-parts/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 4000 Series Parts Hub</h3><p class="hub-card-summary">Full parts hub for the 12V / 16V / 20V larger siblings.</p></div></a>
-      <a class="hub-card" href="/series/mtu-1163/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 1163 Series Hub</h3><p class="hub-card-summary">12V / 16V / 20V large-bore family (230 × 280 mm).</p></div></a>
-      <a class="hub-card" href="/series/mtu-396/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 396 Series Hub</h3><p class="hub-card-summary">8V / 12V / 16V workhorse — carries live RFQ numbers.</p></div></a>
-      <a class="hub-card" href="/series/mtu-2000/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 2000 Series Hub</h3><p class="hub-card-summary">8V / 12V / 16V / 18V high-speed engines.</p></div></a>
+      <a class="hub-card" href="/products/mtu-4000-series-parts/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 4000 系列配件专区</h3><p class="hub-card-summary">12V / 16V / 20V 同族更大机型的完整配件专区。</p></div></a>
+      <a class="hub-card" href="/series/mtu-1163/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 1163 系列专区</h3><p class="hub-card-summary">12V / 16V / 20V 大缸径家族（230 × 280 mm）。</p></div></a>
+      <a class="hub-card" href="/series/mtu-396/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 396 系列专区</h3><p class="hub-card-summary">8V / 12V / 16V 主力机型——含实时 RFQ 零件号。</p></div></a>
+      <a class="hub-card" href="/series/mtu-2000/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 2000 系列专区</h3><p class="hub-card-summary">8V / 12V / 16V / 18V 高速发动机。</p></div></a>
     </div>
 
-    <FaqSection items={faqItems} title="MTU 4000 Variant Decoder FAQ" subtitle="FAQ" />
+    <FaqSection items={faqItems} title="MTU 4000 变型解读常见问题" subtitle="常见问题" />
   </DetailPageShell>
 </BaseLayout>
 

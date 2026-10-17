@@ -7,67 +7,67 @@ import FaqSection from '../../components/FaqSection.astro';
 import { breadcrumbSchema, itemListSchema, faqSchema, site } from '../../data/site';
 import '../../styles/resource-page.css';
 
-const title = 'MTU 1163 Engine Models & Part Identification';
-const seoTitle = 'MTU 1163 Engine Models & Part Identification Guide';
-const description = 'Review MTU 1163 engine model designations and catalog part references. Identify the complete engine build and component marking for a replacement-parts inquiry.';
+const title = 'MTU 1163 发动机型号与零件识别';
+const seoTitle = 'MTU 1163 发动机型号与零件识别指南';
+const description = '查阅 MTU 1163 发动机型号命名与目录零件参考。识别完整发动机构型与零件标记，用于替换件询价。';
 const pageUrl = `${site.url}/series/mtu-1163/`;
 const quoteHref = `/contact/?source=mtu-1163-series`;
 
 const configRows = [
-  { desig: '12V 1163', cyl: 'V12', disp: '139.6 L', output: '~3600–4440 kW', app: 'Fast ferries, naval auxiliaries' },
-  { desig: '16V 1163', cyl: 'V16', disp: '186.1 L', output: '~4800–6000 kW', app: 'Patrol craft, coast-guard vessels' },
-  { desig: '20V 1163', cyl: 'V20', disp: '232.7 L', output: 'up to 7400 kW (M94)', app: 'Frigates, large fast craft' },
+  { desig: '12V 1163', cyl: 'V12', disp: '139.6 L', output: '约 3600–4440 kW', app: '高速渡轮、海军辅助船' },
+  { desig: '16V 1163', cyl: 'V16', disp: '186.1 L', output: '约 4800–6000 kW', app: '巡逻艇、海岸警卫队船' },
+  { desig: '20V 1163', cyl: 'V20', disp: '232.7 L', output: '最高 7400 kW（M94）', app: '护卫舰、大型高速艇' },
 ];
 
 // 1163 numbers are confirmed per-enquiry; no public RFQ/USACE seed verified yet.
 // Rows stay category-level with a clear "send nameplate" CTA to avoid publishing unverified numbers.
 const crossRef = [
-  { pn: '—', desc: 'Piston assembly (incl. rings)', fit: '1163 piston / liner', src: 'request exact PN + engine serial' },
-  { pn: '—', desc: 'Cylinder liner (wet, 230 × 280)', fit: '1163 block', src: 'request exact PN + engine serial' },
-  { pn: '—', desc: 'Cylinder-head gasket set', fit: '1163 head', src: 'request exact PN + engine serial' },
-  { pn: '—', desc: 'Fuel injector / nozzle (common-rail, 1800 bar)', fit: '1163 fuel system', src: 'request exact PN + engine serial' },
-  { pn: '—', desc: 'Two-stage turbocharger cartridge (LP + HP stage)', fit: '1163 charged air', src: 'request exact PN + engine serial' },
-  { pn: '—', desc: 'Connecting-rod / main bearing shell', fit: '1163 bottom end', src: 'request exact PN + engine serial' },
-  { pn: '—', desc: 'Exhaust gas thermocouple', fit: '1163 exhaust temp sensing', src: 'request exact PN + engine serial' },
-  { pn: '—', desc: 'Seawater / freshwater pump & impeller', fit: '1163 cooling', src: 'request exact PN + engine serial' },
+  { pn: '—', desc: '活塞总成（含活塞环）', fit: '1163 活塞 / 缸套', src: '请提供确切零件号 + 发动机出厂编号' },
+  { pn: '—', desc: '气缸套（湿式，230 × 280）', fit: '1163 机体', src: '请提供确切零件号 + 发动机出厂编号' },
+  { pn: '—', desc: '缸垫组', fit: '1163 气缸盖', src: '请提供确切零件号 + 发动机出厂编号' },
+  { pn: '—', desc: '喷油器 / 油嘴（共轨，1800 bar）', fit: '1163 燃油系统', src: '请提供确切零件号 + 发动机出厂编号' },
+  { pn: '—', desc: '两级涡轮增压器芯体（LP + HP 级）', fit: '1163 增压空气', src: '请提供确切零件号 + 发动机出厂编号' },
+  { pn: '—', desc: '连杆 / 主轴承轴瓦', fit: '1163 曲轴下部', src: '请提供确切零件号 + 发动机出厂编号' },
+  { pn: '—', desc: '排气热电偶', fit: '1163 排气温度检测', src: '请提供确切零件号 + 发动机出厂编号' },
+  { pn: '—', desc: '海水泵 / 淡水泵与叶轮', fit: '1163 冷却', src: '请提供确切零件号 + 发动机出厂编号' },
 ];
 
 const listItems = [
-  { name: 'MTU 1163 piston assembly', url: pageUrl },
-  { name: 'MTU 1163 cylinder liner 230×280', url: pageUrl },
-  { name: 'MTU 1163 cylinder-head gasket', url: pageUrl },
-  { name: 'MTU 1163 common-rail injector', url: pageUrl },
-  { name: 'MTU 1163 two-stage turbocharger', url: pageUrl },
-  { name: 'MTU 1163 exhaust thermocouple', url: pageUrl },
+  { name: 'MTU 1163 活塞总成', url: pageUrl },
+  { name: 'MTU 1163 气缸套 230×280', url: pageUrl },
+  { name: 'MTU 1163 缸垫', url: pageUrl },
+  { name: 'MTU 1163 共轨喷油器', url: pageUrl },
+  { name: 'MTU 1163 两级涡轮增压器', url: pageUrl },
+  { name: 'MTU 1163 排气热电偶', url: pageUrl },
 ];
 
 const faqItems = [
   {
-    question: 'Is "MTU 1163" enough to order a part?',
-    answer: 'No. The 1163 family spans 12V, 16V and 20V in several generations — M74 (original unit-injection), M84, and M94 (common-rail upgrade at 1800 bar with ADEC). Add the complete designation (e.g. 20V1163M94), the engine serial number, and the number marked on the old part so we match the exact gasket set, injector, or bearing for your build.',
+    question: '仅凭「MTU 1163」足以订购零件吗？',
+    answer: '不够。1163 家族涵盖 12V、16V、20V 及多个代际——M74（初代单体喷射）、M84 与 M94（1800 bar 共轨升级、配 ADEC）。请补充完整型号（例如 20V1163M94）、发动机出厂编号及旧件上标注的号码，我们才能为您的构型匹配确切的垫片组、喷油器或轴承。',
   },
   {
-    question: 'Do you supply genuine MTU only?',
-    answer: 'We supply genuine new, reconditioned-exchange, and documented alternatives. For large-bore 1163 components (liners, pistons, two-stage turbochargers) the right option depends on criticality and your acceptance of equivalents — we state which is which on every quote.',
+    question: '你们只供应原厂 MTU 件吗？',
+    answer: '我们供应原厂新件、翻新交换件与凭证替代件。对于 1163 大缸径部件（缸套、活塞、两级涡轮增压器），合适选项取决于关键程度以及您对等价件的接受度——每份报价都会注明属于哪一类。',
   },
   {
-    question: 'Why does the M-suffix matter on the 1163?',
-    answer: 'On the 1163 the M-suffix tracks the generation and injection system: M74 runs unit injection, while M84/M94 run common rail at up to 1800 bar with ADEC engine management. Injectors, seals and sensors differ between these generations, so the suffix is required to quote accurately.',
+    question: '1163 的 M 后缀为何重要？',
+    answer: '在 1163 上，M 后缀对应代际与喷射系统：M74 为单体喷射，M84/M94 为最高 1800 bar 共轨并配 ADEC 发动机管理。各代际的喷油器、密封件与传感器均不同，因此报价必须依据该后缀。',
   },
   {
-    question: 'What do you need to quote a 1163 part?',
-    answer: 'Engine model + serial + part number + description + quantity. A photo of the identification plate and the old part shortens identification significantly, especially for the two-stage turbocharger and common-rail fuel components.',
+    question: '报价 1163 零件需要提供哪些信息？',
+    answer: '发动机型号 + 出厂编号 + 零件号 + 描述 + 数量。提供识别铭牌与旧件照片能显著缩短识别时间，两级涡轮增压器与共轨燃油部件尤其如此。',
   },
   {
-    question: 'How fast can you quote an identified number?',
-    answer: 'Typically within one business day once we can confirm the number against the engine designation and generation. 1163 numbers are confirmed per enquiry and added to our cross-reference table as they are verified.',
+    question: '已识别零件号的报价速度如何？',
+    answer: '一旦能按发动机型号与代际确认该零件号，通常一个工作日内报价。1163 零件号按询价逐条确认，核验后即补充至我们的交叉引用表。',
   },
 ];
 
 const jsonLd = [
   breadcrumbSchema([
-    { name: 'Home', url: site.url },
-    { name: 'MTU Spare Parts', url: `${site.url}/products/mtu-spare-parts/` },
+    { name: '首页', url: site.url },
+    { name: 'MTU 备件', url: `${site.url}/products/mtu-spare-parts/` },
     { name: title, url: pageUrl },
   ]),
   itemListSchema(listItems),
@@ -85,18 +85,18 @@ const jsonLd = [
   <BreadcrumbHero
     title={title}
     trail={[
-      { label: 'Home', href: '/' },
-      { label: 'MTU Spare Parts', href: '/products/mtu-spare-parts/' },
+      { label: '首页', href: '/' },
+      { label: 'MTU 备件', href: '/products/mtu-spare-parts/' },
       { label: title },
     ]}
     variant="1"
   />
 
-  <DetailPageShell intro="The MTU 1163 is a high-speed, four-stroke large-bore V-configuration diesel family from MTU Friedrichshafen (today Rolls-Royce Power Systems). Named for its 11.63-litre per-cylinder displacement, it is a mainstay of fast ferries, coast-guard and naval vessels, and large commercial craft. This hub carries engine configurations, the parts we regularly supply, and a part-identification process built for a family whose generations (M74 → M94) use different injection and management systems.">
+  <DetailPageShell intro="MTU 1163 是 MTU Friedrichshafen（今 Rolls-Royce Power Systems）旗下高速四冲程大缸径 V 型柴油发动机家族，以单缸 11.63 L 排量命名，是高速渡轮、海岸警卫与海军船舶以及大型商用艇的主力机型。本专区汇总发动机构型、常年供应配件，以及面向该家族（M74 → M94 各代际采用不同喷射与管理系统）的零件识别流程。">
     <img
       slot="hero"
       src="/images/mtu-engine-parts-hero.webp"
-      alt="MTU 1163 series engine parts inquiry"
+      alt="MTU 1163 系列发动机配件询价"
       width="1400"
       height="692"
       loading="eager"
@@ -105,26 +105,26 @@ const jsonLd = [
     />
 
     <div class="resource-meta">
-      <span><strong>Section</strong> MTU Spare Parts</span>
-      <span><strong>Family</strong> 1163 (12V / 16V / 20V)</span>
-      <span><strong>Verification</strong> Model + serial number + generation</span>
-      <span><strong>Delivery</strong> Global shipping</span>
+      <span><strong>类别</strong> MTU 备件</span>
+      <span><strong>家族</strong> 1163（12V / 16V / 20V）</span>
+      <span><strong>核验</strong> 型号 + 出厂编号 + 代际</span>
+      <span><strong>运输</strong> 全球运输</span>
     </div>
 
     <DetailRfqStrip
       quoteHref={quoteHref}
-      title="Request MTU 1163 parts"
-      text="Send engine model, serial number, generation (M74 / M84 / M94), part numbers, quantity, destination, and required delivery date."
+      title="询价 MTU 1163 配件"
+      text="请提供发动机型号、出厂编号、代际（M74 / M84 / M94）、零件号、数量、目的地与要求交期。"
       secondaryHref="/series/mtu-1163-variants/"
-      secondaryLabel="1163 variant decoder"
+      secondaryLabel="1163 变型解读"
     />
 
-    <h2>1. Engine configurations</h2>
-    <p>The 1163 family uses a <strong>60° V-block</strong>, four valves per cylinder, and <strong>230 × 280 mm</strong> bore and stroke — giving 11.63 L per cylinder, which is the origin of the "1163" name. It is a large-bore high-speed engine rated around 1300 rpm, with two-stage sequential turbocharging (low-pressure and high-pressure stages) and common-rail injection up to 1800 bar on the M84/M94 generations. All variants are IMO II compliant, with IMO III available via optional SCR.</p>
+    <h2>1. 发动机构型</h2>
+    <p>1163 家族采用<strong>60° V 型机体</strong>、每缸 4 气门、<strong>缸径 × 行程 230 × 280 mm</strong>——单缸排量 11.63 L，即「1163」名称的由来。这是额定转速约 1300 rpm 的大缸径高速发动机，采用两级顺序涡轮增压（低压级与高压级），M84/M94 代际为最高 1800 bar 的共轨喷射。所有变型均符合 IMO II，可选装 SCR 满足 IMO III。</p>
     <div class="resource-table-wrap">
       <table class="resource-table">
         <thead>
-          <tr><th>Designation</th><th>Cyl.</th><th>Displacement</th><th>Typical output</th><th>Primary application</th></tr>
+          <tr><th>型号</th><th>气缸</th><th>排量</th><th>典型功率</th><th>主要应用</th></tr>
         </thead>
         <tbody>
           {configRows.map((r) => (
@@ -139,26 +139,26 @@ const jsonLd = [
         </tbody>
       </table>
     </div>
-    <p class="resource-note">Per-cylinder output is ~336 kW (unrestricted, 1260 rpm) rising to ~370 kW (restricted duty, 1350 rpm). Confirm the exact rating and generation against the engine identification plate before ordering — the M-suffix (M74 / M84 / M94) changes the injection and management system.</p>
+    <p class="resource-note">单缸功率约 336 kW（非限功率，1260 rpm）至约 370 kW（限功率工况，1350 rpm）。订购前请以发动机识别铭牌核对确切功率与代际——M 后缀（M74 / M84 / M94）决定喷射与管理系统。</p>
 
-    <h2>2. Spare parts we supply, by system</h2>
+    <h2>2. 按系统划分的供应配件</h2>
     <div class="hub-grid">
-      <a class="hub-card" href="/part-products/catalog/mtu-1163-series/"><div class="hub-card-body"><h3 class="hub-card-title">Cylinder head &amp; valve train</h3><p class="hub-card-summary">Valve guides, seats, springs, rocker arms, cylinder-head gaskets for 230 × 280 mm bores.</p></div></a>
-      <a class="hub-card" href="/part-products/catalog/mtu-injectors/"><div class="hub-card-body"><h3 class="hub-card-title">Fuel system</h3><p class="hub-card-summary">Common-rail injectors &amp; nozzles (1800 bar), nozzle holders, injection pumps.</p></div></a>
-      <a class="hub-card" href="/part-products/catalog/mtu-1163-series/"><div class="hub-card-body"><h3 class="hub-card-title">Pistons / liners / rings</h3><p class="hub-card-summary">Large-bore piston assemblies, wet liners, piston-ring sets, connecting-rod bolts.</p></div></a>
-      <a class="hub-card" href="/part-products/catalog/mtu-gasket-kits/"><div class="hub-card-body"><h3 class="hub-card-title">Gaskets &amp; seals</h3><p class="hub-card-summary">Head gaskets, O-rings, copper sealing rings, full overhaul gasket sets.</p></div></a>
-      <a class="hub-card" href="/part-products/catalog/mtu-turbocharger-parts/"><div class="hub-card-body"><h3 class="hub-card-title">Turbocharger</h3><p class="hub-card-summary">Two-stage (LP + HP) turbocharger cartridges, turbine wheels, service kits.</p></div></a>
-      <a class="hub-card" href="/part-products/catalog/mtu-filters/"><div class="hub-card-body"><h3 class="hub-card-title">Cooling &amp; lube</h3><p class="hub-card-summary">Seawater &amp; freshwater pumps, impellers, charge-air cooler kits, oil / fuel filters.</p></div></a>
-      <a class="hub-card" href="/part-products/catalog/mtu-sensors/"><div class="hub-card-body"><h3 class="hub-card-title">Sensors &amp; ADEC</h3><p class="hub-card-summary">Exhaust thermocouples, speed / temperature / pressure transmitters, engine-management modules.</p></div></a>
-      <a class="hub-card" href="/series/mtu-1163-variants/"><div class="hub-card-body"><h3 class="hub-card-title">Variant decoder</h3><p class="hub-card-summary">M74 / M84 / M94 generation table and which parts differ by build.</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-1163-series/"><div class="hub-card-body"><h3 class="hub-card-title">气缸盖与配气机构</h3><p class="hub-card-summary">230 × 280 mm 缸径适用的气门导管、气门座、气门弹簧、摇臂、缸垫。</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-injectors/"><div class="hub-card-body"><h3 class="hub-card-title">燃油系统</h3><p class="hub-card-summary">共轨喷油器与油嘴（1800 bar）、油嘴座、喷油泵。</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-1163-series/"><div class="hub-card-body"><h3 class="hub-card-title">活塞 / 缸套 / 活塞环</h3><p class="hub-card-summary">大缸径活塞总成、湿式缸套、活塞环组、连杆螺栓。</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-gasket-kits/"><div class="hub-card-body"><h3 class="hub-card-title">垫片与密封件</h3><p class="hub-card-summary">缸垫、O 型圈、铜密封环、整机大修垫片组。</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-turbocharger-parts/"><div class="hub-card-body"><h3 class="hub-card-title">涡轮增压器</h3><p class="hub-card-summary">两级（LP + HP）增压器芯体、涡轮叶轮、保养包。</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-filters/"><div class="hub-card-body"><h3 class="hub-card-title">冷却与润滑</h3><p class="hub-card-summary">海水泵与淡水泵、叶轮、中冷器包、机油/燃油滤清器。</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-sensors/"><div class="hub-card-body"><h3 class="hub-card-title">传感器与 ADEC</h3><p class="hub-card-summary">排气热电偶、转速/温度/压力变送器、发动机管理模块。</p></div></a>
+      <a class="hub-card" href="/series/mtu-1163-variants/"><div class="hub-card-body"><h3 class="hub-card-title">变型解读</h3><p class="hub-card-summary">M74 / M84 / M94 代际表与随构型而异的零件。</p></div></a>
     </div>
 
-    <h2>3. Part-number cross-reference (confirmed per enquiry)</h2>
-    <p>The 1163 is a lower-volume, higher-value family than the 396 or 2000, so we publish numbers as they are verified against real enquiries rather than from public seeds. Send your number (with the engine model + serial) and we add confirmed entries to this table. Until then, use the category list below and request an exact quote:</p>
+    <h2>3. 零件号交叉引用（按询价确认）</h2>
+    <p>与 396 或 2000 相比，1163 属于小批量、高价值家族，因此我们的零件号在经真实询盘核验后发布，而非取自公开预置数据。请提供您的零件号（附发动机型号 + 出厂编号），核验后我们将补充至本表。在此之前，请使用下列类别清单并索取确切报价：</p>
     <div class="resource-table-wrap">
       <table class="resource-table">
         <thead>
-          <tr><th>Part category</th><th>Description</th><th>1163 fitment</th><th>How to confirm</th></tr>
+          <tr><th>零件类别</th><th>描述</th><th>1163 适配</th><th>如何确认</th></tr>
         </thead>
         <tbody>
           {crossRef.map((r) => (
@@ -172,36 +172,36 @@ const jsonLd = [
         </tbody>
       </table>
     </div>
-    <p class="resource-note">We do not publish unverified 1163 part numbers. The fastest route to a firm quote is a photo of the identification plate plus the number marked on the old component.</p>
+    <p class="resource-note">我们不发布未经核验的 1163 零件号。获得正式报价最快的途径，是提供识别铭牌照片加上旧部件上标注的号码。</p>
 
-    <h2>4. How to identify your exact part</h2>
-    <p>"MTU 1163 part" is <strong>not enough</strong> to order safely. The family runs across three cylinder counts and three generations with different injection and management systems, and large-bore components are build-specific. To match the right item we need:</p>
+    <h2>4. 如何识别您的确切零件</h2>
+    <p>仅凭「MTU 1163 零件」<strong>不足以</strong>安全订购。该家族横跨三种气缸数与三个代际，喷射与管理系统各异，且大缸径部件按构型专用。为匹配正确零件，我们需要：</p>
     <ul class="resource-list">
-      <li><strong>Complete engine designation</strong> (e.g. <code>20V1163M94</code>, not just "1163")</li>
-      <li><strong>Generation</strong> — M74 (unit injection) vs M84 / M94 (common rail)</li>
-      <li><strong>Engine serial number</strong> from the identification plate</li>
-      <li><strong>Existing component part number</strong> — the marking on the old part beats any photo title</li>
-      <li><strong>Component description + quantity</strong>, and a photo of the old part where possible</li>
+      <li><strong>完整发动机型号</strong>（例如 <code>20V1163M94</code>，而非仅「1163」）</li>
+      <li><strong>代际</strong>——M74（单体喷射）与 M84 / M94（共轨）不同</li>
+      <li>识别铭牌上的<strong>发动机出厂编号</strong></li>
+      <li><strong>现有零件号</strong>——旧件上的标记胜过任何照片说明</li>
+      <li><strong>零件描述 + 数量</strong>，并尽可能提供旧件照片</li>
     </ul>
-    <p>This is the same discipline we apply to every enquiry before quoting — it prevents shipping a look-alike that doesn't fit your exact 1163 configuration.</p>
+    <p>这与我们对每笔询价报价前的一贯要求相同——可避免发出与您的确切 1163 构型不匹配的「貌似之件」。</p>
 
-    <h2>5. Supply options</h2>
+    <h2>5. 供货选项</h2>
     <div class="hub-grid">
-      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">Genuine new</h3><p class="hub-card-summary">Original MTU-packaged components with full traceability — best where the documentation chain has to stand up to inspection.</p></div></div>
-      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">Reconditioned / exchange</h3><p class="hub-card-summary">Factory-level overhaul of injectors, two-stage turbochargers, pumps — typically 30–40% lower cost, faster lead time.</p></div></div>
-      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">Documented alternative</h3><p class="hub-card-summary">Verified equivalents for non-critical items where the buyer accepts them — best value for routine overhaul.</p></div></div>
+      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">原厂新件</h3><p class="hub-card-summary">MTU 原包装零件，溯源完整——在文件链需经受检验的场合最为稳妥。</p></div></div>
+      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">翻新 / 交换件</h3><p class="hub-card-summary">喷油器、两级涡轮增压器、油泵的工厂级翻新——成本通常低 30–40%，交货期更短。</p></div></div>
+      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">凭证替代件</h3><p class="hub-card-summary">经核验的等价件，适用于买方接受的非关键项目——常规大修性价比之选。</p></div></div>
     </div>
 
-    <h2>6. MTU series cluster</h2>
-    <p>These hubs group MTU families by the enquiries we actually receive. The 396 page carries live RFQ-verified numbers; the 2000 page is catalog-seed rich; the 1163 and 4000 pages complete the cluster:</p>
+    <h2>6. MTU 系列集群</h2>
+    <p>下列专区按我们实际收到的询盘对 MTU 家族分组。396 页面含实时 RFQ 核验零件号；2000 页面目录预置数据丰富；1163 与 4000 页面补全整个集群：</p>
     <div class="hub-grid">
-      <a class="hub-card" href="/series/mtu-1163-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 1163 Variant Decoder</h3><p class="hub-card-summary">M74 / M84 / M94 generation table — which parts differ by build (230 × 280 mm).</p></div></a>
-      <a class="hub-card" href="/series/mtu-396/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 396 Series Hub</h3><p class="hub-card-summary">8V / 12V / 16V workhorse — patrol craft, submarines, gensets. Carries live RFQ numbers.</p></div></a>
-      <a class="hub-card" href="/series/mtu-2000/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 2000 Series Hub</h3><p class="hub-card-summary">8V / 12V / 16V / 18V high-speed engines — yachts, patrol craft, ferries, gensets.</p></div></a>
-      <a class="hub-card" href="/series/mtu-4000-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 4000 Variant Decoder</h3><p class="hub-card-summary">M05 / M03 / C05 / R03 / R04 / T05 versions and M-duty notation — larger siblings.</p></div></a>
+      <a class="hub-card" href="/series/mtu-1163-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 1163 变型解读</h3><p class="hub-card-summary">M74 / M84 / M94 代际表——哪些零件随构型而异（230 × 280 mm）。</p></div></a>
+      <a class="hub-card" href="/series/mtu-396/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 396 系列专区</h3><p class="hub-card-summary">8V / 12V / 16V 主力机型——巡逻艇、潜艇、发电机组。含实时 RFQ 零件号。</p></div></a>
+      <a class="hub-card" href="/series/mtu-2000/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 2000 系列专区</h3><p class="hub-card-summary">8V / 12V / 16V / 18V 高速发动机——游艇、巡逻艇、渡轮、发电机组。</p></div></a>
+      <a class="hub-card" href="/series/mtu-4000-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 4000 变型解读</h3><p class="hub-card-summary">M05 / M03 / C05 / R03 / R04 / T05 版本与 M 用途标识——同族更大机型。</p></div></a>
     </div>
 
-    <FaqSection items={faqItems} title="MTU 1163 Series FAQ" subtitle="FAQ" />
+    <FaqSection items={faqItems} title="MTU 1163 系列常见问题" subtitle="常见问题" />
   </DetailPageShell>
 </BaseLayout>
 

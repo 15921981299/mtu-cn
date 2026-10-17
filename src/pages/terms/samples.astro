@@ -9,20 +9,20 @@ import '../../styles/terms-page.css';
 ---
 
 <BaseLayout
-  title="Sample & Trial Order Policy — Engine Parts | Diesel Part Source"
-  description="How to start with a small trial order for MTU and diesel engine parts: what a trial order includes, arrival checks, photos before dispatch, and moving to repeat or framework orders."
+  title="样品与试订单政策 — 发动机零件 | 柴油零件源"
+  description="如何以 MTU 与柴油发动机零件的小额试订单起步：试订单内容、到货核验、发货前照片，以及如何转入重复订单或框架订单。"
   currentPath="/terms/samples"
   jsonLd={breadcrumbSchema([
-    { name: 'Home', url: site.url },
-    { name: 'Sample Policy', url: `${site.url}/terms/samples/` },
+    { name: '首页', url: site.url },
+    { name: '样品政策', url: `${site.url}/terms/samples/` },
   ])}
 >
   <FunnelPageView stage="signing" label="sample-policy" />
   <BreadcrumbHero
-    title="Sample &amp; Trial Order Policy"
+    title="样品与试订单政策"
     trail={[
-      { label: 'Home', href: '/' },
-      { label: 'Sample Policy' },
+      { label: '首页', href: '/' },
+      { label: '样品政策' },
     ]}
     variant="5"
   />
@@ -34,99 +34,99 @@ import '../../styles/terms-page.css';
           <TermsNav active="samples" />
 
           <p class="terms-intro">
-            Many buyers start with a small trial order before placing a full maintenance or overhaul list with a new supplier. This page explains how a trial order works with us and what you can check before ordering more.
+            许多买方在与新供应商合作前，会先下一笔小额试订单（trial order），再提交完整的保养或大修清单。本页说明试订单与我们的合作方式，以及在加购前您可以核验的内容。
           </p>
 
-          <div class="terms-meta" aria-label="Trial order overview">
-            <span><strong>Paid trial</strong> orders</span>
-            <span>Photos <strong>before dispatch</strong></span>
-            <span>Same documents as full orders</span>
-            <span>Express shipping available</span>
+          <div class="terms-meta" aria-label="试订单概览">
+            <span><strong>付费试订单</strong></span>
+            <span>发货<strong>前照片</strong></span>
+            <span>单据与正式订单一致</span>
+            <span>可发国际快递</span>
           </div>
 
           <div class="terms-rfq-strip">
-            <p>Send the part numbers you want to trial — we confirm availability, supply route, and shipping cost in one quote.</p>
-            <a href="/contact/?source=sample" class="terms-rfq-link">Request Trial Quote</a>
+            <p>发送您想试单的零件号——我们在一份报价中确认供货情况、供货路线与运费。</p>
+            <a href="/contact/?source=sample" class="terms-rfq-link">申请试单报价</a>
           </div>
 
           <div class="terms-table-wrap">
             <table class="terms-table">
-              <caption class="terms-table-caption">From trial order to repeat supply</caption>
+              <caption class="terms-table-caption">从试订单到重复供货</caption>
               <thead>
                 <tr>
-                  <th scope="col">Stage</th>
-                  <th scope="col">What's included</th>
-                  <th scope="col">What you check</th>
+                  <th scope="col">阶段</th>
+                  <th scope="col">包含内容</th>
+                  <th scope="col">您需核验</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>Trial order</strong></td>
-                  <td>A few lines from your real maintenance list, quoted with supply route and dispatch estimate</td>
-                  <td>Quote clarity and response speed</td>
+                  <td><strong>试订单</strong></td>
+                  <td>取自您实际保养清单的少量行项，报价含供货路线与发货预估</td>
+                  <td>报价清晰度与响应速度</td>
                 </tr>
                 <tr>
-                  <td><strong>Before dispatch</strong></td>
-                  <td>Photos of parts, labels, and packing on request; packing list and invoice draft</td>
-                  <td>Part markings against your old parts</td>
+                  <td><strong>发货前</strong></td>
+                  <td>应要求提供零件、标签与包装照片；装箱单与发票草稿</td>
+                  <td>零件标记与您旧件的比对</td>
                 </tr>
                 <tr>
-                  <td><strong>On arrival</strong></td>
-                  <td>Commercial invoice, packing list, and HS codes as on a full order</td>
-                  <td>Fit, labels, packaging, and documents</td>
+                  <td><strong>到货时</strong></td>
+                  <td>商业发票、装箱单与 HS 编码，与正式订单相同</td>
+                  <td>适配、标签、包装与单据</td>
                 </tr>
                 <tr>
-                  <td><strong>Repeat supply</strong></td>
-                  <td>Same references, packing format, and marking kept for later orders</td>
-                  <td>Consistency across orders</td>
+                  <td><strong>重复供货</strong></td>
+                  <td>后续订单沿用相同的编号、包装形式与标记</td>
+                  <td>各订单间的一致性</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <nav class="terms-jump-nav" aria-label="On this page">
-            <a href="#trial-order" class="terms-jump-link">Trial order</a>
-            <a href="#arrival-check" class="terms-jump-link">Arrival check</a>
-            <a href="#repeat-supply" class="terms-jump-link">Repeat supply</a>
+          <nav class="terms-jump-nav" aria-label="本页导航">
+            <a href="#trial-order" class="terms-jump-link">试订单</a>
+            <a href="#arrival-check" class="terms-jump-link">到货核验</a>
+            <a href="#repeat-supply" class="terms-jump-link">重复供货</a>
           </nav>
 
-          <h2 id="trial-order">Choosing Parts for a Trial Order</h2>
+          <h2 id="trial-order">试订单零件挑选</h2>
           <ul class="terms-list">
-            <li>Pick parts you use regularly, such as filters, seals, or sensors, so the comparison with your current supplier is meaningful</li>
-            <li>Include at least one item that is harder to find, to see how sourcing and lead times are handled</li>
-            <li>Trial orders are paid in advance — see <a href="/terms/payment/">payment terms →</a></li>
-            <li>Express courier is usually the most practical shipping method for small trial orders</li>
+            <li>挑选您经常使用的零件，如滤清器、密封件或传感器，以便与现供应商的对比更有意义</li>
+            <li>至少纳入一件较难采购的物品，以观察我们的寻源与货期处理能力</li>
+            <li>试订单需预付——详见<a href="/terms/payment/">付款条款 →</a></li>
+            <li>对于小额试订单，国际快递通常是最实际的运输方式</li>
           </ul>
 
-          <h2 id="arrival-check">Checking the Trial Order on Arrival</h2>
+          <h2 id="arrival-check">试订单到货核验</h2>
           <ul class="terms-list">
-            <li>Compare part numbers, labels, and packaging with the quotation and your old parts</li>
-            <li>Check that the invoice, packing list, and box labels match line by line</li>
-            <li>Use our buyer checklist on <a href="/genuine-oem-parts/">how to check genuine MTU parts</a></li>
-            <li>If anything does not match, send photos before installing the part</li>
+            <li>将零件号、标签与包装同报价单及您的旧件比对</li>
+            <li>逐行核对发票、装箱单与外箱标签一致</li>
+            <li>可配合使用我们的采购方清单：<a href="/genuine-oem-parts/">如何辨别 MTU 原厂件</a></li>
+            <li>如发现任何不符，请在安装前拍照反馈</li>
           </ul>
 
-          <h2 id="repeat-supply">Moving to Repeat or Framework Orders</h2>
+          <h2 id="repeat-supply">转入重复订单或框架订单</h2>
           <ul class="terms-list">
-            <li>Larger maintenance and overhaul lists can follow once the trial order has been checked</li>
-            <li>For regular orders we keep your preferred references, packing, and case marking on file</li>
-            <li>Payment options for repeat customers are described on the <a href="/terms/payment/">payment terms</a> page</li>
+            <li>试订单核验通过后，即可提交更大的保养与大修清单</li>
+            <li>对于常规订单，我们将您偏好的编号、包装与箱唛存档</li>
+            <li>重复客户的付款选项详见<a href="/terms/payment/">付款条款</a>页</li>
           </ul>
 
           <div class="terms-note">
-            <strong>Buyer tip:</strong> Send the same short list to every supplier you are comparing, including engine serial number and destination, so quotes can be compared on part reference, supply route, and delivered cost rather than unit price alone.
+            <strong>采购方提示：</strong>将同一份简短清单发送给您比对中的每一家供应商，并附上发动机出厂编号与目的地，这样报价即可按零件编号、供货路线与到岸成本比较，而不只比较单价。
           </div>
 
           <p class="terms-related">
-            <a href="/certifications/">Quality process</a>
+            <a href="/certifications/">质量流程</a>
             <span aria-hidden="true">·</span>
-            <a href="/about/">About us</a>
+            <a href="/about/">关于我们</a>
             <span aria-hidden="true">·</span>
-            <a href="/terms/payment/">Payment terms</a>
+            <a href="/terms/payment/">付款条款</a>
             <span aria-hidden="true">·</span>
-            <a href="/terms/shipping/">Shipping terms</a>
+            <a href="/terms/shipping/">运输条款</a>
             <span aria-hidden="true">·</span>
-            <a href="/contact/?source=sample">Request a trial quote →</a>
+            <a href="/contact/?source=sample">申请试单报价 →</a>
           </p>
         </article>
       </div>
@@ -136,12 +136,12 @@ import '../../styles/terms-page.css';
   <BlogCta
     stage="signing"
     topic="samples"
-    title="Start with a small trial order"
-    text="Send a few part numbers from your maintenance list — we confirm availability, supply route, and shipping cost in one quote."
-    primaryLabel="Request a Trial Quote"
+    title="从小额试订单开始"
+    text="从您的保养清单中挑选几个零件号发来——我们在一份报价中确认供货情况、供货路线与运费。"
+    primaryLabel="申请试单报价"
     primaryHref="/contact/?source=sample"
     primaryEvent="sample_terms_rfq"
-    secondaryLabel="Quality process"
+    secondaryLabel="质量流程"
     secondaryHref="/certifications/"
     secondaryEvent="sample_terms_inspection"
   />

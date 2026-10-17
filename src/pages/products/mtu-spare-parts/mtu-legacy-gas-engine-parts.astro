@@ -128,27 +128,27 @@ const faqItems = [
 ---
 
 <BaseLayout
-  title="MTU Legacy Series & Gas Engine Parts — Sourcing by Model"
-  description="MTU legacy series (183–8000) and gas engine (L-rated) coverage: what is indexed on this site and what is quoted line by line from the model code and serial number."
+  title="MTU 老系列与气体发动机配件 — 按型号采购"
+  description="MTU 老系列（183–8000）与气体发动机（L 代码）覆盖：本站收录了哪些内容，哪些按型号代码与出厂编号逐行报价。"
   currentPath="/products/mtu-spare-parts/mtu-legacy-gas-engine-parts"
   jsonLd={[
     breadcrumbSchema([
-      { name: 'Home', url: site.url },
-      { name: 'Products', url: `${site.url}/products/` },
-      { name: 'MTU Spare Parts', url: `${site.url}/products/mtu-spare-parts/` },
-      { name: 'Legacy Series & Gas Engines', url: pageUrl },
+      { name: '首页', url: site.url },
+      { name: '产品', url: `${site.url}/products/` },
+      { name: 'MTU 备件', url: `${site.url}/products/mtu-spare-parts/` },
+      { name: '老系列与气体发动机', url: pageUrl },
     ]),
     faqSchema(faqItems),
   ]}
 >
   <FunnelPageView stage="selection" label="mtu-legacy-gas-engine-parts" />
   <BreadcrumbHero
-    title="MTU Legacy Series & Gas Engines"
+    title="MTU 老系列与气体发动机"
     trail={[
-      { label: 'Home', href: '/' },
-      { label: 'Products', href: '/products/' },
-      { label: 'MTU Spare Parts', href: '/products/mtu-spare-parts/' },
-      { label: 'Legacy Series & Gas Engines' },
+      { label: '首页', href: '/' },
+      { label: '产品', href: '/products/' },
+      { label: 'MTU 备件', href: '/products/mtu-spare-parts/' },
+      { label: '老系列与气体发动机' },
     ]}
     variant="2"
   />
@@ -156,28 +156,23 @@ const faqItems = [
   <div class="resource-page">
     <section class="resource-page-section">
       <p>
-        MTU has built engines under more model families than any single parts list covers. This site’s
-        indexed catalog data spans <strong>{coveredSeries.size} series</strong> — 183, 396, 538, 595,
-        956, 1163, 2000 and 4000 — where the reference base is largest. Older series and gas-rated
-        engines are quoted <strong>line by line from the model code and serial number</strong> rather
-        than published as empty pages.
+        MTU 生产的发动机型号家族之多，任何一份零件清单都无法覆盖。本站索引目录数据覆盖 <strong>{coveredSeries.size} 个系列</strong>——183、396、538、595、956、1163、2000 与 4000——这些系列的参考基础最大。更早的系列与气体额定发动机按<strong>型号代码与出厂编号逐行报价</strong>，而非发布空页面。
       </p>
       <p class="resource-note">
-        “Indexed” means part pages and engine-model lists are published on this site. “By inquiry” means
-        the model is a real MTU product we source and quote individually — it does not mean unavailable.
+        「已索引」表示零件页与发动机型号清单已在本站发布。「按询价」表示该型号是真实的 MTU 产品，我们单独采购并报价——并不代表无货。
       </p>
     </section>
 
     <section class="resource-page-section">
-      <h2>Coverage by engine family</h2>
+      <h2>按发动机家族划分的覆盖范围</h2>
       <div class="xref-table-wrap">
         <table class="xref-table">
           <thead>
             <tr>
-              <th scope="col">Engine Family</th>
-              <th scope="col">Era</th>
-              <th scope="col">Index Status</th>
-              <th scope="col">What This Means for Your Enquiry</th>
+              <th scope="col">发动机家族</th>
+              <th scope="col">年代</th>
+              <th scope="col">索引状态</th>
+              <th scope="col">对您的询价意味着什么</th>
             </tr>
           </thead>
           <tbody>
@@ -195,47 +190,41 @@ const faqItems = [
     </section>
 
     <section class="resource-page-section">
-      <h2>How legacy and gas enquiries are quoted</h2>
+      <h2>老机型与气体发动机询价如何报价</h2>
       <div class="catalog-depth-section">
         <div class="catalog-depth-card">
-          <h3>01 — Read the code</h3>
+          <h3>01 — 解读代码</h3>
           <p>
-            Send the complete model code and serial number. For legacy series we read the charging
-            letters, application group (group 3 = generator duty, groups 5/6/7/9 = marine), and build
-            digit together with you, so the reference set matches the actual machine.
+            请提供完整型号代码与出厂编号。对于老系列，我们将与您一同解读增压代号、应用组别（第 3 组 = 发电用途，第 5/6/7/9 组 = 船用）与构型数字，使参考集与实机一致。
           </p>
         </div>
         <div class="catalog-depth-card">
-          <h3>02 — Confirm each line</h3>
+          <h3>02 — 逐行确认</h3>
           <p>
-            Every part number is checked against supplier data for that specific build — availability,
-            grade, and supersession. For gas engines we additionally confirm the fuel and ignition
-            variant, because those components do not interchange with the diesel engine of the same
-            block family.
+            每个零件号都按该具体构型对照供应商数据核查——供货情况、品质等级与替代情况。对于气体发动机，我们还会确认燃油与点火变型，因为这些部件不能与同缸体家族的柴油发动机互换。
           </p>
         </div>
         <div class="catalog-depth-card">
-          <h3>03 — Quote with gaps shown</h3>
+          <h3>03 — 明示缺口的报价</h3>
           <p>
-            You receive line-by-line availability and shipping options, with any line that cannot be
-            confirmed clearly marked. A short honest list beats a long guess.
+            您将收到逐行供货情况与运输方案，无法确认的行将明确标注。简短而真实的清单胜过冗长的猜测。
           </p>
         </div>
       </div>
     </section>
 
     <section class="resource-page-section">
-      <h2>Related coverage</h2>
+      <h2>相关覆盖内容</h2>
       <ul class="catalog-scenarios-list">
-        <li>Series 1600 &amp; newer F-build models: <a href="/products/mtu-spare-parts/mtu-1600-series-parts/">MTU Series 1600 parts</a></li>
-        <li>Genset parts by power rating: <a href="/products/mtu-spare-parts/mtu-genset-parts-by-power/">MTU genset parts by power rating</a></li>
-        <li>Parts lists by engine model: <a href="/engine-models/">Parts lists by engine model</a></li>
-        <li>Full part number index (EN · DE): <a href="/part-number-index/">MTU part number index</a></li>
+        <li>1600 系列与新款 F 构型：<a href="/products/mtu-spare-parts/mtu-1600-series-parts/">MTU 1600 系列配件</a></li>
+        <li>按功率段的发电机组配件：<a href="/products/mtu-spare-parts/mtu-genset-parts-by-power/">按功率段的 MTU 发电机组配件</a></li>
+        <li>按发动机型号划分的零件清单：<a href="/engine-models/">按型号划分的零件清单</a></li>
+        <li>完整零件号索引（EN · DE）：<a href="/part-number-index/">MTU 零件号索引</a></li>
       </ul>
     </section>
 
     <section class="resource-page-section">
-      <h2>Legacy &amp; Gas FAQ</h2>
+      <h2>老机型与气体发动机常见问题</h2>
       {faqItems.map((item) => (
         <details class="resource-faq-item">
           <summary>{item.question}</summary>
@@ -245,9 +234,9 @@ const faqItems = [
     </section>
 
     <DetailRfqStrip
-      context="Legacy / gas engine sourcing"
-      heading="Send the model code and serial number"
-      text="Legacy series and gas engines are quoted line by line. Include the complete model code, serial number, and your parts list — photos of the nameplate help for older builds."
+      context="老机型 / 气体发动机采购"
+      heading="请提供型号代码与出厂编号"
+      text="老系列与气体发动机按行逐项报价。请提供完整型号代码、出厂编号与零件清单——老构型请附铭牌照片。"
     />
   </div>
 </BaseLayout>

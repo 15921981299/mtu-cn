@@ -5,6 +5,7 @@ import DetailPageShell from '../../components/DetailPageShell.astro';
 import DetailRfqStrip from '../../components/DetailRfqStrip.astro';
 import { describeModel, getSeriesCatalogHub, isListedPart, modelApplication, modelBuildLabel, modelGroups, type ModelGroup } from '../../data/engine-models';
 import { breadcrumbSchema, itemListSchema, site } from '../../data/site';
+import { zhPartName, zhCategoryName } from '../../data/part-names-zh';
 import '../../styles/resource-page.css';
 
 export function getStaticPaths() {
@@ -15,68 +16,67 @@ const { group } = Astro.props as { group: ModelGroup };
 const pageUrl = `${site.url}/engine-models/${group.slug}/`;
 const quoteHref = `/contact/?source=engine-models-${group.slug}`;
 const modelCodes = group.models.map((model) => model.code);
-const modelText = modelCodes.length <= 4 ? modelCodes.join(', ') : `${modelCodes.slice(0, 3).join(', ')} and ${modelCodes.length - 3} more`;
+const modelText = modelCodes.length <= 4 ? modelCodes.join(', ') : `${modelCodes.slice(0, 3).join(', ')} 等 ${modelCodes.length - 3} 个`;
 
 const byCategory = new Map<string, typeof group.parts>();
-for (const part of group.parts) byCategory.set(part.category, [...(byCategory.get(part.category) ?? []), part]);
+for (const part of group.parts) byCategory.set(zhCategoryName(part.category), [...(byCategory.get(zhCategoryName(part.category)) ?? []), part]);
 const categories = [...byCategory.entries()].sort((a, b) => b[1].length - a[1].length);
 const withHistory = group.parts.filter((part) => (part.replacementFor ?? []).length > 0);
 const applications = [...new Set(group.models.map(modelApplication).filter((value): value is string => Boolean(value)))];
 const cylinderOptions = [...new Set(group.models.map((model) => `${model.cylinders}${model.arrangement}`))];
 const hub = getSeriesCatalogHub(group.series);
 
-const description = `${group.parts.length} catalogued MTU part numbers for ${modelText}, grouped by system, with superseded numbers and model-code notes. Send your engine serial number for a quote.`.slice(0, 158);
+const description = `${group.parts.length} 个已收录的 MTU 零件号，适配 ${modelText}，按系统分组，附旧零件号与型号说明。提供发动机出厂编号即可询价。`.slice(0, 158);
 
 const jsonLd = [
   breadcrumbSchema([
-    { name: 'Home', url: site.url },
-    { name: 'MTU Engine Parts Lists', url: `${site.url}/engine-models/` },
+    { name: '首页', url: site.url },
+    { name: 'MTU 发动机零件清单', url: `${site.url}/engine-models/` },
     { name: group.title, url: pageUrl },
   ]),
-  itemListSchema(group.parts.filter(isListedPart).slice(0, 50).map((part) => ({ name: `${part.partNumber} ${part.name}`, url: `${site.url}/part-products/${part.slug}/` }))),
+  itemListSchema(group.parts.filter(isListedPart).slice(0, 50).map((part) => ({ name: `${part.partNumber} ${zhPartName(part.name)}`, url: `${site.url}/part-products/${part.slug}/` }))),
 ];
 ---
 
-<BaseLayout title={`${group.title} (${group.parts.length} Part Numbers)`} noTitleSuffix description={description} currentPath="/engine-models" jsonLd={jsonLd}>
+<BaseLayout title={`${group.title}（${group.parts.length} 个零件号）`} noTitleSuffix description={description} currentPath="/engine-models" jsonLd={jsonLd}>
   <BreadcrumbHero
     title={group.title}
     trail={[
-      { label: 'Home', href: '/' },
-      { label: 'Engine Parts Lists', href: '/engine-models/' },
+      { label: '首页', href: '/' },
+      { label: '发动机零件清单', href: '/engine-models/' },
       { label: group.title },
     ]}
     variant="1"
   />
 
-  <DetailPageShell intro={`This list brings together the ${group.parts.length} part numbers our catalog records for ${modelText}. The engines share most of their service parts, so they are listed on one page; the exact fitment of each part is still confirmed against the engine serial number before quotation.`}>
+  <DetailPageShell intro={`本清单汇总我们目录收录的 ${group.parts.length} 个零件号，适配 ${modelText}。这些发动机大部分维修件通用，因此集中列于同一页面；每个零件的确切适配仍将在报价前按发动机出厂编号（serial number）逐一确认。`}>
     <div class="resource-meta">
-      <span><strong>Series</strong> MTU {group.series}</span>
-      <span><strong>Models</strong> {group.models.length}</span>
-      <span><strong>Part numbers</strong> {group.parts.length}</span>
-      <span><strong>With earlier numbers</strong> {withHistory.length}</span>
+      <span><strong>系列</strong> MTU {group.series}</span>
+      <span><strong>覆盖型号</strong> {group.models.length}</span>
+      <span><strong>零件号</strong> {group.parts.length}</span>
+      <span><strong>含旧零件号</strong> {withHistory.length}</span>
     </div>
 
     <DetailRfqStrip
       quoteHref={quoteHref}
-      title={`Request parts for ${modelCodes[0]}${modelCodes.length > 1 ? ' and related models' : ''}`}
-      text="Send the engine model, serial number, part numbers or a parts list, quantity, and destination."
+      title={`申请 ${modelCodes[0]}${modelCodes.length > 1 ? ' 及相关型号' : ''}零件报价`}
+      text="请提供零件号、发动机型号与出厂编号、数量及目的地，或直接提交您的零件清单。"
       secondaryHref={hub ? `/part-products/catalog/${hub.slug}/` : '/part-products/'}
-      secondaryLabel={hub ? hub.title : 'MTU parts catalog'}
+      secondaryLabel={hub ? hub.title : 'MTU 零件目录'}
     />
 
-    <h2>Engine Models Covered</h2>
+    <h2>覆盖的发动机型号</h2>
     <p>
-      The list covers {cylinderOptions.join(', ')} versions of the Series {group.series}
-      {applications.length > 0 ? ` for ${applications.join(' and ')}` : ''}. Each model code below is read from left to right: cylinder count and arrangement, series, then the application and build codes. The <a href="/products/mtu-spare-parts/mtu-engine-series-guide/">MTU engine series guide</a> explains the naming systems in full.
+      本清单覆盖 {group.series} 系列的 {cylinderOptions.join(', ')} 机型{applications.length > 0 ? `，应用于${applications.join(' 与 ')}` : ''}。下方各型号代码自左向右读作：气缸数与布置形式、系列，随后是应用与构型代码。<a href="/products/mtu-spare-parts/mtu-engine-series-guide/">MTU 发动机系列指南</a>完整讲解命名规则。
     </p>
-    <div class="part-reference-scroll" tabindex="0" role="region" aria-label="Engine models in this parts list">
+    <div class="part-reference-scroll" tabindex="0" role="region" aria-label="本零件清单覆盖的发动机型号">
       <table class="part-reference-table">
-        <thead><tr><th scope="col">Model</th><th scope="col">Cylinders</th><th scope="col">Arrangement</th><th scope="col">Application</th><th scope="col">Group / build</th><th scope="col">How the code reads</th></tr></thead>
+        <thead><tr><th scope="col">型号</th><th scope="col">气缸数</th><th scope="col">布置形式</th><th scope="col">应用</th><th scope="col">组别 / 构型</th><th scope="col">代码解读</th></tr></thead>
         <tbody>{group.models.map((model) => (
           <tr>
             <th scope="row">{model.code}</th>
             <td>{model.cylinders}</td>
-            <td>{model.arrangement === 'V' ? 'V' : 'In-line'}</td>
+            <td>{model.arrangement === 'V' ? 'V 型' : '直列'}</td>
             <td>{modelApplication(model) ?? '—'}</td>
             <td>{modelBuildLabel(model)}</td>
             <td>{describeModel(model)}</td>
@@ -85,18 +85,18 @@ const jsonLd = [
       </table>
     </div>
 
-    <h2>Parts by System</h2>
-    <p>{categories.map(([category, parts]) => `${category} (${parts.length})`).join(', ')}.</p>
+    <h2>按系统划分的零件</h2>
+    <p>{categories.map(([category, parts]) => `${category}（${parts.length}）`).join(', ')}。</p>
     {categories.map(([category, parts]) => (
       <section class="hub-section">
         <h3>{category}</h3>
-        <div class="part-reference-scroll" tabindex="0" role="region" aria-label={`${category} part numbers`}>
+        <div class="part-reference-scroll" tabindex="0" role="region" aria-label={`${category}零件号`}>
           <table class="part-reference-table">
-            <thead><tr><th scope="col">Part number</th><th scope="col">Description</th><th scope="col">Earlier numbers</th></tr></thead>
+            <thead><tr><th scope="col">零件号</th><th scope="col">描述</th><th scope="col">旧零件号</th></tr></thead>
             <tbody>{parts.map((part) => (
               <tr>
                 <th scope="row"><a href={`/part-products/${part.slug}/`}>{part.partNumber}</a></th>
-                <td>{part.name}</td>
+                <td>{zhPartName(part.name)}</td>
                 <td>{(part.replacementFor ?? []).slice(0, 3).join(', ') || '-'}</td>
               </tr>
             ))}</tbody>
@@ -105,22 +105,22 @@ const jsonLd = [
       </section>
     ))}
 
-    <h2>Superseded Numbers in This List</h2>
+    <h2>本清单中的旧零件号</h2>
     <p>
       {withHistory.length > 0
-        ? `${withHistory.length} of the ${group.parts.length} parts have earlier numbers on record. Older parts lists and engine manuals often still quote those numbers. Send them as they appear and we match them to the current number, checking whether the change affects related parts.`
-        : 'No earlier numbers are recorded for the parts in this list. If your documents show a different number, send it as it appears and we check it against the catalog history.'}
+        ? `本清单 ${group.parts.length} 个零件中，有 ${withHistory.length} 个记录在案的旧零件号。旧版零件清单与发动机手册中常仍沿用这些号码，请按原样提供，我们将为您对应当前号码，并核实替换是否涉及关联零件。`
+        : '本清单中的零件暂无旧零件号记录。如您的文件显示不同号码，请按原样提供，我们将对照目录变更记录进行核查。'}
     </p>
 
-    <h2>What to Send for a Quotation</h2>
+    <h2>询价需提供的资料</h2>
     <ul>
-      <li>Full model code from the data plate, for example {modelCodes[0]}</li>
-      <li>Engine serial number, which decides the build standard and fitment</li>
-      <li>Part numbers as listed in your documents, including old numbers</li>
-      <li>Quantity, destination, and required delivery date</li>
+      <li>铭牌上的完整型号代码，例如 {modelCodes[0]}</li>
+      <li>发动机出厂编号，用于确定构型标准与适配情况</li>
+      <li>文件中列出的零件号，含旧零件号</li>
+      <li>数量、目的地与要求交货日期</li>
     </ul>
     <p>
-      For background on the series, see {hub ? <a href={`/part-products/catalog/${hub.slug}/`}>{hub.title}</a> : <a href="/part-products/">the MTU parts catalog</a>} and <a href="/products/mtu-spare-parts/mtu-engine-series-guide/">how to read MTU model codes</a>.
+      如需了解系列背景，请参阅{hub ? <a href={`/part-products/catalog/${hub.slug}/`}>{hub.title}</a> : <a href="/part-products/">MTU 零件目录</a>}与<a href="/products/mtu-spare-parts/mtu-engine-series-guide/">MTU 型号代码解读</a>。
     </p>
   </DetailPageShell>
 </BaseLayout>

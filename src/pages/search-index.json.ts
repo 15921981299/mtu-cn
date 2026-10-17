@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { isPartPageIndexable, mtuCatalogHubs, mtuParts } from '../data/mtu-parts';
+import { zhPartName } from '../data/part-names-zh';
 
 /**
  * 站内搜索索引（构建期生成的静态 JSON）
@@ -14,6 +15,7 @@ export const GET: APIRoute = () => {
       t: 'p' as const,
       pn: part.partNumber,
       name: part.name,
+      nzh: zhPartName(part.name),
       s: part.series.join(' '),
       slug: part.slug,
     }));
@@ -21,6 +23,7 @@ export const GET: APIRoute = () => {
     t: 'c' as const,
     pn: '',
     name: hub.h1Title,
+    nzh: '',
     s: '',
     slug: `catalog/${hub.slug}`,
   }));

@@ -22,8 +22,8 @@ const hasPersonAuthor = Boolean(site.author.name);
   currentPath="/news"
   jsonLd={[
     breadcrumbSchema([
-      { name: 'Home', url: site.url },
-      { name: 'Industry Notes', url: `${site.url}/news/` },
+      { name: '首页', url: site.url },
+      { name: '行业札记', url: `${site.url}/news/` },
       { name: article.h1, url: pageUrl },
     ]),
     articleSchema({
@@ -44,7 +44,7 @@ const hasPersonAuthor = Boolean(site.author.name);
   <FunnelPageView stage="service" label={`news-${article.slug}`} />
   <BreadcrumbHero
     title={article.h1}
-    trail={[{ label: 'Home', href: '/' }, { label: 'Industry Notes', href: '/news/' }, { label: article.title }]}
+    trail={[{ label: '首页', href: '/' }, { label: '行业札记', href: '/news/' }, { label: article.title }]}
     variant="3"
   />
 
@@ -52,30 +52,29 @@ const hasPersonAuthor = Boolean(site.author.name);
     <section class="resource-page-section">
       <p class="news-lede">{article.description}</p>
       <div class="resource-meta">
-        <span><strong>Published</strong> {article.datePublished}</span>
-        <span><strong>Category</strong> {article.category}</span>
+        <span><strong>发布于</strong> {article.datePublished}</span>
+        <span><strong>类别</strong> {article.category}</span>
         {hasPersonAuthor ? (
-          <span><strong>Written by</strong> {site.author.name}{site.author.jobTitle ? `, ${site.author.jobTitle}` : ''}</span>
+          <span><strong>作者</strong> {site.author.name}{site.author.jobTitle ? `，${site.author.jobTitle}` : ''}</span>
         ) : (
-          <span><strong>Maintained by</strong> The {site.name} parts desk</span>
+          <span><strong>维护</strong> {site.name} 零件部</span>
         )}
       </div>
     </section>
 
     <section class="resource-page-section">
-      <h2>Key Facts</h2>
+      <h2>核心要点</h2>
       <ul class="resource-checklist">
         {article.keyFacts.map((fact) => <li>{fact}</li>)}
       </ul>
-      <h3>Sources</h3>
+      <h3>来源</h3>
       <ul class="resource-olist">
         {article.sources.map((source) => (
           <li><a href={source.url} rel="nofollow noopener" target="_blank">{source.label}</a></li>
         ))}
       </ul>
       <p class="news-note">
-        Facts in this note are taken from the sources listed above. Where a figure is not published by
-        the manufacturer, we do not state one.
+        本札记中的事实均取自上文所列来源。凡制造商未公布的数据，我们不予陈述。
       </p>
     </section>
 
@@ -87,15 +86,15 @@ const hasPersonAuthor = Boolean(site.author.name);
     ))}
 
     <section class="resource-page-section">
-      <h2>Related Pages</h2>
+      <h2>相关页面</h2>
       <ul class="resource-olist">
         {article.related.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
-        <li><a href="/news/">All industry notes</a></li>
+        <li><a href="/news/">全部行业札记</a></li>
       </ul>
     </section>
 
     <section class="resource-page-section">
-      <h2>FAQ</h2>
+      <h2>常见问题（FAQ）</h2>
       {article.faqs.map((item) => (
         <details class="news-faq-item">
           <summary>{item.question}</summary>
@@ -105,10 +104,10 @@ const hasPersonAuthor = Boolean(site.author.name);
     </section>
 
     <DetailRfqStrip
-      title="Send your engine details"
-      text="Model, serial number, and the positions you need — we verify fitment and supersessions, then quote with availability per line."
+      title="提供您的发动机信息"
+      text="请提供型号、出厂编号与所需部位——我们核验适配与替换关系后按行报价，并注明每行供货情况。"
       quoteHref={`/contact/?source=news-${article.slug}`}
-      label="Request Parts Quote"
+      label="申请零件报价"
       modalSource={`news-${article.slug}`}
     />
   </div>

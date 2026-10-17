@@ -8,6 +8,7 @@ import QuotationExamples from '../../components/QuotationExamples.astro';
 import { modelProcurement } from '../../data/procurement-content';
 import { partsGuides } from '../../data/guides';
 import { mtuParts } from '../../data/mtu-parts';
+import { zhCategoryName, zhPartName } from '../../data/part-names-zh';
 import { articleSchema, breadcrumbSchema, faqSchema, site } from '../../data/site';
 import '../../styles/resource-page.css';
 
@@ -41,8 +42,8 @@ const hasPersonAuthor = Boolean(site.author.name);
   currentPath="/guides"
   jsonLd={[
     breadcrumbSchema([
-      { name: 'Home', url: site.url },
-      { name: 'Parts Guides', url: `${site.url}/guides/` },
+      { name: '首页', url: site.url },
+      { name: '零件指南', url: `${site.url}/guides/` },
       { name: guide.h1, url: pageUrl },
     ]),
     articleSchema({
@@ -62,7 +63,7 @@ const hasPersonAuthor = Boolean(site.author.name);
   <FunnelPageView stage={guide.stage} label={`guide-${guide.slug}`} />
   <BreadcrumbHero
     title={guide.h1}
-    trail={[{ label: 'Home', href: '/' }, { label: 'Parts Guides', href: '/guides/' }, { label: guide.h1 }]}
+    trail={[{ label: '首页', href: '/' }, { label: '零件指南', href: '/guides/' }, { label: guide.h1 }]}
     variant="3"
   />
 
@@ -70,13 +71,13 @@ const hasPersonAuthor = Boolean(site.author.name);
     <section class="resource-page-section">
       {guide.intro.map((paragraph) => <p>{paragraph}</p>)}
       <div class="resource-meta">
-        <span><strong>Parts listed</strong> {guideParts.length} catalog records</span>
-        <span><strong>Fitment check</strong> By engine serial number</span>
-        <span><strong>Supersessions</strong> Traced before quoting</span>
+        <span><strong>收录零件</strong> {guideParts.length} 条目录记录</span>
+        <span><strong>适配核验</strong> 按发动机出厂编号</span>
+        <span><strong>替代号</strong> 报价前完成追溯</span>
         {hasPersonAuthor ? (
-          <span><strong>Reviewed by</strong> {site.author.name}{site.author.jobTitle ? `, ${site.author.jobTitle}` : ''}</span>
+          <span><strong>审核</strong> {site.author.name}{site.author.jobTitle ? `，${site.author.jobTitle}` : ''}</span>
         ) : (
-          <span><strong>Maintained by</strong> The {site.name} parts desk</span>
+          <span><strong>维护</strong> {site.name}零件部</span>
         )}
       </div>
     </section>
@@ -84,16 +85,16 @@ const hasPersonAuthor = Boolean(site.author.name);
     {guideSeries && <>
       <ProcurementBrief brief={modelProcurement(guideSeries)} source={`guide-${guide.slug}-scope`} />
       <section class="resource-page-section">
-        <h2>Itemized Overhaul RFQ Worksheet</h2>
-        <p>The worksheet contains catalog reference examples, not a completed customer order or a universal overhaul kit. Quantities, engine serial number, grade, supplied condition and required documents remain blank for your request. An included reference is not confirmation that your engine needs it.</p>
-        <p><a href={`/downloads/mtu-${guideSeries}-overhaul-rfq.xlsx`} download>Download MTU {guideSeries} RFQ Worksheet</a></p>
+        <h2>逐项大修询价工作表</h2>
+        <p>该工作表提供目录参考示例，并非一份已完成的客户订单或通用大修包。数量、发动机出厂编号、轴径级别、供货状态与所需文件留空，供您按需填写。列入参考项不等于确认您的发动机需要该项。</p>
+        <p><a href={`/downloads/mtu-${guideSeries}-overhaul-rfq.xlsx`} download>下载 MTU {guideSeries} 询价工作表（XLSX）</a></p>
         <ul class="resource-checklist">
-          <li>Cylinder components: liner, piston, rings and seals listed separately with grade and per-position quantities.</li>
-          <li>Bearings: upper/lower shells and measured shaft grade; record any workshop repair history.</li>
-          <li>Gaskets: itemized contents rather than an unspecified complete gasket set.</li>
-          <li>Injection: complete marked numbers, offered condition, test records and any core terms.</li>
+          <li>气缸组件：缸套、活塞、活塞环与密封件按位置分行列出，含轴径级别与逐位数量。</li>
+          <li>轴承：上瓦/下瓦与实测轴径级别；请记录维修历史。</li>
+          <li>垫片：逐项列明内容，而非笼统的「整套垫片」。</li>
+          <li>燃油系统：完整的打印号码、供货状态、检测记录及芯件条款。</li>
         </ul>
-        <DetailRfqStrip quoteHref={`/contact/?source=guide-${guide.slug}-worksheet`} title="Quote your overhaul list" text="Attach your worksheet or existing parts list. Start with the numbers you have; unresolved positions can be checked separately." label="Send Parts List" modalSource={`guide-${guide.slug}-worksheet`} modalContext={`MTU ${guideSeries} overhaul list; quote contents, grade and condition per line`} />
+        <DetailRfqStrip quoteHref={`/contact/?source=guide-${guide.slug}-worksheet`} title="为您的整张大修清单询价" text="请附上工作表或现有零件清单。从您手头的号码开始即可；未确定的位置可以另行核验。" label="发送零件清单" modalSource={`guide-${guide.slug}-worksheet`} modalContext={`MTU ${guideSeries} 大修清单；请逐行注明内容、级别与供货状态`} />
       </section>
     </>}
     {guideSeries === '4000' && <QuotationExamples ids={['generator-service-filters', 'cylinder-head-components']} source="4000-guide-real-rfq" />}
@@ -107,16 +108,15 @@ const hasPersonAuthor = Boolean(site.author.name);
     </section>
 
     <section class="resource-page-section">
-      <h2>Parts We Supply for This Series</h2>
+      <h2>本系列可供应的零件</h2>
       <p>
-        The groups below are generated from catalog records listed under this engine series
-        ({guideParts.length} part numbers). Open any number for fitment, weight, HS code, and
-        interchange details, or browse the full
-        <a href={guide.seriesCatalog.href}> {guide.seriesCatalog.label}</a>.
+        下列分组由收录在该发动机系列下的目录记录生成（共 {guideParts.length} 个零件号）。
+        打开任意号码可查看适配、重量、HS 编码与互换信息，或浏览完整的
+        <a href={guide.seriesCatalog.href}> {guide.seriesCatalog.label}</a>。
       </p>
       {categories.map(([category, parts]) => (
         <div class="guide-category">
-          <h3>{category} <span class="guide-category__count">({parts.length})</span></h3>
+          <h3>{zhCategoryName(category)} <span class="guide-category__count">（{parts.length}）</span></h3>
           <div class="guide-table-wrap"><table class="guide-parts-table">
             <tbody>
               {parts.slice(0, MAX_ROWS_PER_CATEGORY).map((part) => (
@@ -124,7 +124,7 @@ const hasPersonAuthor = Boolean(site.author.name);
                   <td class="guide-pn">
                     <a href={`/part-products/${part.slug}/`}>{part.partNumber}</a>
                   </td>
-                  <td>{part.name}</td>
+                  <td>{zhPartName(part.name)}</td>
                 </tr>
               ))}
             </tbody>
@@ -132,7 +132,7 @@ const hasPersonAuthor = Boolean(site.author.name);
           {parts.length > MAX_ROWS_PER_CATEGORY && (
             <p class="guide-more">
               <a href={guide.seriesCatalog.href}>
-                + {parts.length - MAX_ROWS_PER_CATEGORY} more {category.toLowerCase()} parts in the catalog →
+                + 目录中另有 {parts.length - MAX_ROWS_PER_CATEGORY} 个{zhCategoryName(category)}零件 →
               </a>
             </p>
           )}
@@ -141,20 +141,20 @@ const hasPersonAuthor = Boolean(site.author.name);
     </section>
 
     <section class="resource-page-section">
-      <h2>Related Resources</h2>
+      <h2>相关资源</h2>
       <ul class="resource-olist">
         {guide.relatedHubs.map((hub) => (
           <li><a href={hub.href}>{hub.label}</a></li>
         ))}
-        <li><a href="/catalog/">Catalog PDF downloads</a> — this series' part-number index as a printable PDF</li>
-        <li><a href="/guides/how-to-read-mtu-parts-diagram/">Reading a parts diagram</a> — from position number to part number</li>
-        <li><a href="/how-to-source-mtu-parts/">Authorised dealer or independent supplier?</a></li>
-        <li><a href="/guides/">All parts guides</a></li>
+        <li><a href="/catalog/">目录 PDF 下载</a> —— 本系列零件号索引的可打印版本</li>
+        <li><a href="/guides/how-to-read-mtu-parts-diagram/">如何阅读零件图纸</a> —— 从位置号到零件号</li>
+        <li><a href="/how-to-source-mtu-parts/">授权经销商还是独立供应商？</a></li>
+        <li><a href="/guides/">全部零件指南</a></li>
       </ul>
     </section>
 
     <section class="resource-page-section">
-      <h2>FAQ</h2>
+      <h2>常见问题</h2>
       {guide.faqs.map((item) => (
         <details class="guide-faq-item">
           <summary>{item.question}</summary>
@@ -164,10 +164,10 @@ const hasPersonAuthor = Boolean(site.author.name);
     </section>
 
     <DetailRfqStrip
-      title="Send your engine details"
-      text="Model, serial number, and the positions you need — we verify fitment and supersessions, then quote with availability per line."
+      title="发送您的发动机信息"
+      text="型号、出厂编号与所需位置——我们先核验适配与替代号，再逐行反馈供货情况并报价。"
       quoteHref={`/contact/?source=guide-${guide.slug}`}
-      label="Request Parts Quote"
+      label="申请零件报价"
       modalSource={`guide-${guide.slug}`}
     />
   </div>

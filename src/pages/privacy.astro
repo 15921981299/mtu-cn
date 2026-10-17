@@ -11,20 +11,20 @@ const legalName = site.company.legalNameEn;
 ---
 
 <BaseLayout
-  title="Privacy Policy — Diesel Part Source"
-  description="How Diesel Part Source collects, uses, and protects information submitted through parts inquiry forms, email, and site analytics."
+  title="隐私政策 — 柴油零件源"
+  description="柴油零件源 如何收集、使用和保护通过零件询价表单、邮件与网站分析提交的信息。"
   currentPath="/privacy"
   jsonLd={breadcrumbSchema([
-    { name: 'Home', url: site.url },
-    { name: 'Privacy Policy', url: pageUrl },
+    { name: '首页', url: site.url },
+    { name: '隐私政策', url: pageUrl },
   ])}
 >
   <FunnelPageView stage="awareness" label="privacy" />
   <BreadcrumbHero
-    title="Privacy Policy"
+    title="隐私政策"
     trail={[
-      { label: 'Home', href: '/' },
-      { label: 'Privacy Policy' },
+      { label: '首页', href: '/' },
+      { label: '隐私政策' },
     ]}
     variant="5"
   />
@@ -34,88 +34,83 @@ const legalName = site.company.legalNameEn;
       <div class="container">
         <article class="blog-details-content-block terms-page fade-in">
           <p class="terms-intro">
-            Last updated: June 15, 2026. This policy describes how {legalName} ({site.name}) handles information when you visit
-            {site.url.replace('https://', '')} or submit an RFQ.
+            最后更新：2026 年 6 月 15 日。本政策说明 {legalName}（{site.name}）在您访问
+            {site.url.replace('https://', '')} 或提交询价时如何处理信息。
           </p>
 
-          <div class="terms-meta" aria-label="Privacy policy overview">
-            <span>RFQ &amp; contact forms</span>
-            <span>Engineering file handling</span>
-            <span>Analytics &amp; cookies</span>
-            <span>Data retention up to <strong>7 years</strong></span>
+          <div class="terms-meta" aria-label="隐私政策概览">
+            <span>询价与联系表单</span>
+            <span>工程文件处理</span>
+            <span>分析与 Cookie</span>
+            <span>数据保留最长 <strong>7 年</strong></span>
           </div>
 
-          <nav class="terms-jump-nav" aria-label="On this page">
-            <a href="#information-collected" class="terms-jump-link">Information collected</a>
-            <a href="#how-we-use" class="terms-jump-link">How we use data</a>
-            <a href="#engineering-files" class="terms-jump-link">Engineering files</a>
-            <a href="#your-rights" class="terms-jump-link">Your rights</a>
-            <a href="#contact" class="terms-jump-link">Contact</a>
+          <nav class="terms-jump-nav" aria-label="本页导航">
+            <a href="#information-collected" class="terms-jump-link">收集的信息</a>
+            <a href="#how-we-use" class="terms-jump-link">数据使用方式</a>
+            <a href="#engineering-files" class="terms-jump-link">工程文件</a>
+            <a href="#your-rights" class="terms-jump-link">您的权利</a>
+            <a href="#contact" class="terms-jump-link">联系我们</a>
           </nav>
 
-          <h2 id="information-collected">Information We Collect</h2>
+          <h2 id="information-collected">我们收集的信息</h2>
           <ul class="terms-list">
-            <li><strong>RFQ and contact forms:</strong> name, company, email, phone, project details, and files you upload (drawings, STEP, PDF).</li>
-            <li><strong>Email and messaging:</strong> correspondence needed to quote, produce, and ship your order.</li>
-            <li><strong>Site analytics:</strong> anonymized usage data via Google Analytics when enabled (page views, referral source, device type).</li>
-            <li><strong>Technical logs:</strong> IP address, browser type, and timestamps for security and abuse prevention.</li>
+            <li><strong>询价与联系表单：</strong>姓名、公司、邮箱、电话、项目详情，以及您上传的文件（图纸、STEP、PDF）。</li>
+            <li><strong>邮件与消息：</strong>为您的订单报价、生产与发货所需的往来通信。</li>
+            <li><strong>网站分析：</strong>启用时通过 Google Analytics 收集匿名化使用数据（页面浏览、来源、设备类型）。</li>
+            <li><strong>技术日志：</strong>IP 地址、浏览器类型与时间戳，用于安全与滥用防范。</li>
           </ul>
 
-          <h2 id="how-we-use">How We Use Information</h2>
+          <h2 id="how-we-use">我们如何使用信息</h2>
           <ul class="terms-list">
-            <li>Prepare quotations, parts verification feedback, and parts orders you request</li>
-            <li>Communicate about lead time, inspection, shipping, and payment</li>
-            <li>Maintain quality records tied to your PO (travelers, inspection IDs, material lots)</li>
-            <li>Improve site content and measure marketing performance</li>
-            <li>Comply with law and enforce our terms</li>
+            <li>编制您请求的报价、零件核验反馈与零件订单</li>
+            <li>就交货期、检验、运输与付款进行沟通</li>
+            <li>维护与您的 PO 挂钩的质量记录（流程卡、检验编号、材料批次）</li>
+            <li>改进网站内容并衡量营销效果</li>
+            <li>遵守法律并执行我们的条款</li>
           </ul>
 
-          <h2 id="engineering-files">Engineering Files &amp; Confidentiality</h2>
+          <h2 id="engineering-files">工程文件与保密</h2>
           <p>
-            Drawings and CAD files are used only to quote and manufacture your parts. We do not sell your designs. NDA terms can be
-            confirmed on quotation when required. Remove unrelated proprietary data before upload when possible.
+            图纸与 CAD 文件仅用于为您的零件报价与生产。我们不出售您的设计。需要时可在报价中确认 NDA 条款。如可能，请在上传前移除无关的专有数据。
           </p>
 
-          <h2>Sharing</h2>
+          <h2>信息共享</h2>
           <p>
-            We share information with manufacturing partners, carriers, and payment processors only as needed to fulfill your order.
-            We do not sell personal data to data brokers.
+            我们仅在履行您的订单所必需的范围内，与生产合作伙伴、承运方与支付处理方共享信息。我们不会向数据中介出售个人数据。
           </p>
 
-          <h2>Retention</h2>
+          <h2>数据保留</h2>
           <p>
-            RFQ files and order records are kept for the period needed for production traceability, warranty, and tax compliance —
-            typically up to seven years for completed orders unless you request earlier deletion where legally permitted.
+            询价文件与订单记录按生产追溯、保修与税务合规所需的期限保存——已完成订单通常最长保留七年，除非您在法律允许的范围内要求提前删除。
           </p>
 
-          <h2>Cookies &amp; Analytics</h2>
+          <h2>Cookie 与分析</h2>
           <p>
-            We may use cookies for analytics and form functionality. You can block cookies in your browser; some features may not work
-            correctly without them.
+            我们可能将 Cookie 用于分析与表单功能。您可以在浏览器中阻止 Cookie；缺少 Cookie 时部分功能可能无法正常工作。
           </p>
 
-          <h2 id="your-rights">Your Rights</h2>
+          <h2 id="your-rights">您的权利</h2>
           <p>
-            Depending on your location, you may request access, correction, or deletion of personal data we hold. Contact us at{' '}
-            <a href={`mailto:${site.email}`}>{site.email}</a> with the email address used on your RFQ.
+            根据您所在地的法律，您可以请求查阅、更正或删除我们持有的个人数据。请使用您询价时所用的邮箱地址联系我们：{' '}
+            <a href={`mailto:${site.email}`}>{site.email}</a>。
           </p>
 
-          <h2>International Transfers</h2>
+          <h2>国际传输</h2>
           <p>
-            Data may be processed in China and other countries where our partners operate. We apply reasonable safeguards for B2B
-            manufacturing workflows.
+            数据可能在中国及我们的合作伙伴运营的其他国家处理。我们对 B2B 制造工作流采取合理的安全保障措施。
           </p>
 
-          <h2 id="contact">Contact</h2>
+          <h2 id="contact">联系我们</h2>
           <p>
             {legalName}<br />
-            Email: <a href={`mailto:${site.email}`}>{site.email}</a><br />
-            Phone: {site.phone}
+            邮箱：<a href={`mailto:${site.email}`}>{site.email}</a><br />
+            电话：{site.phone}
           </p>
 
           <p class="terms-related">
-            Related: <a href="/terms/payment/">Payment terms</a> · <a href="/terms/shipping/">Shipping terms</a> ·{' '}
-            <a href="/contact/">Contact</a>
+            相关：<a href="/terms/payment/">付款条款</a> · <a href="/terms/shipping/">运输条款</a> ·{' '}
+            <a href="/contact/">联系我们</a>
           </p>
         </article>
       </div>
@@ -125,12 +120,12 @@ const legalName = site.company.legalNameEn;
   <BlogCta
     stage="awareness"
     topic="privacy"
-    title="Questions about your RFQ data?"
-    text="Contact us about access, correction, or deletion of personal data tied to your quotation or order."
-    primaryLabel="Contact Us"
+    title="对您的询价数据有疑问？"
+    text="如对与您的报价或订单相关的个人数据的查阅、更正或删除有疑问，请联系我们。"
+    primaryLabel="联系我们"
     primaryHref="/contact/?source=privacy"
     primaryEvent="privacy_contact"
-    secondaryLabel="Payment terms"
+    secondaryLabel="付款条款"
     secondaryHref="/terms/payment/"
     secondaryEvent="privacy_payment"
   />

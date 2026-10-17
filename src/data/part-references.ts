@@ -21,9 +21,9 @@ export function getPartReferences(part: Pick<MtuPart, 'partNumber' | 'replacemen
     key,
     number: entry.number,
     relationship: entry.directions.size === 1 ? [...entry.directions][0] : 'reference',
-    label: entry.directions.size > 1 ? 'Conflicting catalog history; verify direction'
-      : entry.directions.has('replaces') ? 'Listed earlier number'
-      : entry.directions.has('replaced-by') ? 'Listed later number'
-      : 'Reference only; direction unconfirmed',
+    label: entry.directions.size > 1 ? '目录沿革存在冲突；请核验方向'
+      : entry.directions.has('replaces') ? '所列早期号码'
+      : entry.directions.has('replaced-by') ? '所列后续号码'
+      : '仅供参考；方向未确认',
   }));
 }

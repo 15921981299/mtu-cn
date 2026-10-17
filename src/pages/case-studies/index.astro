@@ -14,21 +14,21 @@ const hasCases = publishedCaseStudies.length > 0 || quotationExamples.length > 0
 ---
 
 <BaseLayout
-  title="Customer Supply Cases — Engine Parts in Service"
-  description="Real engine-parts supply cases, published with written customer permission: the application, the parts supplied, and the outcome."
+  title="客户供货案例 — 在役发动机零件"
+  description="真实的发动机零件供货案例，均经客户书面授权后发布：应用场景、所供零件与最终结果。"
   currentPath="/case-studies"
   noindex={!hasCases}
   jsonLd={[
     breadcrumbSchema([
-      { name: 'Home', url: site.url },
-      { name: 'Customer Cases', url: pageUrl },
+      { name: '首页', url: site.url },
+      { name: '客户案例', url: pageUrl },
     ]),
   ]}
 >
   <FunnelPageView stage="signing" label="case-studies-index" />
   <BreadcrumbHero
-    title="Customer Supply Cases"
-    trail={[{ label: 'Home', href: '/' }, { label: 'Customer Cases' }]}
+    title="客户供货案例"
+    trail={[{ label: '首页', href: '/' }, { label: '客户案例' }]}
     variant="2"
   />
 
@@ -49,28 +49,24 @@ const hasCases = publishedCaseStudies.length > 0 || quotationExamples.length > 0
     ) : !hasCases && (
       <section class="resource-page-section">
         <p>
-          We publish supply cases only with the customer's written permission — including the
-          application, the part numbers supplied, and the outcome in the customer's own terms.
-          The first cases are currently being prepared with the customers involved.
+          我们仅在获得客户书面授权后发布供货案例——包括应用场景、所供零件号，以及客户视角的结果。首批案例正与相关客户共同整理中。
         </p>
         <p>
-          Until they are ready, the fastest way to evaluate us is direct: send one part number
-          with your engine model and serial number, and judge the verification and quotation
-          process yourself.
+          在案例发布前，评估我们最直接的方式是：提供一个零件号，连同发动机型号与出厂编号，亲自检验我们的核验与报价流程。
         </p>
         <ul class="resource-olist">
-          <li><a href="/certifications/">Quality &amp; Certifications</a> — how parts are verified before shipment</li>
-          <li><a href="/terms/payment/">Payment &amp; Shipping Terms</a></li>
-          <li><a href="/part-products/">MTU Part Number Catalog</a></li>
+          <li><a href="/certifications/">质量与认证</a> — 发货前的零件核验方式</li>
+          <li><a href="/terms/payment/">付款与运输条款</a></li>
+          <li><a href="/part-products/">MTU 零件号目录</a></li>
         </ul>
       </section>
     )}
 
     <DetailRfqStrip
-      title="Evaluate us on a real inquiry"
-      text="One part number is enough. We verify fitment against your engine serial number before quoting."
+      title="以一次真实询价检验我们"
+      text="一个零件号足矣。报价前，我们将对照您的发动机出厂编号核验适配。"
       quoteHref="/contact/?source=case-studies"
-      label="Start an Inquiry"
+      label="发起询价"
       modalSource="case-studies"
     />
   </div>

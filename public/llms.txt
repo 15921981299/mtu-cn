@@ -1,59 +1,59 @@
-# Diesel Part Source — LLM / AI crawler index
+# Diesel Part Source — 大语言模型（LLM）/ AI 爬虫索引
 # https://dieselpartsource.com
 
-> Diesel engine parts supplier based in Shanghai. Diesel Part Source supplies MTU, Detroit Diesel, Cummins, and DEUTZ parts for marine, industrial, power generation, rail, shipyard, and repair customers. Buyers can inquire by part number, engine model, serial number, nameplate photo, old part photo, quantity, and destination.
+> 总部位于上海的柴油发动机（Diesel Engine）配件供应商。Diesel Part Source 面向船用（Marine）、工业（Industrial）、发电（Power Generation）、轨道交通（Rail）、船厂（Shipyard）与维修（Repair）客户，供应 MTU、Detroit Diesel、Cummins 和 DEUTZ 配件。采购方可按零件号（Part Number）、发动机型号（Engine Model）、出厂编号（Serial Number）、铭牌照片、旧件照片、数量及目的地发送询价（RFQ）。
 
-## Part number catalog (core asset)
+## 零件号目录（核心资产）
 
-- [All part numbers](https://dieselpartsource.com/part-products/) — 840+ individual part pages with weight, HS code, NATO number, superseded references, and fitment notes. URL pattern: /part-products/{partnumber-part-name}/
-- [Machine-readable part index (JSON)](https://dieselpartsource.com/search-index.json) — flat list of every part number, name, engine series, and page slug for programmatic lookup
-- [Cross-reference index](https://dieselpartsource.com/cross-reference/) — 1,400+ verified interchange pairs: OEM / superseded / other-supplier part number → the part we supply
-- [MTU 2000 series catalog](https://dieselpartsource.com/part-products/catalog/mtu-2000-series/)
-- [MTU 4000 series catalog](https://dieselpartsource.com/part-products/catalog/mtu-4000-series/)
-- [MTU 396 series catalog](https://dieselpartsource.com/part-products/catalog/mtu-396-series/)
-- [MTU injectors](https://dieselpartsource.com/part-products/catalog/mtu-injectors/)
-- [MTU filters](https://dieselpartsource.com/part-products/catalog/mtu-filters/)
-- [MTU sensors](https://dieselpartsource.com/part-products/catalog/mtu-sensors/)
+- [全部零件号](https://dieselpartsource.com/part-products/) — 840 余个独立零件页面，含重量、HS 编码、NATO 号、被替代（Superseded）零件号参考与适配（Fitment）说明。URL 模式：/part-products/{partnumber-part-name}/
+- [机器可读零件索引（JSON）](https://dieselpartsource.com/search-index.json) — 涵盖全部零件号、名称、发动机系列与页面 slug 的平面列表，供程序化查询
+- [交叉引用（Cross-Reference）索引](https://dieselpartsource.com/cross-reference/) — 1,400 余组经核验的互换配对：原厂配套（OEM）零件号 / 被替代零件号 / 其他供应商零件号 → 本站所供零件
+- [MTU 2000 系列目录](https://dieselpartsource.com/part-products/catalog/mtu-2000-series/)
+- [MTU 4000 系列目录](https://dieselpartsource.com/part-products/catalog/mtu-4000-series/)
+- [MTU 396 系列目录](https://dieselpartsource.com/part-products/catalog/mtu-396-series/)
+- [MTU 喷油器](https://dieselpartsource.com/part-products/catalog/mtu-injectors/)
+- [MTU 滤清器](https://dieselpartsource.com/part-products/catalog/mtu-filters/)
+- [MTU 传感器](https://dieselpartsource.com/part-products/catalog/mtu-sensors/)
 
-## Parts guides (data-backed)
+## 零件指南（数据支撑）
 
-- [MTU 2000 overhaul parts guide](https://dieselpartsource.com/guides/mtu-2000-overhaul-parts/) — real in-catalog parts grouped by system, with serial-number verification workflow
-- [MTU 4000 overhaul parts guide](https://dieselpartsource.com/guides/mtu-4000-overhaul-parts/)
-- [MTU 396 series parts selection guide](https://dieselpartsource.com/guides/mtu-396-series-parts/)
+- [MTU 2000 大修包（Overhaul Kit）指南](https://dieselpartsource.com/guides/mtu-2000-overhaul-parts/) — 按系统归类的目录内实际零件，并附出厂编号核验流程
+- [MTU 4000 大修包指南](https://dieselpartsource.com/guides/mtu-4000-overhaul-parts/)
+- [MTU 396 系列零件选型指南](https://dieselpartsource.com/guides/mtu-396-series-parts/)
 
-## Brand hubs
+## 品牌中心
 
-- [MTU Spare Parts](https://dieselpartsource.com/products/mtu-spare-parts/)
-- [MTU 2000 Series Parts](https://dieselpartsource.com/products/mtu-2000-series-parts/)
-- [MTU 4000 Series Parts](https://dieselpartsource.com/products/mtu-4000-series-parts/)
-- [Cummins Parts](https://dieselpartsource.com/products/cummins-parts/)
-- [DEUTZ Parts](https://dieselpartsource.com/products/deutz-parts/)
+- [MTU 备件](https://dieselpartsource.com/products/mtu-spare-parts/)
+- [MTU 2000 系列配件](https://dieselpartsource.com/products/mtu-2000-series-parts/)
+- [MTU 4000 系列配件](https://dieselpartsource.com/products/mtu-4000-series-parts/)
+- [Cummins 配件](https://dieselpartsource.com/products/cummins-parts/)
+- [DEUTZ 配件](https://dieselpartsource.com/products/deutz-parts/)
 
-## Service and support
+## 服务与支持
 
-- [MTU Engine Parts](https://dieselpartsource.com/capabilities/mtu-engine-parts/)
-- [Cummins Engine Parts](https://dieselpartsource.com/capabilities/cummins-engine-parts/)
-- [DEUTZ Engine Parts](https://dieselpartsource.com/capabilities/deutz-engine-parts/)
-- [Marine Engine Service](https://dieselpartsource.com/capabilities/marine-engine-service/)
-- [Industrial Engine Service](https://dieselpartsource.com/capabilities/industrial-engine-service/)
-- [Verified OEM Sourcing](https://dieselpartsource.com/capabilities/genuine-oem-parts/)
+- [MTU 发动机配件](https://dieselpartsource.com/capabilities/mtu-engine-parts/)
+- [Cummins 发动机配件](https://dieselpartsource.com/capabilities/cummins-engine-parts/)
+- [DEUTZ 发动机配件](https://dieselpartsource.com/capabilities/deutz-engine-parts/)
+- [船用发动机服务](https://dieselpartsource.com/capabilities/marine-engine-service/)
+- [工业发动机服务](https://dieselpartsource.com/capabilities/industrial-engine-service/)
+- [经核验的原厂配套采购](https://dieselpartsource.com/capabilities/genuine-oem-parts/)
 
-## Industries and applications
+## 行业与应用
 
-- [Marine](https://dieselpartsource.com/industries/marine/)
-- [Industrial Engines](https://dieselpartsource.com/industries/industrial-engines/)
-- [Power Generation](https://dieselpartsource.com/industries/power-generation/)
-- [Rail](https://dieselpartsource.com/industries/rail/)
-- [Shipyards & Repair](https://dieselpartsource.com/industries/shipyards-repair/)
-- [Energy Suppliers](https://dieselpartsource.com/industries/energy-suppliers/)
+- [船用](https://dieselpartsource.com/industries/marine/)
+- [工业发动机](https://dieselpartsource.com/industries/industrial-engines/)
+- [发电](https://dieselpartsource.com/industries/power-generation/)
+- [轨道交通](https://dieselpartsource.com/industries/rail/)
+- [船厂与维修](https://dieselpartsource.com/industries/shipyards-repair/)
+- [能源供应商](https://dieselpartsource.com/industries/energy-suppliers/)
 
-## How to request a quote
+## 如何询价
 
-Buyers get fastest pricing by sending: part number (or old-part photo / nameplate photo), engine model, engine serial number, quantity, and destination country. Superseded and interchange numbers are verified before quoting; both OEM and OEM-alternative routes are quoted when available.
+采购方发送以下信息可获得最快报价：零件号（或旧件照片 / 铭牌照片）、发动机型号、发动机出厂编号、数量与目的国。报价前先核验被替代号与互换号；如有供应，原厂配套与原厂替代（OEM-Alternative）渠道均可报价。
 
-- Inquiry form: https://dieselpartsource.com/contact/
-- Email: sales@dieselpartsource.com
-- Phone: +8615921981299
-- WhatsApp: +8615921981299
-- Legal name: Shanghai Diesel Part Source Co., Ltd.
-- Address: Room 401, No. 655 Jialin Road, Pudong New Area, Shanghai, 201206, China
+- 询价表单：https://dieselpartsource.com/contact/
+- 邮箱：sales@dieselpartsource.com
+- 电话：+8615921981299
+- WhatsApp：+8615921981299
+- 法定名称：Shanghai Diesel Part Source Co., Ltd.
+- 地址：Room 401, No. 655 Jialin Road, Pudong New Area, Shanghai, 201206, China

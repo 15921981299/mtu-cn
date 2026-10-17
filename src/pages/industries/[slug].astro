@@ -28,8 +28,8 @@ const secondaryImage = item.image;
   image={heroImage}
   jsonLd={[
     breadcrumbSchema([
-      { name: 'Home', url: site.url },
-      { name: 'Industries', url: `${site.url}/industries/` },
+      { name: '首页', url: site.url },
+      { name: '行业', url: `${site.url}/industries/` },
       { name: item.title, url: pageUrl },
     ]),
     serviceSchema({
@@ -44,8 +44,8 @@ const secondaryImage = item.image;
   <BreadcrumbHero
     title={item.h1Title}
     trail={[
-      { label: 'Home', href: '/' },
-      { label: 'Industries', href: '/industries/' },
+      { label: '首页', href: '/' },
+      { label: '行业', href: '/industries/' },
       { label: item.title },
     ]}
     variant="2"
@@ -55,7 +55,7 @@ const secondaryImage = item.image;
     <img
       slot="hero"
       src={heroImage}
-      alt={`${item.title} engine parts support`}
+      alt={`${item.title}发动机配件支持`}
       width="1400"
       height="692"
       loading="eager"
@@ -63,31 +63,31 @@ const secondaryImage = item.image;
       decoding="async"
     />
     <div class="resource-meta">
-      <span><strong>parts verification</strong> Free with quote</span>
-      <span><strong>Lead time</strong> 7–15 days typical</span>
-      <span><strong>Inspection</strong> supplier document reports included</span>
+      <span><strong>零件核验</strong> 报价免费包含</span>
+      <span><strong>交货期</strong> 通常 7–15 天</span>
+      <span><strong>检验</strong> 含供应商文件报告</span>
     </div>
 
     <DetailRfqStrip
       quoteHref={quoteHref}
-      title={`Quote ${item.title.toLowerCase()} parts`}
-      text="Send your part number for industry-specific parts verification feedback, compliance notes, and a reply within one business day."
+      title={`${item.title.toLowerCase()}零件询价`}
+      text="请提供零件号，我们将反馈针对该行业的零件核验结果、合规说明，并在一个工作日内回复。"
     />
 
     <div set:html={item.content.partOne} />
     <figure class="detail-page-figure">
-      <img src={secondaryImage} alt={`${item.title} engine parts examples`} width="1200" height="662" loading="lazy" decoding="async" />
+      <img src={secondaryImage} alt={`${item.title}发动机配件示例`} width="1200" height="662" loading="lazy" decoding="async" />
     </figure>
     <div set:html={item.content.partTwo} />
 
     <p class="resource-note detail-page-back">
-      <a href="/industries/">All industries</a>
+      <a href="/industries/">全部行业</a>
       ·
-      <a href="/certifications/">Compliance paths</a>
+      <a href="/certifications/">合规路径</a>
       ·
-      <a href="/about/">Case studies</a>
+      <a href="/about/">案例</a>
       ·
-      <a href={quoteHref}>Request a quote</a>
+      <a href={quoteHref}>获取报价</a>
     </p>
     <IndustrySidebar slot="sidebar" activeSlug={item.slug} quoteHref={quoteHref} />
   </DetailPageShell>
@@ -95,12 +95,12 @@ const secondaryImage = item.image;
   <BlogCta
     stage="selection"
     topic={item.slug}
-    title={`Quote ${item.title.toLowerCase()} parts`}
-    text="Send your part number with industry and compliance notes — we confirm scope and reply within one business day."
-    primaryLabel="Request a Quote"
+    title={`${item.title.toLowerCase()}零件询价`}
+    text="请提供零件号并注明行业与合规要求，我们将确认范围并在一个工作日内回复。"
+    primaryLabel="获取报价"
     primaryHref={quoteHref}
     primaryEvent={`industry_${item.slug}_rfq`}
-    secondaryLabel="Case studies"
+    secondaryLabel="案例"
     secondaryHref="/about/"
     secondaryEvent="industry_case_studies"
   />

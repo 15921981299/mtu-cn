@@ -7,74 +7,74 @@ import FaqSection from '../../components/FaqSection.astro';
 import { breadcrumbSchema, itemListSchema, faqSchema, site } from '../../data/site';
 import '../../styles/resource-page.css';
 
-const title = 'MTU 16V 2000 M96 Spare Parts';
-const seoTitle = 'MTU 16V 2000 M96 Spare Parts — 1,790 kW High-Speed Marine Engine (135 × 156 mm)';
-const description = 'MTU 16V 2000 M96 spare parts: genuine, reconditioned-exchange and documented-alternative supply for the 1,790 kW / 2,400 bhp high-speed V16 marine engine. Cross-reference table (incl. Bosch injector equivalent), part-identification guide, and global shipping from Shanghai.';
+const title = 'MTU 16V 2000 M96 配件';
+const seoTitle = 'MTU 16V 2000 M96 配件 — 1,790 kW 高速船用发动机（135 × 156 mm）';
+const description = 'MTU 16V 2000 M96 配件：为 1,790 kW / 2,400 bhp 高速 V16 船用发动机提供原厂新件、翻新交换件与凭证替代件。附交叉引用表（含 Bosch 喷油器等价号）、零件识别指南，上海全球发货。';
 const pageUrl = `${site.url}/series/16v2000m96/`;
 const quoteHref = `/contact/?source=16v2000m96`;
 
 const specs = [
-  { k: 'Configuration', v: '90° V16, four-stroke, 4 valves/cylinder' },
-  { k: 'Bore × stroke', v: '135 × 156 mm' },
-  { k: 'Displacement', v: '35.7 L (2.23 L/cylinder)' },
-  { k: 'Rated power', v: '1,790 kW / 2,400 bhp @ 2,450 rpm' },
-  { k: 'M96L rating', v: '1,939 kW / 2,600 bhp @ 2,450 rpm' },
-  { k: 'Specific fuel consumption', v: '~215 g/kWh (≈464 L/h at rated)' },
-  { k: 'Flywheel / gearbox', v: 'SAE 0 / ZF 3060' },
-  { k: 'Emission', v: 'IMO Tier II / EPA Tier 3 Recreational / Directive 2013/53/EU' },
-  { k: 'Dry mass', v: '~3,450 kg' },
-  { k: 'Fuel system', v: 'Common rail; sequential turbocharging (3 turbochargers); ADEC' },
-  { k: 'Applications', v: 'Fast yachts, patrol craft, crew-transfer vessels' },
+  { k: '结构形式', v: '90° V16 四冲程，每缸 4 气门' },
+  { k: '缸径 × 行程', v: '135 × 156 mm' },
+  { k: '排量', v: '35.7 L（单缸 2.23 L）' },
+  { k: '额定功率', v: '1,790 kW / 2,400 bhp @ 2,450 rpm' },
+  { k: 'M96L 功率', v: '1,939 kW / 2,600 bhp @ 2,450 rpm' },
+  { k: '燃油消耗率', v: '约 215 g/kWh（额定工况约 464 L/h）' },
+  { k: '飞轮 / 齿轮箱', v: 'SAE 0 / ZF 3060' },
+  { k: '排放', v: 'IMO Tier II / EPA Tier 3 Recreational / Directive 2013/53/EU' },
+  { k: '干重', v: '约 3,450 kg' },
+  { k: '燃油系统', v: '共轨；顺序涡轮增压（3 台增压器）；ADEC' },
+  { k: '应用', v: '高速游艇、巡逻艇、人员转运船' },
 ];
 
 // Series 2000 catalog seeds apply to the 16V2000M96 (verify against serial).
 const crossRef = [
-  { pn: '5410110059', desc: 'Sealing ring (liner / crankcase)', fit: 'M96 liner & crankcase', tag: 'cat' },
-  { pn: '0229974948', desc: 'Lower cylinder-liner sealing ring', fit: 'M96 liner arrangement', tag: 'cat' },
-  { pn: '5410160920', desc: 'Cylinder-head gasket', fit: 'M96 cylinder head', tag: 'cat' },
-  { pn: '0249975047', desc: 'Radial shaft seal', fit: 'M96', tag: 'cat' },
-  { pn: '5369970147', desc: 'Seal ring', fit: 'M96', tag: 'cat' },
-  { pn: '700429036001', desc: 'O-ring 36 × 5', fit: 'M96 cylinder-head cover', tag: 'cat' },
-  { pn: 'X51107500011', desc: 'Fuel injector (Bosch 0986435617 / F00BL0J005)', fit: 'M96 fuel system', tag: 'cat' },
-  { pn: '5420382211', desc: 'Connecting-rod bearing', fit: 'M96 bottom end', tag: 'cat' },
-  { pn: '0005357433', desc: 'Speed sensor', fit: 'M96 sensing', tag: 'cat' },
-  { pn: '0005356430', desc: 'Temperature sensor', fit: 'M96 sensing', tag: 'cat' },
-  { pn: '0035352531', desc: 'Pressure sensor', fit: 'M96 sensing', tag: 'cat' },
-  { pn: '0031845301', desc: 'Oil filter element', fit: 'M96 (also S4000)', tag: 'cat' },
-  { pn: '0020922801', desc: 'Fuel filter (spin-on)', fit: 'M96 fuel system', tag: 'cat' },
-  { pn: 'X000040776', desc: 'Turbocharger asm GTA5523', fit: 'M96 charged air', tag: 'cat' },
+  { pn: '5410110059', desc: '密封环（缸套 / 曲轴箱）', fit: 'M96 缸套与曲轴箱', tag: 'cat' },
+  { pn: '0229974948', desc: '缸套下部密封环', fit: 'M96 缸套结构', tag: 'cat' },
+  { pn: '5410160920', desc: '缸垫', fit: 'M96 气缸盖', tag: 'cat' },
+  { pn: '0249975047', desc: '径向轴封', fit: 'M96', tag: 'cat' },
+  { pn: '5369970147', desc: '密封环', fit: 'M96', tag: 'cat' },
+  { pn: '700429036001', desc: 'O 型圈 36 × 5', fit: 'M96 气门室盖', tag: 'cat' },
+  { pn: 'X51107500011', desc: '燃油喷油器（Bosch 0986435617 / F00BL0J005）', fit: 'M96 燃油系统', tag: 'cat' },
+  { pn: '5420382211', desc: '连杆轴承', fit: 'M96 曲轴下部', tag: 'cat' },
+  { pn: '0005357433', desc: '转速传感器', fit: 'M96 检测', tag: 'cat' },
+  { pn: '0005356430', desc: '温度传感器', fit: 'M96 检测', tag: 'cat' },
+  { pn: '0035352531', desc: '压力传感器', fit: 'M96 检测', tag: 'cat' },
+  { pn: '0031845301', desc: '机油滤芯', fit: 'M96（亦适用 S4000）', tag: 'cat' },
+  { pn: '0020922801', desc: '燃油滤清器（旋装式）', fit: 'M96 燃油系统', tag: 'cat' },
+  { pn: 'X000040776', desc: '涡轮增压器总成 GTA5523', fit: 'M96 增压空气', tag: 'cat' },
 ];
 
 const listItems = crossRef.map((r) => ({ name: `${r.pn} — ${r.desc}`, url: pageUrl }));
 
 const faqItems = [
   {
-    question: 'Is "MTU 2000" enough to order a 16V2000M96 part?',
-    answer: 'No. The 16V2000M96 is one configuration of the Series 2000 (135 × 156 mm, common rail, ADEC). Add the complete designation, the engine serial number, and the number marked on the old part so we match the exact gasket set, injector, or bearing for your M96 build — an overhaul set for a 12V2000G83 will not fit an M96.',
+    question: '仅凭「MTU 2000」足以订购 16V2000M96 配件吗？',
+    answer: '不够。16V2000M96 是 2000 系列的一种构型（135 × 156 mm，共轨，ADEC）。请补充完整型号、发动机出厂编号及旧件上标注的号码，我们才能为您的 M96 构型匹配确切的垫片组、喷油器或轴承——12V2000G83 的大修组无法装到 M96 上。',
   },
   {
-    question: 'Do you supply genuine MTU injectors for the M96?',
-    answer: 'We supply genuine MTU X51107500011 injectors and the documented Bosch equivalent (0986435617 / F00BL0J005). We state genuine vs cross-referenced on every quote so you can choose based on criticality and budget.',
+    question: '你们供应 M96 的原厂 MTU 喷油器吗？',
+    answer: '我们供应原厂 MTU X51107500011 喷油器，以及有凭证的 Bosch 等价号（0986435617 / F00BL0J005）。每份报价都会注明原厂件与交叉引用件，便于您按关键程度与预算选择。',
   },
   {
-    question: 'What is the difference between M96 and M96L?',
-    answer: 'The M96L is the higher-output variant: 1,939 kW / 2,600 bhp vs 1,790 kW / 2,400 bhp at the same 2,450 rpm. Most external parts are shared, but confirm the exact rating on the identification plate because some internal ratings differ.',
+    question: 'M96 与 M96L 有什么区别？',
+    answer: 'M96L 是高输出版：同为 2,450 rpm，1,939 kW / 2,600 bhp 对 1,790 kW / 2,400 bhp。外部件大多通用，但部分内部功率档不同，确切功率请以识别铭牌为准。',
   },
   {
-    question: 'What do you need to quote a 16V2000M96 part?',
-    answer: 'Engine model + serial + part number + description + quantity. For injector and sensor cross-references, the engine rating and build year help confirm the right Bosch or MTU equivalent.',
+    question: '报价 16V2000M96 配件需要提供哪些信息？',
+    answer: '发动机型号 + 出厂编号 + 零件号 + 描述 + 数量。喷油器与传感器的交叉引用还需发动机功率档与出厂年份，以确认对应的 Bosch 或 MTU 等价号。',
   },
   {
-    question: 'How fast can you quote an identified number?',
-    answer: 'Typically within one business day for a number we can confirm against the 16V2000M96 designation. The catalog numbers on this page are verified against public MTU BOM and procurement references.',
+    question: '已识别零件号的报价速度如何？',
+    answer: '对于能按 16V2000M96 型号确认的零件号，通常一个工作日内报价。本页目录零件号均经公开 MTU BOM 与采购参考核验。',
   },
 ];
 
 const jsonLd = [
   breadcrumbSchema([
-    { name: 'Home', url: site.url },
-    { name: 'MTU Spare Parts', url: `${site.url}/products/mtu-spare-parts/` },
-    { name: 'MTU 2000 Series', url: `${site.url}/series/mtu-2000/` },
+    { name: '首页', url: site.url },
+    { name: 'MTU 备件', url: `${site.url}/products/mtu-spare-parts/` },
+    { name: 'MTU 2000 系列', url: `${site.url}/series/mtu-2000/` },
     { name: title, url: pageUrl },
   ]),
   itemListSchema(listItems),
@@ -92,19 +92,19 @@ const jsonLd = [
   <BreadcrumbHero
     title={title}
     trail={[
-      { label: 'Home', href: '/' },
-      { label: 'MTU Spare Parts', href: '/products/mtu-spare-parts/' },
-      { label: 'MTU 2000 Series', href: '/series/mtu-2000/' },
+      { label: '首页', href: '/' },
+      { label: 'MTU 备件', href: '/products/mtu-spare-parts/' },
+      { label: 'MTU 2000 系列', href: '/series/mtu-2000/' },
       { label: title },
     ]}
     variant="1"
   />
 
-  <DetailPageShell intro="The MTU 16V 2000 M96 is a high-speed, four-stroke V16 marine diesel rated at 1,790 kW (2,400 bhp) at 2,450 rpm — a popular propulsion package for fast yachts, patrol craft and crew-transfer vessels. This page is a single-model deep dive: confirmed engine specifications, the parts we regularly supply with verified cross-references, and a part-identification process built for the exact M96 build.">
+  <DetailPageShell intro="MTU 16V 2000 M96 是高速四冲程 V16 船用柴油发动机，额定 1,790 kW（2,400 bhp）@ 2,450 rpm——是高速游艇、巡逻艇与人员转运船的常用推进方案。本页为单机型深度解析：已确认的发动机规格、我们常年供应的配件（附已核验交叉引用），以及面向确切 M96 构型的零件识别流程。">
     <img
       slot="hero"
       src="/images/mtu-engine-parts-hero.webp"
-      alt="MTU 16V 2000 M96 engine parts inquiry"
+      alt="MTU 16V 2000 M96 发动机配件询价"
       width="1400"
       height="692"
       loading="eager"
@@ -113,25 +113,25 @@ const jsonLd = [
     />
 
     <div class="resource-meta">
-      <span><strong>Model</strong> 16V 2000 M96</span>
-      <span><strong>Power</strong> 1,790 kW @ 2,450 rpm</span>
-      <span><strong>Bore × Stroke</strong> 135 × 156 mm</span>
-      <span><strong>Delivery</strong> Global shipping</span>
+      <span><strong>型号</strong> 16V 2000 M96</span>
+      <span><strong>功率</strong> 1,790 kW @ 2,450 rpm</span>
+      <span><strong>缸径 × 行程</strong> 135 × 156 mm</span>
+      <span><strong>运输</strong> 全球运输</span>
     </div>
 
     <DetailRfqStrip
       quoteHref={quoteHref}
-      title="Request 16V 2000 M96 parts"
-      text="Send engine serial number, part numbers, quantity, destination, and required delivery date."
+      title="询价 16V 2000 M96 配件"
+      text="请提供发动机出厂编号、零件号、数量、目的地与要求交期。"
       secondaryHref="/series/mtu-2000/"
-      secondaryLabel="MTU 2000 series hub"
+      secondaryLabel="MTU 2000 系列专区"
     />
 
-    <h2>1. Engine specifications (16V 2000 M96)</h2>
+    <h2>1. 发动机规格（16V 2000 M96）</h2>
     <div class="resource-table-wrap">
       <table class="resource-table">
         <thead>
-          <tr><th>Parameter</th><th>Value</th></tr>
+          <tr><th>参数</th><th>数值</th></tr>
         </thead>
         <tbody>
           {specs.map((r) => (
@@ -143,24 +143,24 @@ const jsonLd = [
         </tbody>
       </table>
     </div>
-    <p class="resource-note">Confirm the exact rating and M-suffix (M96 vs M96L) against the engine identification plate. The M96L reaches 1,939 kW / 2,600 bhp at the same 2,450 rpm.</p>
+    <p class="resource-note">确切功率与 M 后缀（M96 与 M96L）请以发动机识别铭牌为准。M96L 在同样 2,450 rpm 下可达 1,939 kW / 2,600 bhp。</p>
 
-    <h2>2. Spare parts we supply, by system</h2>
+    <h2>2. 按系统划分的供应配件</h2>
     <div class="hub-grid">
-      <a class="hub-card" href="/part-products/catalog/mtu-2000-series/"><div class="hub-card-body"><h3 class="hub-card-title">Cylinder head &amp; valve train</h3><p class="hub-card-summary">Liners, piston rings, valve guides, seats, rocker arms, cylinder-head gaskets.</p></div></a>
-      <a class="hub-card" href="/part-products/catalog/mtu-injectors/"><div class="hub-card-body"><h3 class="hub-card-title">Fuel system</h3><p class="hub-card-summary">Injectors &amp; nozzles (incl. Bosch cross-ref), nozzle holders, injection pumps.</p></div></a>
-      <a class="hub-card" href="/part-products/catalog/mtu-gasket-kits/"><div class="hub-card-body"><h3 class="hub-card-title">Gaskets &amp; seals</h3><p class="hub-card-summary">Overhaul gasket sets, O-rings, liner seals, radial shaft seals.</p></div></a>
-      <a class="hub-card" href="/part-products/catalog/mtu-turbocharger-parts/"><div class="hub-card-body"><h3 class="hub-card-title">Turbocharger</h3><p class="hub-card-summary">GTA-series cartridges, turbine wheels, V-band clamps, service kits.</p></div></a>
-      <a class="hub-card" href="/part-products/catalog/mtu-filters/"><div class="hub-card-body"><h3 class="hub-card-title">Cooling &amp; lube</h3><p class="hub-card-summary">Seawater &amp; freshwater pumps, impellers, oil / fuel filter elements.</p></div></a>
-      <a class="hub-card" href="/part-products/catalog/mtu-sensors/"><div class="hub-card-body"><h3 class="hub-card-title">Sensors &amp; ADEC</h3><p class="hub-card-summary">Speed, temperature, pressure sensors and engine-management modules.</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-2000-series/"><div class="hub-card-body"><h3 class="hub-card-title">气缸盖与配气机构</h3><p class="hub-card-summary">缸套、活塞环、气门导管、气门座、摇臂、缸垫。</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-injectors/"><div class="hub-card-body"><h3 class="hub-card-title">燃油系统</h3><p class="hub-card-summary">喷油器与油嘴（含 Bosch 交叉引用）、油嘴座、喷油泵。</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-gasket-kits/"><div class="hub-card-body"><h3 class="hub-card-title">垫片与密封件</h3><p class="hub-card-summary">大修垫片组、O 型圈、缸套密封环、径向轴封。</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-turbocharger-parts/"><div class="hub-card-body"><h3 class="hub-card-title">涡轮增压器</h3><p class="hub-card-summary">GTA 系列芯体、涡轮叶轮、V 型卡箍、保养包。</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-filters/"><div class="hub-card-body"><h3 class="hub-card-title">冷却与润滑</h3><p class="hub-card-summary">海水泵与淡水泵、叶轮、机油/燃油滤芯。</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-sensors/"><div class="hub-card-body"><h3 class="hub-card-title">传感器与 ADEC</h3><p class="hub-card-summary">转速、温度、压力传感器与发动机管理模块。</p></div></a>
     </div>
 
-    <h2>3. Part-number cross-reference (verified Series 2000 seeds)</h2>
-    <p>These numbers are verified against public MTU BOM and procurement references and apply to the Series 2000 family including the 16V2000M96. Confirm each against your engine serial before ordering. Tags: <span class="rfq-badge cat">catalog</span> = verified public cross-reference seed.</p>
+    <h2>3. 零件号交叉引用（经核验的 2000 系列预置数据）</h2>
+    <p>这些零件号均经公开 MTU BOM 与采购参考核验，适用于含 16V2000M96 的 2000 系列家族。订购前请对照发动机出厂编号逐条确认。标签：<span class="rfq-badge cat">目录</span> = 经核验的公开交叉引用预置数据。</p>
     <div class="resource-table-wrap">
       <table class="resource-table">
         <thead>
-          <tr><th>Part number</th><th>Description</th><th>M96 fitment</th><th>Source / cross-ref</th></tr>
+          <tr><th>零件号</th><th>描述</th><th>M96 适配</th><th>来源 / 交叉引用</th></tr>
         </thead>
         <tbody>
           {crossRef.map((r) => (
@@ -168,38 +168,38 @@ const jsonLd = [
               <td><code>{r.pn}</code></td>
               <td>{r.desc}</td>
               <td>{r.fit}</td>
-              <td><span class="rfq-badge cat">catalog</span> {r.tag === 'cat' ? 'verified MTU BOM / Bosch' : ''}</td>
+              <td><span class="rfq-badge cat">目录</span> {r.tag === 'cat' ? '经核验 MTU BOM / Bosch' : ''}</td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
-    <p class="resource-note">Don't see your number? Send it (with the engine serial) via the form — we add confirmed numbers to this page and the 2000 hub's growing list.</p>
+    <p class="resource-note">没找到您的零件号？请通过表单提交（附发动机出厂编号）——经确认的号码将补充至本页及 2000 专区不断更新的清单。</p>
 
-    <h2>4. How to identify your exact part</h2>
+    <h2>4. 如何识别您的确切零件</h2>
     <ul class="resource-list">
-      <li><strong>Complete engine designation</strong> (e.g. <code>16V2000M96</code>, not just "2000")</li>
-      <li><strong>Engine serial number</strong> from the identification plate</li>
-      <li><strong>Existing component part number</strong> — the marking on the old part beats any photo title</li>
-      <li><strong>Component description + quantity</strong>, and a photo of the old part where possible</li>
+      <li><strong>完整发动机型号</strong>（例如 <code>16V2000M96</code>，而非仅「2000」）</li>
+      <li>识别铭牌上的<strong>发动机出厂编号</strong></li>
+      <li><strong>现有零件号</strong>——旧件上的标记胜过任何照片说明</li>
+      <li><strong>零件描述 + 数量</strong>，并尽可能提供旧件照片</li>
     </ul>
 
-    <h2>5. Supply options</h2>
+    <h2>5. 供货选项</h2>
     <div class="hub-grid">
-      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">Genuine new</h3><p class="hub-card-summary">Original MTU-packaged components with full traceability — best where the documentation chain has to stand up to inspection.</p></div></div>
-      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">Reconditioned / exchange</h3><p class="hub-card-summary">Factory-level overhaul of injectors, turbochargers, pumps — typically 30–40% lower cost, faster lead time.</p></div></div>
-      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">Documented alternative</h3><p class="hub-card-summary">Verified equivalents (incl. Bosch for injectors) for non-critical items where the buyer accepts them.</p></div></div>
+      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">原厂新件</h3><p class="hub-card-summary">MTU 原包装零件，溯源完整——在文件链需经受检验的场合最为稳妥。</p></div></div>
+      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">翻新 / 交换件</h3><p class="hub-card-summary">喷油器、涡轮增压器、油泵的工厂级翻新——成本通常低 30–40%，交货期更短。</p></div></div>
+      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">凭证替代件</h3><p class="hub-card-summary">经核验的等价件（含喷油器的 Bosch 替代），适用于买方接受的非关键项目。</p></div></div>
     </div>
 
-    <h2>6. MTU series cluster</h2>
+    <h2>6. MTU 系列集群</h2>
     <div class="hub-grid">
-      <a class="hub-card" href="/series/mtu-2000/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 2000 Series Hub</h3><p class="hub-card-summary">Full 8V / 12V / 16V / 18V family overview.</p></div></a>
-      <a class="hub-card" href="/series/mtu-2000-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 2000 Variant Decoder</h3><p class="hub-card-summary">M61 → M9x generation decoder and per-model table.</p></div></a>
-      <a class="hub-card" href="/series/mtu-396/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 396 Series Hub</h3><p class="hub-card-summary">8V / 12V / 16V workhorse — carries live RFQ numbers.</p></div></a>
-      <a class="hub-card" href="/series/mtu-4000-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 4000 Variant Decoder</h3><p class="hub-card-summary">M05 / M03 / C05 / R03 / R04 / T05 + M-duty notation.</p></div></a>
+      <a class="hub-card" href="/series/mtu-2000/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 2000 系列专区</h3><p class="hub-card-summary">8V / 12V / 16V / 18V 家族全览。</p></div></a>
+      <a class="hub-card" href="/series/mtu-2000-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 2000 变型解读</h3><p class="hub-card-summary">M61 → M9x 代际解读与分型号表。</p></div></a>
+      <a class="hub-card" href="/series/mtu-396/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 396 系列专区</h3><p class="hub-card-summary">8V / 12V / 16V 主力机型——含实时 RFQ 零件号。</p></div></a>
+      <a class="hub-card" href="/series/mtu-4000-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 4000 变型解读</h3><p class="hub-card-summary">M05 / M03 / C05 / R03 / R04 / T05 及 M 用途标识。</p></div></a>
     </div>
 
-    <FaqSection items={faqItems} title="MTU 16V 2000 M96 FAQ" subtitle="FAQ" />
+    <FaqSection items={faqItems} title="MTU 16V 2000 M96 常见问题" subtitle="常见问题" />
   </DetailPageShell>
 </BaseLayout>
 

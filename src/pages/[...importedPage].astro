@@ -37,48 +37,48 @@ const isStrategicImportedPage =
 const shouldNoindex = !isStrategicImportedPage;
 
 const pageKind = isPartPage
-  ? 'parts family'
+  ? '零件族'
   : isCategoryPage
-    ? 'engine category'
+    ? '发动机类别'
     : isNewsPage
-      ? 'reference update'
-      : 'support topic';
+      ? '资料更新'
+      : '支持主题';
 const applicationContext = pageText.includes('marine')
-  ? 'marine propulsion, auxiliary vessel engines, and shipyard service'
+  ? '船舶推进、船用辅助发动机与船厂服务'
   : pageText.includes('generator') || pageText.includes('power')
-    ? 'generator sets, standby power, and power-plant maintenance'
+    ? '发电机组、备用电源与电站维护'
     : pageText.includes('rail')
-      ? 'rail engine service and scheduled fleet maintenance'
+      ? '轨交发动机服务与机群计划维护'
       : pageText.includes('cummins')
-        ? 'Cummins industrial, generator, and equipment engine service'
+        ? 'Cummins 工业、发电与设备发动机服务'
         : pageText.includes('deutz')
-          ? 'DEUTZ industrial equipment, pump, and compressor engine service'
-          : 'diesel engine maintenance, replacement, and export sourcing';
+          ? 'DEUTZ 工业设备、泵与压缩机发动机服务'
+          : '柴油发动机维护、更换与出口采购';
 const sourcingChecklist = isPartPage
-  ? ['Confirm the engine series and exact part number before comparing options', 'Check supersession or replacement references when the original number is old', 'Send quantity, destination, and urgency so stock and shipping can be quoted together']
+  ? ['比较选项前，先确认发动机系列与确切零件号', '原编号较旧时，核查替代或替换参考号', '发送数量、目的地与紧急程度，以便库存与运输一并报价']
   : isCategoryPage
-    ? ['Use the category to narrow engine series, rating, and application', 'Group related models into one inquiry when the maintenance list covers several engines', 'Link the category page to exact product or part-number pages before sending RFQ']
+    ? ['用类别缩小发动机系列、功率与应用范围', '维护清单涉及多台发动机时，将相关型号合并为一次询价', '发送询价前，先链接到确切的产品或零件号页面']
     : isNewsPage
-      ? ['Use the update as context, then verify the exact engine model before ordering', 'Do not assume compatibility from article text alone', 'Send part numbers and photos for confirmation before shipment']
-      : ['Clarify the service situation and required delivery window', 'Attach engine nameplate and old part photos when the part number is unclear', 'Confirm packing, documents, and international shipping route before release'];
+      ? ['将该更新作为背景信息，下单前再核验确切发动机型号', '不要仅凭文章文本假设兼容性', '发货前发送零件号与照片以供确认']
+      : ['说明服务情况与要求的交付窗口', '零件号不明时，附上发动机铭牌与旧件照片', '放行前确认包装、单证与国际运输路线'];
 const uniqueAngle = isPartPage
-  ? `${page.title} pages should help buyers move from a broad MTU parts family to an exact line-item inquiry.`
+  ? `${page.title} 页面应帮助采购方从宽泛的 MTU 零件族走向逐项的准确询价。`
   : isCategoryPage
-    ? `${page.title} is useful as a category hub when it routes buyers toward the correct engine series and related parts pages.`
+    ? `${page.title} 作为类别中心页很有用，能将采购方引向正确的发动机系列与相关零件页面。`
     : isNewsPage
-      ? `${page.title} is treated as background information, not as a standalone fitment guarantee.`
-      : `${page.title} is useful when it explains a specific support step in the sourcing workflow.`;
+      ? `${page.title} 视为背景信息，而非独立的适配保证。`
+      : `${page.title} 在解释采购流程中某一具体支持步骤时很有用。`;
 ---
 
 <BaseLayout
   title={page.seoTitle}
-  description={content ? page.summary : `${page.summary} Request availability, replacement checks, and global shipping support from Shanghai.`}
+  description={content ? page.summary : `${page.summary} 请询价确认供货情况、替代核验与从上海出发的全球运输支持。`}
   currentPath="/products"
   image="/images/mtu-engine-parts-hero.webp"
   noindex={shouldNoindex}
   jsonLd={[
     breadcrumbSchema([
-      { name: 'Home', url: site.url },
+      { name: '首页', url: site.url },
       { name: page.section, url: pageUrl },
       { name: page.title, url: pageUrl },
     ]),
@@ -87,7 +87,7 @@ const uniqueAngle = isPartPage
   <BreadcrumbHero
     title={page.title}
     trail={[
-      { label: 'Home', href: '/' },
+      { label: '首页', href: '/' },
       { label: page.section },
       { label: page.title },
     ]}
@@ -98,7 +98,7 @@ const uniqueAngle = isPartPage
     <img
       slot="hero"
       src="/images/mtu-engine-parts-hero.webp"
-      alt={`${page.title} engine parts inquiry`}
+      alt={`${page.title} 零件询价`}
       width="1400"
       height="692"
       loading="eager"
@@ -107,57 +107,55 @@ const uniqueAngle = isPartPage
     />
 
     <div class="resource-meta">
-      <span><strong>Section</strong> {page.section}</span>
-      <span><strong>Support</strong> Parts inquiry</span>
-      <span><strong>Verification</strong> Model and serial number</span>
-      <span><strong>Delivery</strong> Global shipping</span>
+      <span><strong>栏目</strong> {page.section}</span>
+      <span><strong>支持</strong> 零件询价</span>
+      <span><strong>核验</strong> 型号与出厂编号</span>
+      <span><strong>交付</strong> 全球运输</span>
     </div>
 
     <DetailRfqStrip
       quoteHref={quoteHref}
-      title={`Request ${page.title} support`}
-      text="Send engine model, serial number, part numbers, quantity, destination, and required delivery date."
+      title={`请求 ${page.title} 相关支持`}
+      text="请发送发动机型号、出厂编号、零件号、数量、目的地与要求交付日期。"
       secondaryHref="/part-products/"
-      secondaryLabel="Browse MTU part numbers"
+      secondaryLabel="浏览 MTU 零件号"
     />
 
     {content ? (
       <Fragment set:html={content.body} />
     ) : (
       <>
-        <h2>{page.title} Sourcing Support</h2>
+        <h2>{page.title} 采购支持</h2>
         <p>
-          This {pageKind} page helps buyers organize inquiries related to {page.title}. Diesel Part Source checks part
-          references, engine details, replacement status, stock route, and shipping options before quotation.
+          本{pageKind}页面帮助采购方整理与 {page.title} 相关的询价。柴油零件源 在报价前核查零件参考号、发动机详情、替代状态、库存路线与运输选项。
         </p>
         <p>{uniqueAngle}</p>
 
-        <h2>{page.title} Application Context</h2>
+        <h2>{page.title} 应用场景</h2>
         <p>
-          Buyers normally use this page when working on {applicationContext}. What matters most is the connection
-          between the engine application and the exact part details sent with the inquiry.
+          采购方通常在处理{applicationContext}时使用本页面。最关键的是发动机应用与随询价一并发送的确切零件详情之间的联系。
         </p>
 
-        <h2>What We Can Check for {page.title}</h2>
+        <h2>我们可以为 {page.title} 核验什么</h2>
         <ul>
-          <li>Engine model, rating, serial number, and application details</li>
-          <li>Part numbers, replacement references, photos, and quantity</li>
-          <li>Stock availability, lead time, packing, and international shipment route</li>
+          <li>发动机型号、功率、出厂编号与应用详情</li>
+          <li>零件号、替代参考号、照片与数量</li>
+          <li>库存供货情况、交货期、包装与国际运输路线</li>
         </ul>
 
-        <h2>How to Use This Page</h2>
+        <h2>如何使用本页</h2>
         <ul>
           {sourcingChecklist.map((item) => <li>{item}</li>)}
         </ul>
       </>
     )}
 
-    <h2>Useful Links</h2>
+    <h2>有用链接</h2>
     <ul>
-      <li><a href="/part-products/">MTU part numbers</a></li>
-      <li><a href="/part-products/catalog/mtu-2000-series/">MTU 2000 series catalog</a></li>
-      <li><a href="/part-products/catalog/mtu-4000-series/">MTU 4000 series catalog</a></li>
-      <li><a href="/contact/">Send parts inquiry</a></li>
+      <li><a href="/part-products/">MTU 零件号</a></li>
+      <li><a href="/part-products/catalog/mtu-2000-series/">MTU 2000 系列目录</a></li>
+      <li><a href="/part-products/catalog/mtu-4000-series/">MTU 4000 系列目录</a></li>
+      <li><a href="/contact/">发送零件询价</a></li>
     </ul>
   </DetailPageShell>
 </BaseLayout>

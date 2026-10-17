@@ -8,6 +8,7 @@ import QuotationExamples from '../../../components/QuotationExamples.astro';
 import { allCatalogAssemblies } from '../../../data/part-assemblies';
 import { catalogProcurement } from '../../../data/procurement-content';
 import { isRealPartImage, mtuCatalogHubs, mtuParts, searchPriorityPartRank, type MtuCatalogHub } from '../../../data/mtu-parts';
+import { zhCategoryName, zhEngineType, zhPartName, zhPartNameBilingual, zhSeriesLabel } from '../../../data/part-names-zh';
 import { breadcrumbSchema, itemListSchema, site } from '../../../data/site';
 import '../../../styles/resource-page.css';
 
@@ -21,12 +22,12 @@ const drawingGroups = ['mtu-396-series', 'mtu-1163-series', 'mtu-956-series'].in
   ? allCatalogAssemblies.filter((assembly) => assembly.parts.some((item) => parts.some((part) => part.partNumber === item.partNumber))) : [];
 const pageUrl = `${site.url}/part-products/catalog/${hub.slug}/`;
 const quoteHref = `/contact/?source=catalog-${hub.slug}`;
-const catalogHeading = /catalog/i.test(hub.h1Title) ? hub.h1Title : `${hub.h1Title} Catalog`;
+const catalogHeading = /零件|目录/.test(hub.h1Title) ? hub.h1Title : `${hub.h1Title}零件目录`;
 const seriesGuideLinks: Record<string, { href: string; label: string }> = {
-  'mtu-2000-series': { href: '/series/mtu-2000/', label: 'MTU 2000 model identification' },
-  'mtu-396-series': { href: '/series/mtu-396/', label: 'MTU 396 model identification' },
-  'mtu-1163-series': { href: '/series/mtu-1163/', label: 'MTU 1163 model identification' },
-  'mtu-4000-series': { href: '/series/mtu-4000-variants/', label: 'MTU 4000 model variants' },
+  'mtu-2000-series': { href: '/series/mtu-2000/', label: 'MTU 2000 型号识别' },
+  'mtu-396-series': { href: '/series/mtu-396/', label: 'MTU 396 型号识别' },
+  'mtu-1163-series': { href: '/series/mtu-1163/', label: 'MTU 1163 型号识别' },
+  'mtu-4000-series': { href: '/series/mtu-4000-variants/', label: 'MTU 4000 型号变型' },
 };
 const seriesGuide = seriesGuideLinks[hub.slug];
 
@@ -36,14 +37,22 @@ for (const part of parts) {
   const groupKeys = hub.type === 'series'
     ? [part.category]
     : part.series.length > 0
-      ? part.series
-      : [part.engineType ?? 'Verify by engine serial number'];
+      ? part.series.map(zhSeriesLabel)
+      : [part.engineType ?? '按发动机出厂编号核验'];
 
   for (const key of groupKeys) {
     if (!categoryGroups.has(key)) categoryGroups.set(key, []);
     categoryGroups.get(key)!.push(part);
   }
 }
+
+// 分组键展示层映射：类别键→中文类别名；核验哨兵→中文；机型标签→中文机型名
+const zhGroupKey = (key: string) =>
+  key === '按发动机出厂编号核验'
+    ? '按出厂编号核验'
+    : /ENGINES?$/i.test(key)
+      ? zhEngineType(key)
+      : zhCategoryName(key);
 
 const groupLabel = hub.type === 'series' ? 'category' : 'series';
 const featuredParts = [...parts]
@@ -78,26 +87,26 @@ const relatedCatalogHubs = mtuCatalogHubs
   .sort((a, b) => b.overlap - a.overlap || b.crossTypeBoost - a.crossTypeBoost || a.hub.h1Title.localeCompare(b.hub.h1Title))
   .slice(0, 12)
   .map(({ hub }) => hub);
-const catalogSeries = Array.from(new Set(parts.flatMap((part) => part.series.length > 0 ? part.series : [part.engineType ?? 'serial-number verified']))).slice(0, 8);
+const catalogSeries = Array.from(new Set(parts.flatMap((part) => part.series.length > 0 ? part.series.map(zhSeriesLabel) : [part.engineType ?? '按出厂编号核验']))).slice(0, 8);
 const catalogCategories = Array.from(new Set(parts.map((part) => part.category))).slice(0, 8);
 const catalogScope = hub.type === 'series'
-  ? `${hub.h1Title} covers ${catalogCategories.join(', ')} and related service references.`
-  : `${hub.h1Title} includes catalog references listed under ${catalogSeries.join(', ')}. Engine-specific fitment remains subject to verification.`;
+  ? `${hub.h1Title} 覆盖 ${catalogCategories.map(zhCategoryName).join('、')} 及相关保养参考号。`
+  : `${hub.h1Title} 收录的目录参考号见于 ${catalogSeries.join('、')}。发动机专属适配仍须核验。`;
 // Authority concentration: series hubs link to the matching overhaul guide (hub-and-spoke).
 const overhaulGuideLink = hub.slug === 'mtu-2000-series'
-  ? { href: '/guides/mtu-2000-overhaul-parts/', label: 'MTU 2000 Series Overhaul Parts Guide' }
+  ? { href: '/guides/mtu-2000-overhaul-parts/', label: 'MTU 2000 系列大修零件指南' }
   : hub.slug === 'mtu-4000-series'
-    ? { href: '/guides/mtu-4000-overhaul-parts/', label: 'MTU 4000 Series Overhaul Parts Guide' }
+    ? { href: '/guides/mtu-4000-overhaul-parts/', label: 'MTU 4000 系列大修零件指南' }
     : undefined;
 const quoteChecklist = [
-  'Exact part number and quantity',
-  'Engine model, rating, and serial number',
-  'Nameplate photo or old-part photo when the marking is unclear',
-  'Destination country, delivery deadline, and preferred shipping method',
+  '准确的零件号与数量',
+  '发动机型号、功率标定与出厂编号',
+  '标识不清时的铭牌照片或旧件照片',
+  '目的国、交货期限与期望的运输方式',
 ];
 const catalogUseCases = hub.type === 'series'
-  ? ['Preventive maintenance list by engine serial number', 'Major overhaul quotation by category', 'Urgent downtime replacement for one confirmed part number', 'Fleet replenishment across several engines in the same series']
-  : ['Bulk replenishment for repeated service items', 'Cross-series part-number verification', 'Old-stock replacement and supersession checks', 'Mixed RFQ lists from service companies or shipyards'];
+  ? ['按发动机出厂编号整理的预防性保养清单', '按类别报的大修询价', '单个已确认零件号的紧急停机替换', '同系列多台发动机的船队补库']
+  : ['重复性保养件的批量补库', '跨系列零件号核验', '旧库存替换与替代关系核查', '服务公司或船厂发来的混合询价清单'];
 ---
 
 <BaseLayout
@@ -106,13 +115,13 @@ const catalogUseCases = hub.type === 'series'
   currentPath="/products"
   jsonLd={[
     breadcrumbSchema([
-      { name: 'Home', url: site.url },
-      { name: 'MTU Parts Catalog', url: `${site.url}/part-products/` },
+      { name: '首页', url: site.url },
+      { name: 'MTU 零件目录', url: `${site.url}/part-products/` },
       { name: hub.h1Title, url: pageUrl },
     ]),
     itemListSchema(
       parts.slice(0, 50).map((p) => ({
-        name: `${p.partNumber} ${p.name}`,
+        name: `${p.partNumber} ${zhPartName(p.name)}`,
         url: `${site.url}/part-products/${p.slug}/`,
       })),
     ),
@@ -122,9 +131,9 @@ const catalogUseCases = hub.type === 'series'
   <BreadcrumbHero
     title={catalogHeading}
     trail={[
-      { label: 'Home', href: '/' },
-      { label: 'MTU Parts Catalog', href: '/part-products/' },
-      { label: hub.type === 'series' ? hub.h1Title.replace(' Engine Parts', '') : hub.h1Title.replace('MTU ', '').replace(' & Seal Kits', '') },
+      { label: '首页', href: '/' },
+      { label: 'MTU 零件目录', href: '/part-products/' },
+      { label: hub.h1Title },
     ]}
     variant="2"
   />
@@ -140,28 +149,28 @@ const catalogUseCases = hub.type === 'series'
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
               </span>
               <span class="catalog-stat-value">{parts.length}</span>
-              <span class="catalog-stat-label">Part Numbers</span>
+              <span class="catalog-stat-label">零件号</span>
             </div>
             <div class="catalog-stat-item">
               <span class="catalog-stat-icon catalog-stat-icon--grid">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
               </span>
               <span class="catalog-stat-value">{categoryGroups.size}</span>
-              <span class="catalog-stat-label">{groupLabel === 'series' ? 'Series' : 'Categories'}</span>
+              <span class="catalog-stat-label">{groupLabel === 'series' ? '系列' : '类别'}</span>
             </div>
             <div class="catalog-stat-item">
               <span class="catalog-stat-icon catalog-stat-icon--moq">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
               </span>
-              <span class="catalog-stat-value">Per RFQ</span>
-              <span class="catalog-stat-label">Quantity</span>
+              <span class="catalog-stat-value">按询价</span>
+              <span class="catalog-stat-label">数量</span>
             </div>
             <div class="catalog-stat-item">
               <span class="catalog-stat-icon catalog-stat-icon--globe">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
               </span>
-              <span class="catalog-stat-value">Global</span>
-              <span class="catalog-stat-label">Delivery</span>
+              <span class="catalog-stat-value">全球</span>
+              <span class="catalog-stat-label">交付</span>
             </div>
           </div>
 
@@ -170,33 +179,33 @@ const catalogUseCases = hub.type === 'series'
             <span class="catalog-rfq-strip-icon" aria-hidden="true">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
             </span>
-            <p><strong>Send part numbers, engine model, serial number, quantity, and destination.</strong> We check compatibility, stock, and shipping options.</p>
+            <p><strong>请发送零件号、发动机型号、出厂编号、数量与收货地。</strong> 我们核查适配性、库存与运输方案。</p>
             <a
               href={quoteHref}
               class="detail-rfq-link"
               data-rfq-modal
-              data-rfq-context={`${hub.h1Title} parts list inquiry`}
+              data-rfq-context={`${hub.h1Title} 零件清单询价`}
               data-rfq-source={`catalog-${hub.slug}`}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
-              Request Parts Inquiry
+              发起零件询价
             </a>
           </div>
 
-          <h2>{hub.type === 'series' ? 'Parts by Category' : 'Parts by Engine Series'}</h2>
-          {seriesGuide && <p><a href={seriesGuide.href}>{seriesGuide.label}</a> · <a href={hub.slug === 'mtu-4000-series' ? '/products/mtu-4000-series-parts/' : hub.slug === 'mtu-2000-series' ? '/products/mtu-2000-series-parts/' : '/products/mtu-spare-parts/'}>Parts supply and quotation</a></p>}
+          <h2>{hub.type === 'series' ? '按类别浏览零件' : '按发动机系列浏览零件'}</h2>
+          {seriesGuide && <p><a href={seriesGuide.href}>{seriesGuide.label}</a> · <a href={hub.slug === 'mtu-4000-series' ? '/products/mtu-4000-series-parts/' : hub.slug === 'mtu-2000-series' ? '/products/mtu-2000-series-parts/' : '/products/mtu-spare-parts/'}>零件供货与报价</a></p>}
           <p class="catalog-intro-text">{hub.description}</p>
           {catalogProcurement[hub.slug] && <ProcurementBrief brief={catalogProcurement[hub.slug]} source={`catalog-${hub.slug}-scope`} />}
           {drawingGroups.length > 0 && <section class="catalog-depth-section">
-            <h2>Catalog Drawing Positions</h2>
-            <p>These are catalog drawing relationships, not a confirmed kit. Check the revision and your engine serial range before using the positions.</p>
+            <h2>目录图纸位置</h2>
+            <p>以下为目录图纸中的对应关系，并非确认的套件。使用这些位置前请核对图纸版本与您的发动机出厂编号范围。</p>
             {drawingGroups.map((assembly) => <>
               <h3>{assembly.name}</h3>
               {assembly.kind === 'derived' && <p>{assembly.provenance}</p>}
               <ul>{assembly.parts.map((item) => {
                 const linked = mtuParts.find((part) => part.partNumber === item.partNumber);
-                const label = `${item.partNumber} ${item.description}`;
-                return <li>{item.position ? `Position ${item.position}: ` : ''}{linked ? <a href={`/part-products/${linked.slug}/`}>{label}</a> : label}</li>;
+                const label = `${item.partNumber} ${zhPartNameBilingual(item.description)}`;
+                return <li>{item.position ? `位置 ${item.position}：` : ''}{linked ? <a href={`/part-products/${linked.slug}/`}>{label}</a> : label}</li>;
               })}</ul>
             </>)}
           </section>}
@@ -211,10 +220,9 @@ const catalogUseCases = hub.type === 'series'
 
           {hub.searchTopics && hub.searchTopics.length > 0 && (
             <section class="catalog-depth-section">
-              <h2>{hub.type === 'series' ? 'Engine Model Coverage' : 'Component Coverage'}</h2>
+              <h2>{hub.type === 'series' ? '发动机型号覆盖' : '部件覆盖'}</h2>
               <p>
-                Use these focused topics to narrow the catalog before sending a part-number list. Final fitment is
-                confirmed against the complete engine or component reference.
+                先用这些专题收窄目录范围，再发送零件号清单。最终适配性对照完整的发动机或部件参考号确认。
               </p>
               <div class="catalog-info-grid">
                 {hub.searchTopics.map((topic) => (
@@ -231,45 +239,45 @@ const catalogUseCases = hub.type === 'series'
 
           <!-- ── Scope + coverage ── -->
           <section class="catalog-depth-section">
-            <h2>Catalog Scope and Fitment Method</h2>
-            <p>{catalogScope} We do not treat a part number as interchangeable until the engine serial number, installation position, and any superseded reference have been checked.</p>
+            <h2>目录范围与适配方法</h2>
+            <p>{catalogScope} 在核对发动机出厂编号、安装位置与任何被替代参考号之前，我们不会把某个零件号当作可互换件。</p>
             <div class="catalog-info-grid">
               <article class="catalog-info-card">
                 <span class="catalog-info-card-icon" aria-hidden="true">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8.45 2.09A10 10 0 0 0 2.05 8.5"/><path d="M12 2a10 10 0 0 1 10 10"/><circle cx="12" cy="12" r="10"/></svg>
                 </span>
-                <h3>Included engine coverage</h3>
-                <p>{catalogSeries.join(', ')}</p>
+                <h3>覆盖的发动机</h3>
+                <p>{catalogSeries.join('、')}</p>
               </article>
               <article class="catalog-info-card">
                 <span class="catalog-info-card-icon" aria-hidden="true">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
                 </span>
-                <h3>Included part categories</h3>
-                <p>{catalogCategories.join(', ')}</p>
+                <h3>收录的零件类别</h3>
+                <p>{catalogCategories.map(zhCategoryName).join('、')}</p>
               </article>
             </div>
           </section>
 
           <!-- ── Part-number checks ── -->
           {featuredParts.length > 0 && <section class="catalog-depth-section">
-            <h2>Part Numbers &amp; Selection Checks</h2>
-            <p>These numbers have part-specific identification checks. Catalog measurements, where shown, still require confirmation for the quoted item and engine.</p>
-            <div class:list={['catalog-spec-table', { 'catalog-spec-table--no-size': !hasPublishedSizes }]} role="table" aria-label={`${hub.h1Title} part-number selection checks`}>
+            <h2>零件号与选用核查</h2>
+            <p>这些零件号带有针对具体物件的识别核查项。此处列出的目录测量值，对所报物件与发动机仍需进一步确认。</p>
+            <div class:list={['catalog-spec-table', { 'catalog-spec-table--no-size': !hasPublishedSizes }]} role="table" aria-label={`${hub.h1Title} 零件号选用核查`}>
               <div class="catalog-spec-head" role="row">
-                <span role="columnheader">Part No.</span>
-                <span role="columnheader">Component</span>
-                <span role="columnheader">Engine Series</span>
-                {hasPublishedSizes && <span role="columnheader">Published Size</span>}
-                <span role="columnheader">Check Before Quote</span>
+                <span role="columnheader">零件号</span>
+                <span role="columnheader">部件</span>
+                <span role="columnheader">发动机系列</span>
+                {hasPublishedSizes && <span role="columnheader">已发布尺寸</span>}
+                <span role="columnheader">报价前核查</span>
               </div>
               {featuredParts.map((part) => (
                 <a class="catalog-spec-row" role="row" href={`/part-products/${part.slug}/`}>
-                  <span role="cell" class="catalog-spec-cell-pn" data-label="Part No.">{part.partNumber}</span>
-                  <span role="cell" data-label="Component">{part.name}</span>
-                  <span role="cell" data-label="Engine Series">{part.series.join(', ') || 'Serial check'}</span>
-                  {hasPublishedSizes && <span role="cell" data-label="Published Size">{part.dimensions || 'Not published'}</span>}
-                  <span role="cell" data-label="Check Before Quote">{part.specificationChecks?.[0] ?? 'Confirm part marking and engine serial number.'}</span>
+                  <span role="cell" class="catalog-spec-cell-pn" data-label="零件号">{part.partNumber}</span>
+                  <span role="cell" data-label="部件">{zhPartName(part.name)}</span>
+                  <span role="cell" data-label="发动机系列">{part.series.map(zhSeriesLabel).join(', ') || '按出厂编号核查'}</span>
+                  {hasPublishedSizes && <span role="cell" data-label="已发布尺寸">{part.dimensions || '未发布'}</span>}
+                  <span role="cell" data-label="报价前核查">{part.specificationChecks?.[0] ?? '确认零件标识与发动机出厂编号。'}</span>
                 </a>
               ))}
             </div>
@@ -277,7 +285,7 @@ const catalogUseCases = hub.type === 'series'
 
           <!-- ── Verification checklist ── -->
           <section class="catalog-depth-section">
-            <h2>What We Verify Before Quoting</h2>
+            <h2>报价前我们核验什么</h2>
             <div class="catalog-checklist-grid">
               {quoteChecklist.map((item, i) => (
                 <article class="catalog-checklist-card">
@@ -292,7 +300,7 @@ const catalogUseCases = hub.type === 'series'
 
           <!-- ── RFQ scenarios ── -->
           <section class="catalog-depth-section">
-            <h2>Common RFQ Scenarios</h2>
+            <h2>常见询价场景</h2>
             <ul class="catalog-scenarios-list">
               {catalogUseCases.map((item) => (
                 <li>
@@ -301,28 +309,27 @@ const catalogUseCases = hub.type === 'series'
                 </li>
               ))}
             </ul>
-            <p class="catalog-scenarios-note">For mixed lists, send the spreadsheet as-is. We return line-by-line availability, replacement notes, and practical shipping options instead of a generic catalog reply.</p>
+            <p class="catalog-scenarios-note">混合清单请按原样发送表格。我们逐行返回供货情况、替换说明与实用运输方案，而不是一封通用的目录式回复。</p>
           </section>
 
           <!-- ── Not listed? Just ask ── -->
           <section class="catalog-depth-section catalog-just-ask">
-            <h2>Don't See Your Part Number Here? Just Ask.</h2>
+            <h2>这里没有您的零件号？直接问我们。</h2>
             <p>
-              This page lists the references indexed for {hub.h1Title.toLowerCase()} — it is not the
-              full MTU spare-parts range, and a missing number says nothing about availability. Send
-              the complete part number with your engine model and serial number: we check the
-              reference, trace supersessions, name the supply grade, and confirm stock before
-              quoting. If a number cannot be verified, we say so instead of shipping a guess.
+              本页仅列出 {hub.h1Title.toLowerCase()} 已收录的参考号——并非 MTU 备件全系列，
+              某个号未列出也完全不能说明有无供货。请把完整零件号连同发动机型号与出厂编号一并发来：
+              我们核验参考号、追溯替代关系、明确供货等级，并在报价前确认库存。
+              若某个号无法核验，我们会如实告知，而不是猜一个发货。
             </p>
             <a
               href={quoteHref}
               class="detail-rfq-link"
               data-rfq-modal
-              data-rfq-context="Unlisted part number sourcing check"
+              data-rfq-context="未收录零件号寻源核查"
               data-rfq-source={`catalog-${hub.slug}-just-ask`}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
-              Send My Part Number
+              发送我的零件号
             </a>
           </section>
 
@@ -331,8 +338,8 @@ const catalogUseCases = hub.type === 'series'
             Array.from(categoryGroups.entries()).map(([groupKey, groupParts]) => (
               <section class="catalog-group-section">
                 <h3 class="catalog-group-title">
-                  <span>{groupKey}</span>
-                  <span class="catalog-group-count">{groupParts.length} parts</span>
+                  <span>{zhGroupKey(groupKey)}</span>
+                  <span class="catalog-group-count">{groupParts.length} 个零件</span>
                 </h3>
                 <div class="hub-grid">
                   {groupParts.slice(0, 12).map((part) => (
@@ -340,7 +347,7 @@ const catalogUseCases = hub.type === 'series'
                       <div class="hub-card-image">
                         <img
                           src={part.image}
-                          alt={part.imageAlt ?? `${part.partNumber} ${part.name}`}
+                          alt={part.imageAlt ?? `${part.partNumber} ${zhPartName(part.name)}`}
                           width="320"
                           height="200"
                           loading="lazy"
@@ -349,47 +356,47 @@ const catalogUseCases = hub.type === 'series'
                       </div>
                       <div class="hub-card-body">
                         <p class="hub-card-meta">{part.partNumber}</p>
-                        <h4 class="hub-card-title">{part.name}</h4>
+                        <h4 class="hub-card-title">{zhPartName(part.name)}</h4>
                         <dl class="catalog-part-specs">
                           <div>
-                            <dt>Engine</dt>
-                            <dd>{part.engineType ?? (part.series.length > 0 ? part.series.join(', ') : 'Serial check')}</dd>
+                            <dt>发动机</dt>
+                            <dd>{part.engineType ? zhEngineType(part.engineType) : (part.series.length > 0 ? part.series.map(zhSeriesLabel).join(', ') : '按出厂编号核验')}</dd>
                           </div>
                           <div>
-                            <dt>Category</dt>
-                            <dd>{part.category}</dd>
+                            <dt>类别</dt>
+                            <dd>{zhCategoryName(part.category)}</dd>
                           </div>
                           <div>
-                            <dt>Catalog Weight</dt>
-                            <dd>{part.weightKg ?? 'Quote check'}</dd>
+                            <dt>目录重量</dt>
+                            <dd>{part.weightKg ?? '报价核查'}</dd>
                           </div>
                           <div>
-                            <dt>HS Code (ref.)</dt>
-                            <dd>{part.hsCode ?? 'Quote check'}</dd>
+                            <dt>HS 编码（参考）</dt>
+                            <dd>{part.hsCode ?? '报价核查'}</dd>
                           </div>
                           <div>
-                            <dt>Other References</dt>
-                            <dd>{part.replacementFor?.slice(0, 2).join(', ') || 'Verify'}</dd>
+                            <dt>其他参考号</dt>
+                            <dd>{part.replacementFor?.slice(0, 2).join(', ') || '待核验'}</dd>
                           </div>
                           <div>
-                            <dt>Image</dt>
-                            <dd>{isRealPartImage(part.image) ? 'Catalog photo' : 'Category image'}</dd>
+                            <dt>图片</dt>
+                            <dd>{isRealPartImage(part.image) ? '目录照片' : '类别图片'}</dd>
                           </div>
                         </dl>
-                        <p class="hub-card-summary">Availability confirmed for the quoted part number and quantity.</p>
+                        <p class="hub-card-summary">所询零件号与数量的供货情况经询价后确认。</p>
                       </div>
                     </a>
                   ))}
                 </div>
                 {groupParts.length > 12 && (
                   <p class="catalog-group-more">
-                    <span class="catalog-group-more-count">+{groupParts.length - 12}</span> more {groupKey.toLowerCase()} parts —
+                    <span class="catalog-group-more-count">+{groupParts.length - 12}</span> 另有 {groupParts.length - 12} 个{zhGroupKey(groupKey)}零件——
                     <a
                       href={quoteHref}
                       data-rfq-modal
-                      data-rfq-context={`${hub.h1Title} full catalog list inquiry`}
+                      data-rfq-context={`${hub.h1Title} 完整目录清单询价`}
                       data-rfq-source={`catalog-${hub.slug}`}
-                    >send a part list for full catalog</a>
+                    >发送零件清单以获取完整目录</a>
                   </p>
                 )}
               </section>
@@ -398,12 +405,12 @@ const catalogUseCases = hub.type === 'series'
 
           <!-- Related catalog hubs -->
           <hr class="catalog-divider" />
-          <h2>Browse More MTU Parts Catalogs</h2>
+          <h2>浏览更多 MTU 零件目录</h2>
           <div class="hub-grid">
             {relatedCatalogHubs.map((h) => (
                 <a href={`/part-products/catalog/${h.slug}/`} class="hub-card catalog-related-card">
                   <div class="hub-card-body">
-                    <span class="catalog-related-badge">{h.type === 'series' ? 'Engine Series' : 'Parts Category'}</span>
+                    <span class="catalog-related-badge">{h.type === 'series' ? '发动机系列' : '零件类别'}</span>
                     <h4 class="hub-card-title">{h.h1Title}</h4>
                     <p class="hub-card-summary">{h.summary}</p>
                   </div>
@@ -415,10 +422,10 @@ const catalogUseCases = hub.type === 'series'
           <div class="catalog-footer-links">
             <a href="/part-products/" class="catalog-footer-link">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-              All Part Numbers
+              全部零件号
             </a>
             <span class="catalog-footer-sep" aria-hidden="true">/</span>
-            <a href="/products/mtu-spare-parts/" class="catalog-footer-link">MTU Spare Parts</a>
+            <a href="/products/mtu-spare-parts/" class="catalog-footer-link">MTU 备件</a>
             {overhaulGuideLink && (
               <>
                 <span class="catalog-footer-sep" aria-hidden="true">/</span>
@@ -430,9 +437,9 @@ const catalogUseCases = hub.type === 'series'
               href={quoteHref}
               class="catalog-footer-link catalog-footer-link--cta"
               data-rfq-modal
-              data-rfq-context={`${hub.h1Title} parts inquiry`}
+              data-rfq-context={`${hub.h1Title} 零件询价`}
               data-rfq-source={`catalog-${hub.slug}`}
-            >Request Parts Inquiry</a>
+            >发起零件询价</a>
           </div>
         </article>
       </div>
@@ -442,15 +449,15 @@ const catalogUseCases = hub.type === 'series'
   <BlogCta
     stage="selection"
     topic={`catalog-${hub.slug}`}
-    title="Ready to check engine parts?"
-    text="Send part numbers, engine model, serial number, quantity, and destination. We confirm availability before quotation."
-    primaryLabel="Send Parts Inquiry"
+    title="准备核查发动机零件了吗？"
+    text="发送零件号、发动机型号、出厂编号、数量与收货地。我们在报价前确认供货情况。"
+    primaryLabel="发起零件询价"
     primaryHref={quoteHref}
     primaryEvent={`catalog_${hub.slug}_rfq`}
     useRfqModal
-    rfqContext={`${hub.h1Title} parts inquiry`}
+    rfqContext={`${hub.h1Title} 零件询价`}
     rfqSource={`catalog-${hub.slug}`}
-    secondaryLabel="All part numbers"
+    secondaryLabel="全部零件号"
     secondaryHref="/part-products/"
     secondaryEvent="catalog_all_parts"
   />

@@ -9,20 +9,20 @@ import '../../styles/terms-page.css';
 ---
 
 <BaseLayout
-  title="Payment Terms — Engine Parts RFQ & Orders | Diesel Part Source"
-  description="Payment terms for engine parts orders: T/T wire transfer, PayPal for small orders, L/C for large overhaul and project POs, proforma invoices, and balance timing."
+  title="付款条款 — 发动机零件询价与订单 | 柴油零件源"
+  description="发动机零件订单付款条款：T/T 电汇、小额订单 PayPal、大修与项目订单信用证（L/C）、形式发票及尾款时限。"
   currentPath="/terms/payment"
   jsonLd={breadcrumbSchema([
-    { name: 'Home', url: site.url },
-    { name: 'Payment Terms', url: `${site.url}/terms/payment/` },
+    { name: '首页', url: site.url },
+    { name: '付款条款', url: `${site.url}/terms/payment/` },
   ])}
 >
   <FunnelPageView stage="signing" label="payment-terms" />
   <BreadcrumbHero
-    title="Payment Terms"
+    title="付款条款"
     trail={[
-      { label: 'Home', href: '/' },
-      { label: 'Payment Terms' },
+      { label: '首页', href: '/' },
+      { label: '付款条款' },
     ]}
     variant="5"
   />
@@ -34,92 +34,92 @@ import '../../styles/terms-page.css';
           <TermsNav active="payment" />
 
           <p class="terms-intro">
-            Clear payment terms reduce friction at contract stage. Below is our standard structure — specific terms are confirmed on your quotation.
+            清晰的付款条款可减少合同阶段的摩擦。以下为我们的标准结构——具体条款以您的报价单为准。
           </p>
 
-          <div class="terms-meta" aria-label="Payment overview">
-            <span><strong>T/T wire</strong> standard</span>
-            <span>PayPal under <strong>USD 2,000</strong></span>
-            <span><strong>Net 30</strong> after 3 orders</span>
-            <span>L/C for large POs</span>
+          <div class="terms-meta" aria-label="付款概览">
+            <span><strong>T/T 电汇</strong>标准方式</span>
+            <span>低于 <strong>USD 2,000</strong> 可用 PayPal</span>
+            <span>3 笔订单后可享 <strong>Net 30</strong></span>
+            <span>大额采购订单（PO）可用信用证（L/C）</span>
           </div>
 
           <div class="terms-rfq-strip">
-            <p>Note your preferred payment structure on the RFQ — we confirm deposit, balance timing, and methods in the quote.</p>
-            <a href="/contact/?source=payment-terms" class="terms-rfq-link">Confirm on RFQ</a>
+            <p>请在询价单（RFQ）中注明您倾向的付款结构——我们将在报价中确认定金、尾款时限与支付方式。</p>
+            <a href="/contact/?source=payment-terms" class="terms-rfq-link">在询价单中确认</a>
           </div>
 
           <div class="terms-table-wrap">
             <table class="terms-table">
-              <caption class="terms-table-caption">Standard payment structures by order type</caption>
+              <caption class="terms-table-caption">按订单类型的标准付款结构</caption>
               <thead>
                 <tr>
-                  <th scope="col">Order type</th>
-                  <th scope="col">Payment structure</th>
-                  <th scope="col">Methods</th>
+                  <th scope="col">订单类型</th>
+                  <th scope="col">付款结构</th>
+                  <th scope="col">支付方式</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Small or first orders</td>
-                  <td><strong>100% prepayment</strong> before dispatch</td>
-                  <td>T/T wire transfer; PayPal for orders under USD 2,000</td>
+                  <td>小额或首次订单</td>
+                  <td>发货前 <strong>100% 预付</strong></td>
+                  <td>T/T 电汇；低于 USD 2,000 的订单可用 PayPal</td>
                 </tr>
                 <tr>
-                  <td>Standard parts orders</td>
-                  <td><strong>50% deposit</strong>, 50% before shipment</td>
-                  <td>T/T wire transfer</td>
+                  <td>标准零件订单</td>
+                  <td><strong>50% 定金</strong>，发货前付清其余 50%</td>
+                  <td>T/T 电汇</td>
                 </tr>
                 <tr>
-                  <td>Established customers</td>
-                  <td><strong>Net 30</strong> after credit review</td>
-                  <td>Available after 3 successful orders</td>
+                  <td>老客户</td>
+                  <td>信用审核通过后 <strong>Net 30</strong></td>
+                  <td>成功交易 3 笔后可用</td>
                 </tr>
                 <tr>
-                  <td>Large overhaul or project POs</td>
-                  <td>Irrevocable <strong>L/C</strong> at sight or usance</td>
-                  <td>Qualified buyers — case by case</td>
+                  <td>大修或项目采购订单</td>
+                  <td>即期或远期不可撤销<strong>信用证</strong></td>
+                  <td>符合条件的买方——逐单确认</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <h2>Quotation Validity and Currency</h2>
+          <h2>报价有效期与币种</h2>
           <ul class="terms-list">
-            <li>Quote valid <strong>30 days</strong>; currency USD unless otherwise stated</li>
-            <li>Ready-stock lines are reserved after payment is received, not at quotation stage</li>
-            <li>Sourced-to-order lines are purchased after the deposit or prepayment is received</li>
-            <li>Sample policy details: <a href="/terms/samples/">sample terms →</a></li>
+            <li>报价有效期 <strong>30 天</strong>；未另行注明时，币种为 USD</li>
+            <li>有现货的行项在收到货款后锁定，报价阶段不予锁定</li>
+            <li>按单采购（sourced-to-order）的行项在收到定金或预付款后启动采购</li>
+            <li>样品政策详见：<a href="/terms/samples/">样品条款 →</a></li>
           </ul>
 
-          <h2>How a Parts Order Is Paid</h2>
-          <p>After you confirm the quotation, we issue a proforma invoice listing every part number, quantity, unit price, freight, and the agreed Incoterm. Payment is made against the proforma invoice. For orders with a deposit, the balance is due once all lines are packed and we have sent you the packing list and, if requested, photos of the parts and cases. The final commercial invoice and packing list travel with the shipment.</p>
+          <h2>零件订单如何付款</h2>
+          <p>您确认报价后，我们开具形式发票（proforma invoice），列明全部零件号、数量、单价、运费及双方约定的贸易术语（Incoterm），付款凭形式发票办理。对于有定金的订单，尾款在所有行项包装完毕、且我们已向您发送装箱单（以及应要求提供的零件与箱况照片）后支付。最终商业发票与装箱单随货同行。</p>
 
-          <h3>Bank Charges and Payment References</h3>
-          <p>International wire transfers usually involve sender, intermediary, and receiving bank charges. Please instruct your bank to pay the sender charges and quote the proforma invoice number as the payment reference, so the payment can be matched to your order without delay.</p>
+          <h3>银行费用与付款参考号</h3>
+          <p>国际电汇通常涉及汇款行、中转行与收款行费用。请指示您的银行支付汇款方费用，并在付款参考号中注明形式发票编号，以便款项及时匹配到您的订单。</p>
 
-          <h2>What Affects Payment Structure</h2>
+          <h2>影响付款结构的因素</h2>
           <ul class="terms-list">
-            <li>First-time vs. repeat customer relationship</li>
-            <li>Order value and the share of sourced-to-order lines</li>
-            <li>High-value items such as cylinder heads, turbochargers, or injector sets bought specifically for your order</li>
-            <li>Tender or government procurement rules that require L/C or payment after delivery</li>
+            <li>首次合作与重复合作的客户关系</li>
+            <li>订单金额及按单采购行项的占比</li>
+            <li>专为您的订单采购的高价值物品，如气缸盖、涡轮增压器或喷油器组</li>
+            <li>要求采用信用证（L/C）或货到付款的招标或政府采购规则</li>
           </ul>
 
           <div class="terms-note">
-            <strong>Procurement tip:</strong> State your preferred payment structure on the RFQ so we can confirm feasibility in the quote response — especially for Net 30 or L/C programs.
+            <strong>采购提示：</strong>请在询价单（RFQ）中注明您倾向的付款结构，以便我们在报价回复中确认可行性——尤其是 Net 30 或信用证方案。
           </div>
 
           <p class="terms-related">
-            <a href="/terms/shipping/">Shipping terms</a>
+            <a href="/terms/shipping/">运输条款</a>
             <span aria-hidden="true">·</span>
-            <a href="/terms/samples/">Sample policy</a>
+            <a href="/terms/samples/">样品政策</a>
             <span aria-hidden="true">·</span>
-            <a href="/certifications/">Quality &amp; certifications</a>
+            <a href="/certifications/">质量与认证</a>
             <span aria-hidden="true">·</span>
-            <a href="/about/">Project proof</a>
+            <a href="/about/">项目实绩</a>
             <span aria-hidden="true">·</span>
-            <a href="/contact/?source=payment-terms">Confirm terms on your RFQ →</a>
+            <a href="/contact/?source=payment-terms">在询价单中确认条款 →</a>
           </p>
         </article>
       </div>
@@ -129,12 +129,12 @@ import '../../styles/terms-page.css';
   <BlogCta
     stage="signing"
     topic="payment"
-    title="Confirm payment terms on your quote"
-    text="Send your part number and note preferred payment structure — we confirm deposit, balance timing, and methods in the quotation response."
-    primaryLabel="Request a Quote"
+    title="在报价中确认付款条款"
+    text="发送您的零件号并注明倾向的付款结构——我们将在报价回复中确认定金、尾款时限与支付方式。"
+    primaryLabel="获取报价"
     primaryHref="/contact/?source=payment-terms"
     primaryEvent="payment_terms_rfq"
-    secondaryLabel="Shipping terms"
+    secondaryLabel="运输条款"
     secondaryHref="/terms/shipping/"
     secondaryEvent="payment_terms_shipping"
   />

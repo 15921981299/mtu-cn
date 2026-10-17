@@ -15,279 +15,279 @@ const cta = (label: string, source: string) =>
 
 export const importedPageContent: Record<string, ImportedPageContent> = {
   stock: {
-    title: 'MTU Parts Stock & Availability',
-    seoTitle: 'MTU Parts Stock & Availability Check | Diesel Part Source',
+    title: 'MTU 零件库存与供货情况',
+    seoTitle: 'MTU 零件库存与供货情况查询 | 柴油零件源',
     summary:
-      'How Diesel Part Source checks MTU parts availability: what "in stock" means on our quotations, which items move fastest, and how lead times are stated for sourced parts.',
+      '柴油零件源如何核查 MTU 零件供货情况：我们报价单上“有现货”的含义、哪些件流转最快，以及寻源件的交货期如何表述。',
     body: `
-      <h2>What "In Stock" Means on Our Quotes</h2>
-      <p>Every quotation line carries an availability note. <strong>Ready stock</strong> means the part is on the shelf in Shanghai and can be packed once the order is confirmed. <strong>Partner stock</strong> means the item is held by a supply partner we buy from regularly and has to reach our warehouse first. <strong>Sourced to order</strong> means we have to locate the part, so the quote gives an estimated lead time instead of a dispatch date. We only label a line as ready stock after checking it at the time of quotation, and the quote states the expected dispatch time for each line.</p>
-      <h2>Items That Usually Move Fastest</h2>
-      <p>Maintenance parts for the MTU 2000, 4000, and 396 series make up most daily orders, so they are the items most often available from ready stock:</p>
+      <h2>我们报价单上“有现货”的含义</h2>
+      <p>每一报价行都带供货说明。<strong>现货</strong>指零件在上海仓库货架上，订单确认后即可包装。<strong>伙伴库存</strong>指该件由我们长期采购的供应伙伴持有，须先运至我方仓库。<strong>按单寻源</strong>指我们需要定位该零件，因此报价给出的是预计交货期而非发货日期。我们只在报价时核查后才将某行标为现货，报价单会注明每一行的预计发货时间。</p>
+      <h2>通常流转最快的件</h2>
+      <p>MTU 2000、4000 与 396 系列的保养件占日常订单的大部分，因此它们最常以现货供应：</p>
       <ul>
-        <li>Spin-on oil and fuel filters, such as the <a href="/part-products/0031845201-oil-filter-spin-on/">0031845201 oil filter</a> and <a href="/part-products/x57508300091-fuel-filter-spin-on/">X57508300091 fuel filter</a></li>
-        <li>O-rings, sealing rings, and gaskets used in routine service</li>
-        <li>Pressure, temperature, and speed sensors that cause alarms or shutdowns</li>
-        <li>Injectors and fuel-system items for common ratings</li>
+        <li>旋装式机油与燃油滤清器，如 <a href="/part-products/0031845201-oil-filter-spin-on/">0031845201 机油滤清器</a>与 <a href="/part-products/x57508300091-fuel-filter-spin-on/">X57508300091 燃油滤清器</a></li>
+        <li>例行保养用的 O 型圈、密封环与垫片</li>
+        <li>引起报警或停机的压力、温度与转速传感器</li>
+        <li>常用功率等级的喷油器与燃油系统件</li>
       </ul>
-      <p>Overhaul parts in size grades, cylinder heads, crankshaft components, and parts for legacy engines such as the 538 and 956 series are more often sourced to order.</p>
-      <h2>Getting an Accurate Availability Answer</h2>
-      <p>Stock answers are only as good as the part reference. Send the exact part number, quantity, and engine serial number, and tell us if a later or earlier number is acceptable. An Excel list is fastest for more than ten lines. You can also check individual numbers in the <a href="/part-products/">MTU parts catalog</a> before sending the inquiry.</p>
-      ${cta('Check stock for your part numbers', 'stock')}
+      <p>带尺寸等级的大修件、气缸盖、曲轴部件，以及 538 与 956 等老式系列的零件，更多按单寻源。</p>
+      <h2>获得准确的供货情况答复</h2>
+      <p>库存答复的准确度取决于零件参考号。请发送确切的零件号、数量与发动机出厂编号，并告知是否可接受后续或更早的号码。超过十行时，Excel 清单最快。发送询价前，您也可以先在 <a href="/part-products/">MTU 零件目录</a>中核查单个号码。</p>
+      ${cta('查询您的零件号库存', 'stock')}
     `,
   },
   'support-services': {
-    title: 'Parts Sourcing Support Services',
-    seoTitle: 'Engine Parts Sourcing Support Services | Diesel Part Source',
+    title: '零件采购支持服务',
+    seoTitle: '发动机零件采购支持服务 | 柴油零件源',
     summary:
-      'The non-product work behind an engine parts order: part identification from photos, parts-list cleanup, pre-shipment photos, export documents, and packing to your marking instructions.',
+      '发动机零件订单背后的非产品工作：从照片识别零件、理顺零件清单、发运前拍照、出口文件，以及按您的唛头指示包装。',
     body: `
-      <h2>Support Included With Every Order</h2>
-      <p>Buying engine parts across borders involves more than a price per line. These are the support steps behind a typical inquiry and order.</p>
-      <h3>Part Identification</h3>
-      <p>When a part number is missing, worn off, or superseded, we work from the engine data plate, photos of the old part, its installation position, and any casting or label marks. We confirm the reference with you before quoting, so the order is based on an agreed number rather than a guess.</p>
-      <h3>Parts-List Cleanup</h3>
-      <p>Maintenance lists often combine numbers from different manuals and years. We return your list with duplicates merged, superseded numbers flagged, and lines that need inspection first, such as graded liners and bearings, clearly marked.</p>
-      <h3>Pre-Shipment Photos</h3>
-      <p>On request, we photograph the parts, labels, and packaging before dispatch, so your team can compare them with the old parts before the shipment leaves Shanghai.</p>
-      <h3>Export Documents and Packing</h3>
+      <h2>每笔订单附带的支持</h2>
+      <p>跨境采购发动机零件，不只是每行一个价格。以下是典型询价与订单背后的支持步骤。</p>
+      <h3>零件识别</h3>
+      <p>当零件号缺失、磨损或被替代时，我们从发动机数据铭牌、旧件照片、安装位置及任何铸造或标签标记入手。我们在报价前与您确认参考号，使订单基于商定的号码，而不是猜测。</p>
+      <h3>清单理顺</h3>
+      <p>保养清单常混合不同手册与年份的号码。我们返还的清单会合并重复项、标注被替代的号码，并清晰标出需先检查的行，如带等级的缸套与轴承。</p>
+      <h3>发运前拍照</h3>
+      <p>按需我们在发货前拍摄零件、标签与包装照片，使您的团队能在货物离开上海前与旧件比对。</p>
+      <h3>出口文件与包装</h3>
       <ul>
-        <li>Commercial invoice and packing list matched to your purchase-order lines</li>
-        <li>HS codes per line and certificate of origin where required</li>
-        <li>Case marking with your PO number, vessel or project name, and consignee</li>
-        <li>Wooden cases for heavy or fragile items; moisture protection for sea freight</li>
+        <li>与您采购单行项对应的商业发票与装箱单</li>
+        <li>每行的 HS 编码，以及需要时的原产地证书</li>
+        <li>带您的 PO 号、船名或项目名及收货人的箱唛</li>
+        <li>重件或易损件用木箱；海运防潮处理</li>
       </ul>
-      <h2>What We Do Not Do</h2>
-      <p>We are a parts supplier, not a field service company. We do not send technicians to carry out repairs, but we can quote the parts and special tools your own technicians or local service partner need. See <a href="/part/mtu-specialized-tools/">MTU specialized tools</a>.</p>
-      ${cta('Ask about support for your order', 'support-services')}
+      <h2>我们不做什么</h2>
+      <p>我们是零件供应商，不是现场服务公司。我们不派技术人员执行维修，但可以为您的技术人员或当地服务伙伴所需的零件与专用工具报价。见 <a href="/part/mtu-specialized-tools/">MTU 专用工具</a>。</p>
+      ${cta('咨询订单支持', 'support-services')}
     `,
   },
   'genuine-oem-parts': {
-    title: 'How to Check Genuine MTU Parts',
-    seoTitle: 'How to Check Genuine MTU Parts | Buyer Checklist',
+    title: '如何检查原厂 MTU 零件',
+    seoTitle: '如何检查原厂 MTU 零件 | 买方核查清单',
     summary:
-      'A practical checklist for buyers who want to confirm genuine MTU parts on arrival: part-number marking, labels and packaging, documents, and what to compare against the old part.',
+      '为希望在到货时确认原厂 MTU 零件的买方准备的实用清单：零件号标记、标签与包装、文件，以及与旧件比对的内容。',
     body: `
-      <h2>Why Buyers Check on Arrival</h2>
-      <p>Counterfeit and relabelled engine parts are a real risk in the spare-parts market, especially for filters, injectors, and sensors. A few minutes of checking when the parts arrive is far cheaper than an engine problem later. These are the checks we recommend, and the same ones we apply before parts leave our warehouse.</p>
-      <h2>Buyer Checklist</h2>
+      <h2>买方为何在到货时检查</h2>
+      <p>假冒与改标发动机零件在备件市场是真实风险，滤清器、喷油器与传感器尤甚。到货时花几分钟检查，远比日后的发动机问题便宜。以下是我们建议的检查项，也是我们在零件出库前执行的同一套检查。</p>
+      <h2>买方核查清单</h2>
       <ol>
-        <li><strong>Part number marking.</strong> The number on the part or its label should match the quotation exactly, including any suffix after a slash.</li>
-        <li><strong>Label and packaging.</strong> Look for clean, consistent printing and a label that is part of the original packaging rather than stuck over another one.</li>
-        <li><strong>Comparison with the old part.</strong> Check dimensions, connector type, thread, and mounting points against the part you removed.</li>
-        <li><strong>Supersession.</strong> If the number differs from your old part, the quote should state that it is a later or replacement reference.</li>
-        <li><strong>Documents.</strong> The commercial invoice should list the same part numbers and quantities as the packing list and the boxes.</li>
+        <li><strong>零件号标记。</strong>零件或其标签上的号码应与报价完全一致，含斜杠后的任何后缀。</li>
+        <li><strong>标签与包装。</strong>印刷应清晰一致，标签应为原包装的一部分，而不是贴在另一个标签之上。</li>
+        <li><strong>与旧件比对。</strong>对照您拆下的零件，检查尺寸、连接器类型、螺纹与安装点。</li>
+        <li><strong>替代关系。</strong>若号码与旧件不同，报价应说明它是后续号或替换参考号。</li>
+        <li><strong>文件。</strong>商业发票所列零件号与数量，应与装箱单和包装箱一致。</li>
       </ol>
-      <h2>How We Label Supply Routes</h2>
-      <p>Not every buyer needs, or can wait for, an original MTU part. Our quotes state the route for each line, whether original, OEM-alternative, or remanufactured exchange, so you know exactly what you are paying for. The routes are explained on our <a href="/capabilities/genuine-oem-parts/">verified OEM sourcing</a> page.</p>
-      <p>If anything on arrival does not match, do not install the part. Send photos of the part, label, and packaging as soon as possible so we can review it with you.</p>
-      ${cta('Request genuine MTU parts', 'genuine-oem-parts')}
+      <h2>我们如何标注供应路线</h2>
+      <p>并非每个买方都需要或等得起原厂 MTU 件。我们的报价逐行标明路线——原厂、OEM 替代或再制造换件——让您清楚所付为何。路线说明见我们的 <a href="/capabilities/genuine-oem-parts/">经核验 OEM 采购</a>页面。</p>
+      <p>若到货有任何不符，请勿安装。尽快发送零件、标签与包装照片，以便我们与您共同核查。</p>
+      ${cta('申请原厂 MTU 零件', 'genuine-oem-parts')}
     `,
   },
   'mtu-oils': {
-    title: 'MTU Engine Oils',
-    seoTitle: 'MTU Engine Oil Approvals & Supply | Diesel Part Source',
+    title: 'MTU 发动机机油',
+    seoTitle: 'MTU 发动机机油认证与供应 | 柴油零件源',
     summary:
-      'Choosing engine oil for MTU diesel engines: MTU oil categories, why the fluids specification matters for warranty and service intervals, and how we supply approved oils with parts orders.',
+      '为 MTU 柴油发动机选择机油：MTU 机油类别、油液规格为何对保修与保养间隔要紧，以及我们如何在零件订单中随供认证机油。',
     body: `
-      <h2>Oil Approval Matters on MTU Engines</h2>
-      <p>MTU does not approve engine oils by viscosity grade alone. Oils are listed in the MTU Fluids and Lubricants Specifications (publication A001061) under oil categories, commonly referred to as Category 1, 2, 2.1, 3, and 3.1. The category allowed for an engine depends on the series, the fuel quality, and the oil-change interval you want to run. Higher categories generally allow longer intervals where the engine and fuel permit it.</p>
-      <h2>How to Choose</h2>
+      <h2>机油认证在 MTU 发动机上要紧</h2>
+      <p>MTU 不单凭黏度等级认证发动机机油。机油按类别列于 MTU 油液与润滑剂规范（出版物 A001061）中，通常称类别 1、2、2.1、3 与 3.1。发动机允许的类别取决于系列、燃油质量与您希望的换油间隔。在发动机与燃油允许的情况下，较高类别通常允许更长间隔。</p>
+      <h2>如何选择</h2>
       <ul>
-        <li>Check the engine's operating instructions for the permitted oil categories</li>
-        <li>Consider fuel sulfur content; high-sulfur fuel can limit the choice of oil and interval</li>
-        <li>Use only oils listed in the current fluids specification for that category</li>
-        <li>Avoid mixing different oils between changes, and record the oil used in the maintenance log</li>
+        <li>查看发动机使用说明中允许的机油类别</li>
+        <li>考虑燃油硫含量；高硫燃油会限制机油与间隔的选择</li>
+        <li>只使用该类别现行油液规范所列的机油</li>
+        <li>避免在换油期内混用不同机油，并在保养日志中记录所用机油</li>
       </ul>
-      <h2>Supplying Oil With a Parts Order</h2>
-      <p>We quote MTU-approved oils mainly for buyers who want to consolidate oil with a filter and parts shipment, for example a vessel or remote generator site. Oil is heavy, so it is usually economical only by sea or consolidated freight, and drums or pails need proper palletizing. Tell us the engine series, required category, viscosity, and quantity in liters, and we will quote it together with the matching <a href="/part-products/catalog/mtu-filters/">MTU filters</a>.</p>
-      <p>Coolant follows a separate approval list; see <a href="/mtu-coolants/">MTU coolants</a>.</p>
-      ${cta('Quote oil with your parts order', 'mtu-oils')}
+      <h2>随零件订单供应机油</h2>
+      <p>我们主要为希望把机油与滤清器及零件发货合并的买方报价 MTU 认证机油，例如船舶或偏远发电现场。机油很重，通常只有海运或集拼才经济，桶装需要正规托盘化。请告知发动机系列、所需类别、黏度与升数，我们将与配套的 <a href="/part-products/catalog/mtu-filters/">MTU 滤清器</a>一起报价。</p>
+      <p>冷却液另有认证清单；见 <a href="/mtu-coolants/">MTU 冷却液</a>。</p>
+      ${cta('机油随零件订单一起报价', 'mtu-oils')}
     `,
   },
   'mtu-coolants': {
-    title: 'MTU Engine Coolants',
-    seoTitle: 'MTU Engine Coolant Approvals & Supply | Diesel Part Source',
+    title: 'MTU 发动机冷却液',
+    seoTitle: 'MTU 发动机冷却液认证与供应 | 柴油零件源',
     summary:
-      'Coolant for MTU diesel engines: approved antifreeze and corrosion-inhibitor types, why mixing products causes problems, and how we supply coolant alongside cooling-system parts.',
+      'MTU 柴油发动机冷却液：经认证的防冻液与缓蚀剂类型、为何混用产品会出问题，以及我们如何在冷却系统零件之外随供冷却液。',
     body: `
-      <h2>Coolant Is a Specified Fluid, Not a Commodity</h2>
-      <p>MTU engines use coolant made from treated water mixed with either an approved antifreeze concentrate or an approved corrosion inhibitor where freezing is not a risk. Approved products are listed in the MTU Fluids and Lubricants Specifications (publication A001061). Using an unapproved product, or the wrong concentration, can lead to cavitation on cylinder liners, corrosion in heat exchangers, and deposits that reduce cooling performance.</p>
-      <h2>Common Coolant Mistakes</h2>
+      <h2>冷却液是指定流体，不是大宗商品</h2>
+      <p>MTU 发动机的冷却液由处理水与经认证的防冻浓缩液混合而成，在无冻结风险处也可使用经认证的缓蚀剂。认证产品列于 MTU 油液与润滑剂规范（出版物 A001061）。使用未经认证的产品或错误浓度，可能导致气缸套气蚀、热交换器腐蚀，以及降低冷却性能的沉积物。</p>
+      <h2>常见冷却液错误</h2>
       <ul>
-        <li>Mixing different coolant chemistries when topping up</li>
-        <li>Using untreated hard water instead of water that meets the specified quality</li>
-        <li>Running too little concentrate, which reduces corrosion protection</li>
-        <li>Skipping regular coolant checks on standby generators that run few hours</li>
+        <li>补液时混用不同化学体系的冷却液</li>
+        <li>使用未处理的硬水，而非符合规定水质的水</li>
+        <li>浓缩液太少，降低防锈保护</li>
+        <li>跳过运行小时数很少的备用发电机的定期冷却液检查</li>
       </ul>
-      <h2>Coolant and Cooling-System Parts Together</h2>
-      <p>Coolant problems usually show up as failed water-pump seals, thermostats, or heat-exchanger leaks. If you are replacing cooling-system parts, it is a good time to flush and refill with an approved product. We can quote coolant together with parts from the <a href="/part-products/catalog/mtu-cooling-system/">MTU cooling system catalog</a>, including pumps, impellers, thermostats, and seals.</p>
-      <p>Send the engine series, the product you currently use, the system volume, and the destination. Like oil, coolant is best shipped by sea or consolidated with a larger order. For engine oil, see <a href="/mtu-oils/">MTU oils</a>.</p>
-      ${cta('Quote coolant and cooling parts', 'mtu-coolants')}
+      <h2>冷却液与冷却系统件一起</h2>
+      <p>冷却液问题通常表现为水泵密封、节温器或热交换器泄漏失效。如果您在更换冷却系统件，正是冲洗并用认证产品重注的好时机。我们可以把冷却液与 <a href="/part-products/catalog/mtu-cooling-system/">MTU 冷却系统目录</a>中的零件一起报价，包括泵、叶轮、节温器与密封件。</p>
+      <p>请发送发动机系列、现用产品、系统容积与目的地。与机油一样，冷却液最好海运或与较大订单集拼。发动机机油见 <a href="/mtu-oils/">MTU 机油</a>。</p>
+      ${cta('冷却液与冷却件一起报价', 'mtu-coolants')}
     `,
   },
   'rail-drive-solutions': {
-    title: 'MTU Rail Engine Parts',
-    seoTitle: 'MTU Rail Engine Parts for Locomotives & Railcars | Diesel Part Source',
+    title: 'MTU 轨交发动机零件',
+    seoTitle: '面向机车与轨道车的 MTU 轨交发动机零件 | 柴油零件源',
     summary:
-      'Parts supply for MTU rail engines in locomotives, railcars, and on-track machines, with model-code checks for Series 2000, 4000, and legacy rail installations.',
+      '面向机车、轨道车与轨行机械中 MTU 轨交发动机的零件供应，对 2000、4000 系列及老式轨交装机作型号代码核查。',
     body: `
-      <h2>MTU Engines in Rail Service</h2>
-      <p>MTU engines power diesel locomotives, diesel multiple units, power cars, and track-maintenance machines in many countries. Rail engines carry an "R" in the model code, for example 12V 4000 R43 or 16V 4000 R84, and are often supplied as part of a complete power pack built to the vehicle maker's layout. That combination of engine rating, emission stage, and installation decides which parts fit.</p>
-      <h2>Rail Parts We Quote Most Often</h2>
+      <h2>轨交服役中的 MTU 发动机</h2>
+      <p>在许多国家，MTU 发动机为柴油机车、柴油动车、动力车与线路养护机械提供动力。轨交发动机型号码带“R”，例如 12V 4000 R43 或 16V 4000 R84，且常作为按车辆制造商布置制造的完整动力包的一部分供应。发动机功率、排放阶段与安装方式的组合，决定哪些零件适用。</p>
+      <h2>我们最常报价的轨交零件</h2>
       <ul>
-        <li>Filters and service items for mileage- or hour-based exams</li>
-        <li>Injectors, high-pressure pumps, and fuel-system seals</li>
-        <li>Pressure, temperature, and speed sensors</li>
-        <li>Cooling-system pumps, thermostats, and hoses</li>
-        <li>Cylinder heads, pistons, liners, bearings, and gasket kits for depot overhauls</li>
+        <li>按里程或小时检修的滤清器与保养件</li>
+        <li>喷油器、高压泵与燃油系统密封件</li>
+        <li>压力、温度与转速传感器</li>
+        <li>冷却系统泵、节温器与软管</li>
+        <li>机务段大修用的气缸盖、活塞、缸套、轴承与垫片包</li>
       </ul>
-      <h2>Series 4000 Rail Generations</h2>
-      <p>The Series 4000 rail engine has been built in several generations. Parts are not always interchangeable between them, so we keep separate notes for the <a href="/series-4000-r03/">Series 4000 R03</a> and <a href="/series-4000-r04/">Series 4000 R04</a> build families.</p>
-      <h2>Information to Send</h2>
-      <p>For each engine, send the model code and serial number from the data plate, the vehicle builder and class, and the part numbers from the current parts documentation. If you are ordering for several vehicles, a fleet list with one line per engine lets us spot where engines in the same fleet have different build standards, which is common after earlier overhauls or modifications.</p>
-      <p>Rail buyers usually order in fleet batches; the <a href="/industries/rail/">rail industry page</a> explains how we quote exam kits per engine and repeat them across a fleet.</p>
-      ${cta('Request MTU rail engine parts', 'rail-drive-solutions')}
+      <h2>4000 系列轨交历代</h2>
+      <p>4000 系列轨交发动机已制造数代。零件并非总能跨代互换，因此我们对 <a href="/series-4000-r03/">4000 系列 R03</a>与 <a href="/series-4000-r04/">4000 系列 R04</a>构型家族分别保持记录。</p>
+      <h2>应发送的信息</h2>
+      <p>每台发动机请发送数据铭牌上的型号代码与出厂编号、车辆制造商与车型，以及现行零件资料中的零件号。如为多辆车订购，一台一行的车队清单能让我们发现同车队中发动机构型标准的差异——这在早期大修或改装后很常见。</p>
+      <p>轨交买方通常按车队批次订购；我们的 <a href="/industries/rail/">轨交行业页面</a>说明我们如何按每台发动机报检修包并在车队中复制。</p>
+      ${cta('申请 MTU 轨交发动机零件', 'rail-drive-solutions')}
     `,
   },
   'series-4000-r03': {
-    title: 'MTU Series 4000 R03 Rail Engine Parts',
-    seoTitle: 'MTU Series 4000 R03 Rail Engine Parts | Diesel Part Source',
+    title: 'MTU 4000 系列 R03 轨交发动机零件',
+    seoTitle: 'MTU 4000 系列 R03 轨交发动机零件 | 柴油零件源',
     summary:
-      'Parts for MTU Series 4000 R03-generation rail engines in freight and passenger locomotives, with serial-number checks before quotation.',
+      '面向货运与客运机车中 MTU 4000 系列 R03 代轨交发动机的零件，报价前经出厂编号核查。',
     body: `
-      <h2>About the R03 Build Generation</h2>
-      <p>MTU identifies engine generations with the last digit of the application code. Rail engines of the third build generation, such as the 12V 4000 R43 and 16V 4000 R43, are widely used in freight and passenger locomotives and have been in service for many years. Many fleets are now in their second or third major overhaul cycle on these engines, which makes overhaul parts and supersessions a frequent topic.</p>
-      <h2>Typical R03-Generation Requests</h2>
+      <h2>关于 R03 构型代</h2>
+      <p>MTU 以用途代码的最后一位数字标识发动机代次。第三构型代的轨交发动机，如 12V 4000 R43 与 16V 4000 R43，广泛用于货运与客运机车，已服役多年。许多车队现处于这些发动机的第二或第三次大修周期，使大修件与替代号成为常见话题。</p>
+      <h2>R03 代的典型询价</h2>
       <ul>
-        <li>Complete exam kits: filters, seals, and gaskets per engine</li>
-        <li>Common-rail injectors and high-pressure fuel components</li>
-        <li>Turbocharger parts and charge-air components</li>
-        <li>Pistons, liners, bearings, and cylinder-head parts for overhaul</li>
-        <li>Sensors and wiring items that trigger derates</li>
+        <li>完整检修包：每台发动机的滤清器、密封件与垫片</li>
+        <li>共轨喷油器与高压燃油部件</li>
+        <li>涡轮增压器件与增压空气部件</li>
+        <li>大修用的活塞、缸套、轴承与缸头部件事</li>
+        <li>触发降功率的传感器与线束件</li>
       </ul>
-      <h2>Supersession Checks</h2>
-      <p>Over a long production run, many part numbers have been updated. When you send numbers from an older parts list, we check each one against its current reference and tell you if the later part is a direct replacement or needs related parts to be changed at the same time.</p>
-      <h2>Overhaul Planning</h2>
-      <p>A major overhaul on an R03-generation engine normally replaces gasket sets, seals, piston rings, and bearings as standard, while liners, pistons, valves, and turbocharger parts depend on inspection results. We quote the standard items as firm lines and the inspection-dependent items as provisional lines, so the depot can order the first group immediately.</p>
-      <p>Search individual numbers in the <a href="/part-products/catalog/mtu-4000-series/">MTU 4000 parts catalog</a>, or compare with the newer <a href="/series-4000-r04/">Series 4000 R04</a> generation.</p>
-      ${cta('Request Series 4000 R03 parts', 'series-4000-r03')}
+      <h2>替代号核查</h2>
+      <p>在漫长的生产周期中，许多零件号已更新。当您发送旧清单上的号码时，我们逐个对照现行参考号核查，并告知后续件是直接替换，还是需要同时更换相关部件。</p>
+      <h2>大修计划</h2>
+      <p>R03 代发动机的大修通常按惯例更换垫片组、密封件、活塞环与轴承，而缸套、活塞、气门与涡轮增压器件取决于检查结果。我们将标准件报为确定行，依赖检查的件报为暂定行，使机务段能立即订购第一组。</p>
+      <p>在 <a href="/part-products/catalog/mtu-4000-series/">MTU 4000 零件目录</a>中搜索单个号码，或与较新的 <a href="/series-4000-r04/">4000 系列 R04</a>代比较。</p>
+      ${cta('申请 4000 系列 R03 零件', 'series-4000-r03')}
     `,
   },
   'series-4000-r04': {
-    title: 'MTU Series 4000 R04 Rail Engine Parts',
-    seoTitle: 'MTU Series 4000 R04 Rail Engine Parts | Diesel Part Source',
+    title: 'MTU 4000 系列 R04 轨交发动机零件',
+    seoTitle: 'MTU 4000 系列 R04 轨交发动机零件 | 柴油零件源',
     summary:
-      'Parts for MTU Series 4000 R04-generation rail engines built for stricter EU emission stages, including fuel-system, sensor, and exhaust-aftertreatment related items.',
+      '面向按更严欧盟排放阶段制造的 MTU 4000 系列 R04 代轨交发动机的零件，含燃油系统、传感器与排气后处理相关件。',
     body: `
-      <h2>About the R04 Build Generation</h2>
-      <p>The fourth build generation of the Series 4000 rail engine, with model codes such as 12V 4000 R54, 16V 4000 R64, and 16V 4000 R84, was developed for stricter European emission stages and was the first locomotive engine in its class certified to EU Stage IIIB. Compared with earlier generations, it relies more on electronic engine management and exhaust aftertreatment, so sensors, control components, and aftertreatment-related parts appear more often on parts lists.</p>
-      <h2>What Changes for Parts Buyers</h2>
+      <h2>关于 R04 构型代</h2>
+      <p>4000 系列轨交发动机的第四构型代，型号码如 12V 4000 R54、16V 4000 R64 与 16V 4000 R84，为更严格的欧洲排放阶段而开发，是其级别中首个通过 EU Stage IIIB 认证的机车发动机。与早期各代相比，它更依赖电控发动机管理与排气后处理，因此传感器、控制部件与后处理相关件在零件清单上出现得更频繁。</p>
+      <h2>对零件采购方的变化</h2>
       <ul>
-        <li>More sensors and electronic components per engine, each with its own reference</li>
-        <li>Fuel-system parts matched to the emission configuration, not only to the cylinder count</li>
-        <li>Aftertreatment-related parts that do not exist on earlier generations</li>
-        <li>Software and calibration dependencies for some control items, which should be confirmed with the vehicle operator</li>
+        <li>每台发动机的传感器与电子件更多，各有参考号</li>
+        <li>燃油系统件与排放配置匹配，而不只与缸数匹配</li>
+        <li>早期各代不存在的后处理相关件</li>
+        <li>部分控制件的软件与标定依赖，应与车辆运营方确认</li>
       </ul>
-      <h2>Information to Send</h2>
-      <p>Send the full engine model and serial number, the vehicle type, and the part numbers from the current parts documentation. For electronic items, include photos of the label and connector. We will confirm the reference and availability before quoting.</p>
-      <h2>Sensors and Electronic Items</h2>
-      <p>Electronic parts on newer engines can look identical while carrying different references for different calibrations or connector types. We never substitute an electronic item on appearance alone. If the label is damaged, we ask for the engine serial number and the position in the wiring diagram before we confirm a replacement.</p>
-      <p>For earlier engines, see <a href="/series-4000-r03/">Series 4000 R03</a>; for an overview of rail engines, see <a href="/rail-drive-solutions/">MTU rail engine parts</a>.</p>
-      ${cta('Request Series 4000 R04 parts', 'series-4000-r04')}
+      <h2>应发送的信息</h2>
+      <p>请发送完整发动机型号与出厂编号、车型，以及现行零件资料中的零件号。电子件请附标签与连接器照片。我们将在报价前确认参考号与供货情况。</p>
+      <h2>传感器与电子件</h2>
+      <p>较新发动机上的电子件可能外观相同，却因标定或连接器类型不同而带有不同参考号。我们绝不仅凭外观替换电子件。若标签损坏，我们会在确认替换件前索要发动机出厂编号与线束图中的位置。</p>
+      <p>早期发动机见 <a href="/series-4000-r03/">4000 系列 R03</a>；轨交发动机概览见 <a href="/rail-drive-solutions/">MTU 轨交发动机零件</a>。</p>
+      ${cta('申请 4000 系列 R04 零件', 'series-4000-r04')}
     `,
   },
   'part/mtu-183-parts': {
-    title: 'MTU 183 Series Parts',
-    seoTitle: 'MTU 183 Series Engine Parts | Diesel Part Source',
+    title: 'MTU 183 系列零件',
+    seoTitle: 'MTU 183 系列发动机零件 | 柴油零件源',
     summary:
-      'Spare parts for MTU 183 series engines in workboats, yachts, and generator sets, including cooling pumps, gaskets, sensors, and fuel-injection parts.',
+      'MTU 183 系列发动机备件，覆盖工作船、游艇与发电机组，含冷却泵、垫片、传感器与燃油喷射件。',
     body: `
-      <h2>Parts for an Established Engine Range</h2>
-      <p>The MTU 183 series was built in V-engine versions for marine propulsion, auxiliary power, and generator sets, and many of these engines are still running in workboats, patrol craft, yachts, and standby generators. Because production ended some time ago, buyers usually need help with two things: finding parts that are no longer easy to source, and confirming which number replaced an older one.</p>
-      <h2>Parts in Our 183 Series Catalog</h2>
+      <h2>面向成熟发动机系列的零件</h2>
+      <p>MTU 183 系列以 V 型缸体制造，用于船用推进、辅助动力与发电机组，其中许多仍在工作船、巡逻艇、游艇与备用发电机中运行。由于生产已结束一段时间，买方通常需要两方面的帮助：寻找已不易采购的零件，以及确认哪个号码替代了旧号。</p>
+      <h2>我们 183 系列目录中的零件</h2>
       <ul>
-        <li>Cooling: <a href="/part-products/0002000001-coolant-pump/">0002000001 coolant pump</a>, <a href="/part-products/0012040100-seawater-pump/">0012040100 seawater pump</a>, and oil coolers</li>
-        <li>Sensors such as the <a href="/part-products/0005354330-temperature-sensor/">0005354330 temperature sensor</a></li>
-        <li>Fuel-injection parts, including nozzle holders</li>
-        <li>Gaskets, sealing rings, and repair kits for top-end work</li>
+        <li>冷却：<a href="/part-products/0002000001-coolant-pump/">0002000001 冷却水泵</a>、<a href="/part-products/0012040100-seawater-pump/">0012040100 海水泵</a>与机油冷却器</li>
+        <li>传感器，如 <a href="/part-products/0005354330-temperature-sensor/">0005354330 温度传感器</a></li>
+        <li>燃油喷射件，含喷嘴座</li>
+        <li>缸头作业用的垫片、密封环与维修包</li>
       </ul>
-      <p>The 183 parts pages list the catalog reference, dimensions, and weight where known. Fitment still depends on the full engine model and serial number, because marine and generator versions use different cooling arrangements.</p>
-      <h2>When the Part Number Is Unknown</h2>
-      <p>Send the engine data plate, photos of the old part, and where it sits on the engine. For pumps, include the flange and impeller photos; for sensors, the connector and thread.</p>
-      <h2>Planning Ahead for an Older Engine</h2>
-      <p>For engines that are expected to stay in service for years, it often makes sense to hold a small stock of the parts that are hardest to replace quickly, such as coolant and seawater pumps, oil coolers, and the gasket sets needed for top-end work. Send the engine count and running hours, and we can suggest which items to keep on the shelf and which can be ordered when needed.</p>
-      ${cta('Request MTU 183 parts', 'part-mtu-183-parts')}
+      <p>183 零件页面在已知处列有目录参考号、尺寸与重量。适配性仍取决于完整发动机型号与出厂编号，因为船用与发电版本的冷却布置不同。</p>
+      <h2>零件号不明时</h2>
+      <p>请发送发动机数据铭牌、旧件照片及其在发动机上的位置。泵请附法兰与叶轮照片；传感器请附连接器与螺纹。</p>
+      <h2>为老旧发动机提前规划</h2>
+      <p>对预计还将服役多年的发动机，备少量最难快速更换的零件通常划算，如冷却水泵与海水泵、机油冷却器，以及缸头作业所需的垫片组。请发送发动机数量与运行小时数，我们可建议哪些常备货架、哪些随用随订。</p>
+      ${cta('申请 MTU 183 零件', 'part-mtu-183-parts')}
     `,
   },
   'part/mtu-538-parts': {
-    title: 'MTU 538 Series Parts',
-    seoTitle: 'MTU 538 Series Engine Parts | Diesel Part Source',
+    title: 'MTU 538 系列零件',
+    seoTitle: 'MTU 538 系列发动机零件 | 柴油零件源',
     summary:
-      'Spare parts for MTU 538 series high-speed marine engines in fast naval and patrol vessels, with old-reference tracing and part identification from photos.',
+      'MTU 538 系列高速船用发动机备件，覆盖快速海军与巡逻艇，支持旧参考号追溯与照片识别零件。',
     body: `
-      <h2>Supporting a Legacy High-Speed Marine Engine</h2>
-      <p>The MTU 538 series is a large high-speed diesel used mainly in fast naval craft and patrol vessels. Many of these vessels remain in service long after the engine left production, so operators depend on suppliers who can trace old part references and locate parts that are no longer common.</p>
-      <h2>Parts in Our 538 Series Catalog</h2>
-      <p>Our 538 catalog currently lists close to 80 part numbers, weighted toward the parts consumed during overhaul:</p>
+      <h2>支持老式高速船用发动机</h2>
+      <p>MTU 538 系列是主要用于快速海军舰艇与巡逻艇的大型高速柴油机。这些船舶中许多在发动机停产后仍长期服役，因此运营方依赖能追溯旧零件参考号、找到已不常见零件的供应商。</p>
+      <h2>我们 538 系列目录中的零件</h2>
+      <p>我们的 538 目录目前列有近 80 个零件号，偏重大修中消耗的零件：</p>
       <ul>
-        <li>Gaskets for cylinder heads, covers, and pipe joints, such as <a href="/part-products/5602030680-gasket/">5602030680</a></li>
-        <li>Shaft seal rings, such as <a href="/part-products/700217040001-shaft-seal-ring/">700217040001</a>, and O-rings</li>
-        <li>Bushings and bearings, such as <a href="/part-products/135l35003-1-bushing/">135L35003/1</a></li>
-        <li>Slotted nuts, tab washers, and other fastening parts</li>
+        <li>气缸盖、缸盖与管接头垫片，如 <a href="/part-products/5602030680-gasket/">5602030680</a></li>
+        <li>轴密封环，如 <a href="/part-products/700217040001-shaft-seal-ring/">700217040001</a>，及 O 型圈</li>
+        <li>衬套与轴承，如 <a href="/part-products/135l35003-1-bushing/">135L35003/1</a></li>
+        <li>开槽螺母、锁片及其他紧固件</li>
       </ul>
-      <h2>Old Reference Formats</h2>
-      <p>Some 538 parts use older reference formats that include letters and a slash suffix, such as 135L45018/1. Keep the suffix when you send the number, since it identifies a specific version. If only a drawing position or an old parts-list page is available, send a photo of it together with the engine serial number.</p>
-      <p>Fleet buyers can ask for part numbers, HS codes, and packing data on the quotation where they are known.</p>
-      <h2>Overhaul Lists for 538 Engines</h2>
-      <p>Because many 538 parts are now hard to find, we recommend sending the complete overhaul list early, before the engine is removed. We return each line marked as available, sourced to order with an estimated lead time, or not currently available, so your team can plan around the difficult items instead of discovering them in the middle of the job.</p>
-      ${cta('Request MTU 538 parts', 'part-mtu-538-parts')}
+      <h2>旧参考号格式</h2>
+      <p>部分 538 零件使用含字母与斜杠后缀的旧参考号格式，如 135L45018/1。发送号码时请保留后缀，因为它标识特定版本。若只有图位或旧清单页，请附照片并连同发动机出厂编号一起发送。</p>
+      <p>车队买方可在报价单上索取已知的零件号、HS 编码与包装数据。</p>
+      <h2>538 发动机大修清单</h2>
+      <p>由于许多 538 零件现已难找，我们建议在拆机前尽早发送完整大修清单。我们逐行标注为有货、按单寻源并附预计交货期，或当前无货，使您的团队能围绕难件规划，而不是在作业中途才发现。</p>
+      ${cta('申请 MTU 538 零件', 'part-mtu-538-parts')}
     `,
   },
   'part/mtu-1800-parts': {
-    title: 'MTU 1800 Series Parts',
-    seoTitle: 'MTU 1800 Series Engine Parts | Diesel Part Source',
+    title: 'MTU 1800 系列零件',
+    seoTitle: 'MTU 1800 系列发动机零件 | 柴油零件源',
     summary:
-      'Parts sourcing for MTU Series 1800 six-cylinder engines in rail and industrial applications, quoted on request against the engine serial number.',
+      'MTU 1800 系列六缸发动机（轨交与工业应用）的零件采购，按发动机出厂编号按单报价。',
     body: `
-      <h2>Series 1800 Parts on Request</h2>
-      <p>The MTU Series 1800 is a six-cylinder engine range used mainly in rail vehicles and industrial equipment. Unlike our larger MTU 2000, 4000, and 396 catalogs, the 1800 section of our online catalog is small, for example the <a href="/part-products/x50441600048-air-hose/">X50441600048 air hose</a>. Most 1800 parts are quoted on request after we check the engine data.</p>
-      <h2>What Buyers Usually Need</h2>
+      <h2>1800 系列零件按单供应</h2>
+      <p>MTU 1800 系列是主要用于轨交车辆与工业设备的六缸发动机系列。与我们较大的 MTU 2000、4000 与 396 目录不同，在线目录的 1800 部分很小，例如 <a href="/part-products/x50441600048-air-hose/">X50441600048 空气软管</a>。多数 1800 零件在我们核查发动机资料后按单报价。</p>
+      <h2>买方的常见需求</h2>
       <ul>
-        <li>Oil, fuel, and air filters for scheduled service</li>
-        <li>Belts, hoses, thermostats, and water-pump parts</li>
-        <li>Sensors and electrical items</li>
-        <li>Gasket sets and seals for top-end repairs</li>
+        <li>计划保养用的机油、燃油与空气滤清器</li>
+        <li>皮带、软管、节温器与水泵件</li>
+        <li>传感器与电气件</li>
+        <li>缸头维修用的垫片组与密封件</li>
       </ul>
-      <h2>How to Get a Fast Answer</h2>
-      <p>Because Series 1800 engines are installed by many vehicle and equipment builders, the engine data plate is essential. Send the full model code and serial number, the part numbers from your parts book, and the equipment make. For filters and belts, a photo of the existing part with its label often shortens the check.</p>
-      <h2>Rail Power Packs</h2>
-      <p>In rail vehicles, a Series 1800 engine is often part of a complete power pack that also contains the cooling system, exhaust, and transmission interface supplied by the pack builder. Parts on the engine itself follow MTU references, while radiators, hoses, and mounting items may follow the pack or vehicle builder's numbers. Tell us the vehicle type and pack designation where known, and we will split the list accordingly.</p>
-      <p>If you operate mixed fleets, you can combine Series 1800 lines with <a href="/part-products/catalog/mtu-2000-series/">MTU 2000</a> or <a href="/part-products/catalog/mtu-4000-series/">MTU 4000</a> parts on one inquiry.</p>
-      ${cta('Request MTU 1800 parts', 'part-mtu-1800-parts')}
+      <h2>如何获得快速答复</h2>
+      <p>由于 1800 系列发动机由众多车辆与设备制造商安装，发动机数据铭牌必不可少。请发送完整型号代码与出厂编号、零件手册中的零件号，以及设备品牌。滤清器与皮带方面，一张带标签的旧件照片常能缩短核查时间。</p>
+      <h2>轨交动力包</h2>
+      <p>在轨交车辆中，1800 系列发动机常是完整动力包的一部分，动力包还含由成套方供应的冷却系统、排气与传动接口。发动机本身的零件遵循 MTU 参考号，而散热器、软管与安装件可能遵循动力包或车辆制造商的号码。请尽可能告知车型与动力包称号，我们会相应拆分清单。</p>
+      <p>如果您运行混合机队，可把 1800 系列行项与 <a href="/part-products/catalog/mtu-2000-series/">MTU 2000</a> 或 <a href="/part-products/catalog/mtu-4000-series/">MTU 4000</a> 零件放在同一份询价中。</p>
+      ${cta('申请 MTU 1800 零件', 'part-mtu-1800-parts')}
     `,
   },
   'part/mtu-specialized-tools': {
-    title: 'MTU Special Tools',
-    seoTitle: 'MTU Special Tools for Engine Service | Diesel Part Source',
+    title: 'MTU 专用工具',
+    seoTitle: '发动机保养用 MTU 专用工具 | 柴油零件源',
     summary:
-      'MTU special tools for engine maintenance and overhaul: barring devices, pullers, fitting and removal devices, gauges, and tool kits, sourced by tool number.',
+      '发动机保养与大修用 MTU 专用工具：盘车装置、拉马、安装与拆卸装置、量具及工具包，按工具号寻源。',
     body: `
-      <h2>Why Special Tools Matter</h2>
-      <p>Many MTU maintenance tasks, such as turning the crankshaft, removing liners, or setting injector protrusion, require tools designed for the specific engine. Using improvised tools risks damaging expensive components or getting incorrect settings. MTU special tool numbers usually start with "F", for example F6792918.</p>
-      <h2>Tools in Our Catalog</h2>
+      <h2>专用工具为何要紧</h2>
+      <p>许多 MTU 保养任务，如盘转曲轴、拆卸缸套或设定喷油器突出量，需要为特定发动机设计的工具。使用凑合的工具有损坏昂贵部件或导致设置错误的风险。MTU 专用工具号通常以“F”开头，例如 F6792918。</p>
+      <h2>我们目录中的工具</h2>
       <ul>
-        <li>Barring devices and tools for turning the engine, such as the <a href="/part-products/f6792918-barring-tool/">F6792918 barring tool</a></li>
-        <li>Pullers and fitting/removal devices, such as <a href="/part-products/f6780562-puller/">F6780562</a></li>
-        <li>Measuring tools, such as the <a href="/part-products/y20098771-feeler-gauge/">Y20098771 feeler gauge</a></li>
-        <li>Oil-filter wrenches and service tool kits, such as <a href="/part-products/f30453006-tool-kit/">F30453006</a></li>
+        <li>盘车与转发动机工具，如 <a href="/part-products/f6792918-barring-tool/">F6792918 盘车工具</a></li>
+        <li>拉马与安装/拆卸装置，如 <a href="/part-products/f6780562-puller/">F6780562</a></li>
+        <li>量具，如 <a href="/part-products/y20098771-feeler-gauge/">Y20098771 塞尺</a></li>
+        <li>机油滤清器扳手与保养工具包，如 <a href="/part-products/f30453006-tool-kit/">F30453006</a></li>
       </ul>
-      <h2>Ordering Tools With an Overhaul</h2>
-      <p>The best time to check tools is when planning a major job. Look at the tool list in the maintenance task for your engine, compare it with the tools in your workshop, and add the missing numbers to the parts inquiry. Tools are often slower to source than consumable parts, so ordering them early avoids delays once the engine is opened.</p>
-      <p>Send the tool number, the engine series it is used on, and the quantity. If the number is unknown, describe the task and send a photo of the tool page in your manual.</p>
-      <h2>Shipping Tools</h2>
-      <p>Some special tools are heavy or have precision measuring surfaces. We pack them in fitted cases or wooden crates with moisture protection, and state the gross weight and dimensions on the quotation so you can compare express and freight costs before ordering.</p>
-      ${cta('Request MTU special tools', 'part-mtu-specialized-tools')}
+      <h2>随大修订购工具</h2>
+      <p>核查工具的最佳时机是规划大型作业时。查看您发动机保养任务中的工具清单，与车间现有工具比对，把缺失的号码加入零件询价。工具的寻源常比消耗件慢，提前订购可避免开缸后延误。</p>
+      <p>请发送工具号、所用发动机系列与数量。号码不明时，请描述任务并发送手册中工具页的照片。</p>
+      <h2>工具发运</h2>
+      <p>部分专用工具较重或有精密测量面。我们用适配箱或带防潮的木箱包装，并在报价单上注明毛重与尺寸，供您在下单前比较快递与货运成本。</p>
+      ${cta('申请 MTU 专用工具', 'part-mtu-specialized-tools')}
     `,
   },
 };

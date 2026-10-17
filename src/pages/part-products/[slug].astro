@@ -14,8 +14,7 @@ import PartBuyerEvidence from '../../components/PartBuyerEvidence.astro';
 import { partBuyerEvidence } from '../../data/part-buyer-evidence';
 import { getCatalogAssemblies } from '../../data/part-assemblies';
 import { getPartGuidance } from '../../data/part-category-guidance';
-import { standardPartName } from '../../data/part-names';
-import { germanPartName } from '../../data/part-names-de';
+import { zhApplicableEngines, zhCategoryName, zhEngineType, zhPartName, zhPartNameBilingual, zhSeriesLabel } from '../../data/part-names-zh';
 import { describeModel, getModelGroupsForPart, modelApplication, modelBuildLabel, parseModels } from '../../data/engine-models';
 import { getCompanionParts } from '../../data/part-companions';
 import { isMeasurementLike, isMissingSpec } from '../../data/spec-fields';
@@ -35,14 +34,14 @@ const guidance = getPartGuidance(part.category, part.series);
 const heroImageAlt =
   buyerEvidence?.imageAlt ?? part.imageAlt ??
   (isRealPartImage(part.image)
-    ? `${part.partNumber} ${part.name} - MTU ${part.category} spare part`
-    : `Representative ${part.category.toLowerCase()} image for ${part.partNumber} ${part.name} sourcing`);
+    ? `${part.partNumber} ${zhPartNameBilingual(part.name)}——MTU ${zhCategoryName(part.category)}配件`
+    : `${part.partNumber} ${zhPartNameBilingual(part.name)} 寻源参考图`);
 const supplyBadgeLabel =
   supply?.stockStatus === 'in-stock'
-    ? 'In stock'
+    ? '有现货'
     : supply?.stockStatus === 'fast-order'
-      ? 'Fast order'
-      : 'Availability check';
+      ? '快速订货'
+      : '供货核查';
 const pageUrl = `${site.url}/part-products/${part.slug}/`;
 const quoteHref = `/contact/?source=part-${part.slug}`;
 const relatedParts = getRelatedMtuParts(part, 4);
@@ -54,32 +53,37 @@ const assemblyReferences = getCatalogAssemblies(part.partNumber).map((assembly) 
     linkedPart: mtuParts.find((candidate) => candidate.partNumber.toUpperCase() === item.partNumber.toUpperCase()),
   })),
 }));
-const hasSpecificEngineType = part.engineType && !/^Verify by engine serial number$/i.test(part.engineType);
-const hasSpecificApplicableEngines = part.applicableEngines && !/^Verify by engine serial number$/i.test(part.applicableEngines);
+const hasSpecificEngineType = part.engineType && !/^按发动机出厂编号核验$/.test(part.engineType);
+const hasSpecificApplicableEngines = part.applicableEngines && !/^按发动机出厂编号核验$/.test(part.applicableEngines);
 const shortApplicableEngines = hasSpecificApplicableEngines
-  ? part.applicableEngines!.split(';')[0].replace(/\.$/, '')
+  ? part.applicableEngines!.split(/[;；]/)[0].replace(/[.。]+$/, '')
   : undefined;
 const seriesText = part.series.length > 0
-  ? part.series.join(', ')
+  ? part.series.map((s) => zhSeriesLabel(s)).join('、')
   : hasSpecificEngineType
     ? part.engineType!
     : hasSpecificApplicableEngines
       ? shortApplicableEngines!
-      : 'MTU engine serial-number verified applications';
+      : '经发动机出厂编号核验的 MTU 应用';
+// 展示层映射：数据层的核验哨兵值与英文机型标签转为中文（零件号/系列名等标识符不动）
+const zhVerify = (v?: string) =>
+  v && /^按发动机出厂编号核验$/.test(v) ? '按发动机出厂编号核验' : v;
+const zhSeriesText = () => zhVerify(seriesText) ?? seriesText;
 // Authority concentration: link MTU 2000/4000 series part pages back to the
 // matching overhaul guide (hub-and-spoke). The guide already links out to the
 // series catalog, so this closes the loop and pushes weight onto the strongest asset.
 const overhaulGuide = (() => {
   const joined = part.series.join(' ');
-  if (/MTU 2000/.test(joined)) return { href: '/guides/mtu-2000-overhaul-parts/', label: 'MTU 2000 Series Overhaul Parts Guide' };
-  if (/MTU 4000/.test(joined)) return { href: '/guides/mtu-4000-overhaul-parts/', label: 'MTU 4000 Series Overhaul Parts Guide' };
+  if (/MTU 2000/.test(joined)) return { href: '/guides/mtu-2000-overhaul-parts/', label: 'MTU 2000 系列大修零件指南' };
+  if (/MTU 4000/.test(joined)) return { href: '/guides/mtu-4000-overhaul-parts/', label: 'MTU 4000 系列大修零件指南' };
   return undefined;
 })();
 // Title 专用短系列名：去掉冗余的 ENGINE(S) 后缀，无系列时回退为 "MTU"，避免 99 字符超长标题
 const isVagueSeriesText = (v?: string) =>
-  !v || /^Verify by engine serial number$/i.test(v) || /^MTU engine serial-number verified applications$/i.test(v);
+  !v || /^按发动机出厂编号核验$/.test(v)
+  || /^(MTU engine serial-number verified applications|经发动机出厂编号核验的 MTU 应用)$/i.test(v);
 const seriesShort = part.series.length > 0
-  ? part.series.join(', ')
+  ? part.series.map((s) => zhSeriesLabel(s)).join('、')
   : hasSpecificEngineType
     ? part.engineType!.replace(/\s+ENGINES?$/i, '').trim() || 'MTU'
     : !isVagueSeriesText(shortApplicableEngines)
@@ -87,76 +91,76 @@ const seriesShort = part.series.length > 0
       : 'MTU';
 const earlierNumbers = (part.crossReferences ?? []).filter((ref) => ref.relationship === 'replaces').map((ref) => ref.partNumber);
 const laterNumber = (part.crossReferences ?? []).find((ref) => ref.relationship === 'replaced-by')?.partNumber;
-const baseTitle = `${part.partNumber} ${part.name} - ${seriesShort} Part`;
-const supersessionTitle = earlierNumbers.length > 0 ? `${part.partNumber} ${part.name} (Replaces ${earlierNumbers[0]}) - ${seriesShort}` : undefined;
+const baseTitle = `${part.partNumber} ${zhPartName(part.name)} - ${seriesShort}零件`;
+const supersessionTitle = earlierNumbers.length > 0 ? `${part.partNumber} ${zhPartName(part.name)}（替代 ${earlierNumbers[0]}） - ${seriesShort}` : undefined;
 const title = buyerEvidence?.title ?? (supersessionTitle && supersessionTitle.length <= 65 ? supersessionTitle : baseTitle);
 const engineModels = parseModels(part.applicableEngines);
 const modelGroups = getModelGroupsForPart(part);
 const companions = getCompanionParts(part);
-const stockText = supply?.stockNote ?? 'Availability confirmed after inquiry';
+const stockText = supply?.stockNote ?? '询价后确认供货情况';
 const replacementRefs = Array.from(new Set([...(part.replacementFor ?? []), ...(part.crossReferences ?? []).map((ref) => ref.partNumber)]))
   .filter((ref) => ref.trim() !== '' && ref.toUpperCase() !== part.partNumber.toUpperCase());
 // Meta description：按优先级拼装分段，整段取舍而不是硬截断，保证 SERP 里句子完整
 const metaDesc = buyerEvidence?.metaDescription ?? (() => {
   const rawSummary = (part.summary ?? '').trim();
-  // 自动生成的双句 summary 常达 177 字符（>155 会被整段丢弃 → 134 页曾只剩 CTA）：
-  // 超限时只取首句；meta 场景把冗长模糊串压缩为 "MTU engines"（正文保留完整核验语言）
-  const firstSentence = rawSummary.includes('. ')
-    ? rawSummary.slice(0, rawSummary.indexOf('. ') + 1)
-    : rawSummary;
-  const summaryText = (rawSummary.length <= 155 ? rawSummary : firstSentence)
-    .replace(/MTU engine serial-number verified applications/g, 'MTU engines');
+  // 自动生成的双句 summary 常达 177 字符：中文 SERP 约 80 字，超限时只取首句
+  const firstSentence = rawSummary.includes('。')
+    ? rawSummary.slice(0, rawSummary.indexOf('。') + 1)
+    : rawSummary.includes('. ')
+      ? rawSummary.slice(0, rawSummary.indexOf('. ') + 1)
+      : rawSummary;
+  const summaryText = rawSummary.length <= 80 ? rawSummary : firstSentence;
   // 空 summary 兜底：料号+品名+适配+供应链表述，避免 SERP 只剩一句 CTA
-  const fallbackSummary = `${part.partNumber} ${part.name} — replacement part for ${seriesShort} engines. ${site.quality.iso9001Label}.`;
+  const fallbackSummary = `${part.partNumber} ${zhPartName(part.name)}——${seriesShort} 发动机替换件。${site.quality.iso9001Label}。`;
   const segments: string[] = [summaryText || fallbackSummary];
-  if (supply?.stockStatus === 'in-stock') segments.push('In stock.');
-  else if (supply?.stockStatus === 'fast-order') segments.push('Fast-order supply route.');
+  if (supply?.stockStatus === 'in-stock') segments.push('有现货。');
+  else if (supply?.stockStatus === 'fast-order') segments.push('可走快速订货路线。');
   const specBits: string[] = [];
-  if (part.weightKg && !/^n\/a$/i.test(part.weightKg.trim()) && !summaryText.includes(part.weightKg)) specBits.push(`weight ${part.weightKg}`);
+  if (part.weightKg && !/^n\/a$/i.test(part.weightKg.trim()) && !summaryText.includes(part.weightKg)) specBits.push(`重量 ${part.weightKg}`);
   if (part.hsCode && !summaryText.includes(part.hsCode)) specBits.push(`HS ${part.hsCode}`);
   if (part.natoNumber && !/^n\/a$/i.test(part.natoNumber.trim()) && !summaryText.includes(part.natoNumber)) specBits.push(`NATO ${part.natoNumber}`);
-  if (specBits.length > 0) segments.push(specBits.join(' · ') + '.');
+  if (specBits.length > 0) segments.push(specBits.join(' · ') + '。');
   const freshRefs = replacementRefs.filter((ref) => !summaryText.includes(ref));
-  if (freshRefs.length > 0) segments.push(`Catalog refs: ${freshRefs.slice(0, 3).join(', ')}.`);
-  const cta = `Request price and availability for ${part.partNumber}.`;
+  if (freshRefs.length > 0) segments.push(`目录参考号：${freshRefs.slice(0, 3).join('、')}。`);
+  const cta = `获取 ${part.partNumber} 的价格与供货信息。`;
   let out = '';
   for (const seg of segments) {
     const candidate = out ? `${out} ${seg}` : seg;
-    if (candidate.length > 155) continue; // 超长段跳过而不是终止，给后续规格段留机会
+    if (candidate.length > 80) continue; // 超长段跳过而不是终止，给后续规格段留机会
     out = candidate;
   }
   const withCta = out ? `${out} ${cta}` : cta;
-  if (withCta.length <= 160) return withCta;
+  if (withCta.length <= 80) return withCta;
   if (out) return out;
   const raw = `${summaryText} ${cta}`;
-  return raw.length <= 160 ? raw : raw.slice(0, 157).replace(/\s+\S*$/, '') + '...';
+  return raw.length <= 80 ? raw : raw.slice(0, 77).replace(/\s+\S*$/, '') + '...';
 })();
 const supersessionFaqs = [
   ...(earlierNumbers.length > 0
     ? [{
-        question: `Is ${earlierNumbers[0]} replaced by ${part.partNumber}?`,
+        question: `${earlierNumbers[0]} 是否已被 ${part.partNumber} 替代？`,
         answer: buyerEvidence
-          ? `Imported catalog history lists ${part.partNumber} as a later reference for ${earlierNumbers.join(', ')}. This does not establish universal interchangeability or the number currently available. Confirm the offered component, specifications and engine installation before accepting a substitution.`
-          : `Catalog history lists ${part.partNumber} as the later number for ${earlierNumbers.join(', ')}. Orders quoting ${earlierNumbers.length === 1 ? 'that number' : 'those numbers'} are normally supplied as ${part.partNumber}; we confirm the change against the engine serial number, because a later number can come with related changes to mating parts.`,
+          ? `导入的目录沿革记载 ${part.partNumber} 为 ${earlierNumbers.join('、')} 的后续参考号。这并不代表可普遍互换，也不代表当前可供货的编号。接受替换前请确认所供部件、规格与发动机安装形式。`
+          : `目录沿革记载 ${part.partNumber} 为 ${earlierNumbers.join('、')} 的后续号。引用${earlierNumbers.length === 1 ? '该号' : '这些号'}的订单通常以 ${part.partNumber} 供货；由于后续号可能伴随配合件变更，我们将对照发动机出厂编号确认该项变更。`,
       }]
     : []),
   ...(laterNumber
     ? [{
-        question: `What replaces ${part.partNumber}?`,
-        answer: `Catalog history lists ${laterNumber} as the later number. We check whether ${laterNumber} can be fitted on its own or needs related parts changed, and quote ${part.partNumber} where it is still available and preferred.`,
+        question: `${part.partNumber} 由什么号替代？`,
+        answer: `目录沿革记载 ${laterNumber} 为后续号。我们将核查 ${laterNumber} 能否单独装配、还是需要同时更换相关零件；在 ${part.partNumber} 仍有供货且更合适时，按该号报价。`,
       }]
     : []),
 ];
 const partFaqs = [...(part.faqs ?? []), ...supersessionFaqs.filter((faq) => !(part.faqs ?? []).some((existing) => existing.question === faq.question))];
 const hasReplacementRefs = replacementRefs.length > 0;
 const replacementReviewText = hasReplacementRefs
-  ? 'Catalog history distinguishes earlier and later numbers where documented. Reference-only entries do not establish replacement direction or interchangeability. Confirm the offered number against the engine serial number and installation.'
-  : `${part.partNumber} has no public alternative number listed in our current data. We still check old-part photos, engine serial number, and catalog position for supersession before quotation.`;
+  ? '目录沿革在有据可查的情况下区分早晚编号。仅作参考的条目不构成替换方向或互换性结论。请对照发动机出厂编号与安装位置确认所供编号。'
+  : `我们当前数据中未列出 ${part.partNumber} 的公开替代号。报价前我们仍会依据旧件照片、发动机出厂编号与目录位置核查替代关系。`;
 const quoteChecklist = part.quoteChecklist ?? [
-  `Part number: ${part.partNumber}`,
-  'Engine model, rating, and serial number',
-  'Nameplate photo and old part photo when available',
-  'Quantity, destination country, and required delivery date',
+  `零件号：${part.partNumber}`,
+  '发动机型号、功率标定与出厂编号',
+  '铭牌照片与旧件照片（如有）',
+  '数量、目的国与要求交期',
 ];
 const referenceRows = getPartReferences(part).map((ref) => {
   const number = ref.number;
@@ -168,25 +172,20 @@ const referenceRows = getPartReferences(part).map((ref) => {
   };
 });
 
-// German designation (catalog usage). Only shown when the translation is
-// substantive — identical output would mean an untranslated name, and labelling
-// that "DE" would be false.
-const partNameDe = germanPartName(part.name);
 const specRows = [
-  ['Part No.', part.partNumber],
-  ['Name', part.name],
-  ...(partNameDe && partNameDe !== part.name ? [['Designation (DE)', partNameDe]] : []),
-  ['Category', part.category],
-  ['Engine Type', hasSpecificEngineType ? part.engineType : seriesText],
-  ['Series', seriesText],
+  ['零件号', part.partNumber],
+  ['名称', zhPartNameBilingual(part.name)],
+  ['类别', zhCategoryName(part.category)],
+  ['发动机型号', hasSpecificEngineType ? zhEngineType(part.engineType!) : zhSeriesText()],
+  ['系列', zhSeriesText()],
   // Only measurement-like values are shown: the source column also carries
   // designation codes, ratings and description text that must not be
   // published under a Dimensions label.
-  ...(isMeasurementLike(part.dimensions) ? [['Dimensions', part.dimensions]] : []),
-  ['Catalog Weight', part.weightKg],
-  ['HS Code (reference)', part.hsCode],
-  ['NATO No.', part.natoNumber],
-  ['Lead Time', supply?.leadTime ?? 'Confirmed with quotation'],
+  ...(isMeasurementLike(part.dimensions) ? [['尺寸', part.dimensions]] : []),
+  ['目录重量', part.weightKg],
+  ['HS 编码（参考）', part.hsCode],
+  ['NATO 号', part.natoNumber],
+  ['交货期', supply?.leadTime ?? '报价时确认'],
 ].filter(([, value]) => !isMissingSpec(value as string | undefined));
 const browseCatalogLinks = Array.from(
   new Map(
@@ -197,14 +196,14 @@ const browseCatalogLinks = Array.from(
   ).values(),
 ).slice(0, 6);
 const productJsonLd = productSchema({
-  name: `${part.partNumber} ${part.name}`,
+  name: `${part.partNumber} ${zhPartNameBilingual(part.name)}`,
   description: part.summary,
   url: pageUrl,
   image: `${site.url}${part.image}`,
   sku: part.partNumber,
   model: seriesText,
   brandName: 'MTU',
-  category: part.category,
+  category: zhCategoryName(part.category),
   ...(supply ? { availability: supplyAvailabilitySchema[supply.stockStatus] } : {}),
 });
 ---
@@ -218,9 +217,9 @@ const productJsonLd = productSchema({
   noindex={!isPartPageIndexable(part)}
   jsonLd={[
     breadcrumbSchema([
-      { name: 'Home', url: site.url },
-      { name: 'MTU Parts Catalog', url: `${site.url}/part-products/` },
-      { name: `${part.partNumber} ${part.name}`, url: pageUrl },
+      { name: '首页', url: site.url },
+      { name: 'MTU 零件目录', url: `${site.url}/part-products/` },
+      { name: `${part.partNumber} ${zhPartNameBilingual(part.name)}`, url: pageUrl },
     ]),
     ...(productJsonLd ? [productJsonLd] : []),
     ...(partFaqs.length > 0 ? [faqSchema(partFaqs)] : []),
@@ -228,10 +227,10 @@ const productJsonLd = productSchema({
 >
   <FunnelPageView stage="selection" label={`mtu-part-${part.slug}`} />
   <BreadcrumbHero
-    title={`${part.partNumber}<br>${part.name}`}
+    title={`${part.partNumber}<br>${zhPartNameBilingual(part.name)}`}
     trail={[
-      { label: 'Home', href: '/' },
-      { label: 'MTU Parts Catalog', href: '/part-products/' },
+      { label: '首页', href: '/' },
+      { label: 'MTU 零件目录', href: '/part-products/' },
       { label: part.partNumber },
     ]}
     variant="2"
@@ -251,11 +250,11 @@ const productJsonLd = productSchema({
     />
     {buyerEvidence && <p class="buyer-image-caption">{buyerEvidence.imageCaption}</p>}
 
-    <div class="resource-meta" aria-label="Part specifications" data-part-number={part.partNumber}>
+    <div class="resource-meta" aria-label="零件规格" data-part-number={part.partNumber}>
       {specRows.slice(0, 8).map(([label, value]) => (
         <span><strong>{label}</strong> {value}</span>
       ))}
-      <span><strong>Delivery</strong> Global shipping</span>
+      <span><strong>交付</strong> 全球航运</span>
     </div>
 
     <div class="stock-status-bar">
@@ -265,17 +264,17 @@ const productJsonLd = productSchema({
 
     <DetailRfqStrip
       quoteHref={quoteHref}
-      title={`Check ${part.partNumber} availability`}
-      text={`Start with ${part.partNumber} and the quantity. Add an engine serial number or a photo of the old ${part.name} if available; we will follow up on any missing details.`}
-      modalContext={buyerEvidence?.rfqContext ?? `${part.partNumber} ${part.name} - ${seriesText}`}
+      title={`核查 ${part.partNumber} 供货情况`}
+      text={`从 ${part.partNumber} 与数量开始。如有发动机信息，请补充出厂编号或旧件 ${zhPartName(part.name)} 照片；缺失细节我们将随后跟进。`}
+      modalContext={buyerEvidence?.rfqContext ?? `${part.partNumber} ${zhPartName(part.name)} - ${seriesText}`}
       modalSource={`part-${part.slug}`}
       secondaryHref="/part-products/"
-      secondaryLabel="All MTU part numbers"
+      secondaryLabel="全部 MTU 零件号"
     />
 
     {buyerEvidence && <PartBuyerEvidence number={part.partNumber} evidence={buyerEvidence} />}
 
-    <h2>{part.partNumber} Specification</h2>
+    <h2>{part.partNumber} 规格参数</h2>
     <div class="part-spec-table">
       {specRows.map(([label, value]) => (
         <div>
@@ -284,26 +283,26 @@ const productJsonLd = productSchema({
         </div>
       ))}
       <div>
-        <dt>Availability</dt>
+        <dt>供货情况</dt>
         <dd>{part.availability}</dd>
       </div>
     </div>
 
     {supply && (
       <>
-        <h2>Supply &amp; Availability</h2>
+        <h2>供应与供货情况</h2>
         <div class="part-supply-card">
           <div class="part-supply-head">
             <span class={`part-supply-badge part-supply-badge--${supply.stockStatus}`}>{supplyBadgeLabel}</span>
-            {supply.lastReviewed && <span class="part-supply-verified">Supply information reviewed: {supply.lastReviewed}</span>}
+            {supply.lastReviewed && <span class="part-supply-verified">供货信息更新于：{supply.lastReviewed}</span>}
           </div>
           <dl class="part-supply-grid">
             <div>
-              <dt>Stock</dt>
+              <dt>库存</dt>
               <dd>{supply.stockNote}</dd>
             </div>
             <div>
-              <dt>Lead time</dt>
+              <dt>交货期</dt>
               <dd>{supply.leadTime}</dd>
             </div>
           </dl>
@@ -312,7 +311,7 @@ const productJsonLd = productSchema({
               {supply.realPhotos.map((photo) => (
                 <img
                   src={photo}
-                  alt={`${part.partNumber} ${part.name} - real stock photo`}
+                  alt={`${part.partNumber} ${zhPartName(part.name)}——库存实拍`}
                   width="320"
                   height="240"
                   loading="lazy"
@@ -321,94 +320,94 @@ const productJsonLd = productSchema({
               ))}
             </div>
           )}
-          <p class="part-supply-note">Availability is confirmed for each quotation and may change before order release.</p>
+          <p class="part-supply-note">供货情况以每次报价为准，订单放行前可能发生变化。</p>
         </div>
       </>
     )}
 
     {procurement && <section data-procurement-part={part.partNumber}>
-      <h2>{part.partNumber} Quotation Scope</h2>
+      <h2>{part.partNumber} 报价范围</h2>
       <dl class="part-spec-table">
-        <div><dt>Requested contents</dt><dd>{procurement.scope}</dd></div>
-        <div><dt>Evidence to request</dt><dd>{procurement.evidence}</dd></div>
-        <div><dt>Supplier confirmation</dt><dd>Current stock, exact supplied condition and unit-specific documents are not confirmed by this catalog record. Request them with the quotation.</dd></div>
-        <div><dt>Quote acceptance</dt><dd>Offered number, quantity, included items, condition, price, lead time and delivery terms must be agreed before order release.</dd></div>
+        <div><dt>询价内容</dt><dd>{procurement.scope}</dd></div>
+        <div><dt>需提供的凭证</dt><dd>{procurement.evidence}</dd></div>
+        <div><dt>供应商确认</dt><dd>本目录记录不确认当前库存、确切供货状态及单件专用文件。请随询价一并索取。</dd></div>
+        <div><dt>报价确认</dt><dd>订单放行前须就所供编号、数量、包含项目、状态、价格、交货期与交付条款达成一致。</dd></div>
       </dl>
     </section>}
 
-    <h2>About {part.partNumber} - {part.name}</h2>
-    {part.hasCatalogDetails && <p>Published catalog details are identification references. They do not establish current stock, supplied condition, or confirmed fitment for your engine.</p>}
+    <h2>关于 {part.partNumber} - {zhPartName(part.name)}</h2>
+    {part.hasCatalogDetails && <p>已发布的目录信息仅作物证参考，不代表当前库存、供货状态或对您发动机的确认适配。</p>}
     <p>{part.description ?? part.summary}</p>
     {quotationIds.length > 0 && <QuotationExamples ids={quotationIds} source={`part-${part.slug}-quote-example`} />}
 
     {guidance && !buyerEvidence && (
       <>
-        <h2>Technical Notes: {part.category}</h2>
+        <h2>{zhCategoryName(part.category)}技术要点</h2>
         <p>{guidance.role}</p>
         {guidance.seriesNote && <p>{guidance.seriesNote}</p>}
-        <h3>When This Type of Part Is Usually Replaced</h3>
+        <h3>此类零件的常见更换时机</h3>
         <ul>{guidance.replaceWhen.map((item) => <li>{item}</li>)}</ul>
-        <h3>Checks Before Ordering</h3>
+        <h3>订购前核查项</h3>
         <ul>{guidance.checks.map((item) => <li>{item}</li>)}</ul>
       </>
     )}
 
     {part.specificationChecks && part.specificationChecks.length > 0 && (
       <>
-        <h2>Technical Data Status</h2>
-        <p>Published catalog details help identify this part, but they are not a controlled drawing for the item offered. Measurements that are not shown here still need confirmation before substitution or order.</p>
+        <h2>技术数据状态</h2>
+        <p>已发布的目录信息有助于识别本件，但不构成所供物件的受控图纸。此处未列出的测量项在代用或订购前仍需确认。</p>
         <ul>{part.specificationChecks.map((check) => <li>{check}</li>)}</ul>
-        <p><a href={quoteHref} data-rfq-modal data-rfq-context={`${part.partNumber} technical data and document request`} data-rfq-source={`part-${part.slug}-documents`}>Request a datasheet or measurement check</a></p>
+        <p><a href={quoteHref} data-rfq-modal data-rfq-context={`${part.partNumber} 技术数据与文件索取`} data-rfq-source={`part-${part.slug}-documents`}>索取数据表或测量核验</a></p>
       </>
     )}
 
     {part.applicableEngines && (
       <>
-        <h2>Engine Catalog References</h2>
+        <h2>发动机目录参考</h2>
         {engineModels.length > 1 ? (
           <>
-            <p>{part.partNumber} is listed for {engineModels.length} engine models in the catalog references. The specification table decodes each model code from the fitment list; it does not confirm every installation.</p>
-            <div class="part-reference-scroll" tabindex="0" role="region" aria-label={`Engine models listed for ${part.partNumber}`}>
+            <p>目录参考中列有 {part.partNumber} 适用的 {engineModels.length} 个发动机型号。下方规格表解读适配清单中的各型号编码，但不确认每一处安装。</p>
+            <div class="part-reference-scroll" tabindex="0" role="region" aria-label={`${part.partNumber} 适用的发动机型号`}>
               <table class="part-reference-table">
-                <caption>Engine models listed for {part.partNumber}</caption>
-                <thead><tr><th scope="col">Model</th><th scope="col">Cylinders</th><th scope="col">Arrangement</th><th scope="col">Application</th><th scope="col">Group / build</th></tr></thead>
+                <caption>{part.partNumber} 列名的发动机型号</caption>
+                <thead><tr><th scope="col">型号</th><th scope="col">缸数</th><th scope="col">排列</th><th scope="col">应用</th><th scope="col">组别 / 版本</th></tr></thead>
                 <tbody>{engineModels.map((model) => (
                   <tr>
                     <th scope="row">{model.code}</th>
                     <td>{model.cylinders}</td>
-                    <td>{model.arrangement === 'V' ? 'V' : 'In-line'}</td>
+                    <td>{model.arrangement === 'V' ? 'V' : '直列'}</td>
                     <td>{modelApplication(model) ?? '—'}</td>
                     <td>{modelBuildLabel(model)}</td>
                   </tr>
                 ))}</tbody>
               </table>
             </div>
-            <h3>How Each Model Code Reads</h3>
+            <h3>型号编码解读</h3>
             <ul class="part-model-list">
               {engineModels.map((model) => <li><strong>{model.code}</strong>: {describeModel(model)}</li>)}
             </ul>
           </>
         ) : engineModels.length === 1 ? (
-          <p>{part.partNumber} is listed for {engineModels[0].code} ({describeModel(engineModels[0])}).</p>
+          <p>目录参考中列有 {part.partNumber} 适用于 {engineModels[0].code}（{describeModel(engineModels[0])}）。</p>
         ) : (
-          <p>{part.applicableEngines}</p>
+          <p>{zhApplicableEngines(part.applicableEngines)}</p>
         )}
         {modelGroups.length > 0 && (
           <p>
-            Full parts list for {modelGroups.length > 1 ? 'these engines' : 'this model family'}:{' '}
+            {modelGroups.length > 1 ? '这些发动机' : '该型号系列'}的完整零件清单：{' '}
             {modelGroups.map((group, index) => (
-              <>{index > 0 && ', '}<a href={`/engine-models/${group.slug}/`}>{group.title}</a></>
+              <>{index > 0 && '、'}<a href={`/engine-models/${group.slug}/`}>{group.title}</a></>
             ))}
           </p>
         )}
-        <p>Engine-series references do not confirm every installation. Final fitment of {part.partNumber} depends on the full engine serial number and assembly position.</p>
+        <p>发动机系列参考不确认每一处安装。{part.partNumber} 的最终适配性取决于完整的发动机出厂编号与装配位置。</p>
       </>
     )}
 
     {part.commonFailureScenarios && part.commonFailureScenarios.length > 0 && (
       <>
-        <h2>Common Replacement Scenarios</h2>
-        <p>This part is commonly replaced when:</p>
+        <h2>常见更换场景</h2>
+        <p>以下情况通常需要更换本件：</p>
         <ul>
           {part.commonFailureScenarios.map((s) => <li>{s}</li>)}
         </ul>
@@ -417,23 +416,23 @@ const productJsonLd = productSchema({
 
     {companions && (
       <>
-        <h2>Usually Ordered with {part.name}</h2>
-        <p>{companions.reason} These {seriesShort} references are commonly checked in the same job; each still needs its own fitment check.</p>
+        <h2>常与{zhPartName(part.name)}一同订购</h2>
+        <p>{companions.reason} 这些 {seriesShort} 参考号通常在同一作业中一并核查，每件仍需单独确认适配性。</p>
         <ul>
           {companions.parts.map((item) => (
-            <li><a href={`/part-products/${item.slug}/`}>{item.partNumber} {item.name}</a></li>
+            <li><a href={`/part-products/${item.slug}/`}>{item.partNumber} {zhPartName(item.name)}</a></li>
           ))}
         </ul>
       </>
     )}
 
-    <h2>Cross-Reference and Superseded Part Numbers</h2>
+    <h2>交叉参考与被替代零件号</h2>
     <p>{replacementReviewText}</p>
     {hasReplacementRefs ? (
-      <div class="part-reference-scroll" tabindex="0" role="region" aria-label="Part-number cross-reference table">
+      <div class="part-reference-scroll" tabindex="0" role="region" aria-label="零件号交叉参考表">
       <table class="part-reference-table">
-        <caption>References relative to {part.partNumber}</caption>
-        <thead><tr><th scope="col">Part number</th><th scope="col">Catalog relationship</th></tr></thead>
+        <caption>相对于 {part.partNumber} 的参考号</caption>
+        <thead><tr><th scope="col">零件号</th><th scope="col">目录关系</th></tr></thead>
         <tbody>{referenceRows.map((ref) => (
           <tr><th scope="row">{ref.href ? <a href={ref.href}>{ref.number}</a> : ref.number}</th><td>{ref.label}</td></tr>
         ))}</tbody>
@@ -441,8 +440,8 @@ const productJsonLd = productSchema({
       </div>
     ) : (
       <div class="part-verification-card">
-        <strong>Replacement status to verify:</strong>
-        <span>Send the old part marking, engine model, engine serial number, and installation photo. We check whether a newer, reman, or OEM-alternative route applies before quoting.</span>
+        <strong>需核验的替换状态：</strong>
+        <span>请发送旧件标识、发动机型号、出厂编号与安装照片。报价前我们将核查是否适用更新型号、再制造或原厂配套替代路线。</span>
       </div>
     )}
 
@@ -450,24 +449,24 @@ const productJsonLd = productSchema({
       <section class="hub-section">
         {assembly.kind === 'derived' ? (
           <>
-            <h2>Other Parts in the Same Assembly Group</h2>
-            <p>{assembly.provenance} Parts in the same group are often renewed together, but each reference still needs its own fitment check against the engine serial number.</p>
+            <h2>同一装配组的其他零件</h2>
+            <p>{assembly.provenance} 同一装配组的零件通常一并换新，但每个参考号仍需对照发动机出厂编号单独确认适配性。</p>
           </>
         ) : (
           <>
-            <h2>Parts in the Same Catalog Drawing</h2>
-            <p>{assembly.name}. Drawing positions are identification references, not a confirmed kit or a list of items included with this part. Check the engine serial number and drawing revision before ordering.</p>
+            <h2>同一目录图纸中的零件</h2>
+            <p>{assembly.name}。图纸位置仅作物证参考，不构成确认的套件或本件包含项目清单。订购前请核查发动机出厂编号与图纸版本。</p>
           </>
         )}
-        <div class="part-reference-scroll" tabindex="0" role="region" aria-label="Assembly drawing references">
+        <div class="part-reference-scroll" tabindex="0" role="region" aria-label="装配图纸参考">
         <table class="part-reference-table">
-          <caption>{assembly.kind === 'derived' ? 'Other catalog references in the same assembly group' : 'Other references in this assembly drawing'}</caption>
-          <thead><tr>{assembly.kind === 'derived' ? null : <th scope="col">Position</th>}<th scope="col">Part number</th><th scope="col">Description</th></tr></thead>
+          <caption>{assembly.kind === 'derived' ? '同一装配组的其他目录参考号' : '本装配图纸中的其他参考号'}</caption>
+          <thead><tr>{assembly.kind === 'derived' ? null : <th scope="col">位置</th>}<th scope="col">零件号</th><th scope="col">描述</th></tr></thead>
           <tbody>{assembly.parts.map((item) => (
             <tr>
               {assembly.kind === 'derived' ? null : <td>{item.position}</td>}
               <th scope="row">{item.linkedPart ? <a href={`/part-products/${item.linkedPart.slug}/`}>{item.partNumber}</a> : item.partNumber}</th>
-              <td>{standardPartName(item.description)}</td>
+              <td>{zhPartNameBilingual(item.description)}</td>
             </tr>
           ))}</tbody>
         </table>
@@ -475,27 +474,27 @@ const productJsonLd = productSchema({
       </section>
     ))}
 
-    <h2>Common Applications</h2>
+    <h2>常见应用</h2>
     <ul>
       {part.applications.map((application) => <li>{application}</li>)}
     </ul>
 
-    <h2>Information to Send for Quotation</h2>
+    <h2>询价需提供的信息</h2>
     <ul>
       {quoteChecklist.map((item) => <li>{item}</li>)}
     </ul>
-    <p>The quotation confirms the offered part number, supply condition, price, lead time, and shipping options.</p>
+    <p>报价将确认所供零件号、供货状态、价格、交货期与运输方案。</p>
 
     {part.orderingNotes && (
       <>
-        <h2>Ordering Notes</h2>
+        <h2>订购须知</h2>
         <p>{part.orderingNotes}</p>
       </>
     )}
 
     {partFaqs.length > 0 && (
       <>
-        <h2>{part.partNumber} FAQ</h2>
+        <h2>{part.partNumber} 常见问题</h2>
         <div class="part-faq-list">
           {partFaqs.map((faq) => (
             <article>
@@ -507,7 +506,7 @@ const productJsonLd = productSchema({
       </>
     )}
 
-    <h2>Verification Notes</h2>
+    <h2>核验说明</h2>
     <ul>
       {part.notes.map((note) => <li>{note}</li>)}
     </ul>
@@ -515,16 +514,16 @@ const productJsonLd = productSchema({
     {relatedParts.length > 0 && (
       <section class="hub-section">
         <header class="hub-section-header">
-          <h2>Related MTU Parts</h2>
-          <p>Similar to {part.name} by engine series or category.</p>
+          <h2>相关 MTU 零件</h2>
+          <p>按发动机系列或类别与{zhPartName(part.name)}相近。</p>
         </header>
         <div class="hub-grid part-related-grid">
           {relatedParts.map((related) => (
             <article class="hub-card">
               <div class="hub-card-body">
-                <p class="hub-card-meta">{related.category}</p>
+                <p class="hub-card-meta">{zhCategoryName(related.category)}</p>
                 <h3 class="hub-card-title">
-                  <a href={`/part-products/${related.slug}/`}>{related.partNumber} {related.name}</a>
+                  <a href={`/part-products/${related.slug}/`}>{related.partNumber} {zhPartName(related.name)}</a>
                 </h3>
                 <p class="hub-card-summary">{related.summary}</p>
               </div>
@@ -537,16 +536,16 @@ const productJsonLd = productSchema({
     {pairedParts.length > 0 && (
       <section class="hub-section">
         <header class="hub-section-header">
-          <h2>Other Service Parts in This Engine Series</h2>
-          <p>Related {seriesShort} service categories. Each item requires its own fitment check.</p>
+          <h2>本发动机系列的其他保养件</h2>
+          <p>{seriesShort} 相关保养类别，每件均需单独确认适配性。</p>
         </header>
         <div class="hub-grid part-related-grid">
           {pairedParts.map((p) => (
             <article class="hub-card">
               <div class="hub-card-body">
-                <p class="hub-card-meta">{p.category} / {p.series.join(', ')}</p>
+                <p class="hub-card-meta">{zhCategoryName(p.category)} / {p.series.join(', ')}</p>
                 <h3 class="hub-card-title">
-                  <a href={`/part-products/${p.slug}/`}>{p.partNumber} {p.name}</a>
+                  <a href={`/part-products/${p.slug}/`}>{p.partNumber} {zhPartName(p.name)}</a>
                 </h3>
                 <p class="hub-card-summary">{p.summary}</p>
               </div>
@@ -558,19 +557,19 @@ const productJsonLd = productSchema({
 
     {/* Browse more catalogs */}
     <section style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--color-stroke);">
-      <h2 style="font-size: 18px; margin-bottom: 12px;">Browse More MTU Parts</h2>
+      <h2 style="font-size: 18px; margin-bottom: 12px;">浏览更多 MTU 零件</h2>
       <div style="display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 14px;">
         {browseCatalogLinks.map((hub) => (
           <a href={`/part-products/catalog/${hub.slug}/`} style="color: var(--color-primary); text-decoration: none;">{hub.h1Title}</a>
         ))}
-        <a href="/part-products/" style="color: var(--color-primary); text-decoration: none; font-weight: 600;">All catalogs →</a>
+        <a href="/part-products/" style="color: var(--color-primary); text-decoration: none; font-weight: 600;">全部目录 →</a>
       </div>
     </section>
 
     <p class="resource-note detail-page-back">
-      <a href="/part-products/">All MTU part numbers</a>
+      <a href="/part-products/">全部 MTU 零件号</a>
       /
-      <a href="/products/mtu-spare-parts/">MTU spare parts</a>
+      <a href="/products/mtu-spare-parts/">MTU 备件</a>
       {overhaulGuide && (
         <>
           /
@@ -581,9 +580,9 @@ const productJsonLd = productSchema({
       <a
         href={quoteHref}
         data-rfq-modal
-        data-rfq-context={`${part.partNumber} ${part.name} - ${seriesText}`}
+        data-rfq-context={`${part.partNumber} ${zhPartName(part.name)} - ${seriesText}`}
         data-rfq-source={`part-${part.slug}`}
-      >Check this part</a>
+      >核查本件</a>
     </p>
   </DetailPageShell>
 </BaseLayout>

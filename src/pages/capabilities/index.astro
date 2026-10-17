@@ -11,38 +11,38 @@ import '../../styles/resource-page.css';
 
 const featuredSlugs = new Set(['mtu-engine-parts', 'marine-engine-service', 'genuine-oem-parts']);
 const additionalLinks: Record<string, string> = {
-  'Parts Identification': '/products/mtu-spare-parts/mtu-part-number-lookup/',
-  'Stock Check': '/contact/?source=stock-check',
-  'Export Packing': '/terms/shipping/',
-  'Global Shipping': '/terms/shipping/',
+  '配件识别': '/products/mtu-spare-parts/mtu-part-number-lookup/',
+  '库存核查': '/contact/?source=stock-check',
+  '出口包装': '/terms/shipping/',
+  '全球运输': '/terms/shipping/',
 };
 const additionalSummaries: Record<string, string> = {
-  'Parts Identification': 'Part-number, engine model, serial number, and nameplate checks before quotation.',
-  'Stock Check': 'Availability and replacement checks for urgent maintenance and planned overhaul lists.',
-  'Export Packing': 'International packing and documents prepared for engine parts shipment.',
-  'Global Shipping': 'Express, air, and freight shipment from Shanghai to worldwide buyers.',
+  '配件识别': '报价前核对零件号、发动机型号、出厂编号与铭牌。',
+  '库存核查': '为紧急维护与计划性大修清单核查供货情况与替代件。',
+  '出口包装': '为发动机零件运输准备国际包装与单据。',
+  '全球运输': '自上海向全球买方提供快递、空运与货运。',
 };
 const chevronIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 ---
 
 <BaseLayout
-  title="Engine Parts Service & Support — MTU, Cummins, DEUTZ"
-  description="Diesel Part Source supports MTU, Detroit Diesel, Cummins, and DEUTZ parts inquiries, including part identification, verified sourcing routes, marine service, industrial service, and global delivery."
+  title="发动机零件服务与支持 —— MTU、Cummins、DEUTZ"
+  description="柴油零件源 支持 MTU、Detroit Diesel、Cummins 与 DEUTZ 零件询价，包括零件识别、经核验的采购路线、船用服务、工业服务与全球交付。"
   currentPath="/capabilities"
   jsonLd={[
     breadcrumbSchema([
-      { name: 'Home', url: site.url },
-      { name: 'Capabilities', url: `${site.url}/capabilities/` },
+      { name: '首页', url: site.url },
+      { name: '服务能力', url: `${site.url}/capabilities/` },
     ]),
     faqSchema(faqs.map((f) => ({ question: f.question, answer: f.answer }))),
   ]}
 >
   <FunnelPageView stage="selection" label="capabilities-index" />
   <BreadcrumbHero
-    title="Engine Parts<br>Service & Support"
+    title="发动机零件<br>服务与支持"
     trail={[
-      { label: 'Home', href: '/' },
-      { label: 'Capabilities' },
+      { label: '首页', href: '/' },
+      { label: '服务能力' },
     ]}
     variant="1"
   />
@@ -51,47 +51,47 @@ const chevronIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="
     <div class="section-gap bottom">
       <div class="container">
         <article class="blog-details-content-block resource-page fade-in">
-          <nav class="resource-nav" aria-label="Capabilities navigation">
+          <nav class="resource-nav" aria-label="服务能力导航">
             <a href="/capabilities/" class="resource-nav-link active" aria-current="page">
-              All support
+              全部服务
             </a>
-            <a href="/products/mtu-spare-parts/" class="resource-nav-link">MTU Parts</a>
+            <a href="/products/mtu-spare-parts/" class="resource-nav-link">MTU 零件</a>
             <a href="/products/cummins-parts/" class="resource-nav-link">Cummins</a>
             <a href="/products/deutz-parts/" class="resource-nav-link">DEUTZ</a>
-            <a href="/part-products/" class="resource-nav-link resource-nav-all">Parts Guides</a>
+            <a href="/part-products/" class="resource-nav-link resource-nav-all">零件指南</a>
           </nav>
 
           <p class="resource-intro">
-            Diesel Part Source supports diesel engine parts identification, stock checking, verified sourcing route review, urgent marine service, industrial service, and global delivery from Shanghai.
+            柴油零件源 支持柴油发动机零件识别、库存核查、经核验采购路线审核、紧急船用服务、工业服务，以及自上海出发的全球交付。
           </p>
 
           <div class="resource-meta capabilities-meta">
-            <span><strong>{services.length}</strong> support areas</span>
+            <span><strong>{services.length}</strong> 个服务领域</span>
             <span>MTU · Cummins · DEUTZ</span>
-            <span>Part number · <strong>serial number</strong></span>
+            <span>零件号 · <strong>出厂编号</strong></span>
           </div>
 
           <div class="detail-rfq-strip capabilities-rfq-strip">
-            <p>Send your part list, engine model, serial number, and destination. We verify compatibility and shipping options.</p>
-            <a href="/contact/?source=capabilities" class="detail-rfq-link">Send Parts Inquiry</a>
+            <p>请提供零件清单、发动机型号、出厂编号与目的地，我们将核验适配性与运输方案。</p>
+            <a href="/contact/?source=capabilities" class="detail-rfq-link">发送零件询价</a>
           </div>
 
-          <nav class="hub-jump-nav resource-nav capabilities-jump-nav" aria-label="On this page">
-            <a href="#core-capabilities" class="resource-nav-link hub-jump-link">Core support</a>
-            <a href="#value-added" class="resource-nav-link hub-jump-link">Value-added</a>
-            <a href="#capabilities-faq" class="resource-nav-link hub-jump-link">FAQ</a>
+          <nav class="hub-jump-nav resource-nav capabilities-jump-nav" aria-label="本页导航">
+            <a href="#core-capabilities" class="resource-nav-link hub-jump-link">核心服务</a>
+            <a href="#value-added" class="resource-nav-link hub-jump-link">增值服务</a>
+            <a href="#capabilities-faq" class="resource-nav-link hub-jump-link">常见问题</a>
           </nav>
 
           <section id="core-capabilities" class="hub-section capabilities-hub-section">
             <div class="hub-section-header">
-              <h2>Core support areas</h2>
-              <p>MTU, Cummins, DEUTZ, marine, industrial, and verified parts sourcing support for urgent and planned maintenance.</p>
+              <h2>核心服务领域</h2>
+              <p>面向紧急与计划性维护的 MTU、Cummins、DEUTZ、船用、工业及经核验零件采购支持。</p>
             </div>
             <div class="hub-grid">
               {services.map((service) => (
                 <article class:list={['hub-card', 'capabilities-hub-card', { featured: featuredSlugs.has(service.slug) }]}>
                   {featuredSlugs.has(service.slug) && (
-                    <span class="capabilities-hub-badge">Popular</span>
+                    <span class="capabilities-hub-badge">热门</span>
                   )}
                   <a href={`/capabilities/${service.slug}/`} class="hub-card-image">
                     <img
@@ -109,7 +109,7 @@ const chevronIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="
                     </h3>
                     <p class="hub-card-summary">{service.summary}</p>
                     <a href={`/capabilities/${service.slug}/`} class="hub-card-link">
-                      View support →
+                      查看服务 →
                     </a>
                   </div>
                 </article>
@@ -119,8 +119,8 @@ const chevronIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="
 
           <section id="value-added" class="hub-section capabilities-hub-section">
             <div class="hub-section-header">
-              <h2>Value-added services</h2>
-              <p>Support around the parts order: identification, stock check, export packing, and global delivery.</p>
+              <h2>增值服务</h2>
+              <p>围绕零件订单的支持服务：零件识别、库存核查、出口包装与全球交付。</p>
             </div>
             <div class="capabilities-addon-grid">
               {additionalServices.map((item) => (
@@ -130,24 +130,24 @@ const chevronIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="
                 >
                   <span class="capabilities-addon-title">{item.title}</span>
                   <span class="capabilities-addon-desc">{additionalSummaries[item.title]}</span>
-                  <span class="capabilities-addon-cta">Learn more →</span>
+                  <span class="capabilities-addon-cta">了解更多 →</span>
                 </a>
               ))}
             </div>
           </section>
 
           <div class="resource-note">
-            <strong>Parts tip:</strong> Not sure which part number is correct?
-            <a href="/products/mtu-spare-parts/mtu-part-number-lookup/">Use the MTU lookup guide</a>
+            <strong>零件提示：</strong>不确定哪个零件号正确？订购前请
+            <a href="/products/mtu-spare-parts/mtu-part-number-lookup/">使用 MTU 零件号查询指南</a>
             ·
-            <a href="/products/mtu-spare-parts/mtu-engine-series-guide/">MTU series guide</a>
+            <a href="/products/mtu-spare-parts/mtu-engine-series-guide/">MTU 系列指南</a>
             ·
-            <a href="/contact/">send photos</a>
-            before you order.
+            <a href="/contact/">发送照片</a>
+            进行确认。
           </div>
 
           <section id="capabilities-faq" class="hub-section capabilities-hub-section">
-            <h2 class="hub-faq-heading">Capabilities FAQ</h2>
+            <h2 class="hub-faq-heading">服务能力常见问题</h2>
             <div class="hub-faq-list capabilities-faq-list">
               {faqs.slice(0, 6).map((faq) => (
                 <details class="hub-faq-item capabilities-faq-item">
@@ -162,13 +162,13 @@ const chevronIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="
           </section>
 
           <p class="resource-related">
-            <a href="/products/">Engine parts</a>
+            <a href="/products/">发动机零件</a>
             <span aria-hidden="true">·</span>
-            <a href="/part-products/">Parts guides</a>
+            <a href="/part-products/">零件指南</a>
             <span aria-hidden="true">·</span>
-            <a href="/terms/shipping/">Shipping</a>
+            <a href="/terms/shipping/">运输</a>
             <span aria-hidden="true">·</span>
-            <a href="/contact/">Contact</a>
+            <a href="/contact/">联系我们</a>
           </p>
         </article>
       </div>

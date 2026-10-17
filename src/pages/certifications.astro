@@ -20,121 +20,121 @@ const pageUrl = `${site.url}/certifications/`;
 
 const qualityCommitments = [
   {
-    title: 'Part identification',
-    description: 'We use the full part marking, engine model, serial number, and old-part photo when available to review the requested item.',
+    title: '零件识别',
+    description: '数据可得时，我们依据完整的零件标记、发动机型号、出厂编号与旧件照片审核所询零件。',
     iconKey: 'cmm',
   },
   {
-    title: 'Clear supply condition',
-    description: 'The quotation identifies the exact offered number and whether the route is OEM, alternative, remanufactured, or a replacement reference.',
+    title: '清晰的供货状态',
+    description: '报价会注明所供的确切编号，以及路线属于 OEM、替代件、再制造件还是替代参考号。',
     iconKey: 'dfm',
   },
   {
-    title: 'Supplier document scope',
-    description: 'Request the datasheet, certificate, test record, or origin information you need with the RFQ. We confirm which documents apply to the offered item.',
+    title: '供应商单证范围',
+    description: '随询价一并提出您需要的 datasheet、证书、检测记录或产地信息。我们会确认所供零件适用哪些单证。',
     iconKey: 'material',
   },
   {
-    title: 'Pre-shipment checks',
-    description: 'For an approved order, marking and packing photos can be requested before dispatch. The available evidence is agreed with the quotation.',
+    title: '发货前检查',
+    description: '订单确认后，可在发货前要求提供标记与包装照片。可提供的凭证以报价约定为准。',
     iconKey: 'iso',
   },
 ];
 
 const equipment = [
-  { name: 'Identification', qty: 'Before quote', capability: 'Requested number, engine serial, old-part marking, and replacement history' },
-  { name: 'Offered item', qty: 'At quote', capability: 'Offered number, condition, quantity, availability, and lead time' },
-  { name: 'Documents', qty: 'Per item', capability: 'Confirm available datasheet, certificate, test record, or origin document' },
-  { name: 'Shipment', qty: 'Before dispatch', capability: 'Confirm marking, packing, shipping documents, and tracking scope' },
+  { name: '识别', qty: '报价前', capability: '所询编号、发动机出厂编号、旧件标记与替代历史' },
+  { name: '所供零件', qty: '报价时', capability: '所供编号、状态、数量、供货情况与交货期' },
+  { name: '单证', qty: '按零件', capability: '确认可提供的 datasheet、证书、检测记录或产地单证' },
+  { name: '发运', qty: '发货前', capability: '确认标记、包装、运输单证与跟踪范围' },
 ];
 
 const inspectionSteps = [
-  'Receive the part number, quantity, destination, and any marking or nameplate photos',
-  'Check the engine serial and catalog relationship when fitment or supersession is uncertain',
-  'Quote the offered number, condition, lead time, document scope, and delivery terms',
-  'Confirm marking and packing requirements before dispatch; provide agreed shipment documents',
+  '接收零件号、数量、目的地，以及任何标记或铭牌照片',
+  '适配性或替代关系不确定时，核查发动机出厂编号与目录对应关系',
+  '就所供编号、状态、交货期、单证范围与交付条款报价',
+  '发货前确认标记与包装要求；提供约定的运输单证',
 ];
 
 const verificationDocuments = [
   {
-    label: 'Supplier availability confirmation',
-    detail: 'Line-item review for part number, quantity, replacement route, and expected delivery window.',
+    label: '供应商供货确认',
+    detail: '逐行审核零件号、数量、替代路线与预计交付窗口。',
   },
   {
-    label: 'Nameplate and old-part photo check',
-    detail: 'Engine model, serial number, plate photo, casting mark, or old-part image review when the part number is unclear.',
+    label: '铭牌与旧件照片核查',
+    detail: '零件号不明时，审核发动机型号、出厂编号、铭牌照片、铸件标记或旧件图片。',
   },
   {
-    label: 'Packing and shipment photos',
-    detail: 'Photo confirmation before dispatch for urgent orders, export packing, or high-value assemblies.',
+    label: '包装与发货照片',
+    detail: '紧急订单、出口包装或高价值总成，可在发货前进行照片确认。',
   },
   {
-    label: 'Supplier documents on request',
-    detail: 'Available supplier documents, conformity notes, invoice, packing list, and export paperwork matched to the order scope.',
+    label: '按需提供供应商单证',
+    detail: '按订单范围匹配可提供的供应商单证、一致性说明、发票、装箱单与出口单据。',
   },
   {
-    label: 'Customs and HS code support',
-    detail: 'HS code and shipment document support for engine parts orders when required by the destination country.',
+    label: '海关与 HS 编码支持',
+    detail: '目的国要求时，为发动机零件订单提供 HS 编码与运输单证支持。',
   },
 ] as const;
 ---
 
 <BaseLayout
-  title="Parts Verification & Documentation | Diesel Part Source"
-  description="Diesel Part Source checks engine part numbers, serial numbers, supplier documents, packing requirements, and delivery routes before quotation and shipment."
+  title="零件核验与单证 | 柴油零件源"
+  description="柴油零件源 在报价与发货前核查发动机零件号、出厂编号、供应商单证、包装要求与交付路线。"
   currentPath="/certifications"
   jsonLd={[
     breadcrumbSchema([
-      { name: 'Home', url: site.url },
-      { name: 'Certifications', url: pageUrl },
+      { name: '首页', url: site.url },
+      { name: '质量与认证', url: pageUrl },
     ]),
   ]}
 >
   <FunnelPageView stage="signing" event="cert_page_view" label="certifications" />
-  <BreadcrumbHero title="Parts Verification & Documentation" current="Quality" variant="5" />
+  <BreadcrumbHero title="零件核验与单证" current="质量" variant="5" />
 
   <section class="blog-details-section detail-page-section">
     <div class="section-gap bottom">
       <div class="container">
         <article class="blog-details-content-block blog-index-page cert-page fade-in">
-          <nav class="resource-nav blog-index-top-nav" aria-label="Quality navigation">
-            <a href="#quality-commitments" class="resource-nav-link">Verification scope</a>
-            <a href="#inspection-process" class="resource-nav-link">Review steps</a>
-            <a href="#documentation" class="resource-nav-link">Documents</a>
-            <a href="/about/" class="resource-nav-link resource-nav-all">About us</a>
+          <nav class="resource-nav blog-index-top-nav" aria-label="质量导航">
+            <a href="#quality-commitments" class="resource-nav-link">核验范围</a>
+            <a href="#inspection-process" class="resource-nav-link">审核步骤</a>
+            <a href="#documentation" class="resource-nav-link">单证</a>
+            <a href="/about/" class="resource-nav-link resource-nav-all">关于我们</a>
           </nav>
 
           <header class="blog-index-hero cert-hero">
-            <p class="blog-index-kicker">Part identification · Quotation review</p>
+            <p class="blog-index-kicker">零件识别 · 报价审核</p>
             <p class="blog-index-intro">
-              Send a part number and quantity to begin. Engine serial numbers, old-part markings, and photos help us check fitment when the catalog reference is incomplete. The quotation states the offered item and which documents can accompany it.
+              发送零件号与数量即可开始。目录参考号不全时，发动机出厂编号、旧件标记与照片可帮助我们核查适配性。报价会注明所供零件以及可随附的单证。
             </p>
             <div class="blog-index-stats" role="list">
               <span class="blog-index-stat" role="listitem">
-                <strong>Part no.</strong>
-                <span>Identification</span>
+                <strong>零件号</strong>
+                <span>识别</span>
               </span>
               <span class="blog-index-stat" role="listitem">
-                <strong>Serial</strong>
-                <span>Fitment check</span>
+                <strong>出厂编号</strong>
+                <span>适配核验</span>
               </span>
               <span class="blog-index-stat" role="listitem">
-                <strong>Quote</strong>
-                <span>Document scope</span>
+                <strong>报价</strong>
+                <span>单证范围</span>
               </span>
             </div>
           </header>
 
           <div class="blog-index-rfq-strip detail-rfq-strip">
-            <p>List required documents with your parts inquiry — supplier documents, packing photos, customs paperwork, or delivery deadline. We confirm what is practical before order placement.</p>
-            <a href="/contact/?source=certifications" class="blog-index-rfq-btn detail-rfq-link" data-rfq-modal data-rfq-context="Parts verification and document request" data-rfq-source="certifications">Request Parts Check</a>
+            <p>请在零件询价中一并列出所需单证——供应商单证、包装照片、海关单据或交付期限。下单前我们会确认哪些可以落实。</p>
+            <a href="/contact/?source=certifications" class="blog-index-rfq-btn detail-rfq-link" data-rfq-modal data-rfq-context="零件核验与文件索取" data-rfq-source="certifications">请求零件核验</a>
           </div>
 
           <section id="quality-commitments" class="blog-index-section cert-section">
             <header class="blog-index-section-head">
               <div>
-                <h2>Verification scope</h2>
-                <p>Identification and documentation are agreed for the part and supply route being quoted.</p>
+                <h2>核验范围</h2>
+                <p>识别与单证范围按所报零件及其供货路线逐项约定。</p>
               </div>
             </header>
             <div class="cert-grid">
@@ -151,8 +151,8 @@ const verificationDocuments = [
           <section id="inspection-process" class="blog-index-section cert-section">
             <header class="blog-index-section-head">
               <div>
-                <h2>Our parts verification process</h2>
-                <p>Four checks from part identification to the agreed shipment documents.</p>
+                <h2>我们的零件核验流程</h2>
+                <p>从零件识别到约定发货单证的四步核查。</p>
               </div>
             </header>
             <div class="inspection-list">
@@ -168,18 +168,18 @@ const verificationDocuments = [
           <section id="equipment" class="blog-index-section cert-section">
             <header class="blog-index-section-head">
               <div>
-                <h2>What the buyer can confirm</h2>
-                <p>Ask for the evidence you need with the parts list so its availability can be checked before the order.</p>
+                <h2>采购方可以确认的内容</h2>
+                <p>请随零件清单一并提出您需要的凭证，以便下单前核查其可得性。</p>
               </div>
             </header>
             <div class="equip-table-wrap">
               <table class="equip-table">
-                <caption class="equip-table-caption">Quotation and shipment review points</caption>
+                <caption class="equip-table-caption">报价与发货审核要点</caption>
                 <thead>
                   <tr>
-                    <th scope="col">Review point</th>
-                    <th scope="col">When</th>
-                    <th scope="col">Information to confirm</th>
+                    <th scope="col">审核要点</th>
+                    <th scope="col">阶段</th>
+                    <th scope="col">待确认信息</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -198,8 +198,8 @@ const verificationDocuments = [
           <section id="documentation" class="blog-index-section cert-section">
             <header class="blog-index-section-head">
               <div>
-                <h2>Documentation buyers can request</h2>
-                <p>Document availability depends on the quoted supplier and item. Request it before approving the order; this page does not imply that every record exists for every part.</p>
+                <h2>采购方可要求的单证</h2>
+                <p>单证可得性取决于所报供应商与零件。请在确认订单前提出；本页不意味着每个零件都具备全部记录。</p>
               </div>
             </header>
             <div class="verify-doc-grid">
@@ -211,20 +211,20 @@ const verificationDocuments = [
               ))}
             </div>
             <p class="cert-cta-row">
-              <a href="/part-products/">MTU part numbers</a>
+              <a href="/part-products/">MTU 零件号</a>
               <span aria-hidden="true">·</span>
-              <a href="/contact/?source=certifications">Request documentation scope →</a>
+              <a href="/contact/?source=certifications">咨询单证范围 →</a>
             </p>
           </section>
 
           <footer class="hub-list-footer-links blog-index-footer">
-            <a href="/terms/payment/">Payment terms</a>
+            <a href="/terms/payment/">付款条款</a>
             <span aria-hidden="true">·</span>
-            <a href="/terms/shipping/">Shipping &amp; logistics</a>
+            <a href="/terms/shipping/">运输与物流</a>
             <span aria-hidden="true">·</span>
-            <a href="/terms/samples/">Sample &amp; trial order policy</a>
+            <a href="/terms/samples/">样品与试单政策</a>
             <span aria-hidden="true">·</span>
-            <a href="/part-products/">MTU part numbers</a>
+            <a href="/part-products/">MTU 零件号</a>
           </footer>
         </article>
       </div>

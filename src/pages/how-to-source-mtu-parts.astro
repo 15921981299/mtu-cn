@@ -18,73 +18,73 @@ const pageUrl = `${site.url}/how-to-source-mtu-parts/`;
 
 const comparison = [
   {
-    question: 'What they are set up to do',
-    distributor: 'Sell new, factory-packaged parts under a territory agreement with the engine maker',
-    independent: 'Find and supply the correct part through whichever route is actually available',
+    question: '各自的定位',
+    distributor: '依据与发动机厂商的区域协议，销售全新的工厂包装零件',
+    independent: '通过实际可行的路线找到并供应正确的零件',
   },
   {
-    question: 'Stock they hold',
-    distributor: 'What their agreement and their own stocking plan covers — strongest on current-production fast movers',
-    independent: 'No fixed range. Availability is checked per part number, including from factory stock and specialist rebuilders',
+    question: '所持库存',
+    distributor: '以其协议与自身备货计划为限——在现产快流件上最强',
+    independent: '无固定范围。按零件号逐一核查供货情况，包括工厂库存与专业翻新厂',
   },
   {
-    question: 'Legacy and discontinued parts',
-    distributor: 'Limited once the engine family leaves active production support',
-    independent: 'Often the better route — this is where tracing old references and superseded numbers matters most',
+    question: '经典与停产零件',
+    distributor: '发动机家族退出主动生产支持后往往受限',
+    independent: '往往是更优路线——这正是追溯旧参考号与被替代号最关键的领域',
   },
   {
-    question: 'Warranty position',
-    distributor: 'Usually the cleanest route if the engine is still under a manufacturer warranty',
-    independent: 'Warranty sits with the part supplied. For a warranty engine, say so and the supply route is scoped accordingly',
+    question: '保修立场',
+    distributor: '发动机仍在制造商保修期内时，通常是路径最清晰的选择',
+    independent: '保修随所供零件而定。保修期内的发动机请说明，供货路线会据此界定',
   },
   {
-    question: 'Options offered',
-    distributor: 'Normally the single new-OEM route',
-    independent: 'Typically several routes — new OEM, OEM-alternative, remanufactured exchange, or replacement — each labelled and priced separately',
+    question: '提供的选项',
+    distributor: '通常只有全新 OEM 一条路线',
+    independent: '通常有多条路线——全新 OEM、OEM 替代件、再制造换新件或替代件——各自标注并单独报价',
   },
   {
-    question: 'Coverage',
-    distributor: 'Defined territory — if you are outside it, they may not be able to sell to you at all',
-    independent: 'Ships across borders, which is why export documentation, HS codes, and freight are part of the quote',
+    question: '覆盖范围',
+    distributor: '限定区域——区域之外可能完全无法向您销售',
+    independent: '跨境发货，因此出口单证、HS 编码与运费是报价的组成部分',
   },
 ];
 
 const vettingChecklist = [
-  'Ask for the part number they intend to supply, not just a description of the item',
-  'Ask whether it is new OEM, OEM-alternative, remanufactured, or replacement — and get the answer in writing on the quotation',
-  'Ask them to confirm fitment against your engine serial number, not just the model name',
-  'Ask for the current number, and what it supersedes, if the reference you hold is old',
-  'Ask for HS code and shipping weight before you approve freight — it prevents surprises at customs and at the forwarder',
-  'Ask what happens if the part does not fit, and who pays return freight',
-  'Check the company is reachable on a business domain with a working phone and a traceable company record',
-  'Compare lead time as well as price — a cheaper part that arrives after the vessel sails is the expensive option',
+  '要求对方给出拟供应的零件号，而不只是零件描述',
+  '询问它是全新 OEM、OEM 替代件、再制造件还是替代件——并要求在报价书上书面载明',
+  '要求对方对照您的发动机出厂编号（而非仅型号名称）确认适配性',
+  '如果您手上的参考号较旧，要求提供现行编号及其所替代的编号',
+  '在批准运费前索要 HS 编码与运输重量——可避免海关与货代处的意外',
+  '询问零件不适配时如何处理、回程运费由谁承担',
+  '核查公司可通过企业域名联系，且有可用的电话与可追溯的公司记录',
+  '同时比较交货期与价格——晚于船舶开航到达的便宜零件，才是昂贵的选项',
 ];
 
 const faqs = [
   {
-    question: 'Are you an authorised MTU distributor?',
+    question: '你们是授权的 MTU 分销商吗？',
     answer:
-      'No. Diesel Part Source is an independent supplier of diesel engine parts. We are not an authorised distributor or dealer for MTU, Rolls-Royce Power Systems, Detroit Diesel, Cummins, or DEUTZ, and we do not claim to be. Brand names and part numbers are used only to identify the parts buyers ask for. Every quotation states which supply route it offers — new OEM, OEM-alternative, remanufactured, or replacement.',
+      '不是。柴油零件源 是独立的柴油发动机零件供应商。我们不是 MTU、Rolls-Royce Power Systems、Detroit Diesel、Cummins 或 DEUTZ 的授权分销商或经销商，也不作此声称。品牌名与零件号仅用于识别采购方所求的零件。每份报价都注明其所提供的供货路线——全新 OEM、OEM 替代件、再制造件或替代件。',
   },
   {
-    question: 'Should I buy from an authorised distributor or an independent supplier?',
+    question: '我该向授权分销商还是独立供应商采购？',
     answer:
-      'It depends on the job, not on principle. If the engine is under a manufacturer warranty, or the part is safety-critical and the specification must be traceable to the maker, an authorised distributor is usually the safer first call. If the part is for a legacy engine, is superseded, is needed urgently, or the authorised channel has no stock and no date, an independent supplier with real sourcing routes is often the only route that produces a part at all.',
+      '取决于具体任务，而非原则。如果发动机在制造商保修期内，或零件关乎安全且规格必须可追溯至厂商，授权分销商通常是更稳妥的第一选择。如果零件用于经典发动机、已被替代、需求紧急，或授权渠道无货也无明确交期，拥有实际采购路线的独立供应商往往是唯一能弄到零件的途径。',
   },
   {
-    question: 'Do you have a local office or a dealer near me?',
+    question: '你们有本地办公室或我附近的分销商吗？',
     answer:
-      'No. We supply from Shanghai and ship worldwide; we do not operate local branches or country dealerships. That is deliberate — it is what lets us quote across engine families and hold no territorial restriction on where a part can go. If you need a part collected locally, tell us the destination and we quote the freight route with the price.',
+      '没有。我们从上海供货并发往全球；不设本地分支或国家分销。这是刻意为之——它使我们能跨发动机系列报价，且对零件去向无任何区域限制。如果您需要本地提货，请告知目的地，我们将运费路线连同价格一并报价。',
   },
   {
-    question: 'How do I know the part you quote is the right one?',
+    question: '如何知道你们报的零件就是正确的那个？',
     answer:
-      'The quotation names the part number, the supply route, and — where fitment is revision-dependent — the engine serial number it was checked against. Where a number supersedes another we tell you both. If anything on the quotation does not match what you asked for, tell us before you order; we would rather re-check it than ship a mismatch.',
+      '报价注明零件号、供货路线，以及在适配取决于修订版本时，所对照的发动机出厂编号。某编号替代另一编号时，我们会两个都告知。如果报价中有任何与您所求不符之处，请在下单前告知；我们宁愿重新核查，也不愿发错货。',
   },
   {
-    question: 'What if I already have a better price elsewhere?',
+    question: '如果我在别处已有更优价格怎么办？',
     answer:
-      'Send it. We will tell you honestly whether we can match it. We are not always the cheapest source on a fast-moving common part, and we will say so rather than trim the offer and risk the part. On legacy and superseded numbers, we are frequently the only source with a confirmed number and a date.',
+      '请发给我们。我们会诚实告知能否匹配。在快流通用件上我们并非总是最便宜的来源，这一点我们会明说，而不是削减报价、拿零件的正确性冒险。在经典与被替代编号上，我们常常是唯一握有已确认编号与交期的来源。',
   },
 ];
 
@@ -93,18 +93,18 @@ const hasPersonAuthor = Boolean(site.author.name);
 ---
 
 <BaseLayout
-  title="MTU Parts Distributors: How to Choose"
-  description="How to choose between an authorised MTU parts distributor and an independent supplier: what each is set up to do, when each is the right call, and how to vet any source before you order."
+  title="MTU 零件分销商：如何选择"
+  description="如何在授权的 MTU 零件分销商与独立供应商之间选择：各自的定位、何时该选哪一方，以及下单前审查任何供货来源的方法。"
   currentPath="/how-to-source-mtu-parts"
   jsonLd={[
     breadcrumbSchema([
-      { name: 'Home', url: site.url },
-      { name: 'How to Source MTU Parts', url: pageUrl },
+      { name: '首页', url: site.url },
+      { name: '如何采购 MTU 零件', url: pageUrl },
     ]),
     articleSchema({
-      title: 'MTU Parts Distributors: How to Choose a Source',
+      title: 'MTU 零件分销商：如何选择供货来源',
       description:
-        'Authorised distributor or independent supplier — what each route is good at, when each is the right call, and a vetting checklist to use before ordering engine parts from any source.',
+        '授权分销商还是独立供应商——各自擅长什么、何时该选哪一方，以及向任何来源采购发动机零件前使用的审查清单。',
       url: pageUrl,
       image: `${site.url}/images/engine-parts-verification-desk.webp`,
       datePublished: today,
@@ -119,55 +119,40 @@ const hasPersonAuthor = Boolean(site.author.name);
 >
   <FunnelPageView stage="comparison" label="how-to-source-mtu-parts" />
   <BreadcrumbHero
-    title="How to Choose an MTU Parts Source"
-    trail={[{ label: 'Home', href: '/' }, { label: 'How to Source MTU Parts' }]}
+    title="如何选择 MTU 零件供货来源"
+    trail={[{ label: '首页', href: '/' }, { label: '如何采购 MTU 零件' }]}
     variant="2"
   />
 
   <div class="resource-page">
     <section class="resource-page-section">
       <p>
-        Buyers usually arrive here after typing a phrase like <em>MTU parts distributors</em> — and the
-        question behind it is rarely "who is officially appointed". It is <strong>"who can actually put the
-        right part in my hands, and what does it cost me if they get it wrong?"</strong> This page answers
-        that, without pretending that the two kinds of source are interchangeable.
+        采购方搜索<em>MTU 零件分销商</em>之类关键词来到这里时，背后的问题很少是“谁被官方任命”。而是<strong>“谁能真正把正确的零件交到我手上，万一搞错我要付出什么代价？”</strong>本页回答这个问题，而不假装两类供货来源可以互换。
       </p>
       <p>
-        It is written by an independent supplier, so read the next section with that in mind: we set out
-        where an authorised distributor is the better answer, not only where we are. Getting the choice
-        wrong is expensive in this market — a part that arrives late, or fits the model but not the
-        serial range, costs far more than the difference in unit price.
+        本页由独立供应商撰写，因此阅读下一节时请记住这一点：我们既说明授权分销商更合适的场景，也不只讲我们合适的场景。在这个市场上选错代价很高——零件迟到，或适配型号不适配出厂编号区间，其代价远超单件差价。
       </p>
     </section>
 
     <section class="resource-page-section">
-      <h2>The two kinds of source</h2>
+      <h2>两类供货来源</h2>
       <p>
-        <strong>An authorised distributor</strong> has a formal agreement with the engine manufacturer.
-        They sell new, factory-packaged parts under the maker's part numbers, within an agreed territory,
-        and they carry the maker's warranty position. Their strength is that the specification is
-        traceable straight back to the manufacturer, and their stock is concentrated on parts for engines
-        still in active production support.
+        <strong>授权分销商</strong>与发动机制造商有正式协议。他们在约定区域内，以厂商的零件号销售全新的工厂包装零件，并承担厂商的保修立场。其优势在于规格可直接追溯至制造商，且库存集中于仍在主动生产支持中的发动机零件。
       </p>
       <p>
-        <strong>An independent supplier</strong> has no agreement with the maker and no territory. They
-        find the part through whichever route is actually available — maker's stock, a component
-        manufacturer who supplies the engine builder, a specialist rebuilder, or in the worst case a
-        replacement. Their strength is coverage and options, especially on legacy engines where the
-        authorised channel has moved on. Their weakness is that the buyer has to check <em>which</em>
-        route is being offered, because "MTU parts" on its own means nothing without it.
+        <strong>独立供应商</strong>与厂商无协议，也无区域限制。他们通过实际可行的路线找件——厂商库存、向发动机厂商供货的部件制造商、专业翻新厂，或在最坏情况下用替代件。其优势是覆盖与选项，尤其是在授权渠道已经转移的经典发动机上。其劣势在于采购方必须核查提供的是<em>哪一条</em>路线，因为单说“MTU 零件”不说明任何问题。
       </p>
     </section>
 
     <section class="resource-page-section">
-      <h2>What each is set up to do</h2>
+      <h2>各自的定位</h2>
       <div class="cost-table-wrap">
         <table class="cost-table">
           <thead>
             <tr>
-              <th scope="col">Question</th>
-              <th scope="col">Authorised distributor</th>
-              <th scope="col">Independent supplier</th>
+              <th scope="col">问题</th>
+              <th scope="col">授权分销商</th>
+              <th scope="col">独立供应商</th>
             </tr>
           </thead>
           <tbody>
@@ -184,51 +169,42 @@ const hasPersonAuthor = Boolean(site.author.name);
     </section>
 
     <section class="resource-page-section">
-      <h2>When each is the right call</h2>
-      <h3>Go to an authorised distributor when</h3>
+      <h2>何时选择哪一方</h2>
+      <h3>以下情况找授权分销商</h3>
       <ul class="resource-checklist">
-        <li>The engine is still under a manufacturer warranty and a warranty claim depends on the part's provenance</li>
-        <li>The component is safety-critical and the specification must trace directly to the maker</li>
-        <li>It is a current-production fast mover and they hold it on the shelf — genuine stock is a real advantage</li>
-        <li>A classification society or contract requires the maker's documentation chain</li>
+        <li>发动机仍在制造商保修期内，且保修索赔取决于零件的来源</li>
+        <li>零件关乎安全，规格必须直接追溯至厂商</li>
+        <li>是现产快流件且他们有现货——真品库存是实在的优势</li>
+        <li>船级社或合同要求厂商的单证链</li>
       </ul>
-      <h3>Go to an independent supplier when</h3>
+      <h3>以下情况找独立供应商</h3>
       <ul class="resource-checklist">
-        <li>The engine is legacy or out of production support, and the part number has moved on since</li>
-        <li>The authorised channel has no stock and no confirmed date, and the engine is already down</li>
-        <li>You need the options set out side by side — new OEM versus OEM-alternative versus remanufactured exchange</li>
-        <li>You are outside the distributor's territory and they cannot sell to you at all</li>
-        <li>You have a mixed list across several engine families or brands and want one consolidated quotation</li>
+        <li>发动机已经典或退出生产支持，零件号已经变迁</li>
+        <li>授权渠道无货也无确认交期，而发动机已经停机</li>
+        <li>需要把选项并列摆开——全新 OEM 对 OEM 替代件对再制造换新件</li>
+        <li>您在分销商区域之外，他们完全无法向您销售</li>
+        <li>您的清单跨多个发动机系列或品牌，希望一份合并报价</li>
       </ul>
     </section>
 
     <section class="resource-page-section">
-      <h2>Where we sit</h2>
+      <h2>我们的定位</h2>
       <p>
-        Plainly: <strong>{site.company.legalNameEn} is an independent supplier, not an authorised MTU
-        distributor or dealer.</strong> We do not claim manufacturer authorisation, and no quotation from
-        us should be read as implying it. Brand names and part numbers appear on this site only to identify
-        the parts buyers ask for.
+        直说：<strong>{site.company.legalNameEn} 是独立供应商，不是授权的 MTU 分销商或经销商。</strong>我们不声称制造商授权，我们的任何报价都不应被解读为暗示授权。品牌名与零件号在本站仅用于识别采购方所求的零件。
       </p>
       <p>
-        What we do is verify the part number against the engine model and serial number, set out which
-        supply route is available, and quote it with the lead time and the shipping cost so the decision is
-        made on the real number rather than the headline price. Where the authorised route is the right one
-        for your job, we will say so — and where we cannot supply, we will say that too rather than take an
-        order we cannot fill correctly.
+        我们所做的是：对照发动机型号与出厂编号核验零件号，列明可行的供货路线，并连同交货期与运费一并报价，让决定基于真实数字而非表面价格。如果授权路线适合您的任务，我们会明说——在我们无法正确供货时，我们也会明说，而不是接下无法正确履行的订单。
       </p>
       <p>
-        <a href="/about/">How we work and who does the verification</a> ·
-        <a href="/genuine-oem-parts/">How to check genuine MTU parts before you buy</a>
+        <a href="/about/">我们的工作方式与谁来做核验</a> ·
+        <a href="/genuine-oem-parts/">购买前如何检查 MTU 真品零件</a>
       </p>
     </section>
 
     <section class="resource-page-section">
-      <h2>Vetting any source, including us</h2>
+      <h2>如何审查任何供货来源（包括我们）</h2>
       <p>
-        These are the questions worth asking of any supplier of engine parts. They apply to an authorised
-        distributor and to an independent supplier alike, and we expect to answer all of them on every
-        quotation we issue.
+        这些是值得向任何发动机零件供应商提出的问题。它们对授权分销商与独立供应商一视同仁，我们也期望在出具的每一份报价上回答全部问题。
       </p>
       <ul class="resource-checklist">
         {vettingChecklist.map((item) => (
@@ -238,18 +214,18 @@ const hasPersonAuthor = Boolean(site.author.name);
     </section>
 
     <section class="resource-page-section">
-      <h2>Where to go next</h2>
+      <h2>下一步去哪里</h2>
       <ul class="resource-olist">
-        <li><a href="/part-products/">MTU Part Number Catalog</a> — the part numbers we supply, searchable</li>
-        <li><a href="/cross-reference/">Part Number Cross Reference</a> — OEM and superseded numbers mapped to current references</li>
-        <li><a href="/guides/how-to-read-mtu-parts-diagram/">How to Read an MTU Parts Diagram</a> — turning a drawing reference into a buyable number</li>
-        <li><a href="/support-services/">Sourcing Support Services</a> — what a request actually includes</li>
-        <li><a href="/catalog/">MTU Spare Parts Catalog (PDF)</a> — downloadable lists by engine series</li>
+        <li><a href="/part-products/">MTU 零件号目录</a>——我们供应的零件号，可搜索</li>
+        <li><a href="/cross-reference/">零件号交叉引用</a>——OEM 号与被替代号对应到现行参考号</li>
+        <li><a href="/guides/how-to-read-mtu-parts-diagram/">如何阅读 MTU 零件图</a>——把图纸编号变成可购买的编号</li>
+        <li><a href="/support-services/">采购支持服务</a>——一次请求实际包含什么</li>
+        <li><a href="/catalog/">MTU 备件目录（PDF）</a>——按发动机系列下载清单</li>
       </ul>
     </section>
 
     <section class="resource-page-section">
-      <h2>FAQ</h2>
+      <h2>常见问题</h2>
       {faqs.map((item) => (
         <details class="guide-faq-item">
           <summary>{item.question}</summary>
@@ -259,10 +235,10 @@ const hasPersonAuthor = Boolean(site.author.name);
     </section>
 
     <DetailRfqStrip
-      title="Send the part number and the engine details"
-      text="We will tell you which supply routes are open, what each one costs, and how long it takes — including when the honest answer is to go elsewhere."
+      title="发送零件号与发动机详情"
+      text="我们会告知哪些供货路线可行、各自成本与所需时间——包括诚实的答案是“去别处看看”的时候。"
       quoteHref="/contact/?source=how-to-source-mtu-parts"
-      label="Request Parts Quote"
+      label="发起零件询价"
       modalSource="how-to-source-mtu-parts"
     />
   </div>

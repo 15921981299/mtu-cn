@@ -57,8 +57,8 @@ const inlineImage =
   image={heroImage}
   jsonLd={[
     breadcrumbSchema([
-      { name: 'Home', url: site.url },
-      { name: 'Parts by Application', url: `${site.url}/applications/` },
+      { name: '首页', url: site.url },
+      { name: '按应用场景选购零件', url: `${site.url}/applications/` },
       { name: app.title, url: pageUrl },
     ]),
     serviceSchema({
@@ -73,8 +73,8 @@ const inlineImage =
   <BreadcrumbHero
     title={app.h1Title}
     trail={[
-      { label: 'Home', href: '/' },
-      { label: 'Applications', href: '/applications/' },
+      { label: '首页', href: '/' },
+      { label: '应用', href: '/applications/' },
       { label: app.title },
     ]}
     variant="2"
@@ -84,7 +84,7 @@ const inlineImage =
     <img
       slot="hero"
       src={heroImage}
-      alt={`${app.title} engine parts support`}
+      alt={`${app.title}发动机配件支持`}
       width="1400"
       height="692"
       loading="eager"
@@ -93,24 +93,24 @@ const inlineImage =
     />
 
     <div class="resource-meta">
-      <span><strong>Part types</strong> {linkedProducts.length} linked guides</span>
-      <span><strong>Verification</strong> Part number and serial number</span>
-      <span><strong>Lead time</strong> Quoted by stock and destination</span>
-      <span><strong>Support</strong> Planned or urgent maintenance</span>
+      <span><strong>零件类别</strong> {linkedProducts.length} 篇关联指南</span>
+      <span><strong>核验</strong> 零件号与出厂编号</span>
+      <span><strong>交货期</strong> 按库存与目的地报价</span>
+      <span><strong>支持</strong> 计划性或紧急维护</span>
     </div>
 
     <DetailRfqStrip
       quoteHref={quoteHref}
-      title={`Check parts for ${app.title.toLowerCase()}`}
-      text="Send the part number, engine model, serial number, quantity, destination, and required delivery date for an availability check."
+      title={`${app.title.toLowerCase()}零件核对`}
+      text="请提供零件号、发动机型号、出厂编号、数量、目的地与要求交货日期，以便核查供货情况。"
       modalSource={`application-${app.slug}`}
       modalContext={app.h1Title}
     />
 
     {linkedProducts.length > 0 && (
       <>
-        <p class="detail-quick-label">Related part types</p>
-        <nav class="resource-nav detail-quick-nav" aria-label="Related part types for this application">
+        <p class="detail-quick-label">相关零件类别</p>
+        <nav class="resource-nav detail-quick-nav" aria-label="该应用的相关零件类别">
           {linkedProducts.map((product) => (
             <a href={`/products/${product.slug}/`} class="resource-nav-link">
               {product.title}
@@ -126,7 +126,7 @@ const inlineImage =
     <figure class="detail-page-figure">
       <img
         src={inlineImage}
-        alt={`${app.title} engine parts and service support`}
+        alt={`${app.title}发动机配件与服务支持`}
         width="1200"
         height="662"
         loading="lazy"
@@ -137,7 +137,7 @@ const inlineImage =
 
     {linkedProducts.length > 0 && (
       <section class="application-related" aria-labelledby="application-related-heading">
-        <h2 id="application-related-heading" class="hub-faq-heading">Related part type guides</h2>
+        <h2 id="application-related-heading" class="hub-faq-heading">相关零件类别指南</h2>
         <div class="hub-grid">
           {linkedProducts.map((product) => (
             <article class="hub-card">
@@ -157,7 +157,7 @@ const inlineImage =
                 </h3>
                 <p class="hub-card-summary">{product.summary}</p>
                 <a href={`/products/${product.slug}/`} class="hub-card-link">
-                  View part type
+                  查看零件类别
                 </a>
               </div>
             </article>
@@ -166,18 +166,18 @@ const inlineImage =
       </section>
     )}
 
-    <SubpageLinks title="Industries for this application" items={relatedIndustries} />
+    <SubpageLinks title="该应用对应的行业" items={relatedIndustries} />
 
     <p class="resource-note detail-page-back">
-      <a href="/applications/">All applications</a>
+      <a href="/applications/">全部应用</a>
       ·
-      <a href="/products/">Part types</a>
+      <a href="/products/">零件类别</a>
       ·
-      <a href="/part-products/">Comparisons</a>
+      <a href="/part-products/">对比</a>
       ·
-      <a href="/part-products/">MTU part numbers</a>
+      <a href="/part-products/">MTU 零件号</a>
       ·
-      <a href={quoteHref}>Request a quote</a>
+      <a href={quoteHref}>获取报价</a>
     </p>
 
     <ApplicationSidebar slot="sidebar" activeSlug={app.slug} quoteHref={quoteHref} />
@@ -186,12 +186,12 @@ const inlineImage =
   <BlogCta
     stage="selection"
     topic={app.slug}
-    title={`Check parts for ${app.title.toLowerCase()}`}
-    text="Send part numbers, engine details, photos, quantity, and destination. We verify fitment and availability before quotation."
-    primaryLabel="Check Parts"
+    title={`${app.title.toLowerCase()}零件核对`}
+    text="请提供零件号、发动机信息、照片、数量与目的地，我们将在报价前核验适配性与供货情况。"
+    primaryLabel="核对零件"
     primaryHref={quoteHref}
     primaryEvent={`application_${app.slug}_rfq`}
-    secondaryLabel="MTU part numbers"
+    secondaryLabel="MTU 零件号"
     secondaryHref="/part-products/"
     secondaryEvent="application_part_numbers"
   />

@@ -25,33 +25,33 @@ type Tier = {
 
 const tiers: Tier[] = [
   {
-    tier: 'Top overhaul kit',
-    scope: 'Everything above the block deck',
+    tier: '上部大修包（Top）',
+    scope: '机体平台以上全部内容',
     typical:
-      'Cylinder-head gaskets, valve-stem seals, valve cotters and retainers, injector sleeves and their O-rings, rocker and valve-train hardware, and the head bolts (single-use stretch items).',
+      '缸垫、气门油封、气门锁夹与锁夹座圈、喷油器衬套及其 O 型圈、摇臂与配气机构小件，以及缸盖螺栓（一次性使用的拉伸螺栓）。',
   },
   {
-    tier: 'In-frame overhaul kit',
-    scope: 'Top-end plus the running gear inside the frame',
+    tier: '缸体内大修包（In-frame）',
+    scope: '上部内容加机体内运动件',
     typical:
-      'All of the above, plus piston rings, pistons where scored or worn, cylinder liners and their sealing sets, connecting-rod bearings, and the rod bolts (single-use stretch items).',
+      '上述全部，另加活塞环、拉伤或磨损的活塞、缸套及其密封件组、连杆轴承与连杆螺栓（一次性使用的拉伸螺栓）。',
   },
   {
-    tier: 'Full (major) overhaul kit',
-    scope: 'In-frame plus the bottom end and drives',
+    tier: '整机大修包（Full）',
+    scope: '缸体内内容加曲轴下部与传动',
     typical:
-      'All of the above, plus main-bearing shells, thrust bearings, crankshaft seals and wear sleeves, timing and drive hardware, and the oil and coolant circuit seals opened during the job.',
+      '上述全部，另加主轴承瓦、推力轴承、曲轴油封与磨损套、正时与传动小件，以及作业中打开的机油与冷却回路密封件。',
   },
 ];
 
 /** Indexed catalog counts per series for the part families kits consume. */
 const kitFamilies = [
-  { category: 'Gaskets and seals', label: 'Gaskets, seals & O-rings' },
-  { category: 'Pistons and liners', label: 'Pistons, liners & rings' },
-  { category: 'Valve train', label: 'Valve-train components' },
-  { category: 'Bearings', label: 'Bearing shells & bushings' },
-  { category: 'Fasteners and retaining rings', label: 'Fasteners & stretch bolts' },
-  { category: 'Filters', label: 'Service filters' },
+  { category: 'Gaskets and seals', label: '垫片、密封件与 O 型圈' },
+  { category: 'Pistons and liners', label: '活塞、缸套与活塞环' },
+  { category: 'Valve train', label: '配气机构件' },
+  { category: 'Bearings', label: '轴瓦与衬套' },
+  { category: 'Fasteners and retaining rings', label: '紧固件与拉伸螺栓' },
+  { category: 'Filters', label: '保养滤清器' },
 ];
 
 const seriesTargets = ['MTU 2000', 'MTU 4000', 'MTU 396', 'MTU 595', 'MTU 956', 'MTU 1163', 'MTU 538', 'MTU 183'];
@@ -68,50 +68,50 @@ const seriesRows = seriesTargets.map((series) => {
 const pageUrl = `${site.url}/products/mtu-spare-parts/mtu-overhaul-kits/`;
 const faqItems = [
   {
-    question: 'Do you sell complete overhaul kits?',
+    question: '你们销售整套大修包吗？',
     answer:
-      'Overhaul kits are quoted as itemised lists against your engine build, not sold as a fixed catalogue item. MTU kit contents vary by build, rating, and service history — a kit label alone does not establish coverage. Send the model code, serial number, running hours, and the scope (top, in-frame, or full), and we return a line-by-line list with availability and grade per item.',
+      '大修包按您的发动机构型以明细清单形式报价，不作为固定目录商品销售。MTU 大修包内容随构型、额定参数与使用历史而异——单凭包名不能确定覆盖范围。请提供型号代码、出厂编号、运行小时数与范围（上部、缸体内或整机），我们将返回逐行清单，注明每项的供货情况与品质等级。',
   },
   {
-    question: 'Why are stretch bolts treated as consumables?',
+    question: '拉伸螺栓为何按易损件处理？',
     answer:
-      'Cylinder-head, connecting-rod, and main-bearing bolts on MTU engines are torque-to-yield items: they are tightened to a specified elongation and deform permanently on first installation. Reusing them risks joint relaxation and head-gasket failure, so every overhaul quotation treats them as single-use and quotes them fresh.',
+      'MTU 发动机的缸盖、连杆与主轴承螺栓均为塑性域螺栓（拉伸螺栓）：按规定的伸长量拧紧，首次安装后即发生永久变形。重复使用会带来接头松弛与缸垫失效风险，因此每份大修改价都将其按一次性使用处理并报新件。',
   },
   {
-    question: 'What decides whether liners and pistons are included?',
+    question: '缸套与活塞是否包含在大修包内由什么决定？',
     answer:
-      'Measured wear and service history. Bore glaze, liner step, scuffing, oil consumption trend, and blow-by decide whether liners and pistons are replaced or honed and reused. We quote the wear items as options with the measurement criteria stated, so you can decide with your workshop rather than on our assumption.',
+      '取决于实测磨损与使用历史。缸壁抛光、缸套台阶、拉伤、机油消耗趋势与窜气情况决定缸套与活塞是更换还是珩磨后继续使用。磨损件作为选项报价并附测量判据，由您与车间共同决定，而非基于我们的假设。',
   },
   {
-    question: 'Can I order a gasket set only?',
+    question: '可以只订购垫片组吗？',
     answer:
-      'Yes. Individual gaskets, O-rings, shaft seals, and gasket sets are quoted separately — the gasket and seal references are published in the catalog on this site by series. For an in-frame or full job, quote the full sealing scope at the same time so every opened joint has its gasket before the engine comes apart.',
+      '可以。单个垫片、O 型圈、轴封与垫片组均可单独报价——本站目录已按系列发布垫片与密封件参考。对于缸体内或整机大修，请同时报出全部密封范围，确保发动机拆解前每个打开的接面都有对应垫片。',
   },
 ];
 ---
 
 <BaseLayout
-  title="MTU Overhaul Kits — Top, In-Frame & Full by Series"
-  description="MTU overhaul kits explained by scope (top, in-frame, full), with per-series catalog references for the parts each kit consumes. Kit contents confirmed line by line against the engine build."
+  title="MTU 大修包 — 按系列的上部、缸体内与整机级别"
+  description="按范围（上部、缸体内、整机）讲解 MTU 大修包，并附各级别所需零件的分系列目录参考。大修包内容按发动机构型逐行确认。"
   currentPath="/products/mtu-spare-parts/mtu-overhaul-kits"
   jsonLd={[
     breadcrumbSchema([
-      { name: 'Home', url: site.url },
-      { name: 'Products', url: `${site.url}/products/` },
-      { name: 'MTU Spare Parts', url: `${site.url}/products/mtu-spare-parts/` },
-      { name: 'Overhaul Kits', url: pageUrl },
+      { name: '首页', url: site.url },
+      { name: '产品', url: `${site.url}/products/` },
+      { name: 'MTU 备件', url: `${site.url}/products/mtu-spare-parts/` },
+      { name: '大修包', url: pageUrl },
     ]),
     faqSchema(faqItems),
   ]}
 >
   <FunnelPageView stage="selection" label="mtu-overhaul-kits" />
   <BreadcrumbHero
-    title="MTU Overhaul Kits"
+    title="MTU 大修包"
     trail={[
-      { label: 'Home', href: '/' },
-      { label: 'Products', href: '/products/' },
-      { label: 'MTU Spare Parts', href: '/products/mtu-spare-parts/' },
-      { label: 'Overhaul Kits' },
+      { label: '首页', href: '/' },
+      { label: '产品', href: '/products/' },
+      { label: 'MTU 备件', href: '/products/mtu-spare-parts/' },
+      { label: '大修包' },
     ]}
     variant="2"
   />
@@ -119,27 +119,22 @@ const faqItems = [
   <div class="resource-page">
     <section class="resource-page-section">
       <p>
-        Overhaul buyers think in kits, not part numbers: “top-end”, “in-frame”, or “full”. The three
-        scopes below define what each level covers on an MTU engine, and the table after them shows how
-        many indexed references this site already carries for each series in the part families those
-        kits consume.
+        大修买家想到的是包，而不是零件号：「上部」「缸体内」或「整机」。下列三个范围界定了各级别在 MTU 发动机上的覆盖内容，随后的表格则显示本站在各系列、各大修包所需零件类别中已收录的参考数量。
       </p>
       <p class="resource-note">
-        Kit contents are quoted <strong>line by line against your engine build</strong> — model code,
-        serial number, and running hours — because MTU kit contents vary by build and rating. A kit
-        label alone never establishes coverage.
+        大修包内容按<strong>您的发动机构型逐行报价</strong>——依据型号代码、出厂编号与运行小时数——因为 MTU 大修包内容随构型与额定参数而异。单凭包名永远不能确定覆盖范围。
       </p>
     </section>
 
     <section class="resource-page-section">
-      <h2>The three overhaul scopes</h2>
+      <h2>三个大修范围</h2>
       <div class="xref-table-wrap">
         <table class="xref-table">
           <thead>
             <tr>
-              <th scope="col">Kit Level</th>
-              <th scope="col">Scope</th>
-              <th scope="col">Typically Included</th>
+              <th scope="col">包级别</th>
+              <th scope="col">范围</th>
+              <th scope="col">通常包含</th>
             </tr>
           </thead>
           <tbody>
@@ -154,25 +149,22 @@ const faqItems = [
         </table>
       </div>
       <p>
-        Two points decide whether an overhaul holds: <strong>measurements before ordering</strong> (bore
-        wear, oil consumption, blow-by, compression) and <strong>fresh stretch bolts</strong>. Both are
-        built into how quotations are prepared here.
+        大修能否成功取决于两点：<strong>订购前先测量</strong>（缸径磨损、机油消耗、窜气、气缸压力）与<strong>全新拉伸螺栓</strong>。这两点已纳入本站的报价流程。
       </p>
     </section>
 
     <section class="resource-page-section">
-      <h2>Indexed references by series</h2>
+      <h2>按系列的已索引参考</h2>
       <p>
-        Counts below are the part pages published on this site for each series in the families overhaul
-        kits consume. Use them to size the job, then send the build details for a line-by-line quotation.
+        下列计数为本站在各系列、各大修包所需零件类别中已发布的零件页数量。可据此评估工作量，再提供构型详情以获取逐行报价。
       </p>
       <div class="xref-table-wrap">
         <table class="xref-table">
           <thead>
             <tr>
-              <th scope="col">Series</th>
+              <th scope="col">系列</th>
               {kitFamilies.map((f) => <th scope="col">{f.label}</th>)}
-              <th scope="col">Total</th>
+              <th scope="col">合计</th>
             </tr>
           </thead>
           <tbody>
@@ -187,26 +179,24 @@ const faqItems = [
         </table>
       </div>
       <p class="resource-note">
-        Counts reflect the indexed catalog data on this site, not the full MTU spare-parts range. Series
-        not shown (legacy builds, Series 1600, gas engines) are quoted line by line — see{' '}
-        <a href="/products/mtu-spare-parts/mtu-legacy-gas-engine-parts/">legacy &amp; gas engine
-        coverage</a> and <a href="/products/mtu-spare-parts/mtu-1600-series-parts/">Series 1600 &amp;
-        F-build models</a>.
+        计数反映的是本站索引目录数据，并非 MTU 配件全系列。未列出的系列（老构型、1600 系列、气体发动机）按行逐项报价——见{' '}
+        <a href="/products/mtu-spare-parts/mtu-legacy-gas-engine-parts/">老机型与气体发动机覆盖</a>和 <a href="/products/mtu-spare-parts/mtu-1600-series-parts/">1600 系列与
+        F 构型</a>。
       </p>
     </section>
 
     <section class="resource-page-section">
-      <h2>Related catalog coverage</h2>
+      <h2>相关目录覆盖</h2>
       <ul class="catalog-scenarios-list">
-        <li>Gaskets, seals &amp; O-rings by reference: <a href="/part-products/catalog/mtu-gasket-kits/">MTU gasket kits</a></li>
-        <li>Pistons, liners &amp; rings: <a href="/part-products/catalog/mtu-pistons-liners/">MTU pistons and liners</a></li>
-        <li>Fasteners &amp; single-use stretch bolts: <a href="/part-products/catalog/mtu-fasteners-retaining-rings/">MTU fasteners and retaining rings</a></li>
-        <li>Full part number index (EN · DE): <a href="/part-number-index/">MTU part number index</a></li>
+        <li>按参考的垫片、密封件与 O 型圈：<a href="/part-products/catalog/mtu-gasket-kits/">MTU 垫片组</a></li>
+        <li>活塞、缸套与活塞环：<a href="/part-products/catalog/mtu-pistons-liners/">MTU 活塞与缸套</a></li>
+        <li>紧固件与一次性拉伸螺栓：<a href="/part-products/catalog/mtu-fasteners-retaining-rings/">MTU 紧固件与挡圈</a></li>
+        <li>完整零件号索引（EN · DE）：<a href="/part-number-index/">MTU 零件号索引</a></li>
       </ul>
     </section>
 
     <section class="resource-page-section">
-      <h2>Overhaul Kits FAQ</h2>
+      <h2>大修包常见问题</h2>
       {faqItems.map((item) => (
         <details class="resource-faq-item">
           <summary>{item.question}</summary>
@@ -216,9 +206,9 @@ const faqItems = [
     </section>
 
     <DetailRfqStrip
-      context="Overhaul kit quotation"
-      heading="Send the build details and scope"
-      text="Model code, serial number, running hours, and the overhaul scope (top, in-frame, or full). We return an itemised list with availability, grade, and single-use fasteners called out."
+      context="大修包报价"
+      heading="请提供构型详情与范围"
+      text="请提供型号代码、出厂编号、运行小时数与大修范围（上部、缸体内或整机）。我们将返回明细清单，注明供货情况、品质等级，并标出一次性紧固件。"
     />
   </div>
 </BaseLayout>

@@ -12,97 +12,97 @@ type ApplicationItem = {
 };
 
 const inquiryCta =
-  '<p><a href="/contact/" style="display:inline-block;background:#146ef5;color:#fff;padding:10px 20px;border-radius:4px;text-decoration:none;font-weight:600;">Send parts inquiry</a></p>';
+  '<p><a href="/contact/" style="display:inline-block;background:#146ef5;color:#fff;padding:10px 20px;border-radius:4px;text-decoration:none;font-weight:600;">发送零件询价</a></p>';
 
 export const applications: ApplicationItem[] = [
   {
     slug: 'marine-propulsion-engines',
-    title: 'MTU Marine Engine Parts',
-    seoTitle: 'MTU Marine Engine Parts | Yacht & Boat Diesel Parts',
-    h1Title: 'MTU Marine Engine Parts',
+    title: 'MTU 船用发动机零件',
+    seoTitle: 'MTU 船用发动机零件 | 游艇与船舶柴油机零件',
+    h1Title: 'MTU 船用发动机零件',
     summary:
-      'MTU marine engine parts for yachts, boats, ferries, workboats, commercial vessels, and shipyards, with model and serial-number verification before quotation.',
+      'MTU 船用发动机零件，覆盖游艇、船舶、渡轮、工作船、商船与船厂，报价前经型号与出厂编号核验。',
     productSlugs: ['mtu-spare-parts', 'mtu-2000-series-parts', 'mtu-4000-series-parts', 'mtu-series-8000-engines', 'detroit-diesel-parts'],
     content: {
       partOne:
-        '<h2>MTU Marine Diesel Engine Parts</h2><p>Marine propulsion downtime is time-sensitive. Diesel Part Source supplies MTU marine engine parts for yacht, boat, ferry, workboat, offshore, and shipyard maintenance. We support current and legacy engine families, including MTU 2000, 4000, 396, 595, 956, 1163, and related marine configurations.</p><h3>Marine Engine Series and Models</h3><ul><li><a href="/products/mtu-2000-series-parts/16v-2000-engine-parts/">MTU 16V 2000 marine engine parts</a></li><li><a href="/products/mtu-2000-series-parts/mtu-m96l-engine-parts/">MTU 16V 2000 M96L yacht engine parts</a></li><li><a href="/products/mtu-4000-series-parts/12v-4000-engine-parts/">MTU 12V 4000 marine engine parts</a></li><li><a href="/products/mtu-4000-series-parts/16v-4000-engine-parts/">MTU 16V 4000 marine engine parts</a></li><li><a href="/part-products/catalog/mtu-396-series/">Legacy MTU 396 marine parts</a></li></ul><h3>Common Yacht and Boat Engine Parts</h3><ul><li>Fuel pumps, injectors, pressure valves, fuel lines, and control components</li><li>Oil filters, fuel filters, air filters, gaskets, seals, and maintenance kits</li><li>Seawater pumps, coolant pumps, impellers, thermostats, and heat-exchange parts</li><li>Turbocharger, lubrication, exhaust, sensor, and electrical components</li><li>Pistons, liners, bearings, valves, and overhaul parts for shipyard maintenance</li></ul><p>Browse the <a href="/part-products/">MTU part-number catalog</a> or send an Excel list for line-by-line checking.</p>',
+        '<h2>MTU 船用柴油发动机零件</h2><p>船用推进停机以时间计。柴油零件源 为游艇、船舶、渡轮、工作船、近海与船厂保养供应 MTU 船用发动机零件。我们支持现行与老式发动机家族，包括 MTU 2000、4000、396、595、956、1163 及相关船用配置。</p><h3>船用发动机系列与型号</h3><ul><li><a href="/products/mtu-2000-series-parts/16v-2000-engine-parts/">MTU 16V 2000 船用发动机零件</a></li><li><a href="/products/mtu-2000-series-parts/mtu-m96l-engine-parts/">MTU 16V 2000 M96L 游艇发动机零件</a></li><li><a href="/products/mtu-4000-series-parts/12v-4000-engine-parts/">MTU 12V 4000 船用发动机零件</a></li><li><a href="/products/mtu-4000-series-parts/16v-4000-engine-parts/">MTU 16V 4000 船用发动机零件</a></li><li><a href="/part-products/catalog/mtu-396-series/">老式 MTU 396 船用零件</a></li></ul><h3>常见游艇与船舶发动机零件</h3><ul><li>燃油泵、喷油器、压力阀、燃油管与控制部件</li><li>机油滤清器、燃油滤清器、空气滤清器、垫片、密封件与保养包</li><li>海水泵、冷却水泵、叶轮、节温器与热交换部件</li><li>涡轮增压器、润滑、排气、传感器与电气部件</li><li>活塞、缸套、轴承、气门与船厂大修零件</li></ul><p>浏览 <a href="/part-products/">MTU 零件号目录</a>，或发送 Excel 清单逐行核查。</p>',
       partTwo:
-        `<h2>How We Verify Marine Fitment</h2><p>Include the complete engine model, serial number, part numbers, quantity, vessel or shipyard location, and required delivery date. For injectors, turbochargers, pumps, and electrical components, send the component nameplate or stamped reference as well as the engine data.</p><h3>Marine RFQ Information</h3><ul><li>Vessel type and engine application: propulsion, auxiliary, or generator</li><li>Engine model, rating, serial number, and nameplate photo</li><li>Exact part number, old-part photo, quantity, and maintenance deadline</li><li>Destination port or city and preferred courier, air, or sea shipment</li></ul><p>Quotes identify the available OEM, OEM-alternative, reman, or replacement route rather than treating unconfirmed options as interchangeable.</p>${inquiryCta}`,
+        `<h2>我们如何核验船用适配性</h2><p>请提供完整发动机型号、出厂编号、零件号、数量、船舶或船厂位置及要求交货日期。喷油器、涡轮增压器、泵与电气部件，还请随附部件铭牌或钢印参考号及发动机资料。</p><h3>船用询价信息</h3><ul><li>船舶类型与发动机用途：推进、辅助或发电</li><li>发动机型号、功率等级、出厂编号与铭牌照片</li><li>准确零件号、旧件照片、数量与保养期限</li><li>目的港或城市，以及偏好的快递、空运或海运方式</li></ul><p>报价会标明可用的 OEM、OEM 替代、再制造或替换路线，而不是把未经确认的选项当作可互换。</p>${inquiryCta}`,
     },
   },
   {
     slug: 'auxiliary-generator-engines',
-    title: 'Auxiliary & Generator Engines',
-    seoTitle: 'Generator Engine Parts | MTU, Cummins, DEUTZ',
-    h1Title: 'Auxiliary & Generator Engine Parts',
+    title: '辅助与发电发动机',
+    seoTitle: '发电发动机零件 | MTU、Cummins、DEUTZ',
+    h1Title: '辅助与发电发动机零件',
     summary:
-      'Service and repair parts for auxiliary engines and generator sets in marine, commercial, industrial, and standby power applications.',
+      '面向船用、商用、工业与备用电源应用中辅助发动机与发电机组的保养与维修零件。',
     productSlugs: ['mtu-2000-series-parts', 'mtu-4000-series-parts', 'cummins-parts', 'deutz-parts'],
     content: {
       partOne:
-        '<h2>Generator Engine Parts</h2><p>Generator engines need reliable service parts for planned maintenance and emergency power readiness. We support parts inquiries for MTU, Cummins, and DEUTZ generator engines used in vessels, facilities, power plants, and industrial sites.</p><h3>Typical Parts</h3><ul><li>Filters, belts, gaskets, seals, and service kits</li><li>Fuel injection, cooling, lubrication, and electrical sensors</li><li>Turbochargers, pumps, valves, and overhaul components</li></ul>',
+        '<h2>发电发动机零件</h2><p>发电发动机需要可靠的保养件，以保障计划保养与应急电源就绪。我们支持用于船舶、设施、电站与工业现场的 MTU、Cummins 与 DEUTZ 发电发动机零件询价。</p><h3>典型零件</h3><ul><li>滤清器、皮带、垫片、密封件与保养包</li><li>燃油喷射、冷却、润滑与电气传感器</li><li>涡轮增压器、泵、气门与大修部件</li></ul>',
       partTwo:
-        `<h2>Fast Availability Checks</h2><p>Send part numbers, engine serial number, generator set model if available, quantity, and destination. We will check availability and shipping options.</p>${inquiryCta}`,
+        `<h2>快速供货核查</h2><p>发送零件号、发动机出厂编号、发电机组型号（如有）、数量与目的地。我们将核查供货情况与发运选项。</p>${inquiryCta}`,
     },
   },
   {
     slug: 'industrial-equipment-engines',
-    title: 'Industrial Equipment Engines',
-    seoTitle: 'Industrial Equipment Diesel Engine Parts | Diesel Part Source',
-    h1Title: 'Industrial Equipment Engine Parts',
+    title: '工业设备发动机',
+    seoTitle: '工业设备柴油发动机零件 | 柴油零件源',
+    h1Title: '工业设备发动机零件',
     summary:
-      'Diesel engine parts for pumps, compressors, heavy machinery, oilfield units, construction equipment, and industrial power systems.',
+      '面向泵、压缩机、重型机械、油田装置、工程设备与工业动力系统的柴油发动机零件。',
     productSlugs: ['cummins-parts', 'deutz-parts', 'mtu-spare-parts'],
     content: {
       partOne:
-        '<h2>Industrial Engine Parts</h2><p>Industrial equipment owners need practical sourcing for engines in pumps, compressors, construction machines, oilfield units, and power packages. We help buyers identify parts from engine plates, old part photos, and part lists.</p><h3>Supported Needs</h3><ul><li>Breakdown repair and urgent replacement parts</li><li>Scheduled service kits and filters</li><li>Fuel, cooling, lubrication, and control components</li><li>Overhaul list checking and consolidated shipment</li></ul>',
+        '<h2>工业发动机零件</h2><p>工业设备业主需要务实的采购渠道，覆盖用于泵、压缩机、工程机械、油田装置与动力包的发动机。我们帮助买方从发动机铭牌、旧件照片与零件清单识别零件。</p><h3>支持的需求</h3><ul><li>故障维修与紧急更换件</li><li>计划保养包与滤清器</li><li>燃油、冷却、润滑与控制部件</li><li>大修清单核查与合并发运</li></ul>',
       partTwo:
-        `<h2>Reduce Downtime</h2><p>For urgent breakdowns, send the failure part photo, engine model, serial number, destination, and deadline in the first message.</p>${inquiryCta}`,
+        `<h2>减少停机</h2><p>紧急故障时，请在首条消息中发送故障件照片、发动机型号、出厂编号、目的地与期限。</p>${inquiryCta}`,
     },
   },
   {
     slug: 'rail-engine-parts',
-    title: 'Rail Engine Parts',
-    seoTitle: 'Rail Diesel Engine Parts | MTU Engine Parts Supplier',
-    h1Title: 'Rail Diesel Engine Parts',
+    title: '轨交发动机零件',
+    seoTitle: '轨交柴油发动机零件 | MTU 发动机零件供应商',
+    h1Title: '轨交柴油发动机零件',
     summary:
-      'MTU and diesel engine parts support for rail maintenance teams, locomotive service providers, and transit operators.',
+      '为轨交维护团队、机车服务商与轨道交通运营方提供 MTU 及柴油发动机零件支持。',
     productSlugs: ['mtu-spare-parts', 'mtu-4000-series-parts', 'detroit-diesel-parts'],
     content: {
       partOne:
-        '<h2>Rail Engine Parts Support</h2><p>Rail maintenance schedules require correct parts and dependable logistics. Diesel Part Source supports MTU and diesel engine parts inquiries for rail equipment, locomotive service, and transit maintenance programs.</p><h3>Common Rail Requests</h3><ul><li>Fuel-system, cooling, lubrication, and filtration parts</li><li>Sensors, control components, and electrical items</li><li>Maintenance kits and overhaul components</li></ul>',
+        '<h2>轨交发动机零件支持</h2><p>轨交维护日程要求正确的零件与可靠的物流。柴油零件源 为轨交设备、机车服务与轨交维护计划提供 MTU 及柴油发动机零件询价支持。</p><h3>常见轨交询价</h3><ul><li>燃油系统、冷却、润滑与过滤件</li><li>传感器、控制部件与电气件</li><li>保养包与大修部件</li></ul>',
       partTwo:
-        `<h2>Planned Maintenance Lists</h2><p>Send parts lists early for line-by-line availability checks, replacement confirmation, and shipment planning.</p>${inquiryCta}`,
+        `<h2>计划保养清单</h2><p>请提前发送零件清单，以便逐行核查供货情况、确认替换件并规划发运。</p>${inquiryCta}`,
     },
   },
   {
     slug: 'shipyard-repair-overhaul',
-    title: 'Shipyard Repair & Overhaul',
-    seoTitle: 'Shipyard Engine Parts and Overhaul Support | Diesel Part Source',
-    h1Title: 'Shipyard Repair & Overhaul Parts',
+    title: '船厂维修与大修',
+    seoTitle: '船厂发动机零件与大修支持 | 柴油零件源',
+    h1Title: '船厂维修与大修零件',
     summary:
-      'Parts-list checking, consolidated shipment, and urgent sourcing support for shipyards and marine repair companies.',
+      '为船厂与船用维修公司提供清单核查、合并发运与紧急寻源支持。',
     productSlugs: ['mtu-spare-parts', 'mtu-2000-series-parts', 'mtu-4000-series-parts'],
     content: {
       partOne:
-        '<h2>Shipyard Parts Coordination</h2><p>Shipyard repair work often involves long parts lists, changing deadlines, and multiple engine configurations. We support line-by-line checks for MTU and related engine parts, including routine service items and major overhaul components.</p><h3>How We Help</h3><ul><li>Part-number and serial-number verification</li><li>Availability checks across complete overhaul lists</li><li>Export packing and shipment coordination</li><li>Urgent follow-up for missing or delayed items</li></ul>',
+        '<h2>船厂零件协调</h2><p>船厂维修工作常涉及长零件清单、变动的期限与多种发动机构型。我们支持 MTU 及相关发动机零件的逐行核查，涵盖例行保养件与大修部件。</p><h3>我们如何帮助</h3><ul><li>零件号与出厂编号核验</li><li>完整大修清单的供货核查</li><li>出口包装与发运协调</li><li>缺失或延迟件的紧急跟进</li></ul>',
       partTwo:
-        `<h2>Send Excel Lists</h2><p>For overhaul work, send your list in Excel or email format with part number, quantity, engine model, and deadline. Photos can be attached for unclear items.</p>${inquiryCta}`,
+        `<h2>发送 Excel 清单</h2><p>大修工作请以 Excel 或邮件形式发送清单，注明零件号、数量、发动机型号与期限。不明确的件可附照片。</p>${inquiryCta}`,
     },
   },
   {
     slug: 'energy-power-plant-engines',
-    title: 'Energy & Power Plant Engines',
-    seoTitle: 'Power Plant Diesel Engine Parts | Diesel Part Source',
-    h1Title: 'Energy & Power Plant Engine Parts',
+    title: '能源与电站发动机',
+    seoTitle: '电站柴油发动机零件 | 柴油零件源',
+    h1Title: '能源与电站发动机零件',
     summary:
-      'Diesel engine parts for energy suppliers, standby power systems, independent power plants, and industrial generator operations.',
+      '面向能源供应商、备用电源系统、独立电站与工业发电运营的柴油发动机零件。',
     productSlugs: ['mtu-4000-series-parts', 'cummins-parts', 'deutz-parts'],
     content: {
       partOne:
-        '<h2>Power Plant Engine Parts</h2><p>Energy and power generation users need reliable spare-parts planning to keep standby and continuous-duty engines available. We support MTU, Cummins, and DEUTZ parts inquiries for generator and power plant applications.</p><h3>Common Needs</h3><ul><li>Maintenance kits, filters, belts, and consumables</li><li>Sensors, pumps, injectors, and fuel-system parts</li><li>Cooling, lubrication, turbocharging, and overhaul components</li></ul>',
+        '<h2>电站发动机零件</h2><p>能源与发电用户需要可靠的备件规划，以保持备用与连续运行发动机的可用性。我们支持 MTU、Cummins 与 DEUTZ 零件在发电与电站应用中的询价。</p><h3>常见需求</h3><ul><li>保养包、滤清器、皮带与消耗件</li><li>传感器、泵、喷油器与燃油系统件</li><li>冷却、润滑、涡轮增压与大修部件</li></ul>',
       partTwo:
-        `<h2>Maintenance Planning</h2><p>Share the service schedule and parts list in advance so availability and shipping can be planned before the maintenance window.</p>${inquiryCta}`,
+        `<h2>保养规划</h2><p>请提前分享保养日程与零件清单，以便在保养窗口前规划供货与发运。</p>${inquiryCta}`,
     },
   },
 ] as const;

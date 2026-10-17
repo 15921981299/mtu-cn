@@ -230,7 +230,7 @@
   const list = document.getElementById('dps-search-list') as HTMLDivElement | null;
 
   if (root && toggle && closeBtn && form && input && list) {
-    type Entry = { t: 'p' | 'c'; pn: string; name: string; s: string; slug: string };
+    type Entry = { t: 'p' | 'c'; pn: string; name: string; nzh?: string; s: string; slug: string };
     let index: Entry[] | null = null;
     let loading: Promise<void> | null = null;
     let active = -1;
@@ -274,12 +274,13 @@
     const search = (q: string): Entry[] => {
       if (!index) return [];
       const qn = normPn(q);
-      const tokens = q.toLowerCase().split(/[^a-z0-9]+/).filter((t) => t.length >= 2);
+      // 保留 CJK 字符用于中文品名检索（如「活塞」「增压器」）
+      const tokens = q.toLowerCase().split(/[^a-z0-9\u4e00-\u9fff]+/).filter((t) => t.length >= 2);
       if (qn.length < 2 && tokens.length === 0) return [];
       const scored: Array<[number, Entry]> = [];
       for (const e of index) {
         const epn = normPn(e.pn);
-        const hay = `${e.pn} ${e.name} ${e.s}`.toLowerCase();
+        const hay = `${e.pn} ${e.name} ${e.nzh ?? ''} ${e.s}`.toLowerCase();
         let score = -1;
         if (qn.length >= 2 && epn.startsWith(qn)) score = 0;
         else if (qn.length >= 3 && epn.includes(qn)) score = 1;
@@ -313,7 +314,8 @@
           pn.textContent = e.pn || 'Catalog';
           const name = document.createElement('span');
           name.className = 'dps-search-name';
-          name.textContent = e.name;
+          // 零件条目优先显示中文品名（索引中 nzh 字段）；catalog 条目无 nzh，回退英文名
+          name.textContent = e.nzh || e.name;
           a.append(pn, name);
           if (e.s) {
             const s = document.createElement('span');

@@ -1,65 +1,65 @@
 ﻿export const productFaqs = [
   {
-    question: 'Which diesel engine parts can you supply?',
+    question: '你们可以供应哪些柴油发动机零件？',
     answer:
-      'We supply MTU, Detroit Diesel, Cummins, and DEUTZ engine parts, including filters, seals, gaskets, sensors, pumps, injectors, valves, liners, bearings, overhaul parts, and routine service kits.',
+      '我们供应 MTU、Detroit Diesel、Cummins 与 DEUTZ 发动机零件，包括滤清器、密封件、垫片、传感器、泵、喷油器、气门、缸套、轴承、大修件与例行保养包。',
   },
   {
-    question: 'What information do you need for a fast quotation?',
+    question: '快速报价需要哪些信息？',
     answer:
-      'Send the part number, engine brand, engine model, engine serial number or nameplate photo, quantity, destination country, and required delivery date. Clear photos of the old part are helpful when the number is unclear.',
+      '请发送零件号、发动机品牌、发动机型号、发动机出厂编号或铭牌照片、数量、目的国与要求交货日期。号码不明时，旧件的清晰照片很有帮助。',
   },
   {
-    question: 'Can you check parts by MTU engine series?',
+    question: '可以按 MTU 发动机系列核查零件吗？',
     answer:
-      'Yes. We handle MTU 183, 331, 396, 493, 538, 595, 956, 1163, 2000, 4000, and 8000 series inquiries. Part-number and serial-number checks help avoid mismatched replacements.',
+      '可以。我们受理 MTU 183、331、396、493、538、595、956、1163、2000、4000 与 8000 系列的询价。零件号与出厂编号核查有助于避免不匹配的替换件。',
   },
   {
-    question: 'Do you offer OEM or verified replacement routes?',
+    question: '你们提供 OEM 或经核验的替换路线吗？',
     answer:
-      'Yes. Diesel Part Source can quote OEM, OEM-alternative, reman, repaired, or replacement routes for maintenance, overhaul, and fleet service programs. Availability depends on the exact part number and current stock.',
+      '提供。柴油零件源 可为保养、大修与车队服务计划报价 OEM、OEM 替代、再制造、修复或替换路线。供货情况取决于确切零件号与当前库存。',
   },
   {
-    question: 'Can you ship engine parts globally?',
+    question: '发动机零件可以全球发运吗？',
     answer:
-      'Yes. We arrange express and freight shipment from Shanghai to marine, industrial, generator, rail, and repair customers worldwide. Urgent downtime orders can be prioritized.',
+      '可以。我们从上海为全球船用、工业、发电、轨交与维修客户安排快递与货运。紧急停机订单可优先处理。',
   },
   {
-    question: 'Can you help if I only have an old part photo?',
+    question: '如果只有一张旧件照片，你们能帮忙吗？',
     answer:
-      'Often yes. Send clear photos of the complete part, markings, nameplate, and installation position. We will ask for the engine model or serial number when needed to confirm compatibility.',
+      '通常可以。请发送完整零件、标记、铭牌与安装位置的清晰照片。需要时我们会索要发动机型号或出厂编号以确认适配性。',
   },
 ] as const;
 
 export const industryFaqs = [
   {
-    question: 'Which engine parts buyers do you serve most often?',
+    question: '你们最常服务哪些发动机零件买方？',
     answer:
-      'Marine operators, shipyards, repair companies, generator owners, rail maintenance teams, energy suppliers, industrial equipment fleets, and diesel engine service companies.',
+      '船用运营方、船厂、维修公司、发电机业主、铁路维护团队、能源供应商、工业设备机群与柴油发动机服务公司。',
   },
   {
-    question: 'Can you support urgent vessel or generator downtime?',
+    question: '可以支持紧急船舶或发电机停机吗？',
     answer:
-      'Yes. Include the part number, engine serial number, old part photo, destination, and deadline in your first message. We will prioritize availability and shipment options.',
+      '可以。请在首条消息中包含零件号、发动机出厂编号、旧件照片、目的地与期限。我们将优先安排供货与发运选项。',
   },
   {
-    question: 'Can you consolidate parts for overhaul programs?',
+    question: '可以为整份大修清单合并备件吗？',
     answer:
-      'Yes. Send an overhaul list or spreadsheet with part numbers and quantities. We can check availability line by line and prepare consolidated export packing.',
+      '可以。请发送带零件号与数量的大修清单或表格。我们可以逐行核查供货情况，并准备合并出口包装。',
   },
   {
-    question: 'What delivery options are available?',
+    question: '有哪些交付选项？',
     answer:
-      'Delivery depends on stock status, destination, and urgency. We can arrange express courier, air freight, or freight shipment from Shanghai.',
+      '交付取决于库存状态、目的地与紧迫程度。我们可以安排自上海发出的快递、空运或货运。',
   },
   {
-    question: 'Do you work with service companies and end users?',
+    question: '你们与服务公司和终端用户合作吗？',
     answer:
-      'Yes. We support both engine service companies and end users, including fleet owners, shipyards, generator operators, and industrial maintenance teams.',
+      '合作。我们同时支持发动机服务公司与终端用户，包括船东、船厂、发电机运营方与工业维护团队。',
   },
   {
-    question: 'What if the buyer does not know the exact part number?',
+    question: '买方不知道确切零件号怎么办？',
     answer:
-      'Send the engine brand, model, serial number, nameplate photo, old part photos, and installation position. We will ask follow-up questions to narrow the part reference.',
+      '请发送发动机品牌、型号、出厂编号、铭牌照片、旧件照片与安装位置。我们会追问细节以缩小零件参考号范围。',
   },
 ] as const;

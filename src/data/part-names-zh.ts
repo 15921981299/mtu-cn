@@ -43,7 +43,7 @@ export const PART_NAMES_ZH: Record<string, string> = {
   'Alternator': '交流发电机',
   'Angular-Contact Ball Bearing': '角接触球轴承',
   // ── B ──
-  'Ball Cock': '球形旋塞阀',
+  'Ball Cock': '球阀',
   'Banjo Bolt A12': '空心螺栓 A12',
   'Banjo Screw': '空心螺钉',
   'Barring Device': '盘车装置',
@@ -68,7 +68,7 @@ export const PART_NAMES_ZH: Record<string, string> = {
   'Camshaft Bearing': '凸轮轴轴承',
   'Camshaft Bearing, Standard': '凸轮轴轴承，标准级',
   'Carbon Scraper Ring': '刮碳环',
-  'Ce Ring': 'Ce 环',
+  'Ce Ring': 'CE 环',
   'Centrifugal Oil Filter Assembly': '离心式机油滤清器总成',
   'Charge-Air Line': '增压空气管',
   'Circlip Kit': '卡簧组',
@@ -106,9 +106,9 @@ export const PART_NAMES_ZH: Record<string, string> = {
   'Crankshaft Bearing Lower Half': '曲轴轴承下瓦',
   'Crankshaft Bearing Size 0-0': '曲轴轴承，规格 0-0',
   'Crankshaft Bearing Size 0-1': '曲轴轴承，规格 0-1',
-  'Crankshaft Front Seal Ring': '曲轴前密封环',
+  'Crankshaft Front Seal Ring': '曲轴前油封',
   'Crankshaft Rear Seal': '曲轴后油封',
-  'Crankshaft Rear Seal Ring': '曲轴后密封环',
+  'Crankshaft Rear Seal Ring': '曲轴后油封',
   'Cylinder Head': '气缸盖',
   'Cylinder Head Cover': '气门室盖',
   'Cylinder Head Gasket': '气缸盖垫片',
@@ -238,7 +238,7 @@ export const PART_NAMES_ZH: Record<string, string> = {
   'Oil Seal': '油封',
   'Oil Separator': '油气分离器',
   'Oil Spray Nozzle': '机油喷射喷嘴',
-  'Oil Thermostat': '机油温控阀',
+  'Oil Thermostat': '机油节温器',
   'Outer Gasket Plate': '外垫片板',
   'Outer Valve Spring': '外气门弹簧',
   'Overflow Valve': '溢流阀',
@@ -398,9 +398,89 @@ export const PART_NAMES_ZH: Record<string, string> = {
   'Wiring Harness for Sensor': '传感器线束',
   'Wiring Harness to Injector': '喷油器线束',
   // ── Kept in English (brand product / uncertain catalog term — do not guess) ──
-  'Rotocap': 'Rotocap 旋转密封件',
+  'Rotocap': 'Rotocap 阀片旋转器',
   'Stress Bolt': '拉伸螺栓（Stress Bolt）',
   'Tombak Ring': 'Tombak 合金环',
+  // ── 国内买家常用词补充（对齐 MTU 中文供应商清单术语）──
+  'Plunger': '柱塞',
+  'Plunger And Barrel': '柱塞偶件',
+  'Fuel Injection Pump': '喷油泵',
+  'Injection Pump': '喷油泵',
+  'Fuel-Water Separator': '油水分离器',
+  'Oil Pan': '油底壳',
+  'Sump': '油底壳',
+  'Thermostat': '节温器',
+  'Overhaul Kit': '大修包',
+  'Water Filter': '水滤清器',
+  'V-Belt': 'V 型皮带',
+  'Fan Belt': '风扇皮带',
+  'Pre-Lube Pump': '预供润滑泵',
+  'Pre-Lubrication Pump': '预供润滑泵',
+  'Valve Bridge': '气门桥',
+  'Freeze Plug': '水堵',
+  'Core Plug': '水堵',
+  'Charge-Air Cooler': '中冷器',
+  'Intercooler': '中冷器',
+  'Flywheel': '飞轮',
+  'Flywheel Housing': '飞轮壳',
+  'Tensioner': '涨紧轮',
+  'Radiator': '水箱',
+  'Expansion Tank': '膨胀水箱',
+  'Fuel Tank': '燃油箱',
+  'Lubricator': '注油器',
+  'Stuffing Box': '填料函',
+  'Indicator Valve': '示功阀',
+  'Starting Air Distributor': '启动空气分配器',
+  'Water Jacket': '水套',
+  'Engine Block': '机体',
+  'Cylinder Block': '缸体',
+  'Injector Assembly': '喷油器总成',
+  'Turbocharger Assembly': '增压器总成',
+  'Water Pump Assembly': '水泵总成',
+  'Rocker Cover': '气门室盖',
+  'Valve Cover': '气门室盖',
+  'Cylinder Liner Kit': '缸套组件',
+  'Piston Kit': '活塞组件',
+  'Bearing Shell': '轴瓦',
+  'Main Bearing Shell': '主轴瓦',
+  'Crankshaft Bearing Shell': '曲轴瓦',
+  'Conrod Bearing Shell': '连杆瓦',
+  'Thrust Bearing Shell': '止推瓦',
+  'Camshaft Bearing Shell': '凸轮轴瓦',
+  'Oil Mist Detector': '油雾探测器',
+  'Explosion Door': '防爆门',
+  'Governor Drive': '调速器驱动',
+  'Gear Pump': '齿轮泵',
+  'Check Valve': '单向阀',
+  'Shut-off Valve': '截止阀',
+  'Stop Solenoid': '停车电磁阀',
+  'Control Module': '控制模块',
+  // ── 补充：消除整站扫描残留的英文零件名 ──
+  'Blade Receptacle': '插片式插座',
+  'Crankshaft Bearing Driving End': '曲轴轴承（驱动端）',
+  'Cylinder Head Cover Lower Part': '气缸盖罩下部',
+  'Inlet Valve Guide, Size 0': '进气门导管，规格 0',
+  'Plug In Board': '插装电路板',
+  'Radial Lip Shaft Seal': '径向轴唇形密封件',
+  'Radial Lip Shaft Seal Aux PTO End': '径向轴唇形密封件（辅助 PTO 端）',
+  'Taper Face Compression Ring': '锥面压缩环',
+  // ── 补充：标准化后大小写/标点变化或词组歧义，需整词覆盖 ──
+  'Charge Air Line': '增压空气管',
+  'Conrod Bearing Lower Half': '连杆轴承下瓦',
+  'Conrod Bearing Upper Half': '连杆轴承上瓦',
+  'Copper Washer Form a': '铜垫圈 A 型',
+  'Crankshaft Bearing Lower Half': '曲轴轴承下瓦',
+  'Crankshaft Bearing, Lower': '曲轴轴承下瓦',
+  'Crankshaft Bearing, Upper': '曲轴轴承上瓦',
+  'Cup Seal': '杯形密封件',
+  'Fuel Rail Rear Connector': '燃油轨后接头',
+  'High-Temperature Circuit Water Pump': '高温循环水泵',
+  'Leak-Off Line': '回油管',
+  'Plug in Board': '插装电路板',
+  'Push Rod': '推杆',
+  'Silicone Rubber (loctite)': '硅橡胶（Loctite）',
+  'Thermocouple': '热电偶',
+  'Track Ring': '履带环',
 };
 
 /** Single-word fallback for names not covered above. */
@@ -499,6 +579,31 @@ const WORD_ZH: Record<string, string> = {
   water: '水',
   wheel: '叶轮',
   wiring: '线束',
+  plunger: '柱塞',
+  separator: '分离器',
+  thermostat: '节温器',
+  intercooler: '中冷器',
+  flywheel: '飞轮',
+  tensioner: '涨紧轮',
+  radiator: '水箱',
+  lubricator: '注油器',
+  kit: '包',
+  // ── 补充：消除整站扫描残留的单字 ──
+  charge: '增压',
+  clamping: '夹紧',
+  connector: '接头',
+  cup: '杯',
+  front: '前',
+  half: '半',
+  lower: '下',
+  push: '推',
+  rail: '轨',
+  rectangular: '矩形',
+  rubber: '橡胶',
+  silicone: '硅',
+  track: '履带',
+  upper: '上',
+  wear: '磨损',
 };
 
 /** Categories — keyed on the English category value used across the dataset. */
@@ -583,6 +688,28 @@ export const zhCategoryName = (category: string): string =>
 /** Chinese series label, e.g. "MTU 2000" → "MTU 2000 系列". */
 export const zhSeriesName = (series: string): string =>
   /系列$/.test(series) ? series : `${series} 系列`;
+
+/**
+ * Series label shown to domestic buyers. MTU model codes (MTU 2000, 956/1163…)
+ * stay verbatim — they are search keywords, not prose. Non-model tags such as
+ * "Special tools" are translated.
+ */
+const SERIES_LABELS_ZH: Record<string, string> = {
+  'Special tools': '专用工具',
+};
+export const zhSeriesLabel = (series: string): string =>
+  SERIES_LABELS_ZH[series] ?? (/系列$/.test(series) ? series : `${series} 系列`);
+
+/**
+ * Renders `applicableEngines` for the part-detail "发动机目录参考" block.
+ * Tool parts carry the literal "MTU Specialized Tools" → "MTU 专用工具";
+ * the sentinel verify value passes through unchanged.
+ */
+export const zhApplicableEngines = (v?: string): string => {
+  if (!v) return '';
+  if (/^MTU Specialized Tools$/i.test(v)) return 'MTU 专用工具';
+  return /^按发动机出厂编号核验$/.test(v) ? v : v;
+};
 
 /** Chinese engine-type label; "MTU 956 ENGINE" → "MTU 956 发动机". */
 export const zhEngineType = (engineType: string): string => {

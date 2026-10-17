@@ -64,34 +64,34 @@ const pageUrl = `${site.url}/catalog/`;
 
 const faqs = [
   {
-    question: 'Is the catalog free, and do I have to register?',
+    question: '目录是否免费，需要注册吗？',
     answer:
-      'Both files are free and there is no form, no email gate, and no account. Click the download and you have the PDF. We would rather you check the part number before you write to us than trade your email address for a file.',
+      '两个文件均免费，无需表单、无需邮箱门槛、无需账号。点击下载即可获得 PDF。我们更希望您在写信之前先核对零件号，而不是用您的邮箱来换一个文件。',
   },
   {
-    question: 'Do the catalogs contain prices?',
+    question: '目录中包含价格吗？',
     answer:
-      'No. The catalogs are part-number reference indexes: part number, part name, system, engine series, HS code, and unit weight. Prices, availability, and lead time depend on the supply route, the quantity, and the destination, so they are quoted per inquiry rather than printed in a list that would be out of date within a month.',
+      '不包含。目录是零件号参考索引：零件号、零件名称、所属系统、发动机系列、HS 编码与单件重量。价格、供货情况与交货期取决于供货路线、数量与目的地，因此按询价报价，而不是印成一个月就会过期的清单。',
   },
   {
-    question: 'Does a part number appearing in the catalog mean it fits my engine?',
+    question: '零件号出现在目录中，是否意味着适合我的发动机？',
     answer:
-      'No. The series column tells you which engine family the number belongs to, which is not the same as confirming it for your engine. Many positions changed across production runs, so the number must be checked against the full engine model and serial number before ordering. Send those two details with the number and we confirm it.',
+      '不是。系列列告诉您该编号所属的发动机家族，这与为您的发动机确认它不是一回事。许多部位在不同生产批次中发生过变更，因此下单前必须对照完整的发动机型号与出厂编号核查。请将这两项信息连同编号一并发来，我们予以确认。',
   },
   {
-    question: 'How current are the catalogs?',
+    question: '目录的更新程度如何？',
     answer:
-      'Each catalog states the date it was generated, and it is rebuilt from our part records whenever they change. If the date looks old, send the part number anyway — the records behind it are checked live when you inquire, and supersession is traced before anything is quoted.',
+      '每个目录都注明生成日期，并在我们的零件记录变更时重新生成。如果日期看起来较旧，也请照常发来零件号——您询价时其背后的记录会实时核查，替代关系会在报价前追溯。',
   },
   {
-    question: 'My part number is not in the catalog. Can you still supply it?',
+    question: '我的零件号不在目录中，你们还能供应吗？',
     answer:
-      'Yes. The catalog is an index of the numbers we hold verified records for, not the limit of what we can source. Send the number you have, plus the engine model and serial number, and we will trace it — including where it has been superseded.',
+      '能。目录只是我们持有经核验记录的编号索引，而不是可采购范围的限制。请发来您手上的编号，连同发动机型号与出厂编号，我们会追溯它——包括它已被替代的情况。',
   },
   {
-    question: 'Can I get the list as a spreadsheet instead?',
+    question: '可以换成电子表格提供清单吗？',
     answer:
-      'Yes. If you need to compare a long list against your own stock system, send us the part numbers you are checking and we will return the comparison as a spreadsheet. The PDF is a plain text document, so part numbers can also be copied straight out of it.',
+      '可以。如果您需要将长清单与自己的库存系统比对，请发来待核查的零件号，我们会以电子表格形式返回比对结果。PDF 为纯文本文档，零件号也可直接复制。',
   },
 ];
 
@@ -102,56 +102,53 @@ const faqs = [
 ---
 
 <BaseLayout
-  title="MTU Spare Parts Catalog (PDF Download)"
-  description={`Download MTU spare parts catalogs as PDF — ${totalParts} part numbers across the 2000, 4000, 396, 1163, 956, 538 and 595 series, with part name, system, HS code and unit weight. Free, no sign-up.`}
+  title="MTU 备件目录（PDF 下载）| 柴油零件源"
+  description={`下载 MTU 备件目录 PDF——收录 ${totalParts} 个零件号，覆盖 2000、4000、396、1163、956、538 与 595 系列，含零件名称、所属系统、HS 编码与单件重量。免费，无需注册。`}
   currentPath="/catalog"
   jsonLd={[
     breadcrumbSchema([
-      { name: 'Home', url: site.url },
-      { name: 'Parts Catalog Downloads', url: pageUrl },
+      { name: '首页', url: site.url },
+      { name: '目录下载', url: pageUrl },
     ]),
     faqSchema(faqs),
   ]}
 >
   <FunnelPageView stage="comparison" label="catalog-downloads" />
   <BreadcrumbHero
-    title="MTU Spare Parts Catalog — PDF Downloads"
-    trail={[{ label: 'Home', href: '/' }, { label: 'Parts Catalog Downloads' }]}
+    title="MTU 备件目录 — PDF 下载"
+    trail={[{ label: '首页', href: '/' }, { label: '目录下载' }]}
     variant="2"
   />
 
   <div class="resource-page">
     <section class="resource-page-section">
       <p>
-        These are the downloadable versions of our part-number index: <strong>{totalParts} part numbers</strong>
-        across the MTU engine series we supply, each row listing the part number, the part name, the system it
-        belongs to, the engine series, the HS code, and the unit weight. They are built from the same verified
-        records the rest of this site is built from — not a scraped list, and not a sales brochure.
+        以下是我们零件号索引的可下载版本：<strong>收录 {totalParts} 个零件号</strong>，
+        覆盖我们供货的 MTU 发动机系列，每行列出零件号、零件名称、所属系统、发动机系列、HS 编码与单件重量。
+        它们由本站其余部分所依据的同一套经核验记录生成——不是抓取的清单，也不是销售宣传册。
       </p>
       <p>
-        The files are plain text PDFs, so part numbers can be selected and copied out, searched with the
-        browser or reader search, or printed for the workshop. There is <strong>no sign-up and no email
-        gate</strong>.
+        文件为纯文本 PDF，零件号可选中复制，可用浏览器或阅读器搜索，也可打印到车间使用。<strong>无需注册，无邮箱门槛</strong>。
       </p>
       <div class="resource-meta">
-        <span><strong>Part numbers</strong> {totalParts} indexed</span>
-        <span><strong>Series covered</strong> {seriesCatalogs.length} + complete list</span>
-        <span><strong>Reports</strong> Name, system, series, HS code, unit weight</span>
-        <span><strong>Price data</strong> Not included — quoted per inquiry</span>
+        <span><strong>零件号</strong> 已收录 {totalParts} 个</span>
+        <span><strong>覆盖系列</strong> {seriesCatalogs.length} 个系列 + 完整清单</span>
+        <span><strong>字段</strong> 名称、系统、系列、HS 编码、单件重量</span>
+        <span><strong>价格数据</strong> 不含——按询价报价</span>
       </div>
     </section>
 
     <section class="resource-page-section">
-      <h2>Start with the complete list, or take one series</h2>
+      <h2>先下载完整清单，或按系列下载</h2>
       {complete && (
         <a class="catalog-card catalog-card--primary" href={complete.file} download>
           <div class="catalog-card__head">
-            <h3>{complete.heading}</h3>
-            <span class="catalog-card__cta">Download PDF</span>
+            <h3>{complete.zhHeading ?? complete.heading}</h3>
+            <span class="catalog-card__cta">下载 PDF</span>
           </div>
-          <p>{complete.subtitle}</p>
+          <p>{complete.zhSubtitle ?? complete.subtitle}</p>
           <span class="catalog-card__meta">
-            {complete.parts} part numbers · {complete.pages} pages · {formatSize(complete.bytes)} · generated{' '}
+            {complete.parts} 个零件号 · {complete.pages} 页 · {formatSize(complete.bytes)} · 生成于{' '}
             {complete.generated}
           </span>
         </a>
@@ -161,12 +158,12 @@ const faqs = [
         {seriesCatalogs.map((catalog) => (
           <a class="catalog-card" href={catalog.file} download>
             <div class="catalog-card__head">
-              <h3>{catalog.heading}</h3>
+              <h3>{catalog.zhHeading ?? catalog.heading}</h3>
               <span class="catalog-card__cta">PDF</span>
             </div>
-            <p>{catalog.subtitle}</p>
+            <p>{catalog.zhSubtitle ?? catalog.subtitle}</p>
             <span class="catalog-card__meta">
-              {catalog.parts} part numbers · {catalog.pages} pages · {formatSize(catalog.bytes)} ·{' '}
+              {catalog.parts} 个零件号 · {catalog.pages} 页 · {formatSize(catalog.bytes)} ·{' '}
               {catalog.generated}
             </span>
           </a>
@@ -175,59 +172,55 @@ const faqs = [
     </section>
 
     <section class="resource-page-section">
-      <h2>What each column tells you</h2>
+      <h2>各列含义说明</h2>
       <ul class="resource-checklist">
-        <li><strong>Part number</strong> — the reference as we hold it, printed in full so it can be searched and copied</li>
-        <li><strong>Part name</strong> — the plain description of the item, e.g. gasket, injector, valve collet</li>
-        <li><strong>System</strong> — which assembly group the number belongs to, useful when you are working through a drawing</li>
-        <li><strong>Engine series</strong> — the engine family the number is catalogued against</li>
-        <li><strong>HS code</strong> — the customs classification, so you can estimate duty before you inquire</li>
-        <li><strong>Unit weight</strong> — shipping weight per piece, for freight planning; "On request" where the weight depends on the exact variant</li>
+        <li><strong>零件号</strong>——我们记录的参考号，完整印出，便于检索与复制</li>
+        <li><strong>零件名称</strong>——零件的简明描述，如垫片、喷油器、气门锁夹</li>
+        <li><strong>所属系统</strong>——该编号归属的总成分组，对照图纸作业时很有用</li>
+        <li><strong>发动机系列</strong>——该编号编入的发动机家族</li>
+        <li><strong>HS 编码</strong>——海关归类，便于询价前估算关税</li>
+        <li><strong>单件重量</strong>——每件运输重量，用于运费规划；重量因具体变型而异的，标注“按询价确认”</li>
       </ul>
       <p>
-        What is deliberately <em>not</em> in the files: prices, stock levels, lead times, and supplier
-        information. Those depend on the supply route available at the time and belong in a quotation
-        against a specific engine, not in a list that would be stale within weeks.
+        文件中刻意<strong>不含</strong>的内容：价格、库存水平、交货期与供应商信息。这些取决于当时的供货路线，属于针对具体发动机的报价内容，而不是几周内就会过期的清单内容。
       </p>
     </section>
 
     <section class="resource-page-section">
-      <h2>How to use a catalog to get a fast answer</h2>
+      <h2>如何利用目录快速获得答复</h2>
       <ol class="catalog-steps">
         <li>
-          <h3>Find the number and note the system</h3>
-          <p>Search the PDF for the number you have. If you only have a description, browse by system to narrow the field.</p>
+          <h3>找到编号并记下所属系统</h3>
+          <p>在 PDF 中搜索您手上的编号。如果只有描述，请按系统浏览以缩小范围。</p>
         </li>
         <li>
-          <h3>Add the engine model and serial number</h3>
-          <p>The catalog confirms the number exists in our records; the serial number decides whether it is the revision your engine carries.</p>
+          <h3>补上发动机型号与出厂编号</h3>
+          <p>目录确认该编号存在于我们的记录中；出厂编号决定它是否为您发动机所装的修订版本。</p>
         </li>
         <li>
-          <h3>Send the list with quantity and destination</h3>
-          <p>A consolidated list across several positions is quoted line by line, with the supply route named on each line and freight included.</p>
+          <h3>连同数量与目的地一起发送清单</h3>
+          <p>跨多个部位的合并清单逐行报价，每行注明供货路线，运费一并计入。</p>
         </li>
       </ol>
       <p>
-        If your number is not in the catalog at all, that is not the end of it — send it anyway. The catalog
-        is an index, not a limit, and numbers that have been superseded will not appear under the reference
-        you are holding. See <a href="/guides/how-to-read-mtu-parts-diagram/">how to read a parts diagram</a>
-        if you are working from a drawing, or the
-        <a href="/cross-reference/">part number cross reference</a> if you need to map an old number forward.
+        如果您的编号完全不在目录中，也并非到此为止——照常发来即可。目录是索引而非限制，已被替代的编号不会出现在您手上的参考号之下。
+        如果您在对照图纸作业，请参阅<a href="/guides/how-to-read-mtu-parts-diagram/">如何阅读零件图</a>；
+        如果需要把旧编号对应到新编号，请使用<a href="/cross-reference/">零件号交叉引用</a>。
       </p>
     </section>
 
     <section class="resource-page-section">
-      <h2>Related tools</h2>
+      <h2>相关工具</h2>
       <ul class="resource-olist">
-        <li><a href="/part-products/">MTU Part Number Catalog</a> — the same numbers online, each with full fitment and interchange detail</li>
-        <li><a href="/engine-models/">Parts Lists by Engine Model</a> — grouped by model code instead of by number</li>
-        <li><a href="/cross-reference/">Part Number Cross Reference</a> — OEM and superseded numbers mapped to current references</li>
-        <li><a href="/guides/">Engine Parts Guides</a> — overhaul planning and series identification</li>
+        <li><a href="/part-products/">MTU 零件号目录</a>——同样的编号在线可查，每个均附完整适配与互换详情</li>
+        <li><a href="/engine-models/">按发动机型号列出的零件清单</a>——按型号代码而非按编号分组</li>
+        <li><a href="/cross-reference/">零件号交叉引用</a>——OEM 号与被替代号对应到现行参考号</li>
+        <li><a href="/guides/">发动机零件指南</a>——大修规划与系列识别</li>
       </ul>
     </section>
 
     <section class="resource-page-section">
-      <h2>FAQ</h2>
+      <h2>常见问题</h2>
       {faqs.map((item) => (
         <details class="guide-faq-item">
           <summary>{item.question}</summary>
@@ -237,10 +230,10 @@ const faqs = [
     </section>
 
     <DetailRfqStrip
-      title="Have the list ready? Send it as it is"
-      text="Part numbers, quantity, engine model and serial number, and the destination port. We check each line and quote it with the supply route named."
+      title="清单准备好了？原样发来即可"
+      text="零件号、数量、发动机型号与出厂编号，以及目的港。我们逐行核查，并注明供货路线后报价。"
       quoteHref="/contact/?source=catalog-downloads"
-      label="Request Parts Quote"
+      label="发起零件询价"
       modalSource="catalog-downloads"
     />
   </div>

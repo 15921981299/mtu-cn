@@ -24,20 +24,20 @@ const defaultAppIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="22" heigh
 ---
 
 <BaseLayout
-  title="Engine Parts by Application — Marine, Generator, Industrial & Rail"
-  description="Browse diesel engine parts by application: marine propulsion, auxiliary generators, industrial equipment, rail, shipyard overhaul, and power plant engines."
+  title="按应用场景选购发动机零件 —— 船用、发电、工业与铁路"
+  description="按应用场景浏览柴油发动机零件：船用推进、辅助发电机组、工业设备、铁路、船厂大修与电厂发动机。"
   currentPath="/applications"
   jsonLd={breadcrumbSchema([
-    { name: 'Home', url: site.url },
-    { name: 'Engine Parts by Application', url: `${site.url}/applications/` },
+    { name: '首页', url: site.url },
+    { name: '按应用场景选购发动机零件', url: `${site.url}/applications/` },
   ])}
 >
   <FunnelPageView stage="selection" label="applications-index" />
   <BreadcrumbHero
-    title="Engine Parts by<br>Application"
+    title="按应用场景<br>选购零件"
     trail={[
-      { label: 'Home', href: '/' },
-      { label: 'Applications' },
+      { label: '首页', href: '/' },
+      { label: '应用' },
     ]}
     variant="2"
   />
@@ -46,29 +46,29 @@ const defaultAppIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="22" heigh
     <div class="section-gap bottom">
       <div class="container">
         <article class="blog-details-content-block resource-page fade-in">
-          <nav class="resource-nav" aria-label="Applications navigation">
+          <nav class="resource-nav" aria-label="应用导航">
             <a href="/applications/" class="resource-nav-link active" aria-current="page">
-              All applications
+              全部应用
             </a>
-            <a href="/applications/marine-propulsion-engines/" class="resource-nav-link">Marine</a>
-            <a href="/applications/auxiliary-generator-engines/" class="resource-nav-link">Generators</a>
-            <a href="/applications/industrial-equipment-engines/" class="resource-nav-link">Industrial</a>
-            <a href="/products/" class="resource-nav-link resource-nav-all">Products</a>
+            <a href="/applications/marine-propulsion-engines/" class="resource-nav-link">船用</a>
+            <a href="/applications/auxiliary-generator-engines/" class="resource-nav-link">发电机组</a>
+            <a href="/applications/industrial-equipment-engines/" class="resource-nav-link">工业</a>
+            <a href="/products/" class="resource-nav-link resource-nav-all">产品</a>
           </nav>
 
           <p class="resource-intro">
-            Find diesel engine parts by operating application. Diesel Part Source supports marine propulsion, auxiliary generators, industrial equipment, rail, shipyard repair, and power generation users with part-number verification and global delivery.
+            按运行应用场景查找柴油发动机零件。柴油零件源 为船用推进、辅助发电机组、工业设备、铁路、船厂维修与发电用户提供零件号核验与全球交付支持。
           </p>
 
           <div class="resource-meta">
-            <span><strong>{applications.length}</strong> application paths</span>
-            <span>Linked to <strong>engine parts</strong></span>
-            <span>Marine · Industrial · Power</span>
+            <span><strong>{applications.length}</strong> 条应用路径</span>
+            <span>关联<strong>发动机零件</strong></span>
+            <span>船用 · 工业 · 发电</span>
           </div>
 
           <div class="detail-rfq-strip">
-            <p>Send your application, engine model, serial number, part list, quantity, and destination. We verify parts before quotation.</p>
-            <a href="/contact/?source=applications" class="detail-rfq-link">Send Parts Inquiry</a>
+            <p>请提供应用场景、发动机型号、出厂编号、零件清单、数量与目的地，我们将在报价前核验零件。</p>
+            <a href="/contact/?source=applications" class="detail-rfq-link">发送零件询价</a>
           </div>
 
           <div class="hub-grid">
@@ -81,45 +81,38 @@ const defaultAppIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="22" heigh
                   </h2>
                   <p class="hub-card-summary">{app.summary}</p>
                   <a href={`/applications/${app.slug}/`} class="hub-card-link">
-                    View application →
+                    查看应用 →
                   </a>
                 </div>
               </article>
             ))}
           </div>
 
-          <h2>Why Application Matters for Parts</h2>
+          <h2>为什么应用场景影响零件选择</h2>
           <p>
-            The same engine series is built in different versions for different jobs. On MTU engines the letter in the model
-            code shows the application: M for marine, G for generator sets, R for rail, and S for industrial and mining use.
-            A marine engine usually has a seawater pump and heat exchanger, a generator engine runs at constant speed and is
-            often radiator-cooled, and a rail engine is packaged to the vehicle maker's layout. Filters and seals are often
-            shared, but cooling, fuel-injection, turbocharging, and control parts frequently differ between these versions.
+            同一发动机系列会针对不同工况制造不同版本。在 MTU 发动机上，型号代码中的字母表示应用场景：M 代表船用，G 代表发电机组，R 代表铁路，S 代表工业与矿用。船用发动机通常配备海水泵和热交换器；发电用发动机以恒定转速运行，多采用散热器冷却；铁路发动机则按车辆制造商的布局封装。滤清器与密封件通常可以通用，但冷却、燃油喷射、涡轮增压与控制部件在不同版本间往往存在差异。
           </p>
           <p>
-            Each application page above explains the parts that are typically requested for that use and the details we need
-            to confirm them. If your engine is used in a way that is not listed, for example a marine generator set, choose the
-            closest page and mention the actual use in your inquiry. The
-            <a href="/industries/">industries pages</a> cover the buying side instead: how shipyards, rail depots, power
-            producers, and industrial operators usually order, ship, and document parts.
+            以上每个应用页面都说明了该用途下通常需求的零件，以及我们确认零件所需的信息。如果您的发动机用途不在列（例如船用发电机组），请选择最接近的页面，并在询价中注明实际用途。
+            <a href="/industries/">行业页面</a>则侧重采购端：船厂、铁路机务段、电力生产企业与工业运营方通常如何订购、运输和记录零件。
           </p>
 
           <div class="resource-note">
-            <strong>Selection tip:</strong> Cross-check the engine application with
-            <a href="/products/">parts hubs</a>
-            and
-            <a href="/products/mtu-spare-parts/mtu-engine-series-guide/">MTU series guide</a>
-            before ordering.
+            <strong>选型提示：</strong>下单前，请将发动机应用场景与
+            <a href="/products/">零件中心</a>
+            和
+            <a href="/products/mtu-spare-parts/mtu-engine-series-guide/">MTU 系列指南</a>
+            交叉核对。
           </div>
 
           <p class="resource-related">
-            <a href="/products/">Engine parts</a>
+            <a href="/products/">发动机零件</a>
             <span aria-hidden="true">·</span>
-            <a href="/products/mtu-spare-parts/">MTU parts</a>
+            <a href="/products/mtu-spare-parts/">MTU 零件</a>
             <span aria-hidden="true">·</span>
-            <a href="/products/cummins-parts/">Cummins parts</a>
+            <a href="/products/cummins-parts/">Cummins 零件</a>
             <span aria-hidden="true">·</span>
-            <a href="/contact/">Contact</a>
+            <a href="/contact/">联系我们</a>
           </p>
         </article>
       </div>
@@ -129,12 +122,12 @@ const defaultAppIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="22" heigh
   <BlogCta
     stage="selection"
     topic="applications-index"
-    title="Check parts for your engine application"
-    text="Send your part list, engine model, serial number, quantity, and destination. We verify compatibility before quotation."
-    primaryLabel="Send Parts Inquiry"
+    title="为您的发动机应用场景核对零件"
+    text="请提供零件清单、发动机型号、出厂编号、数量与目的地，我们将在报价前核验适配性。"
+    primaryLabel="发送零件询价"
     primaryHref="/contact/?source=applications"
     primaryEvent="applications_index_rfq"
-    secondaryLabel="Engine parts"
+    secondaryLabel="发动机零件"
     secondaryHref="/products/"
     secondaryEvent="applications_index_products"
   />

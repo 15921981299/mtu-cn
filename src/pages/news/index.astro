@@ -12,66 +12,62 @@ const articles = [...newsArticles].sort((a, b) => b.datePublished.localeCompare(
 ---
 
 <BaseLayout
-  title="Engine Parts Industry Notes — MTU Series & Emission Systems"
-  description="Dated notes on MTU engine programs, emission systems and sourcing practice. Every factual claim is cited to the manufacturer or the original publication."
+  title="发动机零件行业札记 — MTU 系列与排放系统"
+  description="按日期记录的 MTU 发动机项目、排放系统与采购实务札记。所有事实陈述均注明制造商或原始出处。"
   currentPath="/news"
   jsonLd={[
     breadcrumbSchema([
-      { name: 'Home', url: site.url },
-      { name: 'Industry Notes', url: pageUrl },
+      { name: '首页', url: site.url },
+      { name: '行业札记', url: pageUrl },
     ]),
   ]}
 >
   <FunnelPageView stage="service" label="news-index" />
   <BreadcrumbHero
-    title="Industry Notes"
-    trail={[{ label: 'Home', href: '/' }, { label: 'Industry Notes' }]}
+    title="行业札记"
+    trail={[{ label: '首页', href: '/' }, { label: '行业札记' }]}
     variant="3"
   />
 
   <div class="resource-page">
     <section class="resource-page-section">
       <p>
-        Short, dated notes on the engine programs and emission systems our customers actually run.
-        The rule here is the same one we apply to quotations: <strong>every factual claim is cited</strong>
-        to the manufacturer or the original publication, and anything we cannot source is not stated.
-        No press-release rewriting, no invented specifications.
+        简短、注明日期的札记，记录客户实际运行的发动机项目与排放系统。这里的规则与我们报价时遵循的规则相同：<strong>所有事实陈述均注明出处</strong>，引自制造商或原始出版物；无法溯源的内容不予陈述。不转发新闻稿，不编造规格参数。
       </p>
       <p>
-        These notes are not a stock report or a price list. Availability, lead time and supplied
-        condition are confirmed per enquiry after the part number and engine serial number are checked.
+        这些札记不是库存报告，也不是价目表。供货情况、交货期与供货状态，将在核对零件号与发动机出厂编号后按询价逐一确认。
       </p>
     </section>
 
     <section class="resource-page-section">
-      <h2>Latest Notes</h2>
+      <h2>最新札记</h2>
       <div class="news-grid">
         {articles.map((article) => (
           <a class="news-card" href={`/news/${article.slug}/`}>
             <span class="news-card__meta">{article.category} · {article.datePublished}</span>
             <h3>{article.h1}</h3>
             <p>{article.description}</p>
-            <span class="news-card__more">Read the note →</span>
+            <span class="news-card__more">阅读全文 →</span>
           </a>
         ))}
       </div>
     </section>
 
     <section class="resource-page-section">
-      <h2>Related Resources</h2>
+      <h2>相关资源</h2>
       <ul class="resource-olist">
-        <li><a href="/part-number-index/">Search all part numbers (EN · DE)</a></li>
-        <li><a href="/products/mtu-spare-parts/regularly-sourced-parts/">Regularly sourced MTU parts</a> — categories and series coverage</li>
-        <li><a href="/guides/">Engine parts guides</a> — overhaul planning and series identification</li>
-        <li><a href="/genuine-oem-parts/">Genuine, OEM-quality and aftermarket routes</a></li>
+        <li><a href="/part-number-index/">搜索全部零件号（EN · DE）</a></li>
+        <li><a href="/products/mtu-spare-parts/regularly-sourced-parts/">常采购的 MTU 零件</a> — 类别与系列覆盖</li>
+        <li><a href="/guides/">发动机零件指南</a> — 大修规划与系列识别</li>
+        <li><a href="/genuine-oem-parts/">原厂件、OEM 品质件与副厂件渠道</a></li>
       </ul>
     </section>
 
     <DetailRfqStrip
-      title="Send your engine details"
-      text="Model, serial number, and the positions you need — we verify fitment and supersessions, then quote with availability per line."
+      title="提供您的发动机信息"
+      text="请提供型号、出厂编号与所需部位——我们核验适配与替换关系后按行报价，并注明每行供货情况。"
       quoteHref="/contact/?source=news-index"
-      label="Request Parts Quote"
+      label="申请零件报价"
       modalSource="news-index"
     />
   </div>

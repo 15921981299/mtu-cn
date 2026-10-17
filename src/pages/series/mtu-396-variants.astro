@@ -7,82 +7,82 @@ import FaqSection from '../../components/FaqSection.astro';
 import { breadcrumbSchema, itemListSchema, faqSchema, site } from '../../data/site';
 import '../../styles/resource-page.css';
 
-const title = 'MTU 396 Engine Variants — TB / TC / TE / SE Configurations';
-const seoTitle = 'MTU 396 Engine Variants & Part Differences — 8V / 12V / 16V (TB, TC, TE, SE)';
-const description = 'MTU 396 variant decoder: TB / TC / TE / SE duty codes, numeric rating steps, and which spare parts differ by configuration. Representative model table with kW, rpm and application for 8V / 12V / 16V 396 engines.';
+const title = 'MTU 396 发动机变型 — TB / TC / TE / SE 构型';
+const seoTitle = 'MTU 396 发动机变型与零件差异 — 8V / 12V / 16V（TB、TC、TE、SE）';
+const description = 'MTU 396 变型解读：TB / TC / TE / SE 用途代码、数字功率档，以及哪些配件随构型而异。附代表型号表（kW、rpm 与应用场景），覆盖 8V / 12V / 16V 396 发动机。';
 const pageUrl = `${site.url}/series/mtu-396-variants/`;
 const quoteHref = `/contact/?source=mtu-396-variants`;
 
 // Designation decoder — real MTU 396 duty suffixes
 const dutyDecoder = [
-  { code: 'TB', meaning: 'Base / early marine', use: 'Yachts, naval ships, gensets (pre-TE cooling)' },
-  { code: 'TC', meaning: 'Charger / industrial & rail', use: 'Locomotives, industrial stationary duty' },
-  { code: 'TE', meaning: 'Enhanced (split-circuit charge-air cooling, introduced 1989)', use: 'Fast vessels, yachts, ferries, FPBs — highest-volume duty' },
-  { code: 'SE', meaning: 'Submarine (low magnetic / low-noise)', use: 'Low-noise, low-magnetic propulsion' },
+  { code: 'TB', meaning: '基础 / 早期船用', use: '游艇、军舰、发电机组（TE 分区冷却之前）' },
+  { code: 'TC', meaning: '增压 / 工业与轨交', use: '机车、工业固定用途' },
+  { code: 'TE', meaning: '强化（分区增压空气冷却，1989 年推出）', use: '高速船舶、游艇、渡轮、快速巡逻艇——用量最大的用途' },
+  { code: 'SE', meaning: '潜艇（低磁 / 低噪声）', use: '低噪声、低磁推进' },
 ];
 
 // Numeric suffix = rating / power step; L = uprated, D = specific variant
 // Representative models with kW @ rpm (source: MTU rating tables, client-engine / edelmakina)
 const variantRows = [
-  { model: '8V 396 TB34', kw: '835', rpm: '1500', duty: 'TB', app: 'Genset / marine base' },
-  { model: '8V 396 TC34', kw: '770', rpm: '1500', duty: 'TC', app: 'Industrial / rail' },
-  { model: '8V 396 TE64', kw: '680', rpm: '1600', duty: 'TE', app: 'Fast vessel (low load)' },
-  { model: '8V 396 TE94', kw: '1120', rpm: '2000', duty: 'TE', app: 'Yachts / patrol craft' },
-  { model: '8V 396 SE84', kw: '600', rpm: '1800', duty: 'SE', app: 'Submarine' },
-  { model: '12V 396 TB94', kw: '1920', rpm: '2100', duty: 'TB', app: 'Naval ships' },
-  { model: '12V 396 TC14', kw: '1180', rpm: '1800', duty: 'TC', app: 'Locomotive' },
-  { model: '12V 396 TE64', kw: '1020', rpm: '1600', duty: 'TE', app: 'Ferries' },
-  { model: '12V 396 TE74L', kw: '1500', rpm: '1900', duty: 'TE', app: 'Fast vessels (high load)' },
-  { model: '12V 396 TE94', kw: '1680', rpm: '2000', duty: 'TE', app: 'Yachts / authority vessels' },
-  { model: '12V 396 SE84', kw: '1000', rpm: '1800', duty: 'SE', app: 'Submarine' },
-  { model: '16V 396 TB84', kw: '2040', rpm: '1940', duty: 'TB', app: 'Naval ships' },
-  { model: '16V 396 TB94', kw: '2560', rpm: '2100', duty: 'TB', app: 'Naval ships (high power)' },
-  { model: '16V 396 TE84', kw: '2000', rpm: '1900', duty: 'TE', app: 'Fast vessels' },
-  { model: '16V 396 TE94', kw: '2240', rpm: '2000', duty: 'TE', app: 'Fast patrol / yachts' },
-  { model: '16V 396 SE84', kw: '1350', rpm: '1800', duty: 'SE', app: 'Submarine' },
+  { model: '8V 396 TB34', kw: '835', rpm: '1500', duty: 'TB', app: '发电 / 船用基础' },
+  { model: '8V 396 TC34', kw: '770', rpm: '1500', duty: 'TC', app: '工业 / 轨交' },
+  { model: '8V 396 TE64', kw: '680', rpm: '1600', duty: 'TE', app: '高速船舶（低负荷）' },
+  { model: '8V 396 TE94', kw: '1120', rpm: '2000', duty: 'TE', app: '游艇 / 巡逻艇' },
+  { model: '8V 396 SE84', kw: '600', rpm: '1800', duty: 'SE', app: '潜艇' },
+  { model: '12V 396 TB94', kw: '1920', rpm: '2100', duty: 'TB', app: '军舰' },
+  { model: '12V 396 TC14', kw: '1180', rpm: '1800', duty: 'TC', app: '机车' },
+  { model: '12V 396 TE64', kw: '1020', rpm: '1600', duty: 'TE', app: '渡轮' },
+  { model: '12V 396 TE74L', kw: '1500', rpm: '1900', duty: 'TE', app: '高速船舶（高负荷）' },
+  { model: '12V 396 TE94', kw: '1680', rpm: '2000', duty: 'TE', app: '游艇 / 公务艇' },
+  { model: '12V 396 SE84', kw: '1000', rpm: '1800', duty: 'SE', app: '潜艇' },
+  { model: '16V 396 TB84', kw: '2040', rpm: '1940', duty: 'TB', app: '军舰' },
+  { model: '16V 396 TB94', kw: '2560', rpm: '2100', duty: 'TB', app: '军舰（高功率）' },
+  { model: '16V 396 TE84', kw: '2000', rpm: '1900', duty: 'TE', app: '高速船舶' },
+  { model: '16V 396 TE94', kw: '2240', rpm: '2000', duty: 'TE', app: '高速巡逻 / 游艇' },
+  { model: '16V 396 SE84', kw: '1350', rpm: '1800', duty: 'SE', app: '潜艇' },
 ];
 
 // Part differences by variant group — what is shared vs specific
 const partDiff = [
-  { item: 'Bore × stroke', shared: 'All 396 share 165 × 185 mm — wet liners are family-common in principle', note: 'Exact liner sealing rings still vary by build year / serial' },
-  { item: 'Cylinder-head gasket set', shared: 'NOT universal', note: 'TB / TC heads differ from TE (split-circuit cooling); SE heads are low-noise specific. Confirm by full designation + serial.' },
-  { item: 'Exhaust thermocouples', shared: 'Sensing layout is family-common', note: 'RFQ-verified 0005350260 / 0005353960 confirmed on a 396 in continuous duty; cross-ref to non-MTU sensor must be photo-checked.' },
-  { item: 'Turbocharger service kit', shared: 'Varies by duty', note: 'TE engines use sequential turbocharging; ZR140 / ZR170 / ZR210 service kits selected by model.' },
-  { item: 'Injectors / nozzles', shared: 'Varies by build', note: 'Fuel-system parts changed across decades of production — match by engine serial, not just "396".' },
+  { item: '缸径 × 行程', shared: '396 全系列均为 165 × 185 mm——湿式缸套原则上家族通用', note: '确切的缸套密封环仍随出厂年份 / 出厂编号而异' },
+  { item: '缸垫组', shared: '非全家族通用', note: 'TB / TC 缸盖与 TE 不同（TE 为分区冷却）；SE 缸盖为低噪声专用。请按完整型号 + 出厂编号确认。' },
+  { item: '排气热电偶', shared: '检测布局家族通用', note: 'RFQ 核验的 0005350260 / 0005353960 已在一台连续运行的 396 上确认；非 MTU 传感器交叉引用须经照片核对。' },
+  { item: '增压器保养包', shared: '随用途而异', note: 'TE 发动机采用顺序涡轮增压；ZR140 / ZR170 / ZR210 保养包按型号选择。' },
+  { item: '喷油器 / 油嘴', shared: '随构型而异', note: '燃油系统零件在数十年生产中多次变更——须按发动机出厂编号匹配，而非仅凭「396」。' },
 ];
 
 const crossRef = [
-  { pn: '0005350260', desc: 'Exhaust gas thermocouple', fit: '396 exhaust temp sensing', src: 'RFQ · Israel buyer', tag: 'rfq' },
-  { pn: '0005353960', desc: 'Exhaust gas thermocouple', fit: '396 exhaust temp sensing', src: 'RFQ · Israel buyer', tag: 'rfq' },
-  { pn: '5600160180', desc: 'Gasket', fit: '396 general', src: 'RFQ · Oman buyer', tag: 'rfq' },
-  { pn: '5582040406', desc: 'Impeller (cooling pump)', fit: '396 seawater pump', src: 'catalog seed', tag: 'cat' },
-  { pn: '5501800016', desc: 'Oil filter element', fit: '396 lubrication', src: 'catalog seed', tag: 'cat' },
+  { pn: '0005350260', desc: '排气热电偶', fit: '396 排气温度检测', src: 'RFQ · 以色列买家', tag: 'rfq' },
+  { pn: '0005353960', desc: '排气热电偶', fit: '396 排气温度检测', src: 'RFQ · 以色列买家', tag: 'rfq' },
+  { pn: '5600160180', desc: '垫片', fit: '396 通用', src: 'RFQ · 阿曼买家', tag: 'rfq' },
+  { pn: '5582040406', desc: '叶轮（冷却水泵）', fit: '396 海水泵', src: '目录预置', tag: 'cat' },
+  { pn: '5501800016', desc: '机油滤芯', fit: '396 润滑', src: '目录预置', tag: 'cat' },
 ];
 
 const faqItems = [
   {
-    question: 'What does the suffix on an MTU 396 mean (e.g. 16V396TE94)?',
-    answer: 'The cylinder count (8V / 12V / 16V) comes first. The letter group is the duty: TB = base/early marine, TC = industrial & rail, TE = enhanced fast-vessel (split-circuit charge-air cooling), SE = submarine low-noise. The trailing number (34 / 64 / 74 / 84 / 94) is the rating step, and an "L" marks an uprated version. So 16V396TE94 = 16-cylinder, enhanced fast-vessel duty, top rating step.',
+    question: 'MTU 396 的后缀代表什么（例如 16V396TE94）？',
+    answer: '最前面是气缸数（8V / 12V / 16V）。字母组为用途：TB = 基础/早期船用，TC = 工业与轨交，TE = 强化高速艇（分区增压空气冷却），SE = 潜艇低噪声。后面的数字（34 / 64 / 74 / 84 / 94）为功率档，「L」表示功率上调。因此 16V396TE94 = 16 缸、强化高速艇用途、最高功率档。',
   },
   {
-    question: 'Can one gasket set cover every 396 variant?',
-    answer: 'No. The TB/TC heads differ from the TE heads (the TE uses split-circuit cooling introduced in 1989), and SE heads are low-noise specific. Always confirm the full designation and serial before ordering head gaskets or overhaul sets.',
+    question: '一套垫片组能覆盖所有 396 变型吗？',
+    answer: '不能。TB/TC 缸盖与 TE 缸盖不同（TE 采用 1989 年推出的分区冷却），SE 缸盖为低噪声专用。订购缸垫或大修组前，请一律确认完整型号与出厂编号。',
   },
   {
-    question: 'Which 396 parts are safe to quote from the model alone?',
-    answer: 'Family-common items like the 165 × 185 mm bore philosophy and basic sensing layout give a starting point, but we still confirm by serial. RFQ-verified numbers on this page (0005350260, 0005353960, 5600160180) are quoted same-business-day from confirmed channels.',
+    question: '哪些 396 零件可以仅凭型号安全报价？',
+    answer: '165 × 185 mm 缸径体系与基础检测布局等家族通用项可作为起点，但我们仍会按出厂编号确认。本页 RFQ 核验零件号（0005350260、0005353960、5600160180）当日即可从已确认渠道报价。',
   },
   {
-    question: 'Can you supply for the less common 396 duty variants?',
-    answer: 'Yes, provided the number can be identified. The cylinder head, cooling, and charge-air arrangement differs by variant, so the engine designation and serial number are what decide which version of a part fits. Send the designation, the serial number, and the component you need, and we confirm availability and the documentation that comes with the part before quoting.',
+    question: '较冷门的 396 用途变型也能供应吗？',
+    answer: '可以，只要零件号可识别。气缸盖、冷却与增压空气布置随变型而异，因此发动机型号与出厂编号决定哪一版本零件适用。请提供型号、出厂编号与所需零件，我们将在报价前确认供货情况及随件文件。',
   },
 ];
 
 const jsonLd = [
   breadcrumbSchema([
-    { name: 'Home', url: site.url },
-    { name: 'MTU Spare Parts', url: `${site.url}/products/mtu-spare-parts/` },
-    { name: 'MTU 396 Series', url: `${site.url}/series/mtu-396/` },
+    { name: '首页', url: site.url },
+    { name: 'MTU 备件', url: `${site.url}/products/mtu-spare-parts/` },
+    { name: 'MTU 396 系列', url: `${site.url}/series/mtu-396/` },
     { name: title, url: pageUrl },
   ]),
   itemListSchema(variantRows.map((r) => ({ name: `${r.model} — ${r.kw} kW @ ${r.rpm} rpm`, url: pageUrl }))),
@@ -100,19 +100,19 @@ const jsonLd = [
   <BreadcrumbHero
     title={title}
     trail={[
-      { label: 'Home', href: '/' },
-      { label: 'MTU Spare Parts', href: '/products/mtu-spare-parts/' },
-      { label: 'MTU 396 Series', href: '/series/mtu-396/' },
-      { label: '396 Variants' },
+      { label: '首页', href: '/' },
+      { label: 'MTU 备件', href: '/products/mtu-spare-parts/' },
+      { label: 'MTU 396 系列', href: '/series/mtu-396/' },
+      { label: '396 变型' },
     ]}
     variant="1"
   />
 
-  <DetailPageShell intro="The MTU 396 is one of MTU's longest-serving high-speed families, with decades of variants in marine, rail, genset and submarine duty. This page decodes the designation (TB / TC / TE / SE), lists representative 8V / 12V / 16V models with their ratings, and shows which spare parts differ by configuration — the detail you need before ordering the right gasket set or overhaul kit.">
+  <DetailPageShell intro="MTU 396 是 MTU 服役时间最长的高速发动机家族之一，数十年来在船用、轨交、发电与潜艇领域形成了众多变型。本页解读型号命名（TB / TC / TE / SE），列出代表 8V / 12V / 16V 型号及功率，并说明哪些配件随构型而异——这是在订购正确的垫片组或大修包前必须了解的细节。">
     <img
       slot="hero"
       src="/images/mtu-engine-parts-hero.webp"
-      alt="MTU 396 engine variants and part differences"
+      alt="MTU 396 发动机变型与零件差异"
       width="1400"
       height="692"
       loading="eager"
@@ -121,26 +121,26 @@ const jsonLd = [
     />
 
     <div class="resource-meta">
-      <span><strong>Section</strong> MTU 396 → Variants</span>
-      <span><strong>Family</strong> 396 (8V / 12V / 16V)</span>
-      <span><strong>Duty</strong> TB / TC / TE / SE</span>
-      <span><strong>Delivery</strong> Global shipping</span>
+      <span><strong>类别</strong> MTU 396 → 变型</span>
+      <span><strong>家族</strong> 396（8V / 12V / 16V）</span>
+      <span><strong>用途</strong> TB / TC / TE / SE</span>
+      <span><strong>运输</strong> 全球运输</span>
     </div>
 
     <DetailRfqStrip
       quoteHref={quoteHref}
-      title="Request 396 variant parts"
-      text="Send full designation (e.g. 16V396TE94), serial number, part numbers, quantity and destination."
+      title="询价 396 变型配件"
+      text="请提供完整型号（例如 16V396TE94）、出厂编号、零件号、数量与目的地。"
       secondaryHref="/series/mtu-396/"
-      secondaryLabel="MTU 396 hub"
+      secondaryLabel="MTU 396 专区"
     />
 
-    <h2>1. Designation decoder</h2>
-    <p>A full 396 designation reads <strong>[cylinders]V396[duty][rating]</strong>. The duty letter tells you the application family and — critically — which cylinder-head and cooling parts you need:</p>
+    <h2>1. 型号解读</h2>
+    <p>完整的 396 型号读作 <strong>[气缸数]V396[用途][功率档]</strong>。用途字母代表应用家族——更关键的是，它决定了您需要哪种气缸盖与冷却零件：</p>
     <div class="resource-table-wrap">
       <table class="resource-table">
         <thead>
-          <tr><th>Suffix</th><th>Meaning</th><th>Typical use</th></tr>
+          <tr><th>后缀</th><th>含义</th><th>典型用途</th></tr>
         </thead>
         <tbody>
           {dutyDecoder.map((d) => (
@@ -153,14 +153,14 @@ const jsonLd = [
         </tbody>
       </table>
     </div>
-    <p class="resource-note">The trailing number (34 / 44 / 54 / 64 / 74 / 84 / 94) is the rating step; "L" = uprated, "D" = a specific sub-variant. <strong>TE</strong> introduced split-circuit charge-air cooling in 1989 — its heads and gaskets are not interchangeable with TB/TC.</p>
+    <p class="resource-note">后面的数字（34 / 44 / 54 / 64 / 74 / 84 / 94）为功率档；「L」= 功率上调，「D」= 特定子变型。<strong>TE</strong> 于 1989 年引入分区增压空气冷却——其缸盖与垫片不能与 TB/TC 互换。</p>
 
-    <h2>2. Representative variant table (8V / 12V / 16V)</h2>
-    <p>Selected models across the family with published ratings. All share the 165 × 185 mm bore and stroke; outputs differ by duty, rating step and rpm:</p>
+    <h2>2. 代表型号表（8V / 12V / 16V）</h2>
+    <p>全家族代表型号及公布功率。缸径 × 行程均为 165 × 185 mm；功率随用途、功率档与转速而异：</p>
     <div class="resource-table-wrap">
       <table class="resource-table">
         <thead>
-          <tr><th>Model</th><th>Duty</th><th>Power (kW)</th><th>Speed (rpm)</th><th>Primary application</th></tr>
+          <tr><th>型号</th><th>用途</th><th>功率（kW）</th><th>转速（rpm）</th><th>主要应用</th></tr>
         </thead>
         <tbody>
           {variantRows.map((r) => (
@@ -175,14 +175,14 @@ const jsonLd = [
         </tbody>
       </table>
     </div>
-    <p class="resource-note">This is a representative sample, not the full list — the 396 family spans 6V through 16V and many rating steps. Confirm your exact model against the identification plate before ordering.</p>
+    <p class="resource-note">本表为代表性样本，并非完整清单——396 家族覆盖 6V 至 16V 及众多功率档。订购前请以识别铭牌核对您的确切型号。</p>
 
-    <h2>3. Which parts differ by variant</h2>
-    <p>"396 parts" is not one parts list. What is shared vs specific:</p>
+    <h2>3. 哪些零件随变型而异</h2>
+    <p>「396 零件」并非一份清单。通用与专用的分野如下：</p>
     <div class="resource-table-wrap">
       <table class="resource-table">
         <thead>
-          <tr><th>Item</th><th>Shared or specific?</th><th>Note</th></tr>
+          <tr><th>项目</th><th>通用还是专用？</th><th>备注</th></tr>
         </thead>
         <tbody>
           {partDiff.map((p) => (
@@ -196,12 +196,12 @@ const jsonLd = [
       </table>
     </div>
 
-    <h2>4. Part-number cross-reference (verified)</h2>
-    <p>Tags: <span class="rfq-badge rfq">RFQ</span> = confirmed from an inbound 396 enquiry; <span class="rfq-badge cat">catalog</span> = public 396 cross-reference seed.</p>
+    <h2>4. 零件号交叉引用（经核验）</h2>
+    <p>标签说明：<span class="rfq-badge rfq">RFQ</span> = 经收到的 396 询盘确认；<span class="rfq-badge cat">目录</span> = 公开 396 交叉引用预置数据。</p>
     <div class="resource-table-wrap">
       <table class="resource-table">
         <thead>
-          <tr><th>Part number</th><th>Description</th><th>396 fitment</th><th>Source</th></tr>
+          <tr><th>零件号</th><th>描述</th><th>396 适配</th><th>来源</th></tr>
         </thead>
         <tbody>
           {crossRef.map((r) => (
@@ -210,7 +210,7 @@ const jsonLd = [
               <td>{r.desc}</td>
               <td>{r.fit}</td>
               <td>
-                {r.tag === 'rfq' ? <span class="rfq-badge rfq">RFQ</span> : <span class="rfq-badge cat">catalog</span>}
+                {r.tag === 'rfq' ? <span class="rfq-badge rfq">RFQ</span> : <span class="rfq-badge cat">目录</span>}
                 {' '}{r.src}
               </td>
             </tr>
@@ -219,25 +219,25 @@ const jsonLd = [
       </table>
     </div>
 
-    <h2>5. Identify your exact 396 variant</h2>
+    <h2>5. 识别您的确切 396 变型</h2>
     <ul class="resource-list">
-      <li><strong>Full designation</strong> (e.g. <code>12V396TE94</code>, not "396")</li>
-      <li><strong>Engine serial number</strong> from the identification plate</li>
-      <li><strong>Existing part number</strong> marked on the old component</li>
-      <li><strong>Build year / rating</strong> — helps separate TB/TC vs TE heads</li>
+      <li><strong>完整型号</strong>（例如 <code>12V396TE94</code>，而非「396」）</li>
+      <li>识别铭牌上的<strong>发动机出厂编号</strong></li>
+      <li>旧部件上标注的<strong>现有零件号</strong></li>
+      <li><strong>出厂年份 / 功率档</strong>——有助于区分 TB/TC 与 TE 缸盖</li>
     </ul>
 
-    <h2>6. Related & cluster</h2>
+    <h2>6. 相关与集群</h2>
     <div class="hub-grid">
-      <a class="hub-card" href="/series/mtu-396/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 396 Series Hub</h3><p class="hub-card-summary">Configurations, parts-by-system, full cross-reference and RFQ log.</p></div></a>
-      <a class="hub-card" href="/series/mtu-2000-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 2000 Variants</h3><p class="hub-card-summary">M61 → M9x generation decoder and per-model table (135 × 156 mm).</p></div></a>
-      <a class="hub-card" href="/products/mtu-4000-series-parts/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 4000 Series</h3><p class="hub-card-summary">12V / 16V / 20V larger siblings for higher-power duty.</p></div></a>
-      <a class="hub-card" href="/series/mtu-1163/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 1163 Series Hub</h3><p class="hub-card-summary">12V / 16V / 20V large-bore family (230 × 280 mm).</p></div></a>
-      <a class="hub-card" href="/series/mtu-4000-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 4000 Variant Decoder</h3><p class="hub-card-summary">M05 / M03 / C05 / R03 / R04 / T05 + M-duty notation.</p></div></a>
-      <a class="hub-card" href="/series/12v396te94/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 12V 396 TE94</h3><p class="hub-card-summary">Single-model deep dive — 1,680 kW marine & genset engine.</p></div></a>
+      <a class="hub-card" href="/series/mtu-396/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 396 系列专区</h3><p class="hub-card-summary">构型、按系统配件、完整交叉引用与 RFQ 记录。</p></div></a>
+      <a class="hub-card" href="/series/mtu-2000-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 2000 变型</h3><p class="hub-card-summary">M61 → M9x 代际解读与分型号表（135 × 156 mm）。</p></div></a>
+      <a class="hub-card" href="/products/mtu-4000-series-parts/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 4000 系列</h3><p class="hub-card-summary">12V / 16V / 20V 同族更大机型，面向更高功率用途。</p></div></a>
+      <a class="hub-card" href="/series/mtu-1163/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 1163 系列专区</h3><p class="hub-card-summary">12V / 16V / 20V 大缸径家族（230 × 280 mm）。</p></div></a>
+      <a class="hub-card" href="/series/mtu-4000-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 4000 变型解读</h3><p class="hub-card-summary">M05 / M03 / C05 / R03 / R04 / T05 及 M 用途标识。</p></div></a>
+      <a class="hub-card" href="/series/12v396te94/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 12V 396 TE94</h3><p class="hub-card-summary">单机型深度解析——1,680 kW 船用与发电发动机。</p></div></a>
     </div>
 
-    <FaqSection items={faqItems} title="MTU 396 Variants FAQ" subtitle="FAQ" />
+    <FaqSection items={faqItems} title="MTU 396 变型常见问题" subtitle="常见问题" />
   </DetailPageShell>
 </BaseLayout>
 

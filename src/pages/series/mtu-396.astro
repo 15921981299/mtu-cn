@@ -7,60 +7,60 @@ import FaqSection from '../../components/FaqSection.astro';
 import { breadcrumbSchema, itemListSchema, faqSchema, site } from '../../data/site';
 import '../../styles/resource-page.css';
 
-const title = 'MTU 396 Engine Models & Part Identification';
-const seoTitle = 'MTU 396 Engine Models & Part Identification Guide';
-const description = 'MTU 396 model designations, engine configurations, and catalog part references. Confirm the complete model and engine serial number before ordering replacement parts.';
+const title = 'MTU 396 发动机型号与零件识别';
+const seoTitle = 'MTU 396 发动机型号与零件识别指南';
+const description = 'MTU 396 型号命名、发动机构型与目录零件参考。订购替换件前，请确认完整型号与发动机出厂编号。';
 const pageUrl = `${site.url}/series/mtu-396/`;
 const quoteHref = `/contact/?source=mtu-396-series`;
 
 const configRows = [
-  { desig: '8V 396', cyl: 'V8', output: '~600–1120 kW', app: 'Gensets, smaller fast craft' },
-  { desig: '12V 396', cyl: 'V12', output: '~1000–2000 kW', app: 'Patrol craft, ferries, gensets' },
-  { desig: '16V 396', cyl: 'V16', output: '~1350–2240 kW', app: 'Fast vessels, naval, yachts' },
+  { desig: '8V 396', cyl: 'V8', output: '约 600–1120 kW', app: '发电机组、小型高速艇' },
+  { desig: '12V 396', cyl: 'V12', output: '约 1000–2000 kW', app: '巡逻艇、渡轮、发电机组' },
+  { desig: '16V 396', cyl: 'V16', output: '约 1350–2240 kW', app: '高速船舶、海军、游艇' },
 ];
 
 const crossRef = [
-  { pn: '0005350260', desc: 'Exhaust gas thermocouple', fit: '396 exhaust temp sensing', src: 'RFQ · Israel buyer', tag: 'rfq' },
-  { pn: '0005353960', desc: 'Exhaust gas thermocouple', fit: '396 exhaust temp sensing', src: 'RFQ · Israel buyer', tag: 'rfq' },
-  { pn: '5600160180', desc: 'Gasket', fit: '396 general', src: 'RFQ · Oman buyer', tag: 'rfq' },
-  { pn: '5582040406', desc: 'Impeller (cooling pump)', fit: '396 seawater pump', src: 'catalog seed', tag: 'cat' },
-  { pn: '5110809821', desc: 'Turbine wheel', fit: '396 turbocharger', src: 'catalog seed', tag: 'cat' },
-  { pn: '5501800016', desc: 'Oil filter element', fit: '396 lubrication', src: 'catalog seed', tag: 'cat' },
-  { pn: '5090850060', desc: 'Piston ring', fit: '396 piston', src: 'catalog seed', tag: 'cat' },
-  { pn: '5500500333 / 5500500334', desc: 'Rocker arm (inlet / exhaust)', fit: '396 valve train', src: 'catalog seed', tag: 'cat' },
-  { pn: '5550533244', desc: 'Valve guide (inlet)', fit: '396 cylinder head', src: 'catalog seed', tag: 'cat' },
-  { pn: '0045427217', desc: 'Temperature monitor', fit: '396 sensing', src: 'catalog seed', tag: 'cat' },
-  { pn: '0011535528', desc: 'Pressure transmitter', fit: '396 sensing', src: 'catalog seed', tag: 'cat' },
-  { pn: '—', desc: 'Exhaust thermocouple cross-ref (non-MTU brand)', fit: '396', src: 'catalog · "Thermo Fisher 33.700.040" — unverified, request photo', tag: 'cat' },
+  { pn: '0005350260', desc: '排气热电偶', fit: '396 排气温度检测', src: 'RFQ · 以色列买家', tag: 'rfq' },
+  { pn: '0005353960', desc: '排气热电偶', fit: '396 排气温度检测', src: 'RFQ · 以色列买家', tag: 'rfq' },
+  { pn: '5600160180', desc: '垫片', fit: '396 通用', src: 'RFQ · 阿曼买家', tag: 'rfq' },
+  { pn: '5582040406', desc: '叶轮（冷却水泵）', fit: '396 海水泵', src: '目录预置', tag: 'cat' },
+  { pn: '5110809821', desc: '涡轮叶轮', fit: '396 涡轮增压器', src: '目录预置', tag: 'cat' },
+  { pn: '5501800016', desc: '机油滤芯', fit: '396 润滑', src: '目录预置', tag: 'cat' },
+  { pn: '5090850060', desc: '活塞环', fit: '396 活塞', src: '目录预置', tag: 'cat' },
+  { pn: '5500500333 / 5500500334', desc: '摇臂（进气/排气）', fit: '396 配气机构', src: '目录预置', tag: 'cat' },
+  { pn: '5550533244', desc: '气门导管（进气）', fit: '396 气缸盖', src: '目录预置', tag: 'cat' },
+  { pn: '0045427217', desc: '温度监测器', fit: '396 检测', src: '目录预置', tag: 'cat' },
+  { pn: '0011535528', desc: '压力变送器', fit: '396 检测', src: '目录预置', tag: 'cat' },
+  { pn: '—', desc: '排气热电偶交叉引用（非 MTU 品牌）', fit: '396', src: '目录 · "Thermo Fisher 33.700.040"——未经核验，请提供照片', tag: 'cat' },
 ];
 
 const faqItems = [
   {
-    question: 'Is "MTU 396" enough to order a part?',
-    answer: 'Not for every component. Add the complete engine designation (e.g. 16V396TE94, not just "396"), the engine serial number, and — ideally — the number marked on the old part. The 396 family has been in service for decades, so numbers changed and reconditioned parts were fitted; that combination prevents fitment errors.',
+    question: '仅凭「MTU 396」足以订购零件吗？',
+    answer: '并非对所有零件都够。请补充完整发动机型号（例如 16V396TE94，而非仅「396」）、发动机出厂编号，以及——最好——旧件上标注的号码。396 家族已服役数十年，零件号屡经变更并换装过翻新件；这一组合可避免适配错误。',
   },
   {
-    question: 'Do you supply genuine MTU only?',
-    answer: 'We supply genuine new, reconditioned-exchange, and documented alternatives. The right option depends on the component criticality and your acceptance of equivalents — we state which is which on every quote, and genuine thermocouples / sensors are quoted as branded OE where you require it.',
+    question: '你们只供应原厂 MTU 件吗？',
+    answer: '我们供应原厂新件、翻新交换件与凭证替代件。合适选项取决于零件关键程度以及您对等价件的接受度——每份报价都会注明属于哪一类；热电偶与传感器在您要求时按品牌 OE 件报价。',
   },
   {
-    question: 'Can you match a part number to a non-MTU brand?',
-    answer: 'Often yes, but we verify before quoting. If a number crosses to another manufacturer we ask for a photo to confirm rather than assume — several 396 sensing parts have non-MTU cross-references that must be checked against your exact engine.',
+    question: '能把零件号对应到非 MTU 品牌吗？',
+    answer: '多数可以，但我们先核验再报价。若零件号可对应到其他制造商，我们会先索要照片确认而非想当然——部分 396 检测件存在非 MTU 交叉引用，必须对照您的确切发动机核对。',
   },
   {
-    question: 'What do you need to quote?',
-    answer: 'Engine model + serial + part number + description + quantity. A photo of the old part shortens identification significantly. For thermocouples and sensors, the engine rating and build year also help.',
+    question: '报价需要提供哪些信息？',
+    answer: '发动机型号 + 出厂编号 + 零件号 + 描述 + 数量。提供旧件照片能显著缩短识别时间。热电偶与传感器还需发动机功率档与出厂年份辅助判断。',
   },
   {
-    question: 'How fast can you quote an identified number?',
-    answer: 'Typically within one business day for a number we can confirm against the engine designation. RFQ-verified numbers on this page (e.g. 0005350260, 5600160180) are quoted from stock or named-supplier channels the same business day.',
+    question: '已识别零件号的报价速度如何？',
+    answer: '对于能按发动机型号确认的零件号，通常一个工作日内报价。本页 RFQ 核验零件号（例如 0005350260、5600160180）当日即可从库存或指定供应商渠道报价。',
   },
 ];
 
 const jsonLd = [
   breadcrumbSchema([
-    { name: 'Home', url: site.url },
-    { name: 'MTU Spare Parts', url: `${site.url}/products/mtu-spare-parts/` },
+    { name: '首页', url: site.url },
+    { name: 'MTU 备件', url: `${site.url}/products/mtu-spare-parts/` },
     { name: title, url: pageUrl },
   ]),
   itemListSchema(crossRef.filter((r) => r.pn !== '—').map((r) => ({ name: `${r.pn} — ${r.desc}`, url: pageUrl }))),
@@ -78,18 +78,18 @@ const jsonLd = [
   <BreadcrumbHero
     title={title}
     trail={[
-      { label: 'Home', href: '/' },
-      { label: 'MTU Spare Parts', href: '/products/mtu-spare-parts/' },
+      { label: '首页', href: '/' },
+      { label: 'MTU 备件', href: '/products/mtu-spare-parts/' },
       { label: title },
     ]}
     variant="1"
   />
 
-  <DetailPageShell intro="The MTU 396 is a high-speed, four-stroke V-configuration diesel family from MTU Friedrichshafen (today Rolls-Royce Power Systems). It is a workhorse of fast craft, patrol vessels, submarines, and stationary generator sets. This hub carries engine configurations, the parts we regularly supply, a growing cross-reference table, and a part-identification process built for an engine series whose numbers have changed across decades of service.">
+  <DetailPageShell intro="MTU 396 是 MTU Friedrichshafen（今 Rolls-Royce Power Systems）旗下高速四冲程 V 型柴油发动机家族，是高速艇、巡逻船、潜艇与固定发电机组的骨干机型。本专区汇总发动机构型、常年供应配件、持续补充的交叉引用表，以及面向该系列（零件号在数十年服役中屡经变更）的零件识别流程。">
     <img
       slot="hero"
       src="/images/mtu-engine-parts-hero.webp"
-      alt="MTU 396 series engine parts inquiry"
+      alt="MTU 396 系列发动机配件询价"
       width="1400"
       height="692"
       loading="eager"
@@ -98,26 +98,26 @@ const jsonLd = [
     />
 
     <div class="resource-meta">
-      <span><strong>Section</strong> MTU Spare Parts</span>
-      <span><strong>Family</strong> 396 (8V / 12V / 16V)</span>
-      <span><strong>Verification</strong> Model + serial number</span>
-      <span><strong>Delivery</strong> Global shipping</span>
+      <span><strong>类别</strong> MTU 备件</span>
+      <span><strong>家族</strong> 396（8V / 12V / 16V）</span>
+      <span><strong>核验</strong> 型号 + 出厂编号</span>
+      <span><strong>运输</strong> 全球运输</span>
     </div>
 
     <DetailRfqStrip
       quoteHref={quoteHref}
-      title="Request MTU 396 parts"
-      text="Send engine model, serial number, part numbers, quantity, destination, and required delivery date."
+      title="询价 MTU 396 配件"
+      text="请提供发动机型号、出厂编号、零件号、数量、目的地与要求交期。"
       secondaryHref="/part-products/catalog/mtu-396-series/"
-      secondaryLabel="MTU 396 catalog"
+      secondaryLabel="MTU 396 目录"
     />
 
-    <h2>1. Engine configurations</h2>
-    <p>The 396 family spans three cylinder counts and several duty variants. <strong>TB</strong> = base / early marine, <strong>TC</strong> = charger (industrial &amp; rail), <strong>TE</strong> = enhanced (fast vessels, yachts, ferries), <strong>SE</strong> = submarine (low-noise) duty. All share a 165 × 185 mm bore and stroke.</p>
+    <h2>1. 发动机构型</h2>
+    <p>396 家族覆盖三种气缸数与多种用途变型。<strong>TB</strong> = 基础/早期船用，<strong>TC</strong> = 增压（工业与轨交），<strong>TE</strong> = 强化（高速船舶、游艇、渡轮），<strong>SE</strong> = 潜艇（低噪声）用途。缸径 × 行程均为 165 × 185 mm。</p>
     <div class="resource-table-wrap">
       <table class="resource-table">
         <thead>
-          <tr><th>Designation</th><th>Cyl.</th><th>Bore × Stroke</th><th>Typical output</th><th>Primary application</th></tr>
+          <tr><th>型号</th><th>气缸</th><th>缸径 × 行程</th><th>典型功率</th><th>主要应用</th></tr>
         </thead>
         <tbody>
           {configRows.map((r) => (
@@ -132,26 +132,26 @@ const jsonLd = [
         </tbody>
       </table>
     </div>
-    <p class="resource-note">Figures are representative of the family; always confirm against the engine <strong>identification plate</strong> (model + serial number) before ordering. Maintenance interval is typically ~500 operating hours or annually.</p>
+    <p class="resource-note">表中数值为家族代表值；订购前请一律以发动机<strong>识别铭牌</strong>（型号 + 出厂编号）为准。保养间隔通常为约 500 运行小时或每年一次。</p>
 
-    <h2>2. Spare parts we supply, by system</h2>
+    <h2>2. 按系统划分的供应配件</h2>
     <div class="hub-grid">
-      <a class="hub-card" href="/part-products/catalog/mtu-396-series/"><div class="hub-card-body"><h3 class="hub-card-title">Cylinder head &amp; valve train</h3><p class="hub-card-summary">Valve guides, seats, springs, collets, rocker arms, pushrods, cylinder-head gaskets.</p></div></a>
-      <a class="hub-card" href="/part-products/catalog/mtu-injectors/"><div class="hub-card-body"><h3 class="hub-card-title">Fuel system</h3><p class="hub-card-summary">Injectors &amp; nozzles, nozzle holders, injection pumps, fuel delivery pumps.</p></div></a>
-      <a class="hub-card" href="/part-products/catalog/mtu-396-series/"><div class="hub-card-body"><h3 class="hub-card-title">Pistons / liners / rings</h3><p class="hub-card-summary">Piston assemblies, cylinder liners, piston rings, connecting-rod bolts.</p></div></a>
-      <a class="hub-card" href="/part-products/catalog/mtu-396-series/"><div class="hub-card-body"><h3 class="hub-card-title">Bearings</h3><p class="hub-card-summary">Main and connecting-rod bearing shells, thrust washers.</p></div></a>
-      <a class="hub-card" href="/part-products/catalog/mtu-gasket-kits/"><div class="hub-card-body"><h3 class="hub-card-title">Gaskets &amp; seals</h3><p class="hub-card-summary">Head gaskets, O-rings, copper sealing rings, gasket sets.</p></div></a>
-      <a class="hub-card" href="/part-products/catalog/mtu-turbocharger-parts/"><div class="hub-card-body"><h3 class="hub-card-title">Turbocharger</h3><p class="hub-card-summary">Turbine wheels, cartridges, ZR140 / ZR170 / ZR210 service kits.</p></div></a>
-      <a class="hub-card" href="/part-products/catalog/mtu-filters/"><div class="hub-card-body"><h3 class="hub-card-title">Cooling</h3><p class="hub-card-summary">Seawater &amp; freshwater pumps, impellers, heat-exchanger kits, thermostats.</p></div></a>
-      <a class="hub-card" href="/part-products/catalog/mtu-sensors/"><div class="hub-card-body"><h3 class="hub-card-title">Sensors &amp; MDEC</h3><p class="hub-card-summary">Exhaust thermocouples, temp / pressure transmitters, engine-management modules.</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-396-series/"><div class="hub-card-body"><h3 class="hub-card-title">气缸盖与配气机构</h3><p class="hub-card-summary">气门导管、气门座、气门弹簧、锁夹、摇臂、推杆、缸垫。</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-injectors/"><div class="hub-card-body"><h3 class="hub-card-title">燃油系统</h3><p class="hub-card-summary">喷油器与油嘴、油嘴座、喷油泵、燃油输送泵。</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-396-series/"><div class="hub-card-body"><h3 class="hub-card-title">活塞 / 缸套 / 活塞环</h3><p class="hub-card-summary">活塞总成、气缸套、活塞环、连杆螺栓。</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-396-series/"><div class="hub-card-body"><h3 class="hub-card-title">轴承</h3><p class="hub-card-summary">主轴承与连杆轴瓦、推力垫圈。</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-gasket-kits/"><div class="hub-card-body"><h3 class="hub-card-title">垫片与密封件</h3><p class="hub-card-summary">缸垫、O 型圈、铜密封环、垫片组。</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-turbocharger-parts/"><div class="hub-card-body"><h3 class="hub-card-title">涡轮增压器</h3><p class="hub-card-summary">涡轮叶轮、芯体、ZR140 / ZR170 / ZR210 保养包。</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-filters/"><div class="hub-card-body"><h3 class="hub-card-title">冷却</h3><p class="hub-card-summary">海水泵与淡水泵、叶轮、热交换器包、节温器。</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-sensors/"><div class="hub-card-body"><h3 class="hub-card-title">传感器与 MDEC</h3><p class="hub-card-summary">排气热电偶、温度/压力变送器、发动机管理模块。</p></div></a>
     </div>
 
-    <h2>3. Part-number cross-reference (growing)</h2>
-    <p>We publish the part numbers we can confirm as we handle real enquiries. Tags: <span class="rfq-badge rfq">RFQ</span> = verified from an inbound inquiry we received; <span class="rfq-badge cat">catalog</span> = public MTU 396 cross-reference seed. Where a number crosses to a non-MTU brand we note it for verification.</p>
+    <h2>3. 零件号交叉引用（持续补充）</h2>
+    <p>我们在处理真实询盘的过程中发布可确认的零件号。标签说明：<span class="rfq-badge rfq">RFQ</span> = 经收到的询盘核验；<span class="rfq-badge cat">目录</span> = 公开 MTU 396 交叉引用预置数据。凡零件号涉及非 MTU 品牌，我们会注明待核验。</p>
     <div class="resource-table-wrap">
       <table class="resource-table">
         <thead>
-          <tr><th>Part number</th><th>Description</th><th>396 fitment</th><th>Source / cross-ref</th></tr>
+          <tr><th>零件号</th><th>描述</th><th>396 适配</th><th>来源 / 交叉引用</th></tr>
         </thead>
         <tbody>
           {crossRef.map((r) => (
@@ -160,7 +160,7 @@ const jsonLd = [
               <td>{r.desc}</td>
               <td>{r.fit}</td>
               <td>
-                {r.tag === 'rfq' ? <span class="rfq-badge rfq">RFQ</span> : <span class="rfq-badge cat">catalog</span>}
+                {r.tag === 'rfq' ? <span class="rfq-badge rfq">RFQ</span> : <span class="rfq-badge cat">目录</span>}
                 {' '}{r.src}
               </td>
             </tr>
@@ -168,61 +168,61 @@ const jsonLd = [
         </tbody>
       </table>
     </div>
-    <p class="resource-note">Don't see your number? Send it (with the engine model + serial) via the form — we add confirmed numbers to this table, which also helps the next operator with the same engine.</p>
+    <p class="resource-note">没找到您的零件号？请通过表单提交（附发动机型号 + 出厂编号）——经确认的号码将补充至本表，也能帮助下一位同款发动机的用户。</p>
 
-    <h2>4. How to identify your exact part</h2>
-    <p>"MTU 396 part" is often <strong>not enough</strong> to order safely. A 396 engine may have run for decades: components were replaced, numbers changed, reconditioned parts fitted. To match the right item we need:</p>
+    <h2>4. 如何识别您的确切零件</h2>
+    <p>「MTU 396 零件」往往<strong>不足以</strong>安全订购。一台 396 发动机可能已运转数十年：零件换过、号变过、翻新件装过。为匹配正确零件，我们需要：</p>
     <ul class="resource-list">
-      <li><strong>Complete engine designation</strong> (e.g. <code>16V396TE94</code>, not just "396")</li>
-      <li><strong>Engine serial number</strong> from the identification plate</li>
-      <li><strong>Existing component part number</strong> — the marking on the old part beats any photo title</li>
-      <li><strong>Component description + quantity</strong>, and a photo of the old part where possible</li>
+      <li><strong>完整发动机型号</strong>（例如 <code>16V396TE94</code>，而非仅「396」）</li>
+      <li>识别铭牌上的<strong>发动机出厂编号</strong></li>
+      <li><strong>现有零件号</strong>——旧件上的标记胜过任何照片说明</li>
+      <li><strong>零件描述 + 数量</strong>，并尽可能提供旧件照片</li>
     </ul>
-    <p>This is the same discipline we apply to every enquiry before quoting — it prevents shipping a look-alike that doesn't fit your exact configuration.</p>
+    <p>这与我们对每笔询价报价前的一贯要求相同——可避免发出与您的确切构型不匹配的「貌似之件」。</p>
 
-    <h2>5. Enquiry log — how 396 parts reach us</h2>
-    <p>Real examples of 396-related requests we have handled (buyers anonymized). These show the range of configurations and parts in active service:</p>
+    <h2>5. 询盘记录——396 配件如何到达我们手中</h2>
+    <p>我们经手的 396 相关请求实例（买家已匿名）。它们展示了在役构型与零件的范围：</p>
 
     <div class="enquiry-log">
-      <div class="meta">RFQ · Marine operator · exhaust temperature sensing</div>
-      <strong>Exhaust thermocouples <code>0005350260</code> / <code>0005353960</code></strong> for an MTU 396 in continuous duty. Buyer required branded OE parts (no white-label). Quoted genuine thermocouples; cross-reference to a non-MTU sensor brand requested as photo confirmation.
+      <div class="meta">RFQ · 船运运营商 · 排气温度检测</div>
+      <strong>排气热电偶 <code>0005350260</code> / <code>0005353960</code></strong>，用于一台连续运行的 MTU 396。买家要求品牌 OE 件（不要白牌）。我们报了原厂热电偶；非 MTU 传感器品牌的交叉引用按买家要求以照片确认。
     </div>
 
     <div class="enquiry-log">
-      <div class="meta">RFQ · Tender / project buyer · gaskets</div>
-      <strong>Gasket <code>5600160180</code></strong> for MTU 396, part of a multi-line tender. Identified from part number; supplied with fitment confirmation against the engine designation.
+      <div class="meta">RFQ · 招标 / 项目买家 · 垫片</div>
+      <strong>垫片 <code>5600160180</code></strong>，MTU 396 用，属多行招标的一部分。按零件号识别；随附针对发动机型号的适配确认。
     </div>
 
     <div class="enquiry-log">
-      <div class="meta">RFQ · Marine supplier · stock matching</div>
-      <strong>MTU 396 spare list</strong> — a marine parts supplier sent an MTU parts list for line-by-line matching against available stock. Demonstrates the "send your list, we match PN-by-PN" workflow.
+      <div class="meta">RFQ · 船配供应商 · 库存匹配</div>
+      <strong>MTU 396 备件清单</strong>——一家船配供应商发来 MTU 零件清单，要求逐行匹配可用库存。体现了「发来您的清单，我们逐号匹配」的工作流。
     </div>
 
     <div class="enquiry-log">
-      <div class="meta">RFQ · Overhaul / service kit</div>
-      <strong>MTU 396 service &amp; overhaul kit</strong> — periodic maintenance package (pistons, rings, bearings, gaskets, seals). Sourced from non-OEM alternative channels where the buyer accepted documented equivalents.
+      <div class="meta">RFQ · 大修 / 保养包</div>
+      <strong>MTU 396 保养与大修包</strong>——定期保养组合（活塞、活塞环、轴承、垫片、密封件）。在买方接受凭证等价件的前提下，经非 OEM 替代渠道采购。
     </div>
 
-    <h2>6. Supply options</h2>
+    <h2>6. 供货选项</h2>
     <div class="hub-grid">
-      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">Genuine new</h3><p class="hub-card-summary">Original MTU-packaged components with full traceability — best where the documentation chain has to stand up to inspection.</p></div></div>
-      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">Reconditioned / exchange</h3><p class="hub-card-summary">Factory-level overhaul of pumps, injectors, turbochargers — typically 30–40% lower cost, faster lead time.</p></div></div>
-      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">Documented alternative</h3><p class="hub-card-summary">Verified equivalents for non-critical items where the buyer accepts them — best value for routine overhaul.</p></div></div>
+      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">原厂新件</h3><p class="hub-card-summary">MTU 原包装零件，溯源完整——在文件链需经受检验的场合最为稳妥。</p></div></div>
+      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">翻新 / 交换件</h3><p class="hub-card-summary">油泵、喷油器、涡轮增压器的工厂级翻新——成本通常低 30–40%，交货期更短。</p></div></div>
+      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">凭证替代件</h3><p class="hub-card-summary">经核验的等价件，适用于买方接受的非关键项目——常规大修性价比之选。</p></div></div>
     </div>
 
-    <h2>7. MTU series cluster</h2>
-    <p>These hubs group MTU families by the enquiries we actually receive. The 396 page carries live RFQ-verified numbers; the 2000 page is catalog-seed rich; both link to the 4000 family:</p>
+    <h2>7. MTU 系列集群</h2>
+    <p>下列专区按我们实际收到的询盘对 MTU 家族分组。396 页面含实时 RFQ 核验零件号；2000 页面目录预置数据丰富；两者均链接至 4000 家族：</p>
     <div class="hub-grid">
-      <a class="hub-card" href="/series/mtu-396-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 396 Variant Decoder</h3><p class="hub-card-summary">TB / TC / TE / SE duty codes and per-model table — which parts differ by configuration.</p></div></a>
-      <a class="hub-card" href="/series/mtu-2000/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 2000 Series Hub</h3><p class="hub-card-summary">8V / 12V / 16V / 18V high-speed engines — yachts, patrol craft, ferries, marine gensets.</p></div></a>
-      <a class="hub-card" href="/products/mtu-4000-series-parts/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 4000 Series Parts</h3><p class="hub-card-summary">12V / 16V / 20V larger siblings — higher-power marine and genset duty.</p></div></a>
-      <a class="hub-card" href="/products/mtu-spare-parts/mtu-engine-series-guide/"><div class="hub-card-body"><h3 class="hub-card-title">MTU Engine Series Guide</h3><p class="hub-card-summary">Full MTU family map — pick the right series before quoting.</p></div></a>
-      <a class="hub-card" href="/series/mtu-1163/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 1163 Series Hub</h3><p class="hub-card-summary">12V / 16V / 20V large-bore family (230 × 280 mm) — naval & fast ferries.</p></div></a>
-      <a class="hub-card" href="/series/mtu-4000-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 4000 Variant Decoder</h3><p class="hub-card-summary">M05 / M03 / C05 / R03 / R04 / T05 + M-duty notation — larger siblings.</p></div></a>
-      <a class="hub-card" href="/series/12v396te94/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 12V 396 TE94</h3><p class="hub-card-summary">Single-model deep dive — 1,680 kW marine & genset engine with live RFQ numbers.</p></div></a>
+      <a class="hub-card" href="/series/mtu-396-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 396 变型解读</h3><p class="hub-card-summary">TB / TC / TE / SE 用途代码与分型号表——哪些零件随构型而异。</p></div></a>
+      <a class="hub-card" href="/series/mtu-2000/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 2000 系列专区</h3><p class="hub-card-summary">8V / 12V / 16V / 18V 高速发动机——游艇、巡逻艇、渡轮、船用发电机组。</p></div></a>
+      <a class="hub-card" href="/products/mtu-4000-series-parts/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 4000 系列配件</h3><p class="hub-card-summary">12V / 16V / 20V 同族更大机型——更高功率的船用与发电用途。</p></div></a>
+      <a class="hub-card" href="/products/mtu-spare-parts/mtu-engine-series-guide/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 发动机系列指南</h3><p class="hub-card-summary">MTU 家族全图——询价前先选对系列。</p></div></a>
+      <a class="hub-card" href="/series/mtu-1163/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 1163 系列专区</h3><p class="hub-card-summary">12V / 16V / 20V 大缸径家族（230 × 280 mm）——海军与高速渡轮。</p></div></a>
+      <a class="hub-card" href="/series/mtu-4000-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 4000 变型解读</h3><p class="hub-card-summary">M05 / M03 / C05 / R03 / R04 / T05 及 M 用途标识——同族更大机型。</p></div></a>
+      <a class="hub-card" href="/series/12v396te94/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 12V 396 TE94</h3><p class="hub-card-summary">单机型深度解析——1,680 kW 船用与发电发动机，含实时 RFQ 零件号。</p></div></a>
     </div>
 
-    <FaqSection items={faqItems} title="MTU 396 Series FAQ" subtitle="FAQ" />
+    <FaqSection items={faqItems} title="MTU 396 系列常见问题" subtitle="常见问题" />
   </DetailPageShell>
 </BaseLayout>
 

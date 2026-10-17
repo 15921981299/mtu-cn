@@ -9,20 +9,20 @@ import '../../styles/terms-page.css';
 ---
 
 <BaseLayout
-  title="Shipping & Logistics — Engine Parts Global Delivery | Diesel Part Source"
-  description="Shipping options for diesel engine parts: DHL/FedEx express, air freight, sea freight. EXW, FOB, and DDP Incoterms explained."
+  title="运输与物流 — 发动机零件全球配送 | 柴油零件源"
+  description="柴油发动机零件运输选项：DHL/FedEx 快递、空运与海运，EXW、FOB、DDP 贸易术语说明。"
   currentPath="/terms/shipping"
   jsonLd={breadcrumbSchema([
-    { name: 'Home', url: site.url },
-    { name: 'Shipping Terms', url: `${site.url}/terms/shipping/` },
+    { name: '首页', url: site.url },
+    { name: '运输条款', url: `${site.url}/terms/shipping/` },
   ])}
 >
   <FunnelPageView stage="signing" label="shipping-terms" />
   <BreadcrumbHero
-    title="Shipping &amp; Logistics"
+    title="运输与物流"
     trail={[
-      { label: 'Home', href: '/' },
-      { label: 'Shipping Terms' },
+      { label: '首页', href: '/' },
+      { label: '运输条款' },
     ]}
     variant="5"
   />
@@ -34,112 +34,112 @@ import '../../styles/terms-page.css';
           <TermsNav active="shipping" />
 
           <p class="terms-intro">
-            We ship diesel engine parts worldwide from Shanghai. Choose express for urgent and small orders or freight for heavy and large orders — Incoterm and carrier are confirmed on your quotation.
+            我们从上海向全球发运柴油发动机零件。急件与小订单选快递，重货与大订单选货运——贸易术语（Incoterm）与承运商以您的报价单为准。
           </p>
 
-          <div class="terms-meta" aria-label="Shipping overview">
-            <span><strong>DHL / FedEx / UPS</strong> express</span>
-            <span>Air &amp; sea freight for volume</span>
-            <span><strong>EXW · FOB · DDP</strong> Incoterms</span>
-            <span><strong>3–45</strong> days transit by method</span>
+          <div class="terms-meta" aria-label="运输概览">
+            <span><strong>DHL / FedEx / UPS</strong> 快递</span>
+            <span>大宗货件走空运与海运</span>
+            <span><strong>EXW · FOB · DDP</strong> 贸易术语</span>
+            <span>运输时效 <strong>3–45</strong> 天（视方式而定）</span>
           </div>
 
           <div class="terms-rfq-strip">
-            <p>Note destination, Incoterm, and urgency on the RFQ — we confirm carrier, transit time, and freight cost in the quote.</p>
-            <a href="/contact/?source=shipping-terms" class="terms-rfq-link">Confirm on RFQ</a>
+            <p>请在询价单（RFQ）中注明目的地、贸易术语与紧急程度——我们将在报价中确认承运商、运输时效与运费。</p>
+            <a href="/contact/?source=shipping-terms" class="terms-rfq-link">在询价单中确认</a>
           </div>
 
           <div class="terms-table-wrap">
             <table class="terms-table">
-              <caption class="terms-table-caption">Shipping methods, transit times, and typical use cases</caption>
+              <caption class="terms-table-caption">运输方式、时效与典型适用场景</caption>
               <thead>
                 <tr>
-                  <th scope="col">Method</th>
-                  <th scope="col">Transit time</th>
-                  <th scope="col">Typical use</th>
+                  <th scope="col">方式</th>
+                  <th scope="col">运输时效</th>
+                  <th scope="col">典型适用</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>Express courier</strong> (DHL / FedEx / UPS)</td>
-                  <td>3–7 business days to North America and Europe</td>
-                  <td>Urgent breakdown parts and orders under 50 kg</td>
+                  <td><strong>国际快递</strong>（DHL / FedEx / UPS）</td>
+                  <td>至北美与欧洲 3–7 个工作日</td>
+                  <td>紧急故障件与 50 kg 以下订单</td>
                 </tr>
                 <tr>
-                  <td><strong>Air freight</strong></td>
-                  <td>7–14 days</td>
-                  <td>Maintenance lists and mid-size overhaul orders</td>
+                  <td><strong>空运</strong></td>
+                  <td>7–14 天</td>
+                  <td>保养清单与中型大修订单</td>
                 </tr>
                 <tr>
-                  <td><strong>Sea freight</strong> (FCL / LCL)</td>
-                  <td>25–45 days</td>
-                  <td>Major overhaul lists, cylinder heads, and other heavy parts</td>
+                  <td><strong>海运</strong>（FCL / LCL）</td>
+                  <td>25–45 天</td>
+                  <td>大型大修清单、气缸盖及其他重型零件</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <nav class="terms-jump-nav" aria-label="On this page">
-            <a href="#express-courier" class="terms-jump-link">Express courier</a>
-            <a href="#air-sea-freight" class="terms-jump-link">Air &amp; sea freight</a>
-            <a href="#incoterms" class="terms-jump-link">Incoterms</a>
+          <nav class="terms-jump-nav" aria-label="本页导航">
+            <a href="#express-courier" class="terms-jump-link">国际快递</a>
+            <a href="#air-sea-freight" class="terms-jump-link">空运与海运</a>
+            <a href="#incoterms" class="terms-jump-link">贸易术语</a>
           </nav>
 
-          <h2 id="express-courier">Express Courier (Urgent &amp; Small Orders)</h2>
+          <h2 id="express-courier">国际快递（急件与小订单）</h2>
           <ul class="terms-list">
-            <li>Door-to-door tracking; commercial invoice and HS codes prepared</li>
-            <li>Moisture-barrier packaging for machined and sealing surfaces when required</li>
-            <li>Balance payment due before shipment per <a href="/terms/payment/">payment terms →</a></li>
+            <li>门到门派送追踪；备妥商业发票与 HS 编码</li>
+            <li>如需要，对机加工面与密封面采取防潮包装</li>
+            <li>尾款须于发货前付清，详见<a href="/terms/payment/">付款条款 →</a></li>
           </ul>
 
-          <h2 id="air-sea-freight">Air &amp; Sea Freight (Large &amp; Heavy Orders)</h2>
+          <h2 id="air-sea-freight">空运与海运（大额与重型订单）</h2>
           <ul class="terms-list">
-            <li>Palletized or crated with packing list and certificate of origin when required</li>
-            <li>Import duties and customs clearance per agreed Incoterm below</li>
-            <li>Sourcing lead time for sourced-to-order lines quoted separately from transit time</li>
+            <li>采用托盘或木箱包装，随附装箱单；如需，提供原产地证书</li>
+            <li>进口关税与清关按下方约定的贸易术语执行</li>
+            <li>按单采购（sourced-to-order）行项的寻源交货期与运输时效分开报价</li>
           </ul>
 
-          <h2 id="incoterms">Incoterms We Support</h2>
+          <h2 id="incoterms">我们支持的贸易术语</h2>
           <div class="terms-table-wrap">
             <table class="terms-table">
-              <caption class="terms-table-caption">Supported Incoterms and buyer vs. seller responsibilities</caption>
+              <caption class="terms-table-caption">支持的贸易术语及买卖双方责任划分</caption>
               <thead>
                 <tr>
-                  <th scope="col">Term</th>
-                  <th scope="col">Meaning</th>
+                  <th scope="col">术语</th>
+                  <th scope="col">含义</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td><strong>EXW</strong></td>
-                  <td>Buyer arranges pickup and all freight from our facility</td>
+                  <td>买方安排到我方场地提货，并承担全部运费</td>
                 </tr>
                 <tr>
                   <td><strong>FOB</strong></td>
-                  <td>We deliver to port; buyer handles ocean/air freight and import</td>
+                  <td>我们负责交货至港口；买方负责海运/空运及进口事宜</td>
                 </tr>
                 <tr>
                   <td><strong>DDP</strong></td>
-                  <td>Delivered duty paid to your door (quote includes freight + import)</td>
+                  <td>完税后交货至您门口（报价含运费与进口费用）</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
           <div class="terms-note">
-            <strong>Logistics tip:</strong> State your preferred Incoterm and destination on the RFQ — DDP quotes need your delivery address and any import compliance requirements upfront. See our <a href="/terms/shipping/">Incoterms glossary</a> for definitions.
+            <strong>物流提示：</strong>请在询价单（RFQ）中注明您倾向的贸易术语与目的地——DDP 报价需要您提前提供送货地址及进口合规要求。术语定义可参阅我们的<a href="/terms/shipping/">贸易术语表</a>。
           </div>
 
           <p class="terms-related">
-            <a href="/terms/shipping/">Incoterms glossary</a>
+            <a href="/terms/shipping/">贸易术语表</a>
             <span aria-hidden="true">·</span>
-            <a href="/terms/payment/">Payment terms</a>
+            <a href="/terms/payment/">付款条款</a>
             <span aria-hidden="true">·</span>
-            <a href="/terms/samples/">Sample policy</a>
+            <a href="/terms/samples/">样品政策</a>
             <span aria-hidden="true">·</span>
-            <a href="/about/">Project proof</a>
+            <a href="/about/">项目实绩</a>
             <span aria-hidden="true">·</span>
-            <a href="/contact/?source=shipping-terms">Request a shipping quote →</a>
+            <a href="/contact/?source=shipping-terms">申请运输报价 →</a>
           </p>
         </article>
       </div>
@@ -149,12 +149,12 @@ import '../../styles/terms-page.css';
   <BlogCta
     stage="signing"
     topic="shipping"
-    title="Confirm shipping on your quote"
-    text="Send your part number and note destination, Incoterm, and urgency — we confirm carrier, transit time, and freight cost in the quotation response."
-    primaryLabel="Request a Quote"
+    title="在报价中确认运输安排"
+    text="发送您的零件号，并注明目的地、贸易术语与紧急程度——我们将在报价回复中确认承运商、运输时效与运费。"
+    primaryLabel="获取报价"
     primaryHref="/contact/?source=shipping-terms"
     primaryEvent="shipping_terms_rfq"
-    secondaryLabel="Payment terms"
+    secondaryLabel="付款条款"
     secondaryHref="/terms/payment/"
     secondaryEvent="shipping_terms_payment"
   />

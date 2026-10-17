@@ -1,15 +1,15 @@
 /**
- * Customer supply cases. RED LINE: only real, customer-authorized cases go here.
- * Never invent a case, a customer name, a quote, or a result figure.
+ * 客户供货案例。红线：此处只收录真实、经客户授权的案例。
+ * 严禁虚构案例、客户名、报价或结果数据。
  *
- * Workflow:
- * 1. Get written authorization at order/contract time (article-backed: retroactive
- *    permission succeeds far less often; named cases convert 60-80% better than anonymous).
- * 2. Add an entry below with status: 'draft' and collect the real details.
- * 3. Switch to status: 'published' only after the customer confirms the final text.
- * 4. Pages, sitemap inclusion, and index listing appear automatically on next build.
+ * 工作流：
+ * 1. 在订单/合同阶段取得书面授权（有文章依据：事后追认成功率远低于事前授权；
+ *    具名案例的转化率比匿名高 60–80%）。
+ * 2. 在下方添加 status: 'draft' 的条目，收集真实细节。
+ * 3. 仅在客户确认最终文本后切换为 status: 'published'。
+ * 4. 页面、sitemap 收录与索引列表在下次构建时自动出现。
  *
- * Empty published list = /case-studies/ stays noindex and out of the sitemap.
+ * published 列表为空 = /case-studies/ 保持 noindex 且不入 sitemap。
  */
 export type CaseStudy = {
   slug: string;
@@ -17,33 +17,33 @@ export type CaseStudy = {
   title: string;
   summary: string;
   industry: string;
-  /** Country or region, only as precise as the customer allows. */
+  /** 国家或地区，精度以客户允许为限。 */
   region: string;
   engineModel: string;
-  /** The operational problem, in the customer's terms. */
+  /** 客户所述的操作层面问题。 */
   challenge: string[];
-  /** What we supplied and how it was verified. */
+  /** 我们供应了什么以及如何核验。 */
   solution: string[];
-  /** Measurable outcome — only figures the customer confirmed. */
+  /** 可量化的结果——仅客户确认过的数字。 */
   outcome: string[];
-  /** Customer's own words, with written permission. Optional. */
+  /** 客户原话，经书面许可。可选。 */
   quote?: { text: string; person: string; role: string; company: string };
-  /** Part numbers actually supplied (links to part pages). */
+  /** 实际供应的零件号（链接至零件页）。 */
   suppliedParts: { partNumber: string; slug: string; name: string }[];
-  datePublished: string; // ISO date
-  /** Real reviewer on our side (E-E-A-T). */
+  datePublished: string; // ISO 日期
+  /** 我方的真实审核人（E-E-A-T）。 */
   reviewerName: string;
   reviewerJobTitle: string;
 };
 
 export const caseStudies: CaseStudy[] = [
-  // Example structure (keep commented until a real case exists):
+  // 示例结构（在真实案例出现前保持注释）：
   // {
   //   slug: 'marine-fleet-16v4000-overhaul-parts',
   //   status: 'draft',
-  //   title: '16V 4000 Overhaul Parts for a Marine Fleet Operator',
+  //   title: '为某船队运营方供应 16V 4000 大修零件',
   //   summary: '...',
-  //   industry: 'Marine',
+  //   industry: '船用',
   //   region: '...',
   //   engineModel: 'MTU 16V 4000',
   //   challenge: ['...'],
@@ -52,7 +52,7 @@ export const caseStudies: CaseStudy[] = [
   //   suppliedParts: [{ partNumber: '...', slug: '...', name: '...' }],
   //   datePublished: '2026-01-01',
   //   reviewerName: 'Lisa Huang',
-  //   reviewerJobTitle: 'Parts Verification Lead',
+  //   reviewerJobTitle: '零件核验主管',
   // },
 ];
 

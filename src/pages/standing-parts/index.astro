@@ -11,99 +11,94 @@ const pageUrl = `${site.url}/standing-parts/`;
 const groups = [
   {
     brand: 'MTU',
-    note: 'Coverage spans the high-volume 2000/4000 series through the 1600, 8000 and legacy marine families.',
+    note: '覆盖范围从大批量的 2000/4000 系列，到 1600、8000 及经典船用家族。',
     items: [
-      { label: 'MTU 2000 Series (12V · 16V · 18V)', href: '/products/mtu-2000-series-parts/' },
-      { label: 'MTU 4000 Series (8V · 12V · 16V · 20V)', href: '/products/mtu-4000-series-parts/' },
-      { label: 'MTU 1600 Series & F-build models', href: '/products/mtu-spare-parts/mtu-1600-series-parts/' },
-      { label: 'MTU 8000 Series', href: '/products/mtu-series-8000-engines/' },
-      { label: 'MTU 396 / 538 / 956 legacy families', href: '/series/mtu-396/' },
-      { label: 'MTU 1163 marine & defence engines', href: '/series/mtu-1163/' },
+      { label: 'MTU 2000 系列（12V · 16V · 18V）', href: '/products/mtu-2000-series-parts/' },
+      { label: 'MTU 4000 系列（8V · 12V · 16V · 20V）', href: '/products/mtu-4000-series-parts/' },
+      { label: 'MTU 1600 系列与 F 构型型号', href: '/products/mtu-spare-parts/mtu-1600-series-parts/' },
+      { label: 'MTU 8000 系列', href: '/products/mtu-series-8000-engines/' },
+      { label: 'MTU 396 / 538 / 956 经典家族', href: '/series/mtu-396/' },
+      { label: 'MTU 1163 船用与防务发动机', href: '/series/mtu-1163/' },
     ],
   },
   {
     brand: 'Detroit Diesel',
-    note: 'Two-stroke 53/71/92 families and the four-stroke Series 60, including MTU-badged 60 Series builds.',
+    note: '二冲程 53/71/92 家族与四冲程 Series 60，含挂 MTU 标的 60 系列构型。',
     items: [
       { label: 'Detroit Diesel Series 60', href: '/products/detroit-diesel-parts/' },
-      { label: 'Detroit Diesel 71 Series', href: '/products/detroit-diesel-parts/' },
-      { label: 'Detroit Diesel 92 Series', href: '/products/detroit-diesel-parts/' },
-      { label: 'Detroit Diesel 53 Series', href: '/products/detroit-diesel-parts/' },
+      { label: 'Detroit Diesel 71 系列', href: '/products/detroit-diesel-parts/' },
+      { label: 'Detroit Diesel 92 系列', href: '/products/detroit-diesel-parts/' },
+      { label: 'Detroit Diesel 53 系列', href: '/products/detroit-diesel-parts/' },
     ],
   },
   {
     brand: 'Cummins',
-    note: 'Mid-range B-series through the heavy QSK/KTA platform, plus the N14/NT855 lineage.',
+    note: '从中型 B 系列到重型 QSK/KTA 平台，以及 N14/NT855 谱系。',
     items: [
-      { label: 'Cummins ISM / QSM11 (10.8 L)', href: '/products/cummins-parts/cummins-ism-engine-parts/' },
-      { label: 'Cummins ISL / ISLe / QSL (8.9 L)', href: '/products/cummins-parts/cummins-isl-engine-parts/' },
-      { label: 'Cummins QSK19 / KTA19 (19 L)', href: '/products/cummins-parts/cummins-qsk19-engine-parts/' },
-      { label: 'Cummins QSK38 / KTA38 (V12)', href: '/products/cummins-parts/cummins-qsk38-v12-engine-parts/' },
-      { label: 'Cummins QSK50 / KTA50 (V16)', href: '/products/cummins-parts/cummins-qsk50-v16-engine-parts/' },
-      { label: 'Cummins 6BT / 4BT (B-series)', href: '/products/cummins-parts/cummins-6bt-engine-parts/' },
+      { label: 'Cummins ISM / QSM11（10.8 L）', href: '/products/cummins-parts/cummins-ism-engine-parts/' },
+      { label: 'Cummins ISL / ISLe / QSL（8.9 L）', href: '/products/cummins-parts/cummins-isl-engine-parts/' },
+      { label: 'Cummins QSK19 / KTA19（19 L）', href: '/products/cummins-parts/cummins-qsk19-engine-parts/' },
+      { label: 'Cummins QSK38 / KTA38（V12）', href: '/products/cummins-parts/cummins-qsk38-v12-engine-parts/' },
+      { label: 'Cummins QSK50 / KTA50（V16）', href: '/products/cummins-parts/cummins-qsk50-v16-engine-parts/' },
+      { label: 'Cummins 6BT / 4BT（B 系列）', href: '/products/cummins-parts/cummins-6bt-engine-parts/' },
       { label: 'Cummins N14 / NT855', href: '/products/cummins-parts/cummins-n14-engine-parts/' },
     ],
   },
   {
     brand: 'DEUTZ',
-    note: 'Air-cooled 912/913 families and liquid-cooled 1011/2011/2012/2013 common-rail ranges.',
+    note: '风冷 912/913 家族与液冷 1011/2011/2012/2013 共轨系列。',
     items: [
-      { label: 'DEUTZ 2012 Series', href: '/products/deutz-parts/deutz-2012-series-parts/' },
-      { label: 'DEUTZ 2013 / TCD 2013 (common-rail)', href: '/products/deutz-parts/deutz-2013-series-parts/' },
-      { label: 'DEUTZ 1011 Series', href: '/products/deutz-parts/deutz-1011-series-parts/' },
-      { label: 'DEUTZ 2011 Series', href: '/products/deutz-parts/deutz-2011-series-parts/' },
-      { label: 'DEUTZ 912 / 913 air-cooled families', href: '/products/deutz-parts/' },
+      { label: 'DEUTZ 2012 系列', href: '/products/deutz-parts/deutz-2012-series-parts/' },
+      { label: 'DEUTZ 2013 / TCD 2013（共轨）', href: '/products/deutz-parts/deutz-2013-series-parts/' },
+      { label: 'DEUTZ 1011 系列', href: '/products/deutz-parts/deutz-1011-series-parts/' },
+      { label: 'DEUTZ 2011 系列', href: '/products/deutz-parts/deutz-2011-series-parts/' },
+      { label: 'DEUTZ 912 / 913 风冷家族', href: '/products/deutz-parts/' },
     ],
   },
 ];
 ---
 
 <BaseLayout
-  title="Standing Engine Series List — Parts We Regularly Source"
-  description="Engine series we routinely source parts for across MTU, Detroit Diesel, Cummins and DEUTZ. This is a coverage list, not a live stock count — availability and lead time are confirmed per enquiry after the part number and engine serial number are checked."
+  title="常备发动机系列清单 — 我们经常采购零件的系列"
+  description="我们在 MTU、Detroit Diesel、Cummins 与 DEUTZ 上经常采购零件的发动机系列。这是一份覆盖清单，而非实时库存——供货情况与交货期在核验零件号与发动机出厂编号后按询价确认。"
   currentPath="/standing-parts"
   jsonLd={[
     breadcrumbSchema([
-      { name: 'Home', url: site.url },
-      { name: 'Standing Series List', url: pageUrl },
+      { name: '首页', url: site.url },
+      { name: '常备系列清单', url: pageUrl },
     ]),
   ]}
 >
   <FunnelPageView stage="service" label="standing-parts" />
   <BreadcrumbHero
-    title="Standing Engine Series List"
-    trail={[{ label: 'Home', href: '/' }, { label: 'Standing Series List' }]}
+    title="常备发动机系列清单"
+    trail={[{ label: '首页', href: '/' }, { label: '常备系列清单' }]}
     variant="3"
   />
 
   <div class="resource-page">
     <section class="resource-page-section">
       <p>
-        This page lists the <strong>engine series we regularly source parts for</strong>. It is a
-        coverage map of the programs our team works with most often — not a live stock figure and
-        not a price list. We do not publish running inventory counts, because the supplied condition,
-        packaging and lead time for a given part number change with every enquiry.
+        本页列出<strong>我们经常采购零件的发动机系列</strong>。它是我们团队最常打交道的项目覆盖图——不是实时库存数字，也不是价格表。我们不公布动态库存计数，因为给定零件号的供货状态、包装与交货期随每次询价而变。
       </p>
       <p>
-        For any series below, send the <strong>part number, engine model and engine serial number</strong>.
-        We verify fitment and supersessions against the catalog, then confirm availability, lead time
-        and the supplied route (genuine, OEM-quality, or verified aftermarket) per line.
+        对于下列任何系列，请发送<strong>零件号、发动机型号与发动机出厂编号</strong>。我们对照目录核验适配性与替代关系，然后逐行确认供货情况、交货期与供货路线（原厂件、OEM 同质件或经核验副厂件）。
       </p>
     </section>
 
     <section class="resource-page-section">
-      <h2>How to read this list</h2>
+      <h2>如何阅读本清单</h2>
       <ul class="resource-olist">
-        <li><strong>Standing series</strong> — programs we keep sourcing channels open for and quote against routinely.</li>
-        <li><strong>Coverage, not stock</strong> — a series appearing here means we can work the part number, not that a box is on a shelf.</li>
-        <li><strong>Per-enquiry confirmation</strong> — final availability and lead time are confirmed after we check the engine serial number and catalog position.</li>
-        <li><strong>Beyond the list</strong> — if your engine is not shown, send the details anyway; many cross-brand references resolve through the same suppliers.</li>
+        <li><strong>常备系列</strong>——我们保持采购渠道畅通并日常报价的项目。</li>
+        <li><strong>覆盖而非库存</strong>——系列出现在此意味着我们可以操作该零件号，而非货架上已有现货。</li>
+        <li><strong>按询价确认</strong>——最终供货情况与交货期在我们核查发动机出厂编号与目录位置后确认。</li>
+        <li><strong>清单之外</strong>——如果您的发动机未列出，也请照常发来详情；许多跨品牌参考号经由同样的供应商解决。</li>
       </ul>
     </section>
 
     {groups.map((group) => (
       <section class="resource-page-section">
-        <h2>{group.brand} — Standing Series</h2>
+        <h2>{group.brand} — 常备系列</h2>
         <p>{group.note}</p>
         <ul class="standing-list">
           {group.items.map((item) => (
@@ -116,22 +111,22 @@ const groups = [
     ))}
 
     <section class="resource-page-section">
-      <h2>Related Resources</h2>
+      <h2>相关资源</h2>
       <ul class="resource-olist">
-        <li><a href="/part-number-index/">Search all part numbers (EN · DE)</a></li>
-        <li><a href="/engine-models/">Parts lists by engine model</a></li>
-        <li><a href="/cross-reference/">Part number cross reference</a></li>
-        <li><a href="/products/mtu-spare-parts/regularly-sourced-parts/">Regularly sourced MTU parts</a> — categories and series coverage</li>
-        <li><a href="/guides/">Engine parts guides</a> — overhaul planning and series identification</li>
-        <li><a href="/genuine-oem-parts/">Genuine, OEM-quality and aftermarket routes</a></li>
+        <li><a href="/part-number-index/">查询全部零件号（EN · DE）</a></li>
+        <li><a href="/engine-models/">按发动机型号列出的零件清单</a></li>
+        <li><a href="/cross-reference/">零件号交叉引用</a></li>
+        <li><a href="/products/mtu-spare-parts/regularly-sourced-parts/">经常采购的 MTU 零件</a>——类别与系列覆盖</li>
+        <li><a href="/guides/">发动机零件指南</a>——大修规划与系列识别</li>
+        <li><a href="/genuine-oem-parts/">原厂件、OEM 同质件与副厂件路线</a></li>
       </ul>
     </section>
 
     <DetailRfqStrip
-      title="Send your engine details"
-      text="Model, serial number, and the positions you need — we verify fitment and supersessions, then quote with availability per line."
+      title="发送您的发动机详情"
+      text="型号、出厂编号与所需部位——我们核验适配性与替代关系，然后逐行报价并注明供货情况。"
       quoteHref="/contact/?source=standing-parts"
-      label="Request Parts Quote"
+      label="发起零件询价"
       modalSource="standing-parts"
     />
   </div>

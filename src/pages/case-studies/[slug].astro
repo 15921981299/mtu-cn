@@ -5,6 +5,7 @@ import FunnelPageView from '../../components/FunnelPageView.astro';
 import DetailRfqStrip from '../../components/DetailRfqStrip.astro';
 import { publishedCaseStudies } from '../../data/case-studies';
 import { breadcrumbSchema, caseStudySchema, site } from '../../data/site';
+import { zhPartName } from '../../data/part-names-zh';
 import '../../styles/resource-page.css';
 
 export function getStaticPaths() {
@@ -21,8 +22,8 @@ const pageUrl = `${site.url}/case-studies/${study.slug}/`;
   currentPath="/case-studies"
   jsonLd={[
     breadcrumbSchema([
-      { name: 'Home', url: site.url },
-      { name: 'Customer Cases', url: `${site.url}/case-studies/` },
+      { name: '首页', url: site.url },
+      { name: '客户案例', url: `${site.url}/case-studies/` },
       { name: study.title, url: pageUrl },
     ]),
     caseStudySchema({
@@ -41,38 +42,38 @@ const pageUrl = `${site.url}/case-studies/${study.slug}/`;
   <FunnelPageView stage="signing" label={`case-${study.slug}`} />
   <BreadcrumbHero
     title={study.title}
-    trail={[{ label: 'Home', href: '/' }, { label: 'Customer Cases', href: '/case-studies/' }, { label: study.title }]}
+    trail={[{ label: '首页', href: '/' }, { label: '客户案例', href: '/case-studies/' }, { label: study.title }]}
     variant="2"
   />
 
   <div class="resource-page">
     <section class="resource-page-section">
       <div class="resource-meta">
-        <span><strong>Industry</strong> {study.industry}</span>
-        <span><strong>Region</strong> {study.region}</span>
-        <span><strong>Engine</strong> {study.engineModel}</span>
-        <span><strong>Reviewed by</strong> {study.reviewerName}, {study.reviewerJobTitle}</span>
+        <span><strong>行业</strong> {study.industry}</span>
+        <span><strong>地区</strong> {study.region}</span>
+        <span><strong>发动机</strong> {study.engineModel}</span>
+        <span><strong>审核人</strong> {study.reviewerName}，{study.reviewerJobTitle}</span>
       </div>
     </section>
 
     <section class="resource-page-section">
-      <h2>The Challenge</h2>
+      <h2>项目挑战</h2>
       {study.challenge.map((paragraph) => <p>{paragraph}</p>)}
     </section>
 
     <section class="resource-page-section">
-      <h2>What We Supplied</h2>
+      <h2>我们供应的零件</h2>
       {study.solution.map((paragraph) => <p>{paragraph}</p>)}
       {study.suppliedParts.length > 0 && (
         <table class="case-parts-table">
           <thead>
-            <tr><th>Part Number</th><th>Part</th></tr>
+            <tr><th>零件号</th><th>零件</th></tr>
           </thead>
           <tbody>
             {study.suppliedParts.map((part) => (
               <tr>
                 <td class="case-pn"><a href={`/part-products/${part.slug}/`}>{part.partNumber}</a></td>
-                <td>{part.name}</td>
+                <td>{zhPartName(part.name)}</td>
               </tr>
             ))}
           </tbody>
@@ -81,7 +82,7 @@ const pageUrl = `${site.url}/case-studies/${study.slug}/`;
     </section>
 
     <section class="resource-page-section">
-      <h2>The Outcome</h2>
+      <h2>项目结果</h2>
       {study.outcome.map((paragraph) => <p>{paragraph}</p>)}
       {study.quote && (
         <blockquote class="case-quote">
@@ -92,10 +93,10 @@ const pageUrl = `${site.url}/case-studies/${study.slug}/`;
     </section>
 
     <DetailRfqStrip
-      title="Similar requirement?"
-      text="Send your engine model, serial number, and part list. The same verification process applies to every inquiry."
+      title="有类似需求？"
+      text="请提供发动机型号、出厂编号与零件清单。同一套核验流程适用于每一次询价。"
       quoteHref={`/contact/?source=case-${study.slug}`}
-      label="Request Parts Quote"
+      label="申请零件报价"
       modalSource={`case-${study.slug}`}
     />
   </div>
