@@ -1,0 +1,200 @@
+---
+const steps = [
+  {
+    label: '01',
+    title: 'Part inquiry received',
+    body: 'Part number, engine model, serial number, quantity, urgency, and destination are logged for review.',
+    meta: 'Inquiry intake',
+  },
+  {
+    label: '02',
+    title: 'Fitment verification',
+    body: 'We check engine series, old part photos, supersession status, stock route, and shipping constraints.',
+    meta: 'Parts check',
+  },
+  {
+    label: '03',
+    title: 'Quote package',
+    body: 'Buyer receives price, lead time, stock status, replacement notes, documentation scope, and open questions.',
+    meta: '24h target',
+  },
+  {
+    label: '04',
+    title: 'PO to shipment',
+    body: 'Order confirmation, item photos when available, export packing, dispatch note, and tracking.',
+    meta: 'Traceable release',
+  },
+];
+---
+
+<section class="rfq-workflow-proof" aria-labelledby="rfq-workflow-proof-title">
+  <div class="rfq-workflow-proof__copy">
+    <p class="rfq-workflow-proof__kicker">Parts inquiry workflow</p>
+    <h2 id="rfq-workflow-proof-title">What happens after a buyer sends a part number</h2>
+    <p>
+      This workflow mirrors the way we process incoming engine parts inquiries: part-number intake, fitment check,
+      stock route, quote assumptions, documentation scope, and shipment release.
+    </p>
+    <a href="/contact/?source=rfq-workflow-proof">Send a parts inquiry</a>
+  </div>
+
+  <div class="rfq-workflow-proof__screen" aria-label="Parts inquiry workflow example screen">
+    <div class="rfq-workflow-proof__topbar">
+      <span></span>
+      <span></span>
+      <span></span>
+      <strong>PARTS-2026-REDACTED</strong>
+    </div>
+    <div class="rfq-workflow-proof__rows">
+      {steps.map((step) => (
+        <article class="rfq-workflow-proof__row">
+          <div class="rfq-workflow-proof__number">{step.label}</div>
+          <div>
+            <span>{step.meta}</span>
+            <h3>{step.title}</h3>
+            <p>{step.body}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .rfq-workflow-proof {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: 28px;
+    align-items: center;
+    margin: 32px 0;
+    padding: 28px;
+    border: 1px solid var(--color-stroke);
+    border-radius: 8px;
+    background: #f8fafc;
+  }
+
+  .rfq-workflow-proof__kicker {
+    margin: 0 0 8px;
+    color: var(--color-primary);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .rfq-workflow-proof__copy h2 {
+    margin: 0 0 12px;
+    color: var(--color-title);
+    font-size: clamp(22px, 2.4vw, 30px);
+    line-height: 1.25;
+    text-transform: none;
+  }
+
+  .rfq-workflow-proof__copy p {
+    margin: 0 0 16px;
+    color: #475569;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .rfq-workflow-proof__copy a {
+    color: var(--color-primary);
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .rfq-workflow-proof__copy a:hover {
+    text-decoration: underline;
+  }
+
+  .rfq-workflow-proof__screen {
+    overflow: hidden;
+    border: 1px solid rgba(15, 23, 42, 0.12);
+    border-radius: 8px;
+    background: var(--color-white);
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.1);
+  }
+
+  .rfq-workflow-proof__topbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--color-stroke);
+    background: #eef2f7;
+  }
+
+  .rfq-workflow-proof__topbar span {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: #94a3b8;
+  }
+
+  .rfq-workflow-proof__topbar strong {
+    margin-left: auto;
+    color: #475569;
+    font-family: ui-monospace, 'Cascadia Code', 'Segoe UI Mono', monospace;
+    font-size: 12px;
+  }
+
+  .rfq-workflow-proof__rows {
+    display: grid;
+    gap: 1px;
+    background: var(--color-stroke);
+  }
+
+  .rfq-workflow-proof__row {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 14px;
+    padding: 16px;
+    background: var(--color-white);
+  }
+
+  .rfq-workflow-proof__number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: rgba(20, 110, 245, 0.1);
+    color: var(--color-primary);
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .rfq-workflow-proof__row span {
+    display: block;
+    margin-bottom: 3px;
+    color: var(--color-primary);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  .rfq-workflow-proof__row h3 {
+    margin: 0 0 4px;
+    color: var(--color-title);
+    font-size: 15px;
+    line-height: 1.35;
+    text-transform: none;
+  }
+
+  .rfq-workflow-proof__row p {
+    margin: 0;
+    color: #475569;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 820px) {
+    .rfq-workflow-proof {
+      grid-template-columns: 1fr;
+      padding: 22px 18px;
+    }
+  }
+</style>

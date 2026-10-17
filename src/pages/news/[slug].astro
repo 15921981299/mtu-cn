@@ -1,0 +1,146 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../components/BreadcrumbHero.astro';
+import FunnelPageView from '../../components/FunnelPageView.astro';
+import DetailRfqStrip from '../../components/DetailRfqStrip.astro';
+import { newsArticles } from '../../data/news';
+import { articleSchema, breadcrumbSchema, faqSchema, site } from '../../data/site';
+import '../../styles/resource-page.css';
+
+export function getStaticPaths() {
+  return newsArticles.map((article) => ({ params: { slug: article.slug }, props: { article } }));
+}
+
+const { article } = Astro.props;
+const pageUrl = `${site.url}/news/${article.slug}/`;
+const hasPersonAuthor = Boolean(site.author.name);
+---
+
+<BaseLayout
+  title={article.seoTitle}
+  description={article.description}
+  currentPath="/news"
+  jsonLd={[
+    breadcrumbSchema([
+      { name: 'Home', url: site.url },
+      { name: 'Industry Notes', url: `${site.url}/news/` },
+      { name: article.h1, url: pageUrl },
+    ]),
+    articleSchema({
+      title: article.h1,
+      description: article.description,
+      url: pageUrl,
+      image: `${site.url}${article.image}`,
+      datePublished: article.datePublished,
+      dateModified: article.dateModified,
+      authorName: hasPersonAuthor ? site.author.name : site.name,
+      authorType: hasPersonAuthor ? 'Person' : 'Organization',
+      authorJobTitle: hasPersonAuthor && site.author.jobTitle ? site.author.jobTitle : undefined,
+      authorSameAs: hasPersonAuthor && site.author.linkedin ? [site.author.linkedin] : undefined,
+    }),
+    faqSchema(article.faqs),
+  ]}
+>
+  <FunnelPageView stage="service" label={`news-${article.slug}`} />
+  <BreadcrumbHero
+    title={article.h1}
+    trail={[{ label: 'Home', href: '/' }, { label: 'Industry Notes', href: '/news/' }, { label: article.title }]}
+    variant="3"
+  />
+
+  <div class="resource-page">
+    <section class="resource-page-section">
+      <p class="news-lede">{article.description}</p>
+      <div class="resource-meta">
+        <span><strong>Published</strong> {article.datePublished}</span>
+        <span><strong>Category</strong> {article.category}</span>
+        {hasPersonAuthor ? (
+          <span><strong>Written by</strong> {site.author.name}{site.author.jobTitle ? `, ${site.author.jobTitle}` : ''}</span>
+        ) : (
+          <span><strong>Maintained by</strong> The {site.name} parts desk</span>
+        )}
+      </div>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>Key Facts</h2>
+      <ul class="resource-checklist">
+        {article.keyFacts.map((fact) => <li>{fact}</li>)}
+      </ul>
+      <h3>Sources</h3>
+      <ul class="resource-olist">
+        {article.sources.map((source) => (
+          <li><a href={source.url} rel="nofollow noopener" target="_blank">{source.label}</a></li>
+        ))}
+      </ul>
+      <p class="news-note">
+        Facts in this note are taken from the sources listed above. Where a figure is not published by
+        the manufacturer, we do not state one.
+      </p>
+    </section>
+
+    {article.sections.map((section) => (
+      <section class="resource-page-section">
+        <h2>{section.heading}</h2>
+        {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+      </section>
+    ))}
+
+    <section class="resource-page-section">
+      <h2>Related Pages</h2>
+      <ul class="resource-olist">
+        {article.related.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+        <li><a href="/news/">All industry notes</a></li>
+      </ul>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>FAQ</h2>
+      {article.faqs.map((item) => (
+        <details class="news-faq-item">
+          <summary>{item.question}</summary>
+          <p>{item.answer}</p>
+        </details>
+      ))}
+    </section>
+
+    <DetailRfqStrip
+      title="Send your engine details"
+      text="Model, serial number, and the positions you need — we verify fitment and supersessions, then quote with availability per line."
+      quoteHref={`/contact/?source=news-${article.slug}`}
+      label="Request Parts Quote"
+      modalSource={`news-${article.slug}`}
+    />
+  </div>
+</BaseLayout>
+
+<style>
+  .news-lede {
+    font-size: 17px;
+    line-height: 1.65;
+  }
+
+  .news-note {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #64748b;
+  }
+
+  .news-faq-item {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+
+  .news-faq-item summary {
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  .news-faq-item p {
+    margin: 10px 0 0;
+    color: #475569;
+    line-height: 1.6;
+  }
+</style>

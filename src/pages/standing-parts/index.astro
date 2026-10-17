@@ -1,0 +1,167 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../components/BreadcrumbHero.astro';
+import FunnelPageView from '../../components/FunnelPageView.astro';
+import DetailRfqStrip from '../../components/DetailRfqStrip.astro';
+import { breadcrumbSchema, site } from '../../data/site';
+import '../../styles/resource-page.css';
+
+const pageUrl = `${site.url}/standing-parts/`;
+
+const groups = [
+  {
+    brand: 'MTU',
+    note: 'Coverage spans the high-volume 2000/4000 series through the 1600, 8000 and legacy marine families.',
+    items: [
+      { label: 'MTU 2000 Series (12V · 16V · 18V)', href: '/products/mtu-2000-series-parts/' },
+      { label: 'MTU 4000 Series (8V · 12V · 16V · 20V)', href: '/products/mtu-4000-series-parts/' },
+      { label: 'MTU 1600 Series & F-build models', href: '/products/mtu-spare-parts/mtu-1600-series-parts/' },
+      { label: 'MTU 8000 Series', href: '/products/mtu-series-8000-engines/' },
+      { label: 'MTU 396 / 538 / 956 legacy families', href: '/series/mtu-396/' },
+      { label: 'MTU 1163 marine & defence engines', href: '/series/mtu-1163/' },
+    ],
+  },
+  {
+    brand: 'Detroit Diesel',
+    note: 'Two-stroke 53/71/92 families and the four-stroke Series 60, including MTU-badged 60 Series builds.',
+    items: [
+      { label: 'Detroit Diesel Series 60', href: '/products/detroit-diesel-parts/' },
+      { label: 'Detroit Diesel 71 Series', href: '/products/detroit-diesel-parts/' },
+      { label: 'Detroit Diesel 92 Series', href: '/products/detroit-diesel-parts/' },
+      { label: 'Detroit Diesel 53 Series', href: '/products/detroit-diesel-parts/' },
+    ],
+  },
+  {
+    brand: 'Cummins',
+    note: 'Mid-range B-series through the heavy QSK/KTA platform, plus the N14/NT855 lineage.',
+    items: [
+      { label: 'Cummins ISM / QSM11 (10.8 L)', href: '/products/cummins-parts/cummins-ism-engine-parts/' },
+      { label: 'Cummins ISL / ISLe / QSL (8.9 L)', href: '/products/cummins-parts/cummins-isl-engine-parts/' },
+      { label: 'Cummins QSK19 / KTA19 (19 L)', href: '/products/cummins-parts/cummins-qsk19-engine-parts/' },
+      { label: 'Cummins QSK38 / KTA38 (V12)', href: '/products/cummins-parts/cummins-qsk38-v12-engine-parts/' },
+      { label: 'Cummins QSK50 / KTA50 (V16)', href: '/products/cummins-parts/cummins-qsk50-v16-engine-parts/' },
+      { label: 'Cummins 6BT / 4BT (B-series)', href: '/products/cummins-parts/cummins-6bt-engine-parts/' },
+      { label: 'Cummins N14 / NT855', href: '/products/cummins-parts/cummins-n14-engine-parts/' },
+    ],
+  },
+  {
+    brand: 'DEUTZ',
+    note: 'Air-cooled 912/913 families and liquid-cooled 1011/2011/2012/2013 common-rail ranges.',
+    items: [
+      { label: 'DEUTZ 2012 Series', href: '/products/deutz-parts/deutz-2012-series-parts/' },
+      { label: 'DEUTZ 2013 / TCD 2013 (common-rail)', href: '/products/deutz-parts/deutz-2013-series-parts/' },
+      { label: 'DEUTZ 1011 Series', href: '/products/deutz-parts/deutz-1011-series-parts/' },
+      { label: 'DEUTZ 2011 Series', href: '/products/deutz-parts/deutz-2011-series-parts/' },
+      { label: 'DEUTZ 912 / 913 air-cooled families', href: '/products/deutz-parts/' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Standing Engine Series List — Parts We Regularly Source"
+  description="Engine series we routinely source parts for across MTU, Detroit Diesel, Cummins and DEUTZ. This is a coverage list, not a live stock count — availability and lead time are confirmed per enquiry after the part number and engine serial number are checked."
+  currentPath="/standing-parts"
+  jsonLd={[
+    breadcrumbSchema([
+      { name: 'Home', url: site.url },
+      { name: 'Standing Series List', url: pageUrl },
+    ]),
+  ]}
+>
+  <FunnelPageView stage="service" label="standing-parts" />
+  <BreadcrumbHero
+    title="Standing Engine Series List"
+    trail={[{ label: 'Home', href: '/' }, { label: 'Standing Series List' }]}
+    variant="3"
+  />
+
+  <div class="resource-page">
+    <section class="resource-page-section">
+      <p>
+        This page lists the <strong>engine series we regularly source parts for</strong>. It is a
+        coverage map of the programs our team works with most often — not a live stock figure and
+        not a price list. We do not publish running inventory counts, because the supplied condition,
+        packaging and lead time for a given part number change with every enquiry.
+      </p>
+      <p>
+        For any series below, send the <strong>part number, engine model and engine serial number</strong>.
+        We verify fitment and supersessions against the catalog, then confirm availability, lead time
+        and the supplied route (genuine, OEM-quality, or verified aftermarket) per line.
+      </p>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>How to read this list</h2>
+      <ul class="resource-olist">
+        <li><strong>Standing series</strong> — programs we keep sourcing channels open for and quote against routinely.</li>
+        <li><strong>Coverage, not stock</strong> — a series appearing here means we can work the part number, not that a box is on a shelf.</li>
+        <li><strong>Per-enquiry confirmation</strong> — final availability and lead time are confirmed after we check the engine serial number and catalog position.</li>
+        <li><strong>Beyond the list</strong> — if your engine is not shown, send the details anyway; many cross-brand references resolve through the same suppliers.</li>
+      </ul>
+    </section>
+
+    {groups.map((group) => (
+      <section class="resource-page-section">
+        <h2>{group.brand} — Standing Series</h2>
+        <p>{group.note}</p>
+        <ul class="standing-list">
+          {group.items.map((item) => (
+            <li>
+              <a href={item.href}>{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+
+    <section class="resource-page-section">
+      <h2>Related Resources</h2>
+      <ul class="resource-olist">
+        <li><a href="/part-number-index/">Search all part numbers (EN · DE)</a></li>
+        <li><a href="/engine-models/">Parts lists by engine model</a></li>
+        <li><a href="/cross-reference/">Part number cross reference</a></li>
+        <li><a href="/products/mtu-spare-parts/regularly-sourced-parts/">Regularly sourced MTU parts</a> — categories and series coverage</li>
+        <li><a href="/guides/">Engine parts guides</a> — overhaul planning and series identification</li>
+        <li><a href="/genuine-oem-parts/">Genuine, OEM-quality and aftermarket routes</a></li>
+      </ul>
+    </section>
+
+    <DetailRfqStrip
+      title="Send your engine details"
+      text="Model, serial number, and the positions you need — we verify fitment and supersessions, then quote with availability per line."
+      quoteHref="/contact/?source=standing-parts"
+      label="Request Parts Quote"
+      modalSource="standing-parts"
+    />
+  </div>
+</BaseLayout>
+
+<style>
+  .standing-list {
+    list-style: none;
+    margin: 14px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  .standing-list a {
+    display: block;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: #0f172a;
+    font-weight: 600;
+    font-size: 15px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
+  }
+
+  .standing-list a:hover {
+    border-color: var(--color-primary, #146ef5);
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+    color: var(--color-primary, #146ef5);
+  }
+</style>

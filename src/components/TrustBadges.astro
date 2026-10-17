@@ -1,0 +1,96 @@
+---
+const badges = [
+  { label: 'MTU Parts Support', detail: 'Series and Part Checks' },
+  { label: 'Part Number Check', detail: 'Before Quotation' },
+  { label: '24h Response', detail: 'Fast Stock Review' },
+  { label: 'Global Shipping', detail: 'Export Packing' },
+];
+
+const checkIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+---
+
+<div class="trust-badges fade-in">
+  {badges.map((badge) => (
+    <div class="trust-badge">
+      <span class="trust-badge-icon" set:html={checkIcon} />
+      <div class="trust-badge-body">
+        <div class="trust-badge-label">{badge.label}</div>
+        <div class="trust-badge-detail">{badge.detail}</div>
+      </div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .trust-badges {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 32px;
+  }
+  @media (max-width: 991px) {
+    .trust-badges { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .trust-badges { grid-template-columns: 1fr; }
+  }
+
+  .trust-badge {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 20px 20px 20px 24px;
+    border: 1px solid var(--color-stroke);
+    border-radius: 8px;
+    background: var(--color-white);
+    overflow: hidden;
+  }
+  /* Colorful left accent bar per badge */
+  .trust-badge::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 12px;
+    bottom: 12px;
+    width: 4px;
+    border-radius: 0 3px 3px 0;
+  }
+  .trust-badge:nth-child(1)::before { background: linear-gradient(180deg, #3b82f6, #2563eb); }
+  .trust-badge:nth-child(2)::before { background: linear-gradient(180deg, #14b8a6, #0d9488); }
+  .trust-badge:nth-child(3)::before { background: linear-gradient(180deg, #f59e0b, #d97706); }
+  .trust-badge:nth-child(4)::before { background: linear-gradient(180deg, #8b5cf6, #7c3aed); }
+
+  .trust-badge-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(20, 110, 245, 0.1);
+    color: var(--color-primary);
+    margin-top: 2px;
+  }
+  .trust-badge:nth-child(2) .trust-badge-icon { background: rgba(13, 148, 136, 0.12); color: #0d9488; }
+  .trust-badge:nth-child(3) .trust-badge-icon { background: rgba(217, 119, 6, 0.12); color: #d97706; }
+  .trust-badge:nth-child(4) .trust-badge-icon { background: rgba(124, 58, 237, 0.12); color: #7c3aed; }
+
+  .trust-badge-body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .trust-badge-label {
+    font-family: var(--font-title);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-title);
+    margin-bottom: 4px;
+  }
+  .trust-badge-detail {
+    font-size: 13px;
+    color: #64748b;
+  }
+</style>

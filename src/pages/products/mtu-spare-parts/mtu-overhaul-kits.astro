@@ -1,0 +1,224 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../../components/BreadcrumbHero.astro';
+import FunnelPageView from '../../../components/FunnelPageView.astro';
+import DetailRfqStrip from '../../../components/DetailRfqStrip.astro';
+import { mtuParts } from '../../../data/mtu-parts';
+import { breadcrumbSchema, faqSchema, site } from '../../../data/site';
+import '../../../styles/resource-page.css';
+
+/**
+ * MTU overhaul kits by series.
+ *
+ * The angle: overhaul buyers think in "kits" (top / in-frame / full), not in
+ * individual part numbers. This page explains the three kit levels in MTU
+ * terms, then routes to the indexed per-series catalog data for the parts a
+ * kit consumes — with an honest note that kit contents and part numbers are
+ * confirmed per build rather than asserted from a series name.
+ */
+
+type Tier = {
+  tier: string;
+  scope: string;
+  typical: string;
+};
+
+const tiers: Tier[] = [
+  {
+    tier: 'Top overhaul kit',
+    scope: 'Everything above the block deck',
+    typical:
+      'Cylinder-head gaskets, valve-stem seals, valve cotters and retainers, injector sleeves and their O-rings, rocker and valve-train hardware, and the head bolts (single-use stretch items).',
+  },
+  {
+    tier: 'In-frame overhaul kit',
+    scope: 'Top-end plus the running gear inside the frame',
+    typical:
+      'All of the above, plus piston rings, pistons where scored or worn, cylinder liners and their sealing sets, connecting-rod bearings, and the rod bolts (single-use stretch items).',
+  },
+  {
+    tier: 'Full (major) overhaul kit',
+    scope: 'In-frame plus the bottom end and drives',
+    typical:
+      'All of the above, plus main-bearing shells, thrust bearings, crankshaft seals and wear sleeves, timing and drive hardware, and the oil and coolant circuit seals opened during the job.',
+  },
+];
+
+/** Indexed catalog counts per series for the part families kits consume. */
+const kitFamilies = [
+  { category: 'Gaskets and seals', label: 'Gaskets, seals & O-rings' },
+  { category: 'Pistons and liners', label: 'Pistons, liners & rings' },
+  { category: 'Valve train', label: 'Valve-train components' },
+  { category: 'Bearings', label: 'Bearing shells & bushings' },
+  { category: 'Fasteners and retaining rings', label: 'Fasteners & stretch bolts' },
+  { category: 'Filters', label: 'Service filters' },
+];
+
+const seriesTargets = ['MTU 2000', 'MTU 4000', 'MTU 396', 'MTU 595', 'MTU 956', 'MTU 1163', 'MTU 538', 'MTU 183'];
+
+const seriesRows = seriesTargets.map((series) => {
+  const counts = kitFamilies.map((family) => ({
+    label: family.label,
+    count: mtuParts.filter((p) => p.series.includes(series) && p.category === family.category).length,
+  }));
+  const total = counts.reduce((sum, c) => sum + c.count, 0);
+  return { series, counts, total };
+});
+
+const pageUrl = `${site.url}/products/mtu-spare-parts/mtu-overhaul-kits/`;
+const faqItems = [
+  {
+    question: 'Do you sell complete overhaul kits?',
+    answer:
+      'Overhaul kits are quoted as itemised lists against your engine build, not sold as a fixed catalogue item. MTU kit contents vary by build, rating, and service history — a kit label alone does not establish coverage. Send the model code, serial number, running hours, and the scope (top, in-frame, or full), and we return a line-by-line list with availability and grade per item.',
+  },
+  {
+    question: 'Why are stretch bolts treated as consumables?',
+    answer:
+      'Cylinder-head, connecting-rod, and main-bearing bolts on MTU engines are torque-to-yield items: they are tightened to a specified elongation and deform permanently on first installation. Reusing them risks joint relaxation and head-gasket failure, so every overhaul quotation treats them as single-use and quotes them fresh.',
+  },
+  {
+    question: 'What decides whether liners and pistons are included?',
+    answer:
+      'Measured wear and service history. Bore glaze, liner step, scuffing, oil consumption trend, and blow-by decide whether liners and pistons are replaced or honed and reused. We quote the wear items as options with the measurement criteria stated, so you can decide with your workshop rather than on our assumption.',
+  },
+  {
+    question: 'Can I order a gasket set only?',
+    answer:
+      'Yes. Individual gaskets, O-rings, shaft seals, and gasket sets are quoted separately — the gasket and seal references are published in the catalog on this site by series. For an in-frame or full job, quote the full sealing scope at the same time so every opened joint has its gasket before the engine comes apart.',
+  },
+];
+---
+
+<BaseLayout
+  title="MTU Overhaul Kits — Top, In-Frame & Full by Series"
+  description="MTU overhaul kits explained by scope (top, in-frame, full), with per-series catalog references for the parts each kit consumes. Kit contents confirmed line by line against the engine build."
+  currentPath="/products/mtu-spare-parts/mtu-overhaul-kits"
+  jsonLd={[
+    breadcrumbSchema([
+      { name: 'Home', url: site.url },
+      { name: 'Products', url: `${site.url}/products/` },
+      { name: 'MTU Spare Parts', url: `${site.url}/products/mtu-spare-parts/` },
+      { name: 'Overhaul Kits', url: pageUrl },
+    ]),
+    faqSchema(faqItems),
+  ]}
+>
+  <FunnelPageView stage="selection" label="mtu-overhaul-kits" />
+  <BreadcrumbHero
+    title="MTU Overhaul Kits"
+    trail={[
+      { label: 'Home', href: '/' },
+      { label: 'Products', href: '/products/' },
+      { label: 'MTU Spare Parts', href: '/products/mtu-spare-parts/' },
+      { label: 'Overhaul Kits' },
+    ]}
+    variant="2"
+  />
+
+  <div class="resource-page">
+    <section class="resource-page-section">
+      <p>
+        Overhaul buyers think in kits, not part numbers: “top-end”, “in-frame”, or “full”. The three
+        scopes below define what each level covers on an MTU engine, and the table after them shows how
+        many indexed references this site already carries for each series in the part families those
+        kits consume.
+      </p>
+      <p class="resource-note">
+        Kit contents are quoted <strong>line by line against your engine build</strong> — model code,
+        serial number, and running hours — because MTU kit contents vary by build and rating. A kit
+        label alone never establishes coverage.
+      </p>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>The three overhaul scopes</h2>
+      <div class="xref-table-wrap">
+        <table class="xref-table">
+          <thead>
+            <tr>
+              <th scope="col">Kit Level</th>
+              <th scope="col">Scope</th>
+              <th scope="col">Typically Included</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tiers.map((t) => (
+              <tr>
+                <td class="pn-engine">{t.tier}</td>
+                <td>{t.scope}</td>
+                <td>{t.typical}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Two points decide whether an overhaul holds: <strong>measurements before ordering</strong> (bore
+        wear, oil consumption, blow-by, compression) and <strong>fresh stretch bolts</strong>. Both are
+        built into how quotations are prepared here.
+      </p>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>Indexed references by series</h2>
+      <p>
+        Counts below are the part pages published on this site for each series in the families overhaul
+        kits consume. Use them to size the job, then send the build details for a line-by-line quotation.
+      </p>
+      <div class="xref-table-wrap">
+        <table class="xref-table">
+          <thead>
+            <tr>
+              <th scope="col">Series</th>
+              {kitFamilies.map((f) => <th scope="col">{f.label}</th>)}
+              <th scope="col">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {seriesRows.map((row) => (
+              <tr>
+                <td class="pn-engine">{row.series.replace('MTU ', 'MTU ')}</td>
+                {row.counts.map((c) => <td class="pn-kw">{c.count}</td>)}
+                <td class="pn-kw"><strong>{row.total}</strong></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="resource-note">
+        Counts reflect the indexed catalog data on this site, not the full MTU spare-parts range. Series
+        not shown (legacy builds, Series 1600, gas engines) are quoted line by line — see{' '}
+        <a href="/products/mtu-spare-parts/mtu-legacy-gas-engine-parts/">legacy &amp; gas engine
+        coverage</a> and <a href="/products/mtu-spare-parts/mtu-1600-series-parts/">Series 1600 &amp;
+        F-build models</a>.
+      </p>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>Related catalog coverage</h2>
+      <ul class="catalog-scenarios-list">
+        <li>Gaskets, seals &amp; O-rings by reference: <a href="/part-products/catalog/mtu-gasket-kits/">MTU gasket kits</a></li>
+        <li>Pistons, liners &amp; rings: <a href="/part-products/catalog/mtu-pistons-liners/">MTU pistons and liners</a></li>
+        <li>Fasteners &amp; single-use stretch bolts: <a href="/part-products/catalog/mtu-fasteners-retaining-rings/">MTU fasteners and retaining rings</a></li>
+        <li>Full part number index (EN · DE): <a href="/part-number-index/">MTU part number index</a></li>
+      </ul>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>Overhaul Kits FAQ</h2>
+      {faqItems.map((item) => (
+        <details class="resource-faq-item">
+          <summary>{item.question}</summary>
+          <p>{item.answer}</p>
+        </details>
+      ))}
+    </section>
+
+    <DetailRfqStrip
+      context="Overhaul kit quotation"
+      heading="Send the build details and scope"
+      text="Model code, serial number, running hours, and the overhaul scope (top, in-frame, or full). We return an itemised list with availability, grade, and single-use fasteners called out."
+    />
+  </div>
+</BaseLayout>

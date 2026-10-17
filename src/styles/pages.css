@@ -1,0 +1,81 @@
+.inner-hero-section {
+  padding: 80px 0 40px;
+}
+
+.inner-hero-title {
+  font-size: 52px;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.mission-vision-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.mission-vision-card-block {
+  background: var(--color-white);
+  padding: 30px;
+  border-radius: 4px;
+}
+
+.mission-vision-subtitle {
+  color: var(--color-primary);
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.about-page-summary {
+  max-width: 900px;
+  margin: 0 auto 40px;
+  text-align: center;
+  font-size: 20px;
+}
+
+.about-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  text-align: center;
+}
+
+.about-stat-number {
+  font-size: 40px;
+  color: var(--color-primary);
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.team-card {
+  background: var(--color-white);
+  padding: 24px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.team-name {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.team-role {
+  color: var(--color-body-text);
+}
+
+@media (max-width: 991px) {
+  .mission-vision-wrapper,
+  .about-stats-grid,
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .inner-hero-title {
+    font-size: 36px;
+  }
+}

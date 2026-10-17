@@ -1,0 +1,226 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../components/BreadcrumbHero.astro';
+import DetailPageShell from '../../components/DetailPageShell.astro';
+import DetailRfqStrip from '../../components/DetailRfqStrip.astro';
+import FaqSection from '../../components/FaqSection.astro';
+import { breadcrumbSchema, itemListSchema, faqSchema, site } from '../../data/site';
+import '../../styles/resource-page.css';
+
+const title = 'MTU 1163 Variant Decoder';
+const seoTitle = 'MTU 1163 Variant Decoder — M74 / M84 / M94 Generations & Per-Model Table (230 × 280 mm)';
+const description = 'Decode the MTU 1163 designation: 12V / 16V / 20V configurations and M74 / M84 / M94 generations. Which parts differ by build, plus a per-model power table and part-identification guide for the 11.63 L/cylinder large-bore family.';
+const pageUrl = `${site.url}/series/mtu-1163-variants/`;
+const quoteHref = `/contact/?source=mtu-1163-variants`;
+
+const genRows = [
+  { gen: 'M74', inj: 'Unit injection', mgmt: 'Mechanical / early electronic', emis: 'IMO II', note: 'Original 1163 generation; injector & sensor numbers differ from later builds.' },
+  { gen: 'M84', inj: 'Common rail (up to 1800 bar)', mgmt: 'ADEC', emis: 'IMO II', note: 'Common-rail upgrade; shares many fuel-system parts with M94.' },
+  { gen: 'M94', inj: 'Common rail (up to 1800 bar)', mgmt: 'ADEC', emis: 'IMO II / IMO III (SCR)', note: 'Latest 1163; highest output (20V1163M94 = 7400 kW).' },
+];
+
+const modelRows = [
+  { desig: '12V 1163 M74', out: '~3600 kW', rpm: '1300', disp: '139.6 L' },
+  { desig: '12V 1163 M84 / M94', out: '~4440 kW', rpm: '1300', disp: '139.6 L' },
+  { desig: '16V 1163 M74', out: '~4800 kW', rpm: '1300', disp: '186.1 L' },
+  { desig: '16V 1163 M94', out: '~6000 kW', rpm: '1300', disp: '186.1 L' },
+  { desig: '20V 1163 M84', out: '~6000 kW', rpm: '1300', disp: '232.7 L' },
+  { desig: '20V 1163 M94', out: '7400 kW', rpm: '1300', disp: '232.7 L' },
+];
+
+const variantParts = [
+  { sys: 'Fuel system', diff: 'M74 uses unit injectors; M84/M94 use common-rail injectors (1800 bar) — not interchangeable.' },
+  { sys: 'Engine management', diff: 'M74 mechanical/early electronic vs ADEC on M84/M94 — sensors, harness and ECM differ.' },
+  { sys: 'Turbocharging', diff: 'All generations use two-stage sequential (LP + HP) turbocharging; cartridges are generation-specific.' },
+  { sys: 'Pistons / liners', diff: '230 × 280 mm bore/stroke is common across the family; piston-ring and liner numbers are shared by generation but confirmed per serial.' },
+  { sys: 'Gaskets / seals', diff: 'Head gasket and overhaul sets are build-specific — confirm against model + serial, not by generation alone.' },
+];
+
+const listItems = [
+  { name: 'MTU 1163 M74 generation', url: pageUrl },
+  { name: 'MTU 1163 M84 common rail', url: pageUrl },
+  { name: 'MTU 1163 M94 7400 kW', url: pageUrl },
+  { name: 'MTU 1163 20V configuration', url: pageUrl },
+];
+
+const faqItems = [
+  {
+    question: 'What does the 1163 M-suffix mean?',
+    answer: 'On the 1163 the M-suffix tracks the generation and injection system: M74 runs unit injection, while M84 and M94 run common rail at up to 1800 bar with ADEC engine management. The suffixes are not a simple power ranking — injectors, sensors and management parts differ between them.',
+  },
+  {
+    question: 'Are 1163 pistons and liners the same across generations?',
+    answer: 'The 230 × 280 mm bore and stroke are common to the whole family, so piston and liner geometry is shared. However exact piston-ring and liner part numbers are confirmed per engine serial, and the fuel-system parts around them are not — always quote by full designation + serial.',
+  },
+  {
+    question: 'Can an M74 injector be substituted by an M94 common-rail injector?',
+    answer: 'No. M74 uses unit injectors; M84/M94 use common-rail injectors at 1800 bar with ADEC. They are different systems and not interchangeable. We quote the correct generation-specific injector against your engine designation.',
+  },
+  {
+    question: 'Which 1163 models reach 7400 kW?',
+    answer: 'The highest 1163 rating is the 20V1163M94 at 7400 kW (~9925 bhp) at 1300 rpm; the 20V1163M84 reaches ~6000 kW. The 12V and 16V variants cover ~3600–6000 kW. Confirm the exact rating on the identification plate.',
+  },
+];
+
+const jsonLd = [
+  breadcrumbSchema([
+    { name: 'Home', url: site.url },
+    { name: 'MTU Spare Parts', url: `${site.url}/products/mtu-spare-parts/` },
+    { name: 'MTU 1163 Series', url: `${site.url}/series/mtu-1163/` },
+    { name: title, url: pageUrl },
+  ]),
+  itemListSchema(listItems),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout
+  title={seoTitle}
+  description={description}
+  currentPath="/series/mtu-1163-variants"
+  image="/images/mtu-engine-parts-hero.webp"
+  jsonLd={jsonLd}
+>
+  <BreadcrumbHero
+    title={title}
+    trail={[
+      { label: 'Home', href: '/' },
+      { label: 'MTU Spare Parts', href: '/products/mtu-spare-parts/' },
+      { label: 'MTU 1163 Series', href: '/series/mtu-1163/' },
+      { label: title },
+    ]}
+    variant="1"
+  />
+
+  <DetailPageShell intro="The MTU 1163 designation combines a cylinder count (12V / 16V / 20V) with a generation suffix (M74 / M84 / M94). Because the generation changes the injection and management system, the suffix decides which injector, sensor and gasket you actually need. This decoder explains the generations, the per-model power table, and which parts differ by build.">
+    <img
+      slot="hero"
+      src="/images/mtu-engine-parts-hero.webp"
+      alt="MTU 1163 variant decoder"
+      width="1400"
+      height="692"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+
+    <div class="resource-meta">
+      <span><strong>Section</strong> MTU 1163</span>
+      <span><strong>Bore × Stroke</strong> 230 × 280 mm</span>
+      <span><strong>Generations</strong> M74 / M84 / M94</span>
+      <span><strong>Delivery</strong> Global shipping</span>
+    </div>
+
+    <DetailRfqStrip
+      quoteHref={quoteHref}
+      title="Decode your 1163 & request parts"
+      text="Send the full designation (e.g. 20V1163M94), serial number, and the number marked on the old part."
+      secondaryHref="/series/mtu-1163/"
+      secondaryLabel="MTU 1163 hub"
+    />
+
+    <h2>1. Generation decoder (M74 / M84 / M94)</h2>
+    <p>The M-suffix is the part that decides your parts list. M74 is the original unit-injection generation; M84 and M94 moved to common rail at up to 1800 bar with ADEC engine management. The suffixes are <strong>not</strong> a simple power ranking — they change the fuel and management systems.</p>
+    <div class="resource-table-wrap">
+      <table class="resource-table">
+        <thead>
+          <tr><th>Generation</th><th>Injection</th><th>Management</th><th>Emission</th><th>Note</th></tr>
+        </thead>
+        <tbody>
+          {genRows.map((r) => (
+            <tr>
+              <td><strong>{r.gen}</strong></td>
+              <td>{r.inj}</td>
+              <td>{r.mgmt}</td>
+              <td>{r.emis}</td>
+              <td>{r.note}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <h2>2. Per-model power table</h2>
+    <p>All 1163 models run around 1300 rpm. Output scales with cylinder count and generation; the 20V M94 is the top of the family at 7400 kW.</p>
+    <div class="resource-table-wrap">
+      <table class="resource-table">
+        <thead>
+          <tr><th>Model</th><th>Output</th><th>Rated speed</th><th>Displacement</th></tr>
+        </thead>
+        <tbody>
+          {modelRows.map((r) => (
+            <tr>
+              <td><strong>{r.desig}</strong></td>
+              <td>{r.out}</td>
+              <td>{r.rpm} rpm</td>
+              <td>{r.disp}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="resource-note">Figures are representative of the family; confirm the exact rating and generation against the engine identification plate before ordering.</p>
+
+    <h2>3. Which parts differ by generation</h2>
+    <div class="resource-table-wrap">
+      <table class="resource-table">
+        <thead>
+          <tr><th>System</th><th>Difference by build</th></tr>
+        </thead>
+        <tbody>
+          {variantParts.map((r) => (
+            <tr>
+              <td><strong>{r.sys}</strong></td>
+              <td>{r.diff}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <h2>4. How to identify your exact 1163 part</h2>
+    <ul class="resource-list">
+      <li><strong>Complete designation</strong> (e.g. <code>20V1163M94</code>)</li>
+      <li><strong>Generation</strong> — M74 vs M84 / M94 changes the fuel system</li>
+      <li><strong>Engine serial number</strong> from the identification plate</li>
+      <li><strong>Old-part number</strong> — the marking on the component beats any photo title</li>
+      <li><strong>Photo of the identification plate</strong> where available</li>
+    </ul>
+
+    <h2>5. MTU series cluster</h2>
+    <div class="hub-grid">
+      <a class="hub-card" href="/series/mtu-1163/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 1163 Series Hub</h3><p class="hub-card-summary">12V / 16V / 20V large-bore family overview and parts we supply.</p></div></a>
+      <a class="hub-card" href="/series/mtu-396/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 396 Series Hub</h3><p class="hub-card-summary">8V / 12V / 16V workhorse — carries live RFQ numbers.</p></div></a>
+      <a class="hub-card" href="/series/mtu-2000/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 2000 Series Hub</h3><p class="hub-card-summary">8V / 12V / 16V / 18V high-speed engines.</p></div></a>
+      <a class="hub-card" href="/series/mtu-4000-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 4000 Variant Decoder</h3><p class="hub-card-summary">M05 / M03 / C05 / R03 / R04 / T05 + M-duty notation.</p></div></a>
+    </div>
+
+    <FaqSection items={faqItems} title="MTU 1163 Variant Decoder FAQ" subtitle="FAQ" />
+  </DetailPageShell>
+</BaseLayout>
+
+<style>
+  .rfq-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    letter-spacing: 0.03em;
+    vertical-align: middle;
+  }
+  .rfq-badge.cat {
+    background: #e4eef7;
+    color: var(--color-primary);
+  }
+  .hub-card h3.hub-card-title {
+    font-size: 17px;
+  }
+  .resource-table code {
+    background: #eef3f8;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #0a3d66;
+  }
+</style>

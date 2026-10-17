@@ -1,0 +1,44 @@
+node_modules/
+.pnpm-store/
+dist/
+.astro/
+.env
+.env.*
+_ref_home_body.html
+
+# Local training videos (not for repo)
+videocourse/
+
+# Whisper transcription scratch files
+.tmp-*
+
+# Local ops docs (transcripts scratch — markdown plans can be committed)
+docs/*
+!docs/**/*.md
+
+# SEO / build scratch (scripts, raw scan output, temp build copies)
+tmp/
+dist.prev/
+outputs/
+# Local analysis reports (competitor/SEO reviews — working docs, not site source)
+reports/
+
+# AI / IDE tools
+.agent/
+.claude/
+.codebuddy/
+.codex/
+.seo-cache/
+.continue/
+.cursor/
+.gemini/
+.kiro/
+.opencode/
+.qoder/
+.roo/
+.trae/
+.windsurf/
+.workbuddy/
+.agents/
+.wrangler/
+exports/

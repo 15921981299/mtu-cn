@@ -1,0 +1,252 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../components/BreadcrumbHero.astro';
+import DetailPageShell from '../../components/DetailPageShell.astro';
+import DetailRfqStrip from '../../components/DetailRfqStrip.astro';
+import FaqSection from '../../components/FaqSection.astro';
+import { breadcrumbSchema, itemListSchema, faqSchema, site } from '../../data/site';
+import '../../styles/resource-page.css';
+
+const title = 'MTU 1163 Engine Models & Part Identification';
+const seoTitle = 'MTU 1163 Engine Models & Part Identification Guide';
+const description = 'Review MTU 1163 engine model designations and catalog part references. Identify the complete engine build and component marking for a replacement-parts inquiry.';
+const pageUrl = `${site.url}/series/mtu-1163/`;
+const quoteHref = `/contact/?source=mtu-1163-series`;
+
+const configRows = [
+  { desig: '12V 1163', cyl: 'V12', disp: '139.6 L', output: '~3600–4440 kW', app: 'Fast ferries, naval auxiliaries' },
+  { desig: '16V 1163', cyl: 'V16', disp: '186.1 L', output: '~4800–6000 kW', app: 'Patrol craft, coast-guard vessels' },
+  { desig: '20V 1163', cyl: 'V20', disp: '232.7 L', output: 'up to 7400 kW (M94)', app: 'Frigates, large fast craft' },
+];
+
+// 1163 numbers are confirmed per-enquiry; no public RFQ/USACE seed verified yet.
+// Rows stay category-level with a clear "send nameplate" CTA to avoid publishing unverified numbers.
+const crossRef = [
+  { pn: '—', desc: 'Piston assembly (incl. rings)', fit: '1163 piston / liner', src: 'request exact PN + engine serial' },
+  { pn: '—', desc: 'Cylinder liner (wet, 230 × 280)', fit: '1163 block', src: 'request exact PN + engine serial' },
+  { pn: '—', desc: 'Cylinder-head gasket set', fit: '1163 head', src: 'request exact PN + engine serial' },
+  { pn: '—', desc: 'Fuel injector / nozzle (common-rail, 1800 bar)', fit: '1163 fuel system', src: 'request exact PN + engine serial' },
+  { pn: '—', desc: 'Two-stage turbocharger cartridge (LP + HP stage)', fit: '1163 charged air', src: 'request exact PN + engine serial' },
+  { pn: '—', desc: 'Connecting-rod / main bearing shell', fit: '1163 bottom end', src: 'request exact PN + engine serial' },
+  { pn: '—', desc: 'Exhaust gas thermocouple', fit: '1163 exhaust temp sensing', src: 'request exact PN + engine serial' },
+  { pn: '—', desc: 'Seawater / freshwater pump & impeller', fit: '1163 cooling', src: 'request exact PN + engine serial' },
+];
+
+const listItems = [
+  { name: 'MTU 1163 piston assembly', url: pageUrl },
+  { name: 'MTU 1163 cylinder liner 230×280', url: pageUrl },
+  { name: 'MTU 1163 cylinder-head gasket', url: pageUrl },
+  { name: 'MTU 1163 common-rail injector', url: pageUrl },
+  { name: 'MTU 1163 two-stage turbocharger', url: pageUrl },
+  { name: 'MTU 1163 exhaust thermocouple', url: pageUrl },
+];
+
+const faqItems = [
+  {
+    question: 'Is "MTU 1163" enough to order a part?',
+    answer: 'No. The 1163 family spans 12V, 16V and 20V in several generations — M74 (original unit-injection), M84, and M94 (common-rail upgrade at 1800 bar with ADEC). Add the complete designation (e.g. 20V1163M94), the engine serial number, and the number marked on the old part so we match the exact gasket set, injector, or bearing for your build.',
+  },
+  {
+    question: 'Do you supply genuine MTU only?',
+    answer: 'We supply genuine new, reconditioned-exchange, and documented alternatives. For large-bore 1163 components (liners, pistons, two-stage turbochargers) the right option depends on criticality and your acceptance of equivalents — we state which is which on every quote.',
+  },
+  {
+    question: 'Why does the M-suffix matter on the 1163?',
+    answer: 'On the 1163 the M-suffix tracks the generation and injection system: M74 runs unit injection, while M84/M94 run common rail at up to 1800 bar with ADEC engine management. Injectors, seals and sensors differ between these generations, so the suffix is required to quote accurately.',
+  },
+  {
+    question: 'What do you need to quote a 1163 part?',
+    answer: 'Engine model + serial + part number + description + quantity. A photo of the identification plate and the old part shortens identification significantly, especially for the two-stage turbocharger and common-rail fuel components.',
+  },
+  {
+    question: 'How fast can you quote an identified number?',
+    answer: 'Typically within one business day once we can confirm the number against the engine designation and generation. 1163 numbers are confirmed per enquiry and added to our cross-reference table as they are verified.',
+  },
+];
+
+const jsonLd = [
+  breadcrumbSchema([
+    { name: 'Home', url: site.url },
+    { name: 'MTU Spare Parts', url: `${site.url}/products/mtu-spare-parts/` },
+    { name: title, url: pageUrl },
+  ]),
+  itemListSchema(listItems),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout
+  title={seoTitle}
+  description={description}
+  currentPath="/series/mtu-1163"
+  image="/images/mtu-engine-parts-hero.webp"
+  jsonLd={jsonLd}
+>
+  <BreadcrumbHero
+    title={title}
+    trail={[
+      { label: 'Home', href: '/' },
+      { label: 'MTU Spare Parts', href: '/products/mtu-spare-parts/' },
+      { label: title },
+    ]}
+    variant="1"
+  />
+
+  <DetailPageShell intro="The MTU 1163 is a high-speed, four-stroke large-bore V-configuration diesel family from MTU Friedrichshafen (today Rolls-Royce Power Systems). Named for its 11.63-litre per-cylinder displacement, it is a mainstay of fast ferries, coast-guard and naval vessels, and large commercial craft. This hub carries engine configurations, the parts we regularly supply, and a part-identification process built for a family whose generations (M74 → M94) use different injection and management systems.">
+    <img
+      slot="hero"
+      src="/images/mtu-engine-parts-hero.webp"
+      alt="MTU 1163 series engine parts inquiry"
+      width="1400"
+      height="692"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+
+    <div class="resource-meta">
+      <span><strong>Section</strong> MTU Spare Parts</span>
+      <span><strong>Family</strong> 1163 (12V / 16V / 20V)</span>
+      <span><strong>Verification</strong> Model + serial number + generation</span>
+      <span><strong>Delivery</strong> Global shipping</span>
+    </div>
+
+    <DetailRfqStrip
+      quoteHref={quoteHref}
+      title="Request MTU 1163 parts"
+      text="Send engine model, serial number, generation (M74 / M84 / M94), part numbers, quantity, destination, and required delivery date."
+      secondaryHref="/series/mtu-1163-variants/"
+      secondaryLabel="1163 variant decoder"
+    />
+
+    <h2>1. Engine configurations</h2>
+    <p>The 1163 family uses a <strong>60° V-block</strong>, four valves per cylinder, and <strong>230 × 280 mm</strong> bore and stroke — giving 11.63 L per cylinder, which is the origin of the "1163" name. It is a large-bore high-speed engine rated around 1300 rpm, with two-stage sequential turbocharging (low-pressure and high-pressure stages) and common-rail injection up to 1800 bar on the M84/M94 generations. All variants are IMO II compliant, with IMO III available via optional SCR.</p>
+    <div class="resource-table-wrap">
+      <table class="resource-table">
+        <thead>
+          <tr><th>Designation</th><th>Cyl.</th><th>Displacement</th><th>Typical output</th><th>Primary application</th></tr>
+        </thead>
+        <tbody>
+          {configRows.map((r) => (
+            <tr>
+              <td><strong>{r.desig}</strong></td>
+              <td>{r.cyl}</td>
+              <td>{r.disp}</td>
+              <td>{r.output}</td>
+              <td>{r.app}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="resource-note">Per-cylinder output is ~336 kW (unrestricted, 1260 rpm) rising to ~370 kW (restricted duty, 1350 rpm). Confirm the exact rating and generation against the engine identification plate before ordering — the M-suffix (M74 / M84 / M94) changes the injection and management system.</p>
+
+    <h2>2. Spare parts we supply, by system</h2>
+    <div class="hub-grid">
+      <a class="hub-card" href="/part-products/catalog/mtu-1163-series/"><div class="hub-card-body"><h3 class="hub-card-title">Cylinder head &amp; valve train</h3><p class="hub-card-summary">Valve guides, seats, springs, rocker arms, cylinder-head gaskets for 230 × 280 mm bores.</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-injectors/"><div class="hub-card-body"><h3 class="hub-card-title">Fuel system</h3><p class="hub-card-summary">Common-rail injectors &amp; nozzles (1800 bar), nozzle holders, injection pumps.</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-1163-series/"><div class="hub-card-body"><h3 class="hub-card-title">Pistons / liners / rings</h3><p class="hub-card-summary">Large-bore piston assemblies, wet liners, piston-ring sets, connecting-rod bolts.</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-gasket-kits/"><div class="hub-card-body"><h3 class="hub-card-title">Gaskets &amp; seals</h3><p class="hub-card-summary">Head gaskets, O-rings, copper sealing rings, full overhaul gasket sets.</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-turbocharger-parts/"><div class="hub-card-body"><h3 class="hub-card-title">Turbocharger</h3><p class="hub-card-summary">Two-stage (LP + HP) turbocharger cartridges, turbine wheels, service kits.</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-filters/"><div class="hub-card-body"><h3 class="hub-card-title">Cooling &amp; lube</h3><p class="hub-card-summary">Seawater &amp; freshwater pumps, impellers, charge-air cooler kits, oil / fuel filters.</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-sensors/"><div class="hub-card-body"><h3 class="hub-card-title">Sensors &amp; ADEC</h3><p class="hub-card-summary">Exhaust thermocouples, speed / temperature / pressure transmitters, engine-management modules.</p></div></a>
+      <a class="hub-card" href="/series/mtu-1163-variants/"><div class="hub-card-body"><h3 class="hub-card-title">Variant decoder</h3><p class="hub-card-summary">M74 / M84 / M94 generation table and which parts differ by build.</p></div></a>
+    </div>
+
+    <h2>3. Part-number cross-reference (confirmed per enquiry)</h2>
+    <p>The 1163 is a lower-volume, higher-value family than the 396 or 2000, so we publish numbers as they are verified against real enquiries rather than from public seeds. Send your number (with the engine model + serial) and we add confirmed entries to this table. Until then, use the category list below and request an exact quote:</p>
+    <div class="resource-table-wrap">
+      <table class="resource-table">
+        <thead>
+          <tr><th>Part category</th><th>Description</th><th>1163 fitment</th><th>How to confirm</th></tr>
+        </thead>
+        <tbody>
+          {crossRef.map((r) => (
+            <tr>
+              <td><code>{r.pn}</code></td>
+              <td>{r.desc}</td>
+              <td>{r.fit}</td>
+              <td>{r.src}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="resource-note">We do not publish unverified 1163 part numbers. The fastest route to a firm quote is a photo of the identification plate plus the number marked on the old component.</p>
+
+    <h2>4. How to identify your exact part</h2>
+    <p>"MTU 1163 part" is <strong>not enough</strong> to order safely. The family runs across three cylinder counts and three generations with different injection and management systems, and large-bore components are build-specific. To match the right item we need:</p>
+    <ul class="resource-list">
+      <li><strong>Complete engine designation</strong> (e.g. <code>20V1163M94</code>, not just "1163")</li>
+      <li><strong>Generation</strong> — M74 (unit injection) vs M84 / M94 (common rail)</li>
+      <li><strong>Engine serial number</strong> from the identification plate</li>
+      <li><strong>Existing component part number</strong> — the marking on the old part beats any photo title</li>
+      <li><strong>Component description + quantity</strong>, and a photo of the old part where possible</li>
+    </ul>
+    <p>This is the same discipline we apply to every enquiry before quoting — it prevents shipping a look-alike that doesn't fit your exact 1163 configuration.</p>
+
+    <h2>5. Supply options</h2>
+    <div class="hub-grid">
+      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">Genuine new</h3><p class="hub-card-summary">Original MTU-packaged components with full traceability — best where the documentation chain has to stand up to inspection.</p></div></div>
+      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">Reconditioned / exchange</h3><p class="hub-card-summary">Factory-level overhaul of injectors, two-stage turbochargers, pumps — typically 30–40% lower cost, faster lead time.</p></div></div>
+      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">Documented alternative</h3><p class="hub-card-summary">Verified equivalents for non-critical items where the buyer accepts them — best value for routine overhaul.</p></div></div>
+    </div>
+
+    <h2>6. MTU series cluster</h2>
+    <p>These hubs group MTU families by the enquiries we actually receive. The 396 page carries live RFQ-verified numbers; the 2000 page is catalog-seed rich; the 1163 and 4000 pages complete the cluster:</p>
+    <div class="hub-grid">
+      <a class="hub-card" href="/series/mtu-1163-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 1163 Variant Decoder</h3><p class="hub-card-summary">M74 / M84 / M94 generation table — which parts differ by build (230 × 280 mm).</p></div></a>
+      <a class="hub-card" href="/series/mtu-396/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 396 Series Hub</h3><p class="hub-card-summary">8V / 12V / 16V workhorse — patrol craft, submarines, gensets. Carries live RFQ numbers.</p></div></a>
+      <a class="hub-card" href="/series/mtu-2000/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 2000 Series Hub</h3><p class="hub-card-summary">8V / 12V / 16V / 18V high-speed engines — yachts, patrol craft, ferries, gensets.</p></div></a>
+      <a class="hub-card" href="/series/mtu-4000-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 4000 Variant Decoder</h3><p class="hub-card-summary">M05 / M03 / C05 / R03 / R04 / T05 versions and M-duty notation — larger siblings.</p></div></a>
+    </div>
+
+    <FaqSection items={faqItems} title="MTU 1163 Series FAQ" subtitle="FAQ" />
+  </DetailPageShell>
+</BaseLayout>
+
+<style>
+  .rfq-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    letter-spacing: 0.03em;
+    vertical-align: middle;
+  }
+  .rfq-badge.cat {
+    background: #e4eef7;
+    color: var(--color-primary);
+  }
+  .enquiry-log {
+    border-left: 3px solid var(--color-primary);
+    background: var(--color-background);
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    margin: 12px 0;
+  }
+  .enquiry-log .meta {
+    font-size: 12.5px;
+    color: var(--color-body-text);
+    opacity: 0.8;
+    margin-bottom: 4px;
+  }
+  .enquiry-log code {
+    background: #eef3f8;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #0a3d66;
+  }
+  .hub-card h3.hub-card-title {
+    font-size: 17px;
+  }
+  .resource-table code {
+    background: #eef3f8;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #0a3d66;
+  }
+</style>

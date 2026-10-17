@@ -1,0 +1,284 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../components/BreadcrumbHero.astro';
+import FunnelPageView from '../components/FunnelPageView.astro';
+import DetailRfqStrip from '../components/DetailRfqStrip.astro';
+import { mtuParts } from '../data/mtu-parts';
+import { getPartReferences } from '../data/part-references';
+import { breadcrumbSchema, faqSchema, site } from '../data/site';
+import '../styles/resource-page.css';
+
+/**
+ * Cross-reference index: OEM / superseded / aftermarket part numbers →
+ * catalog records. References do not independently prove interchangeability.
+ */
+
+type XrefRow = {
+  altNumber: string;
+  altDisplay: string;
+  partNumber: string;
+  partName: string;
+  slug: string;
+  relationship: string;
+};
+
+const normalize = (value: string) => value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+
+const rows: XrefRow[] = [];
+for (const part of mtuParts) {
+  const refs = getPartReferences(part).map((ref) => ({ num: ref.number, rel: ref.label }));
+  for (const { num, rel } of refs) {
+    const cleaned = num.trim();
+    if (!cleaned || normalize(cleaned) === normalize(part.partNumber)) continue;
+    rows.push({
+      altNumber: normalize(cleaned),
+      altDisplay: cleaned,
+      partNumber: part.partNumber,
+      partName: part.name,
+      slug: part.slug,
+      relationship: rel,
+    });
+  }
+}
+
+// Group by normalized alt number; one row per (alt, our part) pair.
+const seen = new Set<string>();
+const grouped = new Map<string, { display: string; targets: XrefRow[] }>();
+for (const row of rows) {
+  const pairKey = `${row.altNumber}|${row.partNumber}`;
+  if (seen.has(pairKey)) continue;
+  seen.add(pairKey);
+  const entry = grouped.get(row.altNumber) ?? { display: row.altDisplay, targets: [] };
+  if (row.altDisplay.length > entry.display.length) entry.display = row.altDisplay;
+  entry.targets.push(row);
+  grouped.set(row.altNumber, entry);
+}
+const groups = [...grouped.entries()]
+  .map(([key, value]) => ({ key, ...value }))
+  .sort((a, b) => a.key.localeCompare(b.key));
+
+const pageUrl = `${site.url}/cross-reference/`;
+const faqItems = [
+  {
+    question: 'How do I use this cross-reference list?',
+    answer:
+      'Match your marked number to the catalog record. Earlier and later labels describe the reference relative to the linked catalog part. Reference-only rows have no confirmed replacement direction. Open the part page for identification checks and send engine details before ordering.',
+  },
+  {
+    question: 'My part number is not listed. Can you still supply it?',
+    answer:
+      'Send the complete number, engine model and serial number for a sourcing check. Absence from this index does not establish availability or unavailability.',
+  },
+  {
+    question: 'Does an interchange reference mean the parts are identical?',
+    answer:
+      'No. These are catalog history and related-number references, including imported public catalog data. They do not prove identical dimensions, condition or application. Confirm the exact offered number, engine serial range and any mating-part changes before substitution.',
+  },
+];
+---
+
+<BaseLayout
+  title="Part Number Cross Reference — MTU, Detroit Diesel & DEUTZ Alternatives"
+  description={`Check ${groups.length} catalog reference numbers, earlier and later part-number history. Follow linked part records and request application-specific replacement verification.`}
+  currentPath="/cross-reference"
+  jsonLd={[
+    breadcrumbSchema([
+      { name: 'Home', url: site.url },
+      { name: 'Part Number Cross Reference', url: pageUrl },
+    ]),
+    faqSchema(faqItems),
+  ]}
+>
+  <FunnelPageView stage="comparison" label="cross-reference-index" />
+  <BreadcrumbHero
+    title="Part Number Cross Reference"
+    trail={[{ label: 'Home', href: '/' }, { label: 'Part Number Cross Reference' }]}
+    variant="2"
+  />
+
+  <div class="resource-page">
+    <section class="resource-page-section">
+      <p>
+        Have an OEM, superseded, or another supplier's part number? This index lists
+        <strong>{groups.length} catalog reference numbers</strong> linked to part records.
+        Earlier and later labels describe published catalog history; an undirected reference does
+        not establish interchangeability. Imported catalog data is an identification aid, not supplier-confirmed fitment.
+      </p>
+      <p>
+        Type any part number fragment below to filter the list, then open the linked part page for
+        fitment, weight, HS code, and availability details. If your number is not listed, send it with
+        your engine model and serial number — we verify interchanges manually before quoting.
+      </p>
+      <p>
+        Looking for the full list rather than an alternative number? The
+        <a href="/part-number-index/">part number index</a> covers every indexed number with English
+        and German designations. For generator-set engines organized by power rating, see
+        <a href="/products/mtu-spare-parts/mtu-genset-parts-by-power/">MTU genset parts by power rating</a>.
+      </p>
+    </section>
+
+    <section class="resource-page-section">
+      <div class="xref-filter">
+        <input
+          type="search"
+          id="xref-filter-input"
+          placeholder="Type a part number, e.g. 4570500127 or A5410500227"
+          aria-label="Filter cross reference list"
+          autocomplete="off"
+        />
+        <span class="xref-filter__count" id="xref-count">{groups.length} references</span>
+      </div>
+      <div class="xref-table-wrap">
+        <table class="xref-table" id="xref-table">
+          <thead>
+            <tr>
+              <th scope="col">Your Part Number</th>
+              <th scope="col">Linked Catalog Number</th>
+              <th scope="col">Reference Relationship</th>
+              <th scope="col">Part</th>
+            </tr>
+          </thead>
+          <tbody>
+            {groups.map((group) =>
+              group.targets.map((target, i) => (
+                <tr data-xref-key={`${group.key} ${target.partNumber}`}>
+                  <td class="xref-alt">{i === 0 ? group.display : `↳ ${group.display}`}</td>
+                  <td>
+                    <a href={`/part-products/${target.slug}/`}>{target.partNumber}</a>
+                  </td>
+                  <td>{target.relationship}</td>
+                  <td>{target.partName}</td>
+                </tr>
+              )),
+            )}
+          </tbody>
+        </table>
+        <p class="xref-empty" id="xref-empty" hidden>
+          No match in the catalog index. <a href="/contact/?source=xref-not-found" data-rfq-modal data-rfq-source="xref-not-found" data-rfq-context="Unlisted part-number verification">Send us the number</a> —
+          we check interchanges manually.
+        </p>
+      </div>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>Cross Reference FAQ</h2>
+      {faqItems.map((item) => (
+        <details class="resource-faq-item">
+          <summary>{item.question}</summary>
+          <p>{item.answer}</p>
+        </details>
+      ))}
+    </section>
+
+    <DetailRfqStrip
+      title="Can't find your number?"
+      text="Send the part number, engine model, and serial number. We verify interchange options and availability before quoting."
+      quoteHref="/contact/?source=cross-reference"
+      label="Check My Part Number"
+      modalSource="cross-reference"
+    />
+  </div>
+</BaseLayout>
+
+<script>
+  const input = document.getElementById('xref-filter-input') as HTMLInputElement | null;
+  const table = document.getElementById('xref-table');
+  const empty = document.getElementById('xref-empty');
+  const count = document.getElementById('xref-count');
+  const rows = table ? Array.from(table.querySelectorAll<HTMLTableRowElement>('tbody tr')) : [];
+
+  input?.addEventListener('input', () => {
+    const q = input.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+    let visible = 0;
+    for (const row of rows) {
+      const key = (row as HTMLElement).dataset.xrefKey?.toUpperCase().replace(/[^A-Z0-9]/g, '') ?? '';
+      const show = !q || key.includes(q);
+      row.style.display = show ? '' : 'none';
+      if (show) visible++;
+    }
+    if (empty) empty.hidden = visible > 0;
+    if (count) count.textContent = q ? `${visible} match${visible === 1 ? '' : 'es'}` : `${rows.length} references`;
+  });
+</script>
+
+<style>
+  .xref-filter {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .xref-filter input {
+    flex: 1;
+    border: 1px solid var(--color-stroke, #d7dee8);
+    border-radius: 6px;
+    padding: 12px 14px;
+    font: inherit;
+  }
+
+  .xref-filter__count {
+    color: #64748b;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  .xref-table-wrap {
+    overflow-x: auto;
+  }
+
+  .xref-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+
+  .xref-table th,
+  .xref-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .xref-table th {
+    background: #f8fafc;
+    font-weight: 700;
+  }
+
+  .xref-alt {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .xref-table a {
+    color: var(--color-primary, #146ef5);
+    font-weight: 700;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  .xref-empty {
+    padding: 24px;
+    text-align: center;
+    color: #475569;
+  }
+
+  .resource-faq-item {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+
+  .resource-faq-item summary {
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  .resource-faq-item p {
+    margin: 10px 0 0;
+    color: #475569;
+    line-height: 1.6;
+  }
+</style>

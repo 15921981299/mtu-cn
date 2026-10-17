@@ -1,0 +1,36 @@
+---
+interface Props {
+  intro?: string;
+}
+
+const { intro } = Astro.props;
+const hasSidebar = Astro.slots.has('sidebar');
+const hasHero = Astro.slots.has('hero');
+---
+
+<section class="blog-details-section detail-page-section">
+  <div class="section-gap bottom">
+    <div class="container">
+      <article class="blog-details-content-block resource-page fade-in">
+
+        {intro && <p class="resource-intro">{intro}</p>}
+        <div class:list={['detail-page-layout', { 'has-sidebar': hasSidebar }]}>
+          <div class="detail-page-main">
+            {hasHero && (
+              <div class="detail-page-hero">
+                <slot name="hero" />
+              </div>
+            )}
+            
+            <slot />
+          </div>
+          {hasSidebar && (
+            <aside class="detail-page-sidebar">
+              <slot name="sidebar" />
+            </aside>
+          )}
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

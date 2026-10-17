@@ -1,0 +1,656 @@
+﻿---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../components/BreadcrumbHero.astro';
+import FunnelPageView from '../components/FunnelPageView.astro';
+import { site, breadcrumbSchema } from '../data/site';
+import '../styles/resource-page.css';
+import '../styles/hub-list-page.css';
+import '../styles/certification-page.css';
+
+const certIcons: Record<string, string> = {
+  iso: `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M14 2v6h6M8 13h8M8 17h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+  automotive: `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 16H9m10 0h1a1 1 0 001-1v-3.5a1 1 0 00-.684-.948l-4.493-1.498a1 1 0 00-1.316.948V15a1 1 0 001 1h1M6 16H5a1 1 0 01-1-1v-3.5a1 1 0 01.684-.948l4.493-1.498a1 1 0 011.316.948V15a1 1 0 01-1 1h-1M6 11l1.5-4h9L18 11M6 16v2m12-2v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  medical: `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 8v8M8 12h8M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+  cmm: `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  material: `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+  dfm: `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke="currentColor" stroke-width="1.5"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke="currentColor" stroke-width="1.5"/></svg>`,
+};
+
+const pageUrl = `${site.url}/certifications/`;
+
+const qualityCommitments = [
+  {
+    title: 'Part identification',
+    description: 'We use the full part marking, engine model, serial number, and old-part photo when available to review the requested item.',
+    iconKey: 'cmm',
+  },
+  {
+    title: 'Clear supply condition',
+    description: 'The quotation identifies the exact offered number and whether the route is OEM, alternative, remanufactured, or a replacement reference.',
+    iconKey: 'dfm',
+  },
+  {
+    title: 'Supplier document scope',
+    description: 'Request the datasheet, certificate, test record, or origin information you need with the RFQ. We confirm which documents apply to the offered item.',
+    iconKey: 'material',
+  },
+  {
+    title: 'Pre-shipment checks',
+    description: 'For an approved order, marking and packing photos can be requested before dispatch. The available evidence is agreed with the quotation.',
+    iconKey: 'iso',
+  },
+];
+
+const equipment = [
+  { name: 'Identification', qty: 'Before quote', capability: 'Requested number, engine serial, old-part marking, and replacement history' },
+  { name: 'Offered item', qty: 'At quote', capability: 'Offered number, condition, quantity, availability, and lead time' },
+  { name: 'Documents', qty: 'Per item', capability: 'Confirm available datasheet, certificate, test record, or origin document' },
+  { name: 'Shipment', qty: 'Before dispatch', capability: 'Confirm marking, packing, shipping documents, and tracking scope' },
+];
+
+const inspectionSteps = [
+  'Receive the part number, quantity, destination, and any marking or nameplate photos',
+  'Check the engine serial and catalog relationship when fitment or supersession is uncertain',
+  'Quote the offered number, condition, lead time, document scope, and delivery terms',
+  'Confirm marking and packing requirements before dispatch; provide agreed shipment documents',
+];
+
+const verificationDocuments = [
+  {
+    label: 'Supplier availability confirmation',
+    detail: 'Line-item review for part number, quantity, replacement route, and expected delivery window.',
+  },
+  {
+    label: 'Nameplate and old-part photo check',
+    detail: 'Engine model, serial number, plate photo, casting mark, or old-part image review when the part number is unclear.',
+  },
+  {
+    label: 'Packing and shipment photos',
+    detail: 'Photo confirmation before dispatch for urgent orders, export packing, or high-value assemblies.',
+  },
+  {
+    label: 'Supplier documents on request',
+    detail: 'Available supplier documents, conformity notes, invoice, packing list, and export paperwork matched to the order scope.',
+  },
+  {
+    label: 'Customs and HS code support',
+    detail: 'HS code and shipment document support for engine parts orders when required by the destination country.',
+  },
+] as const;
+---
+
+<BaseLayout
+  title="Parts Verification & Documentation | Diesel Part Source"
+  description="Diesel Part Source checks engine part numbers, serial numbers, supplier documents, packing requirements, and delivery routes before quotation and shipment."
+  currentPath="/certifications"
+  jsonLd={[
+    breadcrumbSchema([
+      { name: 'Home', url: site.url },
+      { name: 'Certifications', url: pageUrl },
+    ]),
+  ]}
+>
+  <FunnelPageView stage="signing" event="cert_page_view" label="certifications" />
+  <BreadcrumbHero title="Parts Verification & Documentation" current="Quality" variant="5" />
+
+  <section class="blog-details-section detail-page-section">
+    <div class="section-gap bottom">
+      <div class="container">
+        <article class="blog-details-content-block blog-index-page cert-page fade-in">
+          <nav class="resource-nav blog-index-top-nav" aria-label="Quality navigation">
+            <a href="#quality-commitments" class="resource-nav-link">Verification scope</a>
+            <a href="#inspection-process" class="resource-nav-link">Review steps</a>
+            <a href="#documentation" class="resource-nav-link">Documents</a>
+            <a href="/about/" class="resource-nav-link resource-nav-all">About us</a>
+          </nav>
+
+          <header class="blog-index-hero cert-hero">
+            <p class="blog-index-kicker">Part identification · Quotation review</p>
+            <p class="blog-index-intro">
+              Send a part number and quantity to begin. Engine serial numbers, old-part markings, and photos help us check fitment when the catalog reference is incomplete. The quotation states the offered item and which documents can accompany it.
+            </p>
+            <div class="blog-index-stats" role="list">
+              <span class="blog-index-stat" role="listitem">
+                <strong>Part no.</strong>
+                <span>Identification</span>
+              </span>
+              <span class="blog-index-stat" role="listitem">
+                <strong>Serial</strong>
+                <span>Fitment check</span>
+              </span>
+              <span class="blog-index-stat" role="listitem">
+                <strong>Quote</strong>
+                <span>Document scope</span>
+              </span>
+            </div>
+          </header>
+
+          <div class="blog-index-rfq-strip detail-rfq-strip">
+            <p>List required documents with your parts inquiry — supplier documents, packing photos, customs paperwork, or delivery deadline. We confirm what is practical before order placement.</p>
+            <a href="/contact/?source=certifications" class="blog-index-rfq-btn detail-rfq-link" data-rfq-modal data-rfq-context="Parts verification and document request" data-rfq-source="certifications">Request Parts Check</a>
+          </div>
+
+          <section id="quality-commitments" class="blog-index-section cert-section">
+            <header class="blog-index-section-head">
+              <div>
+                <h2>Verification scope</h2>
+                <p>Identification and documentation are agreed for the part and supply route being quoted.</p>
+              </div>
+            </header>
+            <div class="cert-grid">
+              {qualityCommitments.map((c) => (
+                <div class="cert-card">
+                  <span class="cert-icon" set:html={certIcons[c.iconKey]} />
+                  <h3 class="cert-title">{c.title}</h3>
+                  <p class="cert-desc">{c.description}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section id="inspection-process" class="blog-index-section cert-section">
+            <header class="blog-index-section-head">
+              <div>
+                <h2>Our parts verification process</h2>
+                <p>Four checks from part identification to the agreed shipment documents.</p>
+              </div>
+            </header>
+            <div class="inspection-list">
+              {inspectionSteps.map((step, i) => (
+                <div class="inspection-step">
+                  <span class="inspection-num">{String(i + 1).padStart(2, '0')}</span>
+                  <span class="inspection-text">{step}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section id="equipment" class="blog-index-section cert-section">
+            <header class="blog-index-section-head">
+              <div>
+                <h2>What the buyer can confirm</h2>
+                <p>Ask for the evidence you need with the parts list so its availability can be checked before the order.</p>
+              </div>
+            </header>
+            <div class="equip-table-wrap">
+              <table class="equip-table">
+                <caption class="equip-table-caption">Quotation and shipment review points</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Review point</th>
+                    <th scope="col">When</th>
+                    <th scope="col">Information to confirm</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {equipment.map((e) => (
+                    <tr>
+                      <td class="equip-name">{e.name}</td>
+                      <td class="equip-qty">{e.qty}</td>
+                      <td class="equip-cap">{e.capability}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="documentation" class="blog-index-section cert-section">
+            <header class="blog-index-section-head">
+              <div>
+                <h2>Documentation buyers can request</h2>
+                <p>Document availability depends on the quoted supplier and item. Request it before approving the order; this page does not imply that every record exists for every part.</p>
+              </div>
+            </header>
+            <div class="verify-doc-grid">
+              {verificationDocuments.map((doc) => (
+                <div class="verify-doc-card">
+                  <h3 class="verify-doc-label">{doc.label}</h3>
+                  <p class="verify-doc-detail">{doc.detail}</p>
+                </div>
+              ))}
+            </div>
+            <p class="cert-cta-row">
+              <a href="/part-products/">MTU part numbers</a>
+              <span aria-hidden="true">·</span>
+              <a href="/contact/?source=certifications">Request documentation scope →</a>
+            </p>
+          </section>
+
+          <footer class="hub-list-footer-links blog-index-footer">
+            <a href="/terms/payment/">Payment terms</a>
+            <span aria-hidden="true">·</span>
+            <a href="/terms/shipping/">Shipping &amp; logistics</a>
+            <span aria-hidden="true">·</span>
+            <a href="/terms/samples/">Sample &amp; trial order policy</a>
+            <span aria-hidden="true">·</span>
+            <a href="/part-products/">MTU part numbers</a>
+          </footer>
+        </article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .cert-page .cert-hero {
+    margin-bottom: 8px;
+  }
+
+  .cert-jump {
+    margin-bottom: 36px;
+  }
+
+  .cert-section {
+    scroll-margin-top: 120px;
+  }
+
+  .cert-media-section {
+    margin-bottom: 40px;
+  }
+
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  @media (max-width: 991px) {
+    .cert-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .cert-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .cert-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-stroke);
+    border-radius: 10px;
+    padding: 24px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition:
+      border-color 0.22s ease,
+      box-shadow 0.22s ease;
+  }
+
+  .cert-card:hover {
+    border-color: rgba(20, 110, 245, 0.38);
+    box-shadow: 0 8px 28px rgba(20, 110, 245, 0.08);
+  }
+
+  .cert-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: rgba(20, 110, 245, 0.1);
+    color: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  .cert-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--color-title);
+    line-height: 1.35;
+    margin: 0;
+  }
+
+  .cert-desc {
+    font-size: 14px;
+    color: #475569;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .inspection-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--color-stroke);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--color-white);
+  }
+
+  .inspection-step {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--color-stroke);
+  }
+
+  .inspection-step:last-child {
+    border-bottom: none;
+  }
+
+  .inspection-num {
+    font-family: var(--font-title);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--color-primary);
+    min-width: 32px;
+    flex-shrink: 0;
+  }
+
+  .inspection-text {
+    font-size: 16px;
+    color: var(--color-title);
+    line-height: 1.5;
+  }
+
+  .equip-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--color-stroke);
+    border-radius: 10px;
+    background: var(--color-white);
+  }
+
+  .equip-table-caption {
+    padding: 14px 16px 0;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+    color: var(--color-title);
+    caption-side: top;
+  }
+
+  .equip-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .equip-table th,
+  .equip-table td {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--color-stroke);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .equip-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .equip-table tbody tr {
+    transition: background-color 0.2s ease;
+  }
+
+  .equip-table tbody tr:hover {
+    background: rgba(20, 110, 245, 0.04);
+  }
+
+  .equip-table thead tr {
+    background: var(--color-background);
+  }
+
+  .equip-table th {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-title);
+  }
+
+  .equip-name {
+    font-weight: 600;
+    color: var(--color-title);
+    font-size: 15px;
+  }
+
+  .equip-qty {
+    color: var(--color-primary);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .equip-cap {
+    color: #475569;
+    font-size: 14px;
+  }
+
+  .industry-proof-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+  }
+
+  .industry-proof-card {
+    padding: 20px 22px;
+    background: var(--color-white);
+    border: 1px solid var(--color-stroke);
+    border-radius: 10px;
+    border-left: 4px solid var(--color-primary);
+    transition:
+      border-color 0.22s ease,
+      box-shadow 0.22s ease;
+  }
+
+  .industry-proof-card:hover {
+    border-color: rgba(20, 110, 245, 0.35);
+    box-shadow: 0 6px 20px rgba(20, 110, 245, 0.08);
+  }
+
+  .industry-proof-title {
+    margin: 0 0 6px;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .industry-proof-title a {
+    color: var(--color-title);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  .industry-proof-title a:hover {
+    color: var(--color-primary);
+  }
+
+  .industry-proof-meta {
+    margin: 0 0 12px;
+    font-size: 13px;
+    color: #64748b;
+  }
+
+  .industry-proof-links {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .industry-proof-links a {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  .industry-proof-links a:hover {
+    text-decoration: underline;
+  }
+
+  .verify-doc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+  }
+
+  .verify-doc-card {
+    padding: 18px 20px;
+    background: var(--color-background);
+    border: 1px solid var(--color-stroke);
+    border-radius: 10px;
+    transition:
+      border-color 0.22s ease,
+      box-shadow 0.22s ease;
+  }
+
+  .verify-doc-card:hover {
+    border-color: rgba(20, 110, 245, 0.35);
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+  }
+
+  .verify-doc-label {
+    margin: 0 0 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-title);
+  }
+
+  .verify-doc-detail {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: #475569;
+  }
+
+  .verify-doc-sample {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  .verify-doc-sample:hover {
+    text-decoration: underline;
+  }
+
+  .cert-cta-row {
+    margin-top: 24px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-body-text);
+  }
+
+  .cert-cta-row a {
+    color: var(--color-primary);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .cert-cta-row a:hover {
+    text-decoration: underline;
+  }
+
+  .cert-cta-row span {
+    margin: 0 8px;
+    opacity: 0.45;
+  }
+
+  .featured-proof-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  .featured-proof-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 18px 20px;
+    background: var(--color-white);
+    border: 1px solid var(--color-stroke);
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      border-color 0.22s ease,
+      box-shadow 0.22s ease;
+  }
+
+  .featured-proof-card:hover {
+    border-color: rgba(20, 110, 245, 0.4);
+    box-shadow: 0 8px 28px rgba(20, 110, 245, 0.1);
+  }
+
+  .featured-proof-industry {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+  }
+
+  .featured-proof-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-title);
+    line-height: 1.35;
+  }
+
+  .featured-proof-spec {
+    font-size: 13px;
+    color: #64748b;
+  }
+
+  .hub-list-jump-link:focus-visible,
+  .detail-rfq-link:focus-visible,
+  .industry-proof-title a:focus-visible,
+  .industry-proof-links a:focus-visible,
+  .verify-doc-sample:focus-visible,
+  .cert-cta-row a:focus-visible,
+  .hub-list-footer-links a:focus-visible,
+  .featured-proof-card:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .hub-list-jump-link:focus-visible {
+    border-radius: 999px;
+  }
+
+  .featured-proof-card:focus-visible {
+    border-radius: 10px;
+  }
+
+  @media (max-width: 640px) {
+    .equip-table th,
+    .equip-table td {
+      padding: 14px 16px;
+    }
+
+    .inspection-step {
+      padding: 16px 18px;
+      gap: 14px;
+    }
+
+    .inspection-text {
+      font-size: 15px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cert-card,
+    .industry-proof-card,
+    .verify-doc-card,
+    .featured-proof-card,
+    .equip-table tbody tr {
+      transition: none;
+    }
+  }
+</style>

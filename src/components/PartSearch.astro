@@ -1,0 +1,390 @@
+---
+/**
+ * Header icon search — collapsed by default, expands to an input on click.
+ * - Lazy-loads /search-index.json on first open
+ * - Part-number + name matching, keyboard navigation
+ * - Global styles (dps-search-*) because result rows are created in JS
+ */
+---
+
+<div class="dps-search" id="dps-search">
+  <button
+    type="button"
+    class="dps-search-toggle"
+    id="dps-search-toggle"
+    aria-label="搜索 MTU 配件"
+    aria-expanded="false"
+    aria-controls="dps-search-form"
+  >
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"></circle>
+      <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+  </button>
+  <form class="dps-search-form" id="dps-search-form" action="/part-number-index/" method="get" role="search">
+    <svg class="dps-search-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"></circle>
+      <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+    <input
+      id="dps-search-input"
+      class="dps-search-input"
+      type="search"
+      name="q"
+      placeholder="零件号或品名"
+      autocomplete="off"
+      spellcheck="false"
+      tabindex="-1"
+      aria-label="按零件号或品名搜索 MTU 配件"
+      aria-expanded="false"
+      aria-controls="dps-search-list"
+      role="combobox"
+      aria-autocomplete="list"
+    />
+    <button type="button" class="dps-search-close" id="dps-search-close" aria-label="关闭搜索" tabindex="-1">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+      </svg>
+    </button>
+    <div class="dps-search-list" id="dps-search-list" role="listbox" hidden></div>
+  </form>
+</div>
+
+<style is:global>
+  .dps-search {
+    position: relative;
+    flex: none;
+    width: 40px;
+    height: 40px;
+    z-index: 1200;
+  }
+  .dps-search-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--color-title);
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  .dps-search-toggle:hover,
+  .dps-search-toggle:focus-visible {
+    background: #f1f5f9;
+    color: var(--color-primary);
+    outline: none;
+  }
+  .dps-search.is-open .dps-search-toggle {
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .dps-search-form {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    opacity: 0;
+    pointer-events: none;
+    transform-origin: right center;
+    transition: width 0.22s ease, opacity 0.18s ease;
+  }
+  .dps-search.is-open .dps-search-form {
+    width: min(380px, calc(100vw - 32px));
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .dps-search-icon {
+    position: absolute;
+    left: 12px;
+    color: #64748b;
+    pointer-events: none;
+  }
+  .dps-search-input {
+    width: 100%;
+    height: 40px;
+    padding: 0 38px 0 36px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #0f172a;
+    font-size: 14px;
+    outline: none;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  }
+  .dps-search-input::placeholder { color: #94a3b8; }
+  .dps-search-input:focus { border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.16); }
+  .dps-search-input::-webkit-search-cancel-button { -webkit-appearance: none; }
+  .dps-search-close {
+    position: absolute;
+    right: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: #64748b;
+    cursor: pointer;
+  }
+  .dps-search-close:hover,
+  .dps-search-close:focus-visible {
+    background: #f1f5f9;
+    color: #0f172a;
+    outline: none;
+  }
+  .dps-search-list {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    max-height: min(360px, calc(100dvh - 88px));
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.18);
+    z-index: 1201;
+    scrollbar-width: thin;
+    scrollbar-color: #94a3b8 #f1f5f9;
+  }
+  .dps-search-list::-webkit-scrollbar {
+    width: 8px;
+  }
+  .dps-search-list::-webkit-scrollbar-track {
+    background: #f1f5f9;
+  }
+  .dps-search-list::-webkit-scrollbar-thumb {
+    background: #94a3b8;
+    border-radius: 8px;
+  }
+  .dps-search-item {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 9px 14px;
+    text-decoration: none;
+    color: #1e293b;
+    border-bottom: 1px solid #f1f5f9;
+    cursor: pointer;
+  }
+  .dps-search-item:last-child { border-bottom: none; }
+  .dps-search-item:hover,
+  .dps-search-item.is-active { background: #eff6ff; }
+  .dps-search-pn { font-weight: 700; font-size: 13.5px; white-space: nowrap; color: #0f172a; }
+  .dps-search-name { font-size: 13px; color: #334155; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .dps-search-s { margin-left: auto; font-size: 12px; color: #94a3b8; white-space: nowrap; }
+  .dps-search-empty {
+    padding: 12px 14px;
+    font-size: 13px;
+    color: #475569;
+  }
+  .dps-search-empty a { color: #1d4ed8; font-weight: 600; text-decoration: none; }
+  @media (max-width: 1199px) {
+    .dps-search.is-open .dps-search-form {
+      width: min(340px, calc(100vw - 88px));
+    }
+  }
+  @media (max-width: 640px) {
+    .dps-search-s { display: none; }
+    .dps-search.is-open .dps-search-form {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      width: auto;
+      height: 44px;
+    }
+    .dps-search.is-open .dps-search-input {
+      height: 44px;
+    }
+    .dps-search-list {
+      max-height: calc(100dvh - 80px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .dps-search-toggle,
+    .dps-search-form {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const root = document.getElementById('dps-search');
+  const toggle = document.getElementById('dps-search-toggle') as HTMLButtonElement | null;
+  const closeBtn = document.getElementById('dps-search-close') as HTMLButtonElement | null;
+  const form = document.getElementById('dps-search-form') as HTMLFormElement | null;
+  const input = document.getElementById('dps-search-input') as HTMLInputElement | null;
+  const list = document.getElementById('dps-search-list') as HTMLDivElement | null;
+
+  if (root && toggle && closeBtn && form && input && list) {
+    type Entry = { t: 'p' | 'c'; pn: string; name: string; s: string; slug: string };
+    let index: Entry[] | null = null;
+    let loading: Promise<void> | null = null;
+    let active = -1;
+
+    const normPn = (v: string) => v.toUpperCase().replace(/[^A-Z0-9]/g, '');
+    const ensureIndex = () => {
+      if (index) return Promise.resolve();
+      if (!loading) {
+        loading = fetch('/search-index.json')
+          .then((r) => (r.ok ? r.json() : []))
+          .then((data: Entry[]) => { index = data; })
+          .catch(() => { index = []; });
+      }
+      return loading;
+    };
+
+    const closeList = () => {
+      list.hidden = true;
+      active = -1;
+      input.setAttribute('aria-expanded', 'false');
+    };
+
+    const collapse = () => {
+      closeList();
+      root.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      input.tabIndex = -1;
+      closeBtn.tabIndex = -1;
+      input.blur();
+    };
+
+    const expand = () => {
+      root.classList.add('is-open');
+      toggle.setAttribute('aria-expanded', 'true');
+      input.tabIndex = 0;
+      closeBtn.tabIndex = 0;
+      requestAnimationFrame(() => input.focus());
+      ensureIndex().then(render);
+    };
+
+    const search = (q: string): Entry[] => {
+      if (!index) return [];
+      const qn = normPn(q);
+      const tokens = q.toLowerCase().split(/[^a-z0-9]+/).filter((t) => t.length >= 2);
+      if (qn.length < 2 && tokens.length === 0) return [];
+      const scored: Array<[number, Entry]> = [];
+      for (const e of index) {
+        const epn = normPn(e.pn);
+        const hay = `${e.pn} ${e.name} ${e.s}`.toLowerCase();
+        let score = -1;
+        if (qn.length >= 2 && epn.startsWith(qn)) score = 0;
+        else if (qn.length >= 3 && epn.includes(qn)) score = 1;
+        else if (tokens.length > 0 && tokens.every((t) => hay.includes(t))) score = e.t === 'p' ? 2 : 3;
+        if (score >= 0) scored.push([score, e]);
+        if (scored.length > 400) break;
+      }
+      scored.sort((a, b) => a[0] - b[0]);
+      return scored.slice(0, 24).map(([, e]) => e);
+    };
+
+    const render = () => {
+      if (!root.classList.contains('is-open')) return;
+      const q = input.value.trim();
+      if (q.length < 2) { closeList(); return; }
+      const results = search(q);
+      list.innerHTML = '';
+      if (results.length === 0) {
+        const empty = document.createElement('div');
+        empty.className = 'dps-search-empty';
+        empty.innerHTML = '目录中未匹配到该零件号。<a href="/contact/">发给我们核验并报价 →</a>';
+        list.appendChild(empty);
+      } else {
+        for (const e of results) {
+          const a = document.createElement('a');
+          a.className = 'dps-search-item';
+          a.href = `/part-products/${e.slug}/`;
+          a.setAttribute('role', 'option');
+          const pn = document.createElement('span');
+          pn.className = 'dps-search-pn';
+          pn.textContent = e.pn || 'Catalog';
+          const name = document.createElement('span');
+          name.className = 'dps-search-name';
+          name.textContent = e.name;
+          a.append(pn, name);
+          if (e.s) {
+            const s = document.createElement('span');
+            s.className = 'dps-search-s';
+            s.textContent = e.s;
+            a.appendChild(s);
+          }
+          list.appendChild(a);
+        }
+      }
+      list.hidden = false;
+      active = -1;
+      input.setAttribute('aria-expanded', 'true');
+    };
+
+    toggle.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      expand();
+    });
+    closeBtn.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      collapse();
+      toggle.focus();
+    });
+
+    input.addEventListener('input', () => { ensureIndex().then(render); });
+
+    input.addEventListener('keydown', (ev) => {
+      const items = Array.from(list.querySelectorAll<HTMLAnchorElement>('.dps-search-item'));
+      if (ev.key === 'Escape') {
+        if (!list.hidden) { closeList(); return; }
+        collapse();
+        toggle.focus();
+        return;
+      }
+      if (items.length === 0) return;
+      if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') {
+        ev.preventDefault();
+        active = ev.key === 'ArrowDown'
+          ? (active + 1) % items.length
+          : (active - 1 + items.length) % items.length;
+        items.forEach((el, i) => el.classList.toggle('is-active', i === active));
+        items[active].scrollIntoView({ block: 'nearest' });
+      } else if (ev.key === 'Enter') {
+        if (active >= 0) {
+          ev.preventDefault();
+          window.location.href = items[active].href;
+        } else if (items.length > 0) {
+          ev.preventDefault();
+          window.location.href = items[0].href;
+        }
+      }
+    });
+
+    form.addEventListener('submit', (ev) => {
+      const first = list.querySelector<HTMLAnchorElement>('.dps-search-item');
+      if (!list.hidden && first) {
+        ev.preventDefault();
+        window.location.href = first.href;
+      }
+    });
+
+    document.addEventListener('click', (ev) => {
+      if (!root.contains(ev.target as Node)) collapse();
+    });
+
+    document.addEventListener('keydown', (ev) => {
+      if ((ev.metaKey || ev.ctrlKey) && ev.key.toLowerCase() === 'k') {
+        ev.preventDefault();
+        expand();
+      }
+    });
+  }
+</script>

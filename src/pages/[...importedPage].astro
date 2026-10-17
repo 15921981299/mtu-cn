@@ -1,0 +1,163 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../components/BreadcrumbHero.astro';
+import DetailPageShell from '../components/DetailPageShell.astro';
+import DetailRfqStrip from '../components/DetailRfqStrip.astro';
+import { importedPages } from '../data/imported-pages';
+import { importedPageContent } from '../data/imported-page-content';
+import { breadcrumbSchema, site } from '../data/site';
+import '../styles/resource-page.css';
+
+export function getStaticPaths() {
+  return importedPages.map((page) => ({
+    params: { importedPage: page.slug },
+    props: { page },
+  }));
+}
+
+const { page: basePage } = Astro.props;
+const content = importedPageContent[basePage.slug];
+const page = content
+  ? {
+      ...basePage,
+      title: content.title ?? basePage.title,
+      seoTitle: content.seoTitle ?? basePage.seoTitle,
+      summary: content.summary,
+    }
+  : basePage;
+const pageUrl = `${site.url}/${page.slug}/`;
+const quoteHref = `/contact/?source=${page.slug.replace(/[^a-z0-9]+/gi, '-')}`;
+const slugText = page.slug.toLowerCase();
+const pageText = `${page.slug} ${page.title} ${page.section} ${page.summary}`.toLowerCase();
+const isCategoryPage = slugText.startsWith('categories/');
+const isPartPage = slugText.startsWith('part/');
+const isNewsPage = slugText.startsWith('news/') || slugText.startsWith('news-category/');
+const isStrategicImportedPage =
+  /^(part\/mtu-(183-parts|538-parts|1800-parts|specialized-tools)$|stock$|support-services$|genuine-oem-parts$|mtu-oils$|mtu-coolants$|series-4000|rail-drive-solutions$)/i.test(page.slug);
+const shouldNoindex = !isStrategicImportedPage;
+
+const pageKind = isPartPage
+  ? 'parts family'
+  : isCategoryPage
+    ? 'engine category'
+    : isNewsPage
+      ? 'reference update'
+      : 'support topic';
+const applicationContext = pageText.includes('marine')
+  ? 'marine propulsion, auxiliary vessel engines, and shipyard service'
+  : pageText.includes('generator') || pageText.includes('power')
+    ? 'generator sets, standby power, and power-plant maintenance'
+    : pageText.includes('rail')
+      ? 'rail engine service and scheduled fleet maintenance'
+      : pageText.includes('cummins')
+        ? 'Cummins industrial, generator, and equipment engine service'
+        : pageText.includes('deutz')
+          ? 'DEUTZ industrial equipment, pump, and compressor engine service'
+          : 'diesel engine maintenance, replacement, and export sourcing';
+const sourcingChecklist = isPartPage
+  ? ['Confirm the engine series and exact part number before comparing options', 'Check supersession or replacement references when the original number is old', 'Send quantity, destination, and urgency so stock and shipping can be quoted together']
+  : isCategoryPage
+    ? ['Use the category to narrow engine series, rating, and application', 'Group related models into one inquiry when the maintenance list covers several engines', 'Link the category page to exact product or part-number pages before sending RFQ']
+    : isNewsPage
+      ? ['Use the update as context, then verify the exact engine model before ordering', 'Do not assume compatibility from article text alone', 'Send part numbers and photos for confirmation before shipment']
+      : ['Clarify the service situation and required delivery window', 'Attach engine nameplate and old part photos when the part number is unclear', 'Confirm packing, documents, and international shipping route before release'];
+const uniqueAngle = isPartPage
+  ? `${page.title} pages should help buyers move from a broad MTU parts family to an exact line-item inquiry.`
+  : isCategoryPage
+    ? `${page.title} is useful as a category hub when it routes buyers toward the correct engine series and related parts pages.`
+    : isNewsPage
+      ? `${page.title} is treated as background information, not as a standalone fitment guarantee.`
+      : `${page.title} is useful when it explains a specific support step in the sourcing workflow.`;
+---
+
+<BaseLayout
+  title={page.seoTitle}
+  description={content ? page.summary : `${page.summary} Request availability, replacement checks, and global shipping support from Shanghai.`}
+  currentPath="/products"
+  image="/images/mtu-engine-parts-hero.webp"
+  noindex={shouldNoindex}
+  jsonLd={[
+    breadcrumbSchema([
+      { name: 'Home', url: site.url },
+      { name: page.section, url: pageUrl },
+      { name: page.title, url: pageUrl },
+    ]),
+  ]}
+>
+  <BreadcrumbHero
+    title={page.title}
+    trail={[
+      { label: 'Home', href: '/' },
+      { label: page.section },
+      { label: page.title },
+    ]}
+    variant="3"
+  />
+
+  <DetailPageShell intro={page.summary}>
+    <img
+      slot="hero"
+      src="/images/mtu-engine-parts-hero.webp"
+      alt={`${page.title} engine parts inquiry`}
+      width="1400"
+      height="692"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+
+    <div class="resource-meta">
+      <span><strong>Section</strong> {page.section}</span>
+      <span><strong>Support</strong> Parts inquiry</span>
+      <span><strong>Verification</strong> Model and serial number</span>
+      <span><strong>Delivery</strong> Global shipping</span>
+    </div>
+
+    <DetailRfqStrip
+      quoteHref={quoteHref}
+      title={`Request ${page.title} support`}
+      text="Send engine model, serial number, part numbers, quantity, destination, and required delivery date."
+      secondaryHref="/part-products/"
+      secondaryLabel="Browse MTU part numbers"
+    />
+
+    {content ? (
+      <Fragment set:html={content.body} />
+    ) : (
+      <>
+        <h2>{page.title} Sourcing Support</h2>
+        <p>
+          This {pageKind} page helps buyers organize inquiries related to {page.title}. Diesel Part Source checks part
+          references, engine details, replacement status, stock route, and shipping options before quotation.
+        </p>
+        <p>{uniqueAngle}</p>
+
+        <h2>{page.title} Application Context</h2>
+        <p>
+          Buyers normally use this page when working on {applicationContext}. What matters most is the connection
+          between the engine application and the exact part details sent with the inquiry.
+        </p>
+
+        <h2>What We Can Check for {page.title}</h2>
+        <ul>
+          <li>Engine model, rating, serial number, and application details</li>
+          <li>Part numbers, replacement references, photos, and quantity</li>
+          <li>Stock availability, lead time, packing, and international shipment route</li>
+        </ul>
+
+        <h2>How to Use This Page</h2>
+        <ul>
+          {sourcingChecklist.map((item) => <li>{item}</li>)}
+        </ul>
+      </>
+    )}
+
+    <h2>Useful Links</h2>
+    <ul>
+      <li><a href="/part-products/">MTU part numbers</a></li>
+      <li><a href="/part-products/catalog/mtu-2000-series/">MTU 2000 series catalog</a></li>
+      <li><a href="/part-products/catalog/mtu-4000-series/">MTU 4000 series catalog</a></li>
+      <li><a href="/contact/">Send parts inquiry</a></li>
+    </ul>
+  </DetailPageShell>
+</BaseLayout>

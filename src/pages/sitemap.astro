@@ -1,0 +1,197 @@
+﻿---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../components/BreadcrumbHero.astro';
+import { services } from '../data/services';
+import { products, isProductPageNoindex } from '../data/products';
+import { productSubpages } from '../data/product-subpages';
+import { industries } from '../data/industries';
+import { applications } from '../data/applications';
+import { mtuCatalogHubs } from '../data/mtu-parts';
+import { isSubpageNoindex } from '../data/subpage-quality';
+import { breadcrumbSchema, site } from '../data/site';
+import '../styles/resource-page.css';
+
+const corePages = [
+  { href: '/', label: 'Home' },
+  { href: '/products/', label: 'Products' },
+  { href: '/capabilities/', label: 'Service & Support' },
+  { href: '/industries/', label: 'Industries' },
+  { href: '/applications/', label: 'Applications' },
+  { href: '/part-products/', label: 'Parts Guides' },
+  { href: '/certifications/', label: 'Certifications' },
+  { href: '/about/', label: 'About' },
+  { href: '/contact/', label: 'Send Parts Inquiry' },
+];
+
+const toolPages = [
+  { href: '/products/mtu-spare-parts/mtu-part-number-lookup/', label: 'MTU Part Number Lookup' },
+  { href: '/products/mtu-spare-parts/mtu-engine-series-guide/', label: 'MTU Engine Series Guide' },
+  { href: '/products/mtu-2000-series-parts/marine-generator-service-parts/', label: 'MTU 2000 Marine & Generator Parts' },
+  { href: '/products/mtu-2000-series-parts/16v-2000-engine-parts/', label: 'MTU 16V 2000 Engine Parts' },
+  { href: '/products/mtu-2000-series-parts/mtu-m96l-engine-parts/', label: 'MTU 16V 2000 M96L Engine Parts' },
+  { href: '/series/mtu-396/', label: 'MTU 396 Series Hub' },
+  { href: '/series/mtu-2000/', label: 'MTU 2000 Series Hub' },
+  { href: '/series/mtu-396-variants/', label: 'MTU 396 Variant Decoder' },
+  { href: '/series/mtu-2000-variants/', label: 'MTU 2000 Variant Decoder' },
+  { href: '/series/mtu-1163/', label: 'MTU 1163 Series Hub' },
+  { href: '/series/mtu-1163-variants/', label: 'MTU 1163 Variant Decoder' },
+  { href: '/series/mtu-4000-variants/', label: 'MTU 4000 Variant Decoder' },
+  { href: '/series/16v2000m96/', label: 'MTU 16V 2000 M96 Spare Parts' },
+  { href: '/series/12v396te94/', label: 'MTU 12V 396 TE94 Spare Parts' },
+  { href: '/products/mtu-4000-series-parts/overhaul-parts/', label: 'MTU 4000 Overhaul Parts' },
+  { href: '/products/mtu-4000-series-parts/12v-4000-engine-parts/', label: 'MTU 12V 4000 Engine Parts' },
+  { href: '/products/mtu-4000-series-parts/16v-4000-engine-parts/', label: 'MTU 16V 4000 Engine Parts' },
+  { href: '/products/mtu-series-8000-engines/', label: 'MTU 8000 Series Engine Parts' },
+  { href: '/products/cummins-parts/service-kits-and-overhaul-parts/', label: 'Cummins Service Kits & Overhaul Parts' },
+  { href: '/products/deutz-parts/industrial-equipment-parts/', label: 'DEUTZ Industrial Equipment Parts' },
+  { href: '/llm-instructions/', label: 'LLM / AI Instructions' },
+  { href: '/guides/', label: 'Engine Parts Guides' },
+  { href: '/guides/how-to-read-mtu-parts-diagram/', label: 'How to Read an MTU Parts Diagram' },
+  { href: '/catalog/', label: 'MTU Parts Catalog PDF Downloads' },
+  { href: '/cross-reference/', label: 'Part Number Cross Reference' },
+  { href: '/part-number-index/', label: 'Part Number Index (EN · DE)' },
+  { href: '/products/mtu-spare-parts/mtu-genset-parts-by-power/', label: 'MTU Genset Parts by Power Rating' },
+  { href: '/products/mtu-spare-parts/mtu-overhaul-kits/', label: 'MTU Overhaul Kits (Top / In-Frame / Full)' },
+  { href: '/products/mtu-spare-parts/mtu-1600-series-parts/', label: 'MTU Series 1600 & F-Build Models' },
+  { href: '/products/mtu-spare-parts/mtu-legacy-gas-engine-parts/', label: 'MTU Legacy Series & Gas Engines' },
+  { href: '/engine-models/', label: 'Parts Lists by Engine Model' },
+  { href: '/how-to-source-mtu-parts/', label: 'Dealer or Independent Supplier?' },
+];
+
+const termsPages = [
+  { href: '/terms/payment/', label: 'Payment Terms' },
+  { href: '/terms/shipping/', label: 'Shipping Terms' },
+  { href: '/terms/samples/', label: 'Sample Terms' },
+  { href: '/privacy/', label: 'Privacy Policy' },
+];
+
+const capabilityLinks = services.map((s) => ({ href: `/capabilities/${s.slug}/`, label: s.title }));
+const productLinks = products
+  .filter((product) => product.slug !== 'mtu-2000-series' && !isProductPageNoindex(product))
+  .map((product) => ({ href: `/products/${product.slug}/`, label: product.title }));
+const productSubLinks = productSubpages
+  .filter((sp) => !isSubpageNoindex(sp.productSlug, sp.slug))
+  .map((sp) => ({ href: `/products/${sp.productSlug}/${sp.slug}/`, label: sp.title }));
+const industryLinks = industries.map((i) => ({ href: `/industries/${i.slug}/`, label: i.title }));
+const applicationLinks = applications.map((a) => ({ href: `/applications/${a.slug}/`, label: a.title }));
+const catalogLinks = mtuCatalogHubs.map((hub) => ({
+  href: `/part-products/catalog/${hub.slug}/`,
+  label: hub.h1Title,
+}));
+
+const sections = [
+  { title: 'Main Pages', items: corePages },
+  { title: 'Service & Support', items: capabilityLinks },
+  { title: 'Engine Parts', items: productLinks },
+  { title: 'Parts Guides', items: productSubLinks },
+  { title: 'MTU Parts Catalogs', items: catalogLinks },
+  { title: 'Industries', items: industryLinks },
+  { title: 'Applications', items: applicationLinks },
+  { title: 'Resources', items: toolPages },
+  { title: 'Terms & Policies', items: termsPages },
+];
+
+const totalLinks = sections.reduce((sum, s) => sum + s.items.length, 0);
+---
+
+<BaseLayout
+  title="Sitemap — Diesel Part Source"
+  description="Full HTML sitemap of Diesel Part Source — browse diesel engine parts, MTU parts guides, service support, industries, applications, and contact pages."
+  currentPath="/sitemap"
+  jsonLd={breadcrumbSchema([
+    { name: 'Home', url: site.url },
+    { name: 'Sitemap', url: `${site.url}/sitemap/` },
+  ])}
+>
+  <BreadcrumbHero
+    title="Sitemap"
+    trail={[
+      { label: 'Home', href: '/' },
+      { label: 'Sitemap' },
+    ]}
+    variant="1"
+  />
+
+  <section class="blog-details-section resource-page-section">
+    <div class="section-gap bottom">
+      <div class="container">
+        <article class="blog-details-content-block resource-page fade-in">
+          <p class="resource-intro">
+            Every priority Diesel Part Source page in one place — {totalLinks} links across engine parts, service support,
+            industries, applications, resources, and terms.
+          </p>
+
+          {sections.map((section) => (
+            section.items.length > 0 && (
+              <section class="sitemap-section">
+                <h2 class="sitemap-section-title">{section.title} <span class="sitemap-count">({section.items.length})</span></h2>
+                <ul class="sitemap-list">
+                  {section.items.map((item) => (
+                    <li><a href={item.href}>{item.label}</a></li>
+                  ))}
+                </ul>
+              </section>
+            )
+          ))}
+        </article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .sitemap-section {
+    margin: 0 0 28px;
+  }
+  .sitemap-section-title {
+    margin: 0 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--color-stroke);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-title);
+    text-transform: none;
+  }
+  .sitemap-count {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-body-text);
+    opacity: 0.7;
+  }
+  .sitemap-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    columns: 3;
+    column-gap: 28px;
+  }
+  .sitemap-list li {
+    margin: 0 0 8px;
+    break-inside: avoid;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .sitemap-list a {
+    color: var(--color-body-text);
+    text-decoration: none;
+  }
+  .sitemap-list a:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+  .sitemap-list a:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+  @media (max-width: 767px) {
+    .sitemap-list {
+      columns: 2;
+    }
+  }
+  @media (max-width: 479px) {
+    .sitemap-list {
+      columns: 1;
+    }
+  }
+</style>

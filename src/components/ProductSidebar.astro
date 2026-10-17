@@ -1,0 +1,87 @@
+---
+import { services } from '../data/services';
+import { mtuCatalogHubs } from '../data/mtu-parts';
+import { site } from '../data/site';
+
+interface Props {
+  activeSlug: string;
+  capabilitySlugs?: readonly string[];
+  quoteHref?: string;
+}
+
+const {
+  activeSlug,
+  capabilitySlugs = [],
+  quoteHref = '/contact/?source=products',
+} = Astro.props;
+
+const linkedCapabilities = services.filter((s) => capabilitySlugs.includes(s.slug));
+const partCategoryLinks = mtuCatalogHubs.filter((hub) => hub.type === 'category' && !/^mtu-\d+-.*-parts$/.test(hub.slug));
+const arrow = `<svg width="20" height="14" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17 6H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 11C12 11 17 7.3176 17 6C17 4.6824 12 1 12 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>`;
+---
+
+<aside class="service-details-sidebar">
+  <div class="service-category-block">
+    <div class="service-category-flex"><h2 class="service-sidebar-title">MTU 配件类别</h2></div>
+    <div class="service-category-cms-block">
+      <div class="service-sidebar-collection-list">
+        {partCategoryLinks.map((category) => (
+          <div class="service-sidebar-collection-items">
+            <div class="service-title-block">
+              <a
+                href={`/part-products/catalog/${category.slug}/`}
+                class:list={['service-title-link-block', 'is-2', { active: category.slug === activeSlug }]}
+              >
+                <div class="service-title">{category.h1Title}</div>
+                <div class="arrow-icon" set:html={arrow} />
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  {linkedCapabilities.length > 0 && (
+    <div class="service-category-block">
+      <div class="service-category-flex"><h2 class="service-sidebar-title">相关服务</h2></div>
+      <div class="service-category-cms-block">
+        <div class="service-sidebar-collection-list">
+          {linkedCapabilities.map((svc) => (
+            <div class="service-sidebar-collection-items">
+              <div class="service-title-block">
+                <a href={`/capabilities/${svc.slug}/`} class="service-title-link-block is-2">
+                  <div class="service-title">{svc.title}</div>
+                  <div class="arrow-icon" set:html={arrow} />
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )}
+
+  <div class="service-sidebar-inner">
+    <div class="service-contact-info-block">
+      <a
+        href={quoteHref}
+        class="sidebar-rfq-link"
+        data-rfq-modal
+        data-rfq-context={`侧边栏询价：${activeSlug}`}
+        data-rfq-source={`sidebar-${activeSlug}`}
+      >获取该配件的报价 →</a>
+      <div class="service-contact-info-title">实用参考</div>
+      <div class="service-contact-info-devider"></div>
+      <div class="servoce-contact-link-block">
+        <a href="/part-products/" class="service-cotact-info-link">MTU 零件号</a>
+        <a href="/products/mtu-spare-parts/mtu-part-number-lookup/" class="service-cotact-email">零件号查询</a>
+        <a href="/part-products/catalog/mtu-injectors/" class="service-cotact-email">燃油系统目录</a>
+        <a href="/part-products/catalog/mtu-filters/" class="service-cotact-email">滤清器目录</a>
+        <a href="/part-products/catalog/mtu-gasket-kits/" class="service-cotact-email">垫片包目录</a>
+        <a href="/part-products/catalog/mtu-4000-series/" class="service-cotact-email">MTU 4000 目录</a>
+        <a href={`mailto:${site.email}`} class="service-cotact-email">{site.email}</a>
+      </div>
+    </div>
+  </div>
+</aside>

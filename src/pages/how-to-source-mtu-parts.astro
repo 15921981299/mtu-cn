@@ -1,0 +1,322 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../components/BreadcrumbHero.astro';
+import FunnelPageView from '../components/FunnelPageView.astro';
+import DetailRfqStrip from '../components/DetailRfqStrip.astro';
+import { articleSchema, breadcrumbSchema, faqSchema, site } from '../data/site';
+import '../styles/resource-page.css';
+
+/**
+ * "MTU parts distributors: how to choose" — written to answer the buyer query
+ * behind "MTU parts distributors" without claiming to be an authorised
+ * distributor. The company's own positioning is independent supplier
+ * (/about/, homepage disclaimer), so this page states that plainly and then
+ * earns the click by explaining which source is right for which job.
+ */
+
+const pageUrl = `${site.url}/how-to-source-mtu-parts/`;
+
+const comparison = [
+  {
+    question: 'What they are set up to do',
+    distributor: 'Sell new, factory-packaged parts under a territory agreement with the engine maker',
+    independent: 'Find and supply the correct part through whichever route is actually available',
+  },
+  {
+    question: 'Stock they hold',
+    distributor: 'What their agreement and their own stocking plan covers — strongest on current-production fast movers',
+    independent: 'No fixed range. Availability is checked per part number, including from factory stock and specialist rebuilders',
+  },
+  {
+    question: 'Legacy and discontinued parts',
+    distributor: 'Limited once the engine family leaves active production support',
+    independent: 'Often the better route — this is where tracing old references and superseded numbers matters most',
+  },
+  {
+    question: 'Warranty position',
+    distributor: 'Usually the cleanest route if the engine is still under a manufacturer warranty',
+    independent: 'Warranty sits with the part supplied. For a warranty engine, say so and the supply route is scoped accordingly',
+  },
+  {
+    question: 'Options offered',
+    distributor: 'Normally the single new-OEM route',
+    independent: 'Typically several routes — new OEM, OEM-alternative, remanufactured exchange, or replacement — each labelled and priced separately',
+  },
+  {
+    question: 'Coverage',
+    distributor: 'Defined territory — if you are outside it, they may not be able to sell to you at all',
+    independent: 'Ships across borders, which is why export documentation, HS codes, and freight are part of the quote',
+  },
+];
+
+const vettingChecklist = [
+  'Ask for the part number they intend to supply, not just a description of the item',
+  'Ask whether it is new OEM, OEM-alternative, remanufactured, or replacement — and get the answer in writing on the quotation',
+  'Ask them to confirm fitment against your engine serial number, not just the model name',
+  'Ask for the current number, and what it supersedes, if the reference you hold is old',
+  'Ask for HS code and shipping weight before you approve freight — it prevents surprises at customs and at the forwarder',
+  'Ask what happens if the part does not fit, and who pays return freight',
+  'Check the company is reachable on a business domain with a working phone and a traceable company record',
+  'Compare lead time as well as price — a cheaper part that arrives after the vessel sails is the expensive option',
+];
+
+const faqs = [
+  {
+    question: 'Are you an authorised MTU distributor?',
+    answer:
+      'No. Diesel Part Source is an independent supplier of diesel engine parts. We are not an authorised distributor or dealer for MTU, Rolls-Royce Power Systems, Detroit Diesel, Cummins, or DEUTZ, and we do not claim to be. Brand names and part numbers are used only to identify the parts buyers ask for. Every quotation states which supply route it offers — new OEM, OEM-alternative, remanufactured, or replacement.',
+  },
+  {
+    question: 'Should I buy from an authorised distributor or an independent supplier?',
+    answer:
+      'It depends on the job, not on principle. If the engine is under a manufacturer warranty, or the part is safety-critical and the specification must be traceable to the maker, an authorised distributor is usually the safer first call. If the part is for a legacy engine, is superseded, is needed urgently, or the authorised channel has no stock and no date, an independent supplier with real sourcing routes is often the only route that produces a part at all.',
+  },
+  {
+    question: 'Do you have a local office or a dealer near me?',
+    answer:
+      'No. We supply from Shanghai and ship worldwide; we do not operate local branches or country dealerships. That is deliberate — it is what lets us quote across engine families and hold no territorial restriction on where a part can go. If you need a part collected locally, tell us the destination and we quote the freight route with the price.',
+  },
+  {
+    question: 'How do I know the part you quote is the right one?',
+    answer:
+      'The quotation names the part number, the supply route, and — where fitment is revision-dependent — the engine serial number it was checked against. Where a number supersedes another we tell you both. If anything on the quotation does not match what you asked for, tell us before you order; we would rather re-check it than ship a mismatch.',
+  },
+  {
+    question: 'What if I already have a better price elsewhere?',
+    answer:
+      'Send it. We will tell you honestly whether we can match it. We are not always the cheapest source on a fast-moving common part, and we will say so rather than trim the offer and risk the part. On legacy and superseded numbers, we are frequently the only source with a confirmed number and a date.',
+  },
+];
+
+const today = new Date().toISOString().slice(0, 10);
+const hasPersonAuthor = Boolean(site.author.name);
+---
+
+<BaseLayout
+  title="MTU Parts Distributors: How to Choose"
+  description="How to choose between an authorised MTU parts distributor and an independent supplier: what each is set up to do, when each is the right call, and how to vet any source before you order."
+  currentPath="/how-to-source-mtu-parts"
+  jsonLd={[
+    breadcrumbSchema([
+      { name: 'Home', url: site.url },
+      { name: 'How to Source MTU Parts', url: pageUrl },
+    ]),
+    articleSchema({
+      title: 'MTU Parts Distributors: How to Choose a Source',
+      description:
+        'Authorised distributor or independent supplier — what each route is good at, when each is the right call, and a vetting checklist to use before ordering engine parts from any source.',
+      url: pageUrl,
+      image: `${site.url}/images/engine-parts-verification-desk.webp`,
+      datePublished: today,
+      dateModified: today,
+      authorName: hasPersonAuthor ? site.author.name : site.name,
+      authorType: hasPersonAuthor ? 'Person' : 'Organization',
+      authorJobTitle: hasPersonAuthor && site.author.jobTitle ? site.author.jobTitle : undefined,
+      authorSameAs: hasPersonAuthor && site.author.linkedin ? [site.author.linkedin] : undefined,
+    }),
+    faqSchema(faqs),
+  ]}
+>
+  <FunnelPageView stage="comparison" label="how-to-source-mtu-parts" />
+  <BreadcrumbHero
+    title="How to Choose an MTU Parts Source"
+    trail={[{ label: 'Home', href: '/' }, { label: 'How to Source MTU Parts' }]}
+    variant="2"
+  />
+
+  <div class="resource-page">
+    <section class="resource-page-section">
+      <p>
+        Buyers usually arrive here after typing a phrase like <em>MTU parts distributors</em> — and the
+        question behind it is rarely "who is officially appointed". It is <strong>"who can actually put the
+        right part in my hands, and what does it cost me if they get it wrong?"</strong> This page answers
+        that, without pretending that the two kinds of source are interchangeable.
+      </p>
+      <p>
+        It is written by an independent supplier, so read the next section with that in mind: we set out
+        where an authorised distributor is the better answer, not only where we are. Getting the choice
+        wrong is expensive in this market — a part that arrives late, or fits the model but not the
+        serial range, costs far more than the difference in unit price.
+      </p>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>The two kinds of source</h2>
+      <p>
+        <strong>An authorised distributor</strong> has a formal agreement with the engine manufacturer.
+        They sell new, factory-packaged parts under the maker's part numbers, within an agreed territory,
+        and they carry the maker's warranty position. Their strength is that the specification is
+        traceable straight back to the manufacturer, and their stock is concentrated on parts for engines
+        still in active production support.
+      </p>
+      <p>
+        <strong>An independent supplier</strong> has no agreement with the maker and no territory. They
+        find the part through whichever route is actually available — maker's stock, a component
+        manufacturer who supplies the engine builder, a specialist rebuilder, or in the worst case a
+        replacement. Their strength is coverage and options, especially on legacy engines where the
+        authorised channel has moved on. Their weakness is that the buyer has to check <em>which</em>
+        route is being offered, because "MTU parts" on its own means nothing without it.
+      </p>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>What each is set up to do</h2>
+      <div class="cost-table-wrap">
+        <table class="cost-table">
+          <thead>
+            <tr>
+              <th scope="col">Question</th>
+              <th scope="col">Authorised distributor</th>
+              <th scope="col">Independent supplier</th>
+            </tr>
+          </thead>
+          <tbody>
+            {comparison.map((row) => (
+              <tr>
+                <th scope="row">{row.question}</th>
+                <td>{row.distributor}</td>
+                <td>{row.independent}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>When each is the right call</h2>
+      <h3>Go to an authorised distributor when</h3>
+      <ul class="resource-checklist">
+        <li>The engine is still under a manufacturer warranty and a warranty claim depends on the part's provenance</li>
+        <li>The component is safety-critical and the specification must trace directly to the maker</li>
+        <li>It is a current-production fast mover and they hold it on the shelf — genuine stock is a real advantage</li>
+        <li>A classification society or contract requires the maker's documentation chain</li>
+      </ul>
+      <h3>Go to an independent supplier when</h3>
+      <ul class="resource-checklist">
+        <li>The engine is legacy or out of production support, and the part number has moved on since</li>
+        <li>The authorised channel has no stock and no confirmed date, and the engine is already down</li>
+        <li>You need the options set out side by side — new OEM versus OEM-alternative versus remanufactured exchange</li>
+        <li>You are outside the distributor's territory and they cannot sell to you at all</li>
+        <li>You have a mixed list across several engine families or brands and want one consolidated quotation</li>
+      </ul>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>Where we sit</h2>
+      <p>
+        Plainly: <strong>{site.company.legalNameEn} is an independent supplier, not an authorised MTU
+        distributor or dealer.</strong> We do not claim manufacturer authorisation, and no quotation from
+        us should be read as implying it. Brand names and part numbers appear on this site only to identify
+        the parts buyers ask for.
+      </p>
+      <p>
+        What we do is verify the part number against the engine model and serial number, set out which
+        supply route is available, and quote it with the lead time and the shipping cost so the decision is
+        made on the real number rather than the headline price. Where the authorised route is the right one
+        for your job, we will say so — and where we cannot supply, we will say that too rather than take an
+        order we cannot fill correctly.
+      </p>
+      <p>
+        <a href="/about/">How we work and who does the verification</a> ·
+        <a href="/genuine-oem-parts/">How to check genuine MTU parts before you buy</a>
+      </p>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>Vetting any source, including us</h2>
+      <p>
+        These are the questions worth asking of any supplier of engine parts. They apply to an authorised
+        distributor and to an independent supplier alike, and we expect to answer all of them on every
+        quotation we issue.
+      </p>
+      <ul class="resource-checklist">
+        {vettingChecklist.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>Where to go next</h2>
+      <ul class="resource-olist">
+        <li><a href="/part-products/">MTU Part Number Catalog</a> — the part numbers we supply, searchable</li>
+        <li><a href="/cross-reference/">Part Number Cross Reference</a> — OEM and superseded numbers mapped to current references</li>
+        <li><a href="/guides/how-to-read-mtu-parts-diagram/">How to Read an MTU Parts Diagram</a> — turning a drawing reference into a buyable number</li>
+        <li><a href="/support-services/">Sourcing Support Services</a> — what a request actually includes</li>
+        <li><a href="/catalog/">MTU Spare Parts Catalog (PDF)</a> — downloadable lists by engine series</li>
+      </ul>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>FAQ</h2>
+      {faqs.map((item) => (
+        <details class="guide-faq-item">
+          <summary>{item.question}</summary>
+          <p>{item.answer}</p>
+        </details>
+      ))}
+    </section>
+
+    <DetailRfqStrip
+      title="Send the part number and the engine details"
+      text="We will tell you which supply routes are open, what each one costs, and how long it takes — including when the honest answer is to go elsewhere."
+      quoteHref="/contact/?source=how-to-source-mtu-parts"
+      label="Request Parts Quote"
+      modalSource="how-to-source-mtu-parts"
+    />
+  </div>
+</BaseLayout>
+
+<style>
+  .cost-table-wrap {
+    overflow-x: auto;
+  }
+
+  .cost-table {
+    width: 100%;
+    min-width: 640px;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+
+  .cost-table th,
+  .cost-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: left;
+    vertical-align: top;
+    line-height: 1.55;
+  }
+
+  .cost-table thead th {
+    background: #f8fafc;
+    font-size: 14px;
+    color: #0f172a;
+    white-space: nowrap;
+  }
+
+  .cost-table tbody th {
+    font-weight: 600;
+    color: #0f172a;
+    width: 24%;
+  }
+
+  .guide-faq-item {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+
+  .guide-faq-item summary {
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  .guide-faq-item p {
+    margin: 10px 0 0;
+    color: #475569;
+    line-height: 1.6;
+  }
+</style>

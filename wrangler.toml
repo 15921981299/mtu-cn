@@ -1,0 +1,74 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "mtu"
+main = "dist/_worker.js/index.js"
+compatibility_date = "2026-07-18"
+compatibility_flags = ["nodejs_compat", "global_fetch_strictly_public"]
+
+[vars]
+ZOHO_SMTP_USER = "sales@dieselpartsource.com"
+ZOHO_SMTP_HOST = "smtppro.zoho.com"
+ZOHO_SMTP_PORT = "465"
+
+[assets]
+directory = "./dist"
+# `binding` is what exposes the asset store to the Worker as env.ASSETS.
+# Without it env.ASSETS is undefined, so every Worker-rendered response
+# (including the custom 404) silently degrades to a bare text fallback.
+binding = "ASSETS"
+# Ship dist/404.html instead of a blank body when a path matches no asset.
+not_found_handling = "404-page"
+# `run_worker_first` is intentionally left unset (default: false). Static
+# assets are served directly and the Worker only runs when no asset matched
+# (/api/* and 404s), so redirects stay on the `_redirects` path rather than
+# depending on an undocumented Worker-first + env.ASSETS.fetch() combination.
+
+[[r2_buckets]]
+binding = "R2_BUCKET"
+bucket_name = "mtu-rfq-uploads"
+
+# Deployment flow:
+#   1. pnpm build        (astro build && node scripts/create-worker-entry.mjs)
+#   2. wrangler deploy   (uploads dist/_worker.js + changed assets)
+#
+# Notes:
+# - dist/.assetsignore excludes the dist/_worker.js directory from the asset
+#   upload. Without that entry the Worker source is served publicly at
+#   /_worker.js/index.js — verify after every deploy:
+#     curl -sI https://dieselpartsource.com/_worker.js/index.js   # expect 404
+# - Redirects live in exactly ONE place: dist/_redirects. It is generated at
+#   build time by scripts/create-worker-entry.mjs from public/_redirects plus
+#   the part-page dedup map, and the asset layer applies it to every request
+#   (static match or not). Verify after every deploy:
+#     curl -sI https://dieselpartsource.com/marine/            # expect 301
+#     curl -sI https://dieselpartsource.com/products/mtu-series-2000-gensets/
+# - http:// and www. collapsing CANNOT be expressed in _redirects (it matches
+#   paths, never scheme or hostname) and must be configured on the dashboard.
+#   Status as of 2026-09-27:
+#     http -> https  : DONE (http:// and http://www. both 301 to https)
+#     www -> root    : TODO — https://www. still serves a full duplicate (200)
+#   Add ONE rule under Rules -> Redirect Rules:
+#     filter : http.host eq "www.dieselpartsource.com"
+#     then   : dynamic redirect to
+#              concat("https://dieselpartsource.com", http.request.uri.path)
+#              status 301, preserve query string ON
+#   Single Redirects run before both the asset layer and the Worker, which is
+#   why host-level normalisation cannot live in the Worker (with
+#   run_worker_first off, the Worker never runs for a request that matches a
+#   static file — such code is dead code).
+#   www already has the proxied DNS record the rule requires: it is a second
+#   Custom Domain on this Worker. Do NOT add a 100:: / 192.0.2.0 placeholder
+#   record and do NOT delete that Custom Domain — deleting it removes the DNS
+#   record and the rule stops firing.
+#   Verify:
+#     curl -sI https://www.dieselpartsource.com/           # expect 301
+#     curl -sI https://dieselpartsource.com/               # expect 200
+#     curl -sI https://www.dieselpartsource.com/part-products/catalog/mtu-injectors/
+#                                                          # expect 301, path kept
+# - Do NOT add `routes` / `custom_domain` to this file. Wrangler treats routes
+#   as the complete set of bindings for the Worker, so writing them silently
+#   unbinds the dashboard-managed Custom Domains (apex and www go offline).
+# - ZOHO_SMTP_PASS is a Worker secret, managed via `wrangler secret put`
+#   or the Cloudflare dashboard — it is NOT defined here and persists
+#   across deploys.
+# - Do not add observability/log settings here; current production
+#   settings are managed on the dashboard.

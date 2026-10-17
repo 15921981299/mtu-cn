@@ -1,0 +1,270 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../components/BreadcrumbHero.astro';
+import DetailPageShell from '../../components/DetailPageShell.astro';
+import DetailRfqStrip from '../../components/DetailRfqStrip.astro';
+import FaqSection from '../../components/FaqSection.astro';
+import { breadcrumbSchema, itemListSchema, faqSchema, site } from '../../data/site';
+import '../../styles/resource-page.css';
+
+const title = 'MTU 2000 Engine Models & Part Identification';
+const seoTitle = 'MTU 2000 Engine Models & Part Identification Guide';
+const description = 'Identify MTU 2000 engine configurations and model variants. Review catalog part references and the serial-number checks needed for service and overhaul.';
+const pageUrl = `${site.url}/series/mtu-2000/`;
+const quoteHref = `/contact/?source=mtu-2000-series`;
+
+const configRows = [
+  { desig: '8V 2000', cyl: 'V8', output: '~720 kW (966 bhp)', app: 'Gensets, smaller craft' },
+  { desig: '12V 2000', cyl: 'V12', output: '~1432 kW (M94) · up to 1634 kW (M96Z, 2026)', app: 'Yachts, ferries, patrol craft' },
+  { desig: '16V 2000', cyl: 'V16', output: '~1939 kW (2600 bhp)', app: 'Fast vessels, naval, CTVs' },
+  { desig: '18V 2000', cyl: 'V18', output: 'genset duty', app: 'Marine / industrial generator sets' },
+];
+
+const crossRef = [
+  { pn: '5410110059', desc: 'Sealing ring (liner / crankcase)', fit: '2000 liner & crankcase arrangement', src: 'catalog · verified MTU BOM (12V/16V)', tag: 'cat' },
+  { pn: '0229974948', desc: 'Lower cylinder-liner sealing ring', fit: '2000 liner arrangement', src: 'catalog · verified MTU BOM / USACE', tag: 'cat' },
+  { pn: '5410160920', desc: 'Cylinder-head gasket', fit: '2000 cylinder head', src: 'catalog · documented 12V2000G83', tag: 'cat' },
+  { pn: '0249975047', desc: 'Radial shaft seal', fit: '2000', src: 'catalog · documented 12V2000G83', tag: 'cat' },
+  { pn: '5369970147', desc: 'Seal ring', fit: '2000', src: 'catalog · documented 12V2000G83', tag: 'cat' },
+  { pn: '700429036001', desc: 'O-ring 36 × 5', fit: '2000 cylinder-head cover', src: 'catalog seed', tag: 'cat' },
+  { pn: 'X51107500011', desc: 'Fuel injector (Bosch 0986435617 / F00BL0J005)', fit: '2000 fuel system', src: 'catalog · Bosch cross-ref', tag: 'cat' },
+  { pn: '5420382211', desc: 'Connecting-rod bearing', fit: '2000 bottom end', src: 'catalog seed', tag: 'cat' },
+  { pn: '0005357433', desc: 'Speed sensor', fit: '2000 sensing', src: 'catalog seed', tag: 'cat' },
+  { pn: '0005356430', desc: 'Temperature sensor', fit: '2000 sensing', src: 'catalog seed', tag: 'cat' },
+  { pn: '0035352531', desc: 'Pressure sensor', fit: '2000 sensing', src: 'catalog seed', tag: 'cat' },
+  { pn: '0031845301', desc: 'Oil filter element', fit: '2000 (also S4000)', src: 'catalog seed', tag: 'cat' },
+  { pn: '0020922801', desc: 'Fuel filter (spin-on)', fit: '2000 fuel system', src: 'catalog seed', tag: 'cat' },
+  { pn: 'X000040776', desc: 'Turbocharger asm GTA5523', fit: '2000 charged air', src: 'catalog seed', tag: 'cat' },
+  { pn: '000535xxxx', desc: 'Exhaust gas thermocouple (confirm against serial)', fit: '2000 exhaust temp sensing', src: 'catalog · confirm serial', tag: 'cat' },
+];
+
+const faqItems = [
+  {
+    question: 'Is "MTU 2000" enough to order a part?',
+    answer: 'Not for every component. The Series 2000 covers 8V, 10V, 12V, 16V and 18V configurations across several generations (M61 → M9x). Add the complete designation (e.g. 12V2000M94, 16V2000M96), the engine serial number, and the number marked on the old part so we match the exact gasket set, injector, or bearing for your build.',
+  },
+  {
+    question: 'Do you supply genuine MTU only?',
+    answer: 'We supply genuine new, reconditioned-exchange, and documented alternatives. For 2000 injectors especially, the original MTU number (e.g. X51107500011) crosses to Bosch references — we state genuine vs cross-referenced on every quote so you can choose.',
+  },
+  {
+    question: 'Is there one overhaul gasket set for every 2000?',
+    answer: 'No. The required seals depend on the complete model, serial number, and overhaul scope — there is no universal "Series 2000 gasket set" ordered from the words alone. Verified references like 5410110059 and 0229974948 are safe to publish, but the full kit must be confirmed against your engine.',
+  },
+  {
+    question: 'What do you need to quote a 2000 part?',
+    answer: 'Engine model + serial + part number + description + quantity. For injector and sensor cross-references, the engine rating and build year help confirm the right Bosch or MTU equivalent.',
+  },
+  {
+    question: 'How fast can you quote an identified number?',
+    answer: 'Typically within one business day for a number we can confirm against the engine designation. The catalog numbers on this page are verified against public MTU BOM and procurement references; we add RFQ-confirmed 2000 numbers as they arrive.',
+  },
+];
+
+const jsonLd = [
+  breadcrumbSchema([
+    { name: 'Home', url: site.url },
+    { name: 'MTU Spare Parts', url: `${site.url}/products/mtu-spare-parts/` },
+    { name: title, url: pageUrl },
+  ]),
+  itemListSchema(crossRef.filter((r) => r.pn !== '000535xxxx').map((r) => ({ name: `${r.pn} — ${r.desc}`, url: pageUrl }))),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout
+  title={seoTitle}
+  description={description}
+  currentPath="/series/mtu-2000"
+  image="/images/mtu-engine-parts-hero.webp"
+  jsonLd={jsonLd}
+>
+  <BreadcrumbHero
+    title={title}
+    trail={[
+      { label: 'Home', href: '/' },
+      { label: 'MTU Spare Parts', href: '/products/mtu-spare-parts/' },
+      { label: title },
+    ]}
+    variant="1"
+  />
+
+  <DetailPageShell intro="The MTU 2000 is a high-speed, four-stroke V-configuration diesel family from MTU Friedrichshafen (today Rolls-Royce Power Systems), launched at SMM Hamburg in 1996 and now the brand's best-selling series. It powers fast patrol craft, luxury yachts, ferries, crew-transfer vessels, and marine generator sets. This hub carries engine configurations, the parts we regularly supply, a cross-reference table, and a part-identification process built for an engine series whose generations and part numbers vary widely.">
+    <img
+      slot="hero"
+      src="/images/mtu-engine-parts-hero.webp"
+      alt="MTU 2000 series engine parts inquiry"
+      width="1400"
+      height="692"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+
+    <div class="resource-meta">
+      <span><strong>Section</strong> MTU Spare Parts</span>
+      <span><strong>Family</strong> 2000 (8V / 12V / 16V / 18V)</span>
+      <span><strong>Verification</strong> Model + serial number</span>
+      <span><strong>Delivery</strong> Global shipping</span>
+    </div>
+
+    <DetailRfqStrip
+      quoteHref={quoteHref}
+      title="Request MTU 2000 parts"
+      text="Send engine model, serial number, part numbers, quantity, destination, and required delivery date."
+      secondaryHref="/part-products/catalog/mtu-2000-series/"
+      secondaryLabel="MTU 2000 catalog"
+    />
+
+    <h2>1. Engine configurations</h2>
+    <p>The 2000 family uses a 90° V-block, four valves per cylinder, forged crankshaft with bolted counterweights, replaceable wet liners, and chrome-ceramic piston coatings. Current production runs on <strong>135 × 156 mm</strong> bore and stroke at ~2450 rpm (earlier generations were documented at 130 × 150 mm). It sits between the lighter Series 1600 and the larger Series 4000. Routine service is ~250 hours; major overhaul is ~1000 hours or annually. Inclination rating is 45° rolling (IMO High-Speed Craft Code).</p>
+    <div class="resource-table-wrap">
+      <table class="resource-table">
+        <thead>
+          <tr><th>Designation</th><th>Cyl.</th><th>Bore × Stroke</th><th>Typical output</th><th>Primary application</th></tr>
+        </thead>
+        <tbody>
+          {configRows.map((r) => (
+            <tr>
+              <td><strong>{r.desig}</strong></td>
+              <td>{r.cyl}</td>
+              <td rowspan="4">135 × 156 mm</td>
+              <td>{r.output}</td>
+              <td>{r.app}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="resource-note">Power range across the family is ~720–1939 kW. Confirm the exact rating against the engine identification plate before ordering — the M-suffix (M61 → M9x) tracks generation, not displacement.</p>
+
+    <h2>2. Spare parts we supply, by system</h2>
+    <div class="hub-grid">
+      <a class="hub-card" href="/part-products/catalog/mtu-2000-series/"><div class="hub-card-body"><h3 class="hub-card-title">Cylinder head &amp; valve train</h3><p class="hub-card-summary">Liners, piston rings, valve guides, seats, rocker arms, cylinder-head gaskets.</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-injectors/"><div class="hub-card-body"><h3 class="hub-card-title">Fuel system</h3><p class="hub-card-summary">Injectors &amp; nozzles (incl. Bosch cross-ref), nozzle holders, injection pumps.</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-2000-series/"><div class="hub-card-body"><h3 class="hub-card-title">Pistons / liners / rings</h3><p class="hub-card-summary">Piston assemblies, wet liners, piston-ring sets, connecting-rod bearings.</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-gasket-kits/"><div class="hub-card-body"><h3 class="hub-card-title">Gaskets &amp; seals</h3><p class="hub-card-summary">Overhaul gasket sets, O-rings, liner seals, radial shaft seals.</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-turbocharger-parts/"><div class="hub-card-body"><h3 class="hub-card-title">Turbocharger</h3><p class="hub-card-summary">GTA-series cartridges, turbine wheels, V-band clamps, service kits.</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-filters/"><div class="hub-card-body"><h3 class="hub-card-title">Cooling &amp; lube</h3><p class="hub-card-summary">Seawater &amp; freshwater pumps, impellers, oil / fuel filter elements.</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-sensors/"><div class="hub-card-body"><h3 class="hub-card-title">Sensors &amp; ADEC</h3><p class="hub-card-summary">Speed, temperature, pressure sensors and engine-management modules.</p></div></a>
+      <a class="hub-card" href="/products/mtu-2000-series-parts/marine-generator-service-parts/"><div class="hub-card-body"><h3 class="hub-card-title">Marine &amp; genset service</h3><p class="hub-card-summary">Generator-set overhaul packages and continuous-duty service parts.</p></div></a>
+    </div>
+
+    <h2>3. Part-number cross-reference (growing)</h2>
+    <p>This table is <strong>catalog-seed</strong> — verified against public MTU BOM and procurement references (e.g. US Army Corps of Engineers genuine-MTU procurement). Unlike the 396 hub, it does not yet carry RFQ-confirmed numbers; we add those as live enquiries arrive. Always confirm a row against your engine serial before ordering.</p>
+    <div class="resource-table-wrap">
+      <table class="resource-table">
+        <thead>
+          <tr><th>Part number</th><th>Description</th><th>2000 fitment</th><th>Source / cross-ref</th></tr>
+        </thead>
+        <tbody>
+          {crossRef.map((r) => (
+            <tr>
+              <td><code>{r.pn}</code></td>
+              <td>{r.desc}</td>
+              <td>{r.fit}</td>
+              <td><span class="rfq-badge cat">catalog</span> {r.src}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="resource-note">Don't see your number? Send it (with the engine model + serial) via the form — we add confirmed numbers to this table and to the 396 hub's growing list.</p>
+
+    <h2>4. How to identify your exact part</h2>
+    <p>"MTU 2000 part" is often <strong>not enough</strong> to order safely. The family spans generations and cylinder counts, and an overhaul gasket set that fits a 12V2000G83 will not necessarily fit a 16V2000M96. To match the right item we need:</p>
+    <ul class="resource-list">
+      <li><strong>Complete engine designation</strong> (e.g. <code>16V2000M96</code>, not just "2000")</li>
+      <li><strong>Engine serial number</strong> from the identification plate</li>
+      <li><strong>Existing component part number</strong> — the marking on the old part beats any photo title</li>
+      <li><strong>Component description + quantity</strong>, and a photo of the old part where possible</li>
+    </ul>
+    <p>This is the same discipline we apply to every enquiry before quoting — it prevents shipping a look-alike that doesn't fit your exact configuration.</p>
+
+    <h2>5. Request types we support on the 2000</h2>
+    <p>The 2000 is a high-volume family, so most requests fall into repeatable patterns. Typical ones:</p>
+    <div class="enquiry-log">
+      <div class="meta">Pattern · Overhaul kits</div>
+      <strong>Major-overhaul gasket &amp; seal sets</strong> — liner seals (5410110059 / 0229974948), head gaskets (5410160920), O-rings and radial seals, scoped to the exact model + serial.
+    </div>
+    <div class="enquiry-log">
+      <div class="meta">Pattern · Injector cross-reference</div>
+      <strong>MTU injector → Bosch equivalent</strong> — original <code>X51107500011</code> crosses to Bosch 0986435617 / F00BL0J005; we quote genuine vs cross-referenced so you choose.
+    </div>
+    <div class="enquiry-log">
+      <div class="meta">Pattern · Sensor sets</div>
+      <strong>Speed / temperature / pressure sensors</strong> (0005357433, 0005356430, 0035352531) for ADEC-managed engines, quoted by engine rating.
+    </div>
+    <div class="enquiry-log">
+      <div class="meta">Pattern · Turbo &amp; charged air</div>
+      <strong>Turbocharger service</strong> — GTA-series cartridges and V-band clamps (e.g. <code>X000040776</code>), reconditioned-exchange where available.
+    </div>
+
+    <h2>6. Supply options</h2>
+    <div class="hub-grid">
+      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">Genuine new</h3><p class="hub-card-summary">Original MTU-packaged components with full traceability — best where the documentation chain has to stand up to inspection.</p></div></div>
+      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">Reconditioned / exchange</h3><p class="hub-card-summary">Factory-level overhaul of injectors, turbochargers, pumps — typically 30–40% lower cost, faster lead time.</p></div></div>
+      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">Documented alternative</h3><p class="hub-card-summary">Verified equivalents (incl. Bosch for injectors) for non-critical items where the buyer accepts them.</p></div></div>
+    </div>
+
+    <h2>7. MTU series cluster</h2>
+    <p>These hubs group MTU families by the enquiries we actually receive. The 396 page carries live RFQ-verified numbers; this 2000 page is catalog-seed rich; both link to the 4000 family:</p>
+    <div class="hub-grid">
+      <a class="hub-card" href="/series/mtu-2000-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 2000 Variant Decoder</h3><p class="hub-card-summary">M61 → M9x generation decoder and per-model table (135 × 156 mm).</p></div></a>
+      <a class="hub-card" href="/series/mtu-396/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 396 Series Hub</h3><p class="hub-card-summary">8V / 12V / 16V workhorse — patrol craft, submarines, gensets. Carries live RFQ numbers.</p></div></a>
+      <a class="hub-card" href="/products/mtu-4000-series-parts/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 4000 Series Parts</h3><p class="hub-card-summary">12V / 16V / 20V larger siblings — higher-power marine and genset duty.</p></div></a>
+      <a class="hub-card" href="/products/mtu-spare-parts/mtu-engine-series-guide/"><div class="hub-card-body"><h3 class="hub-card-title">MTU Engine Series Guide</h3><p class="hub-card-summary">Full MTU family map — pick the right series before quoting.</p></div></a>
+      <a class="hub-card" href="/series/mtu-1163/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 1163 Series Hub</h3><p class="hub-card-summary">12V / 16V / 20V large-bore family (230 × 280 mm).</p></div></a>
+      <a class="hub-card" href="/series/mtu-4000-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 4000 Variant Decoder</h3><p class="hub-card-summary">M05 / M03 / C05 / R03 / R04 / T05 + M-duty notation.</p></div></a>
+      <a class="hub-card" href="/series/16v2000m96/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 16V 2000 M96</h3><p class="hub-card-summary">Single-model deep dive — 1,790 kW high-speed marine engine.</p></div></a>
+    </div>
+
+    <FaqSection items={faqItems} title="MTU 2000 Series FAQ" subtitle="FAQ" />
+  </DetailPageShell>
+</BaseLayout>
+
+<style>
+  .rfq-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    letter-spacing: 0.03em;
+    vertical-align: middle;
+  }
+  .rfq-badge.cat {
+    background: #e4eef7;
+    color: var(--color-primary);
+  }
+  .enquiry-log {
+    border-left: 3px solid var(--color-primary);
+    background: var(--color-background);
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    margin: 12px 0;
+  }
+  .enquiry-log .meta {
+    font-size: 12.5px;
+    color: var(--color-body-text);
+    opacity: 0.8;
+    margin-bottom: 4px;
+  }
+  .enquiry-log code {
+    background: #eef3f8;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #0a3d66;
+  }
+  .hub-card h3.hub-card-title {
+    font-size: 17px;
+  }
+  .resource-table code {
+    background: #eef3f8;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #0a3d66;
+  }
+</style>

@@ -1,0 +1,89 @@
+.form-result {
+  display: none;
+  margin-top: 20px;
+  padding: 16px 20px;
+  border-radius: 4px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.form-result.is-visible {
+  display: block;
+}
+
+.form-result.is-success {
+  background-color: #e8f4ea;
+  border: 1px solid #b8dfc0;
+  color: #1f4d2a;
+}
+
+.form-result.is-error {
+  background-color: #fdecea;
+  border: 1px solid #f5c2c0;
+  color: #7a1f1a;
+}
+
+.form-result.is-info {
+  background-color: #e8f0fe;
+  border: 1px solid #b3ccf8;
+  color: #0d3b7a;
+}
+
+.form-result strong {
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--font-title);
+  font-size: 18px;
+}
+
+.form-result p {
+  margin: 0;
+  font-size: 15px;
+}
+
+.form-result-note {
+  margin-top: 8px !important;
+  opacity: 0.8;
+  font-size: 14px !important;
+}
+
+.form-result code {
+  background: rgba(0, 0, 0, 0.06);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+.calculate-button:disabled,
+.reset-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.form-input-field.is-error {
+  border-color: #e74c3c;
+}
+
+.hero-video video,
+.feature-highlight-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.contact-form .form-result,
+.service-details-form-inner .form-result {
+  margin-top: 16px;
+}
+
+/* Honeypot anti-spam field — hidden from humans, visible to bots. */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}

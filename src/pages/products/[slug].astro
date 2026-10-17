@@ -1,0 +1,207 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProcurementBrief from '../../components/ProcurementBrief.astro';
+import QuotationExamples from '../../components/QuotationExamples.astro';
+import { supplyProcurement, modelProcurement } from '../../data/procurement-content';
+import BreadcrumbHero from '../../components/BreadcrumbHero.astro';
+import DetailPageShell from '../../components/DetailPageShell.astro';
+import DetailRfqStrip from '../../components/DetailRfqStrip.astro';
+import FunnelPageView from '../../components/FunnelPageView.astro';
+import ProductSidebar from '../../components/ProductSidebar.astro';
+import { products, isProductPageNoindex } from '../../data/products';
+import { services } from '../../data/services';
+import { breadcrumbSchema, serviceSchema, site } from '../../data/site';
+import '../../styles/resource-page.css';
+
+export function getStaticPaths() {
+  return products
+    .filter((product) => product.slug !== 'mtu-2000-series')
+    .map((product) => ({ params: { slug: product.slug }, props: { product } }));
+}
+
+const { product } = Astro.props;
+const pageUrl = `${site.url}/products/${product.slug}/`;
+const quoteHref = `/contact/?source=product-${product.slug}`;
+const capabilitySlugs = (product.capabilitySlugs ?? []) as readonly string[];
+const linkedCapabilities = services.filter((s) => capabilitySlugs.includes(s.slug));
+const productText = `${product.slug} ${product.title} ${product.summary} ${product.content.partOne}`.toLowerCase();
+const shouldNoindex = isProductPageNoindex(product);
+// Authority concentration: the 2000/4000 series product pages are among the
+// highest-impression pages on the site, and the overhaul guides already link
+// out to them. Linking back closes the loop (hub-and-spoke) and pushes weight
+// onto the strongest content asset for these two series.
+const overhaulGuideLink =
+  product.slug === 'mtu-2000-series-parts'
+    ? { href: '/guides/mtu-2000-overhaul-parts/', label: 'MTU 2000 系列大修配件指南' }
+    : product.slug === 'mtu-4000-series-parts'
+      ? { href: '/guides/mtu-4000-overhaul-parts/', label: 'MTU 4000 系列大修配件指南' }
+      : undefined;
+
+const brand = product.brand ?? (productText.includes('cummins')
+  ? 'Cummins'
+  : productText.includes('deutz')
+    ? 'DEUTZ'
+    : productText.includes('detroit')
+      ? 'Detroit Diesel'
+      : productText.includes('mtu') ? 'MTU' : '柴油发动机');
+const applicationFocus = productText.includes('marine') || productText.includes('vessel') || productText.includes('ship')
+  ? '船用推进与船舶维护'
+  : productText.includes('g-drive') || productText.includes('generator') || productText.includes('genset') || productText.includes('power')
+    ? '发电机组与备用电源维护'
+    : productText.includes('industrial') || productText.includes('construction') || productText.includes('compressor') || productText.includes('pump')
+      ? '工业设备与现场服务'
+      : '机群维护、维修与备件计划';
+const seriesFocus = productText.includes('4000') || productText.includes('8000')
+  ? '大缸径大修、燃油、冷却与控制系统件'
+  : productText.includes('2000')
+    ? '高速紧凑型保养件、传感器、喷油器与维护包'
+    : productText.includes('g-drive')
+      ? 'G-drive 发电用发动机保养件'
+      : '经发动机参考信息确认的保养件、磨损件与替换件';
+const partFocus = productText.includes('overhaul') || productText.includes('piston') || productText.includes('liner') || productText.includes('bearing') || productText.includes('valve')
+  ? ['活塞、缸套、轴承、配气机构与气缸盖类零件', '涡轮增压、燃油、冷却与润滑相关零件', '按数量与维护窗口核对的汇总大修清单']
+  : productText.includes('filter') || productText.includes('gasket') || productText.includes('seal')
+    ? ['滤清器、垫片、密封件、O 型圈与定期保养件', '冷却液、机油与润滑相关易损件', '发货前需核对照片或标记的小件']
+    : productText.includes('sensor') || productText.includes('injector') || productText.includes('pump')
+      ? ['喷油器、油泵、传感器、连接器与控制元件', '按额定参数与发动机出厂编号核对的燃油系统零件', '存在被替代零件号时的替换参考']
+      : ['滤清器、密封件、垫片、传感器、油泵与保养件', '燃油、冷却、润滑、涡轮增压与电气元件', '报价前核对的大修或替换总成'];
+const verificationFocus = [
+  `${brand} 型号、额定参数与出厂编号`,
+  '零件号、旧件照片或铭牌照片',
+  `${applicationFocus}应用详情`,
+  '数量、目的地与要求的交货日期',
+];
+---
+
+<BaseLayout
+  title={product.seoTitle}
+  description={product.summary}
+  currentPath="/products"
+  image={product.mainImage}
+  noindex={shouldNoindex}
+  jsonLd={[
+    breadcrumbSchema([
+      { name: '首页', url: site.url },
+      { name: '产品', url: `${site.url}/products/` },
+      { name: product.title, url: pageUrl },
+    ]),
+    serviceSchema({
+      name: product.title,
+      description: product.summary,
+      url: pageUrl,
+      image: `${site.url}${product.mainImage}`,
+    }),
+  ]}
+>
+  <FunnelPageView stage="selection" label={`product-${product.slug}`} />
+  <BreadcrumbHero
+    title={product.h1Title}
+    trail={[
+      { label: '首页', href: '/' },
+      { label: '产品', href: '/products/' },
+      { label: product.title },
+    ]}
+    variant="2"
+  />
+
+  <DetailPageShell intro={product.summary}>
+    <img
+      slot="hero"
+      src={product.mainImage}
+      alt={`${product.title} 供货与型号识别支持`}
+      width="1400"
+      height="692"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+    <div class="resource-meta">
+      <span><strong>核验</strong> {product.tolerance}</span>
+      <span><strong>交货期</strong> {product.leadTime}</span>
+      <span><strong>询价</strong> 零件号或铭牌</span>
+      <span><strong>运输</strong> 全球出口运输</span>
+    </div>
+
+    <DetailRfqStrip
+      quoteHref={quoteHref}
+      title={`查询 ${product.title.toLowerCase()} 供货情况`}
+      text="请提供零件号、发动机型号、出厂编号、数量与目的地。我们将在报价前核验适配性。"
+      modalContext={`${product.title} - ${brand} 配件询价`}
+      modalSource={`product-${product.slug}`}
+    />
+
+    {linkedCapabilities.length > 0 && (
+      <>
+        <p class="detail-quick-label">相关支持</p>
+        <nav class="resource-nav detail-quick-nav" aria-label="该零件的相关流程">
+          {linkedCapabilities.map((capability) => (
+            <a href={`/capabilities/${capability.slug}/`} class="resource-nav-link">
+              {capability.title}
+            </a>
+          ))}
+        </nav>
+      </>
+    )}
+
+    <div set:html={product.content.partOne} />
+    {product.slug === 'mtu-spare-parts' && <ProcurementBrief brief={supplyProcurement} source="mtu-supply-comparison" />}
+    {product.slug === 'mtu-4000-series-parts' && <ProcurementBrief brief={modelProcurement('4000')} source="mtu-4000-model-rfq" />}
+    <section class="detail-differentiation-block">
+      <h2>{product.title} 采购背景</h2>
+      <p>
+        本页聚焦应用于{applicationFocus}的 {brand} 配件。对于 {product.title}，实际采购问题不仅在于零件名称是否一致，更在于所询零件是否与确切的发动机构型、额定参数与使用工况相匹配。
+      </p>
+      <h3>典型适配重点</h3>
+      <p>{seriesFocus}等将在报价前逐一核对，便于买方在一次询价中比较供货情况、替换说明与运输路线。</p>
+      <h3>常见询价内容</h3>
+      <ul>
+        {partFocus.map((item) => <li>{item}</li>)}
+      </ul>
+      <h3>本页提供的核验信息</h3>
+      <ul>
+        {verificationFocus.map((item) => <li>{item}</li>)}
+      </ul>
+    </section>
+    <figure class="detail-page-figure">
+      <img
+        src={product.secondImage}
+        alt={`${product.title} 型号识别与运输支持`}
+        width="1200"
+        height="662"
+        loading="lazy"
+        decoding="async"
+      />
+    </figure>
+    <div set:html={product.content.partTwo} />
+    {product.slug === 'mtu-spare-parts' && <QuotationExamples ids={['spare-parts-kit', 'molded-tubing']} source="mtu-supply-quotation-examples" />}
+    {product.slug === 'mtu-4000-series-parts' && <QuotationExamples ids={['generator-service-filters']} source="mtu-4000-quotation-example" />}
+
+    <p class="resource-note detail-page-back">
+      <a href="/products/">全部产品</a>
+      ·
+      <a href="/part-products/">MTU 零件号</a>
+      ·
+      <a href="/products/mtu-spare-parts/">MTU 配件</a>
+      {overhaulGuideLink && (
+        <>
+          ·
+          <a href={overhaulGuideLink.href}>{overhaulGuideLink.label}</a>
+        </>
+      )}
+      ·
+      <a
+        href={quoteHref}
+        data-rfq-modal
+        data-rfq-context={`${product.title} - ${brand} 配件询价`}
+        data-rfq-source={`product-${product.slug}`}
+      >获取报价</a>
+    </p>
+
+    <ProductSidebar
+      slot="sidebar"
+      activeSlug={product.slug}
+      capabilitySlugs={capabilitySlugs}
+      quoteHref={quoteHref}
+    />
+  </DetailPageShell>
+</BaseLayout>

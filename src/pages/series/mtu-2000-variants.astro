@@ -1,0 +1,259 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../components/BreadcrumbHero.astro';
+import DetailPageShell from '../../components/DetailPageShell.astro';
+import DetailRfqStrip from '../../components/DetailRfqStrip.astro';
+import FaqSection from '../../components/FaqSection.astro';
+import { breadcrumbSchema, itemListSchema, faqSchema, site } from '../../data/site';
+import '../../styles/resource-page.css';
+
+const title = 'MTU 2000 Engine Variants — M / G Generations (M61 → M9x)';
+const seoTitle = 'MTU 2000 Engine Variants & Part Differences — 8V / 10V / 12V / 16V / 18V (M61 → M9x)';
+const description = 'MTU 2000 variant decoder: M (marine) vs G (genset/industrial) designations, generations M61 → M9x, and which spare parts differ by model. Representative model table with kW, rpm and bore/stroke for the 2000 family.';
+const pageUrl = `${site.url}/series/mtu-2000-variants/`;
+const quoteHref = `/contact/?source=mtu-2000-variants`;
+
+// Designation decoder — real MTU 2000 M/G letters + generation
+const dutyDecoder = [
+  { code: 'M-prefix', meaning: 'Marine propulsion', use: 'Yachts, patrol craft, ferries, fast vessels (M61 → M9x)' },
+  { code: 'G-prefix', meaning: 'Genset / industrial', use: 'Generator sets and stationary industrial duty (G23 → G85)' },
+  { code: 'M9x', meaning: 'Current high-output marine generation', use: 'M92 / M93 / M94 / M96 / M96L / M96X / M96Z / M97L (fast vessels)' },
+  { code: 'M6x / M7x / M8x', meaning: 'Earlier generations', use: 'M61 (130×150), M70, M72, M84 — lower output, older builds' },
+];
+
+// Representative models (kW @ rpm) — sources: MTU rating tables, shipcalculators, cmc-mtu
+const variantRows = [
+  { model: '8V 2000 M61', kw: '400', rpm: '1800', gen: 'M61', note: '130 × 150 mm (early gen)' },
+  { model: '12V 2000 M61', kw: '600', rpm: '1800', gen: 'M61', note: '130 × 150 mm (early gen)' },
+  { model: '16V 2000 M61', kw: '800', rpm: '1800', gen: 'M61', note: '130 × 150 mm (early gen)' },
+  { model: '10V 2000 M72', kw: '900', rpm: '2250', gen: 'M72', note: '135 × 156 mm, IMO Tier III path' },
+  { model: '8V 2000 M93', kw: '895', rpm: '2450', gen: 'M93', note: '135 × 156 mm' },
+  { model: '10V 2000 M93', kw: '1120', rpm: '2450', gen: 'M93', note: '135 × 156 mm' },
+  { model: '12V 2000 M93', kw: '1340', rpm: '2450', gen: 'M93', note: '135 × 156 mm' },
+  { model: '16V 2000 M93', kw: '1790', rpm: '2450', gen: 'M93', note: '135 × 156 mm' },
+  { model: '8V 2000 M94', kw: '932', rpm: '2450', gen: 'M94', note: '135 × 156 mm' },
+  { model: '12V 2000 M94', kw: '1432', rpm: '2450', gen: 'M94', note: '135 × 156 mm' },
+  { model: '16V 2000 M94', kw: '1939', rpm: '2450', gen: 'M94', note: '135 × 156 mm (top fast-vessel)' },
+  { model: '12V 2000 M96L', kw: '1432', rpm: '2450', gen: 'M96', note: '135 × 156 mm, uprated' },
+  { model: '16V 2000 M96L', kw: '1939', rpm: '2450', gen: 'M96', note: '135 × 156 mm, uprated' },
+  { model: '12V 2000 M96X', kw: '1472', rpm: '2450', gen: 'M96', note: '2020; first 12V >2000 mhp (same block as M96L)' },
+  { model: '12V 2000 M96Z', kw: '1634', rpm: '2450', gen: 'M96', note: '2025/2026; 138 × 156 mm bore increase' },
+  { model: '16V 2000 M97L', kw: '1939', rpm: '2450', gen: 'M97', note: 'IMO Tier III SCR variant of M96L' },
+  { model: '18V 2000 G83', kw: 'genset', rpm: '1500/1800', gen: 'G', note: 'G-prefix genset duty' },
+];
+
+// Part differences by variant
+const partDiff = [
+  { item: 'Bore × stroke', shared: 'Current production 135 × 156 mm; M61 generation 130 × 150 mm', note: 'Liners and liner seals differ between early M61 and current M9x — confirm generation before ordering.' },
+  { item: 'Overhaul gasket set', shared: 'NOT universal', note: '5410110059 / 0229974948 are documented 2000 liner seals, but the full kit must match model + serial. A 12V2000G83 set ≠ 16V2000M96 set.' },
+  { item: 'Fuel injector', shared: 'Crosses to Bosch', note: 'X51107500011 ↔ Bosch 0986435617 / F00BL0J005. Same injector family across M9x marine; quote genuine vs cross-referenced.' },
+  { item: 'Sensors (speed/temp/pressure)', shared: 'ADEC-managed', note: '0005357433 / 0005356430 / 0035352531 for electronic engines; confirm by engine rating + build year.' },
+  { item: 'Turbocharger', shared: 'Varies by generation', note: 'GTA-series cartridges (e.g. X000040776); reconditioned-exchange where available.' },
+];
+
+const crossRef = [
+  { pn: '5410110059', desc: 'Sealing ring (liner / crankcase)', fit: '2000 liner arrangement', src: 'catalog · MTU BOM', tag: 'cat' },
+  { pn: '0229974948', desc: 'Lower cylinder-liner sealing ring', fit: '2000 liner arrangement', src: 'catalog · MTU BOM / USACE', tag: 'cat' },
+  { pn: 'X51107500011', desc: 'Fuel injector (Bosch 0986435617)', fit: '2000 fuel system', src: 'catalog · Bosch cross-ref', tag: 'cat' },
+  { pn: '0005357433', desc: 'Speed sensor', fit: '2000 ADEC sensing', src: 'catalog seed', tag: 'cat' },
+  { pn: 'X000040776', desc: 'Turbocharger asm GTA5523', fit: '2000 charged air', src: 'catalog seed', tag: 'cat' },
+];
+
+const faqItems = [
+  {
+    question: 'What does M vs G mean on an MTU 2000?',
+    answer: 'M = marine propulsion (yachts, patrol craft, ferries); G = genset / industrial stationary duty. Within M you then have the generation: M61 is the earliest (130 × 150 mm), through M70/M72/M84, up to the current M9x high-output marine generation (135 × 156 mm). So 16V2000M96L = 16-cylinder marine, M9x generation, uprated "L".',
+  },
+  {
+    question: 'Is one overhaul gasket set valid for all 2000 engines?',
+    answer: 'No. Even within the 135 × 156 mm current generation, the required seals depend on the complete model, serial and overhaul scope. Documented references like 5410110059 and 0229974948 are safe to publish, but the full kit must be confirmed against your engine — a 12V2000G83 set will not fit a 16V2000M96.',
+  },
+  {
+    question: 'Does my 2000 injector cross to Bosch?',
+    answer: 'The current M9x marine injector (MTU X51107500011) crosses to Bosch 0986435617 / F00BL0J005. We state genuine vs cross-referenced on every quote so you can choose based on your classification and budget needs.',
+  },
+  {
+    question: 'What changed with M96Z and M97L?',
+    answer: 'M96Z (announced 2025, production 2026) raised 12V output to ~1634 kW via a 138 × 156 mm bore increase with a reinforced crankcase and heads. M97L is the IMO Tier III SCR variant of the 16V M96L, same 1939 kW but with integrated NOx aftertreatment for emission-control areas.',
+  },
+];
+
+const jsonLd = [
+  breadcrumbSchema([
+    { name: 'Home', url: site.url },
+    { name: 'MTU Spare Parts', url: `${site.url}/products/mtu-spare-parts/` },
+    { name: 'MTU 2000 Series', url: `${site.url}/series/mtu-2000/` },
+    { name: title, url: pageUrl },
+  ]),
+  itemListSchema(variantRows.map((r) => ({ name: `${r.model} — ${r.kw} kW @ ${r.rpm} rpm`, url: pageUrl }))),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout
+  title={seoTitle}
+  description={description}
+  currentPath="/series/mtu-2000-variants"
+  image="/images/mtu-engine-parts-hero.webp"
+  jsonLd={jsonLd}
+>
+  <BreadcrumbHero
+    title={title}
+    trail={[
+      { label: 'Home', href: '/' },
+      { label: 'MTU Spare Parts', href: '/products/mtu-spare-parts/' },
+      { label: 'MTU 2000 Series', href: '/series/mtu-2000/' },
+      { label: '2000 Variants' },
+    ]}
+    variant="1"
+  />
+
+  <DetailPageShell intro="The MTU 2000 (launched 1996) is MTU's best-selling high-speed family, but it is not one engine — it spans 8V / 10V / 12V / 16V / 18V and generations from the early M61 through the current M9x. This page decodes the M (marine) vs G (genset) letters and the generation steps, lists representative models with ratings, and shows which spare parts differ by configuration.">
+    <img
+      slot="hero"
+      src="/images/mtu-engine-parts-hero.webp"
+      alt="MTU 2000 engine variants and part differences"
+      width="1400"
+      height="692"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+
+    <div class="resource-meta">
+      <span><strong>Section</strong> MTU 2000 → Variants</span>
+      <span><strong>Family</strong> 2000 (8V–18V)</span>
+      <span><strong>Gen</strong> M61 → M9x</span>
+      <span><strong>Delivery</strong> Global shipping</span>
+    </div>
+
+    <DetailRfqStrip
+      quoteHref={quoteHref}
+      title="Request 2000 variant parts"
+      text="Send full designation (e.g. 16V2000M96), serial number, part numbers, quantity and destination."
+      secondaryHref="/series/mtu-2000/"
+      secondaryLabel="MTU 2000 hub"
+    />
+
+    <h2>1. Designation decoder</h2>
+    <p>A full 2000 designation reads <strong>[cylinders]V2000[M/G][generation]</strong>. The letter tells you the duty, the number the generation:</p>
+    <div class="resource-table-wrap">
+      <table class="resource-table">
+        <thead>
+          <tr><th>Prefix</th><th>Meaning</th><th>Typical use</th></tr>
+        </thead>
+        <tbody>
+          {dutyDecoder.map((d) => (
+            <tr>
+              <td><strong>{d.code}</strong></td>
+              <td>{d.meaning}</td>
+              <td>{d.use}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="resource-note">Current production runs on <strong>135 × 156 mm</strong> at ~2450 rpm; the earliest M61 generation was documented at 130 × 150 mm. M96Z (2026) introduced a 138 × 156 mm bore. The M-suffix tracks generation, not displacement.</p>
+
+    <h2>2. Representative variant table (8V → 18V)</h2>
+    <p>Selected models across generations with published ratings:</p>
+    <div class="resource-table-wrap">
+      <table class="resource-table">
+        <thead>
+          <tr><th>Model</th><th>Gen</th><th>Power (kW)</th><th>Speed (rpm)</th><th>Note</th></tr>
+        </thead>
+        <tbody>
+          {variantRows.map((r) => (
+            <tr>
+              <td><strong>{r.model}</strong></td>
+              <td>{r.gen}</td>
+              <td>{r.kw}</td>
+              <td>{r.rpm}</td>
+              <td>{r.note}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="resource-note">Family power spans ~400 kW (early M61) to ~1939 kW (16V M94 / M96L / M97L). Confirm the exact rating against the identification plate before ordering.</p>
+
+    <h2>3. Which parts differ by variant</h2>
+    <div class="resource-table-wrap">
+      <table class="resource-table">
+        <thead>
+          <tr><th>Item</th><th>Shared or specific?</th><th>Note</th></tr>
+        </thead>
+        <tbody>
+          {partDiff.map((p) => (
+            <tr>
+              <td><strong>{p.item}</strong></td>
+              <td>{p.shared}</td>
+              <td>{p.note}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <h2>4. Part-number cross-reference (catalog)</h2>
+    <p><span class="rfq-badge cat">catalog</span> = verified against public MTU BOM / procurement references. RFQ-confirmed 2000 numbers will be added as live enquiries arrive (the 396 hub already carries RFQ-verified rows).</p>
+    <div class="resource-table-wrap">
+      <table class="resource-table">
+        <thead>
+          <tr><th>Part number</th><th>Description</th><th>2000 fitment</th><th>Source</th></tr>
+        </thead>
+        <tbody>
+          {crossRef.map((r) => (
+            <tr>
+              <td><code>{r.pn}</code></td>
+              <td>{r.desc}</td>
+              <td>{r.fit}</td>
+              <td><span class="rfq-badge cat">catalog</span> {r.src}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <h2>5. Identify your exact 2000 variant</h2>
+    <ul class="resource-list">
+      <li><strong>Full designation</strong> (e.g. <code>16V2000M96</code>, not "2000")</li>
+      <li><strong>Engine serial number</strong> from the identification plate</li>
+      <li><strong>Existing part number</strong> marked on the old component</li>
+      <li><strong>Build year / rating</strong> — separates M61 (130×150) from M9x (135×156)</li>
+    </ul>
+
+    <h2>6. Related & cluster</h2>
+    <div class="hub-grid">
+      <a class="hub-card" href="/series/mtu-2000/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 2000 Series Hub</h3><p class="hub-card-summary">Configurations, parts-by-system, full cross-reference.</p></div></a>
+      <a class="hub-card" href="/series/mtu-396-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 396 Variants</h3><p class="hub-card-summary">TB/TC/TE/SE decoder and per-model table (165 × 185 mm).</p></div></a>
+      <a class="hub-card" href="/products/mtu-4000-series-parts/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 4000 Series</h3><p class="hub-card-summary">12V / 16V / 20V larger siblings.</p></div></a>
+      <a class="hub-card" href="/series/mtu-1163/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 1163 Series Hub</h3><p class="hub-card-summary">12V / 16V / 20V large-bore family (230 × 280 mm).</p></div></a>
+      <a class="hub-card" href="/series/mtu-4000-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 4000 Variant Decoder</h3><p class="hub-card-summary">M05 / M03 / C05 / R03 / R04 / T05 + M-duty notation.</p></div></a>
+      <a class="hub-card" href="/series/16v2000m96/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 16V 2000 M96</h3><p class="hub-card-summary">Single-model deep dive — 1,790 kW high-speed marine engine.</p></div></a>
+    </div>
+
+    <FaqSection items={faqItems} title="MTU 2000 Variants FAQ" subtitle="FAQ" />
+  </DetailPageShell>
+</BaseLayout>
+
+<style>
+  .rfq-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    letter-spacing: 0.03em;
+    vertical-align: middle;
+  }
+  .rfq-badge.cat { background: #e4eef7; color: var(--color-primary); }
+  .resource-table code {
+    background: #eef3f8;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #0a3d66;
+  }
+  .hub-card h3.hub-card-title { font-size: 17px; }
+</style>

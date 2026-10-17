@@ -1,0 +1,38 @@
+---
+import type { ProcurementBrief } from '../data/procurement-content';
+import { mtuParts } from '../data/mtu-parts';
+interface Props { brief: ProcurementBrief; source: string; }
+const { brief, source } = Astro.props;
+const findPart = (number: string) => mtuParts.find((part) => part.partNumber.toUpperCase() === number.toUpperCase());
+---
+<section class="procurement-brief" aria-label={brief.heading}>
+  <h2>{brief.heading}</h2>
+  <p>{brief.intro}</p>
+  <div class="procurement-table-wrap" tabindex="0" aria-label="采购范围与确认事项">
+    <table>
+      <thead><tr><th scope="col">订单行</th><th scope="col">发货范围</th><th scope="col">下单前确认</th></tr></thead>
+      <tbody>{brief.lines.map((line) => <tr>
+        <th scope="row">{line.item}{line.numbers && <span class="procurement-numbers">{line.numbers.map((number) => {
+          const part = findPart(number);
+          return part ? <a href={`/part-products/${part.slug}/`}>{number}</a> : <span>{number}</span>;
+        })}</span>}</th>
+        <td>{line.scope}</td><td>{line.check}</td>
+      </tr>)}</tbody>
+    </table>
+  </div>
+  {brief.links && <ul class="procurement-links">{brief.links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}</ul>}
+  <p><a class="detail-rfq-link" href={`/contact/?source=${source}`} data-rfq-modal data-rfq-source={source} data-rfq-context={brief.heading}>索取逐行报价</a></p>
+</section>
+<style>
+  .procurement-brief { margin: 30px 0; padding: 24px 0; border-top: 1px solid #dbe3e8; border-bottom: 1px solid #dbe3e8; }
+  .procurement-brief h2 { margin-top: 0; }
+  .procurement-table-wrap { max-width: 100%; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 15px; }
+  th, td { padding: 14px 12px; text-align: left; vertical-align: top; border-bottom: 1px solid #dbe3e8; overflow-wrap: anywhere; line-height: 1.6; }
+  thead { background: #f1f5f7; color: #17242d; }
+  th:first-child { width: 26%; }
+  .procurement-numbers { display: flex; flex-wrap: wrap; gap: 5px 12px; margin-top: 8px; font-family: ui-monospace, monospace; font-size: 13px; font-weight: 500; }
+  .procurement-numbers a, .procurement-numbers span { overflow-wrap: anywhere; }
+  .procurement-links { display: flex; flex-wrap: wrap; gap: 8px 24px; padding-left: 20px; }
+  @media (max-width: 600px) { table { min-width: 650px; } .procurement-brief { padding: 18px 0; } }
+</style>

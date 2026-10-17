@@ -1,0 +1,98 @@
+---
+export interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  title: string;
+  /** @deprecated Use `trail` for multi-level breadcrumbs. */
+  current?: string;
+  trail?: BreadcrumbItem[];
+  variant?: '1' | '2' | '3' | '5';
+  image?: string;
+}
+
+const { title, current, trail, variant = '1', image } = Astro.props;
+
+const items: BreadcrumbItem[] =
+  trail ??
+  (current
+    ? [
+        { label: '首页', href: '/' },
+        { label: current },
+      ]
+    : [{ label: '首页', href: '/' }]);
+
+const bgMap: Record<string, string> = {
+  '1': '/images/mtu-engine-parts-hero.webp',
+  '2': '/images/marine-diesel-engine-parts.webp',
+  '3': '/images/mtu-4000-series-overhaul-parts.webp',
+  '5': '/images/global-engine-parts-delivery.webp',
+};
+const bgImage = image ?? bgMap[variant];
+const bgStyle = `background-image: linear-gradient(90deg, #000, rgba(255,255,255,0) 50%), linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('${bgImage}')`;
+---
+
+<section class="breadcrumb-section" data-variant={variant} style={bgStyle}>
+  <div class="container">
+    <div class="breadcrumb-content-wrapper">
+      <div class="breadcrumb-title-block fade-in">
+        <h1 class="breadcrumb-title" set:html={title} />
+      </div>
+    </div>
+  </div>
+  <div class="breadcrumb-subtitle-block">
+    <nav class="breadcrumb-nav" aria-label="面包屑导航">
+      <ol class="breadcrumb-trail">
+        {items.map((item, index) => (
+          <li class="breadcrumb-trail-item">
+            {index > 0 && <span class="breadcrumb-separator" aria-hidden="true">/</span>}
+            {item.href && index < items.length - 1 ? (
+              <a href={item.href} class="breadcrumb-subtitle-link">{item.label}</a>
+            ) : (
+              <span class="breadcrumb-subtitle-current" aria-current={index === items.length - 1 ? 'page' : undefined}>
+                {item.label}
+              </span>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+  </div>
+</section>
+
+<style>
+  .breadcrumb-trail {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    color: var(--color-white);
+    font-family: var(--font-title);
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .breadcrumb-trail-item {
+    display: inline-flex;
+    align-items: center;
+  }
+  .breadcrumb-separator {
+    margin: 0 8px;
+    opacity: 0.7;
+  }
+  .breadcrumb-subtitle-link {
+    color: var(--color-white);
+    text-decoration: none;
+    transition: color 0.25s;
+  }
+  .breadcrumb-subtitle-link:hover {
+    color: var(--color-primary);
+  }
+  .breadcrumb-subtitle-current {
+    color: var(--color-white);
+  }
+</style>

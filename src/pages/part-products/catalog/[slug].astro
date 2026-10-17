@@ -1,0 +1,1094 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../../components/BreadcrumbHero.astro';
+import BlogCta from '../../../components/BlogCta.astro';
+import FunnelPageView from '../../../components/FunnelPageView.astro';
+import ProcurementBrief from '../../../components/ProcurementBrief.astro';
+import QuotationExamples from '../../../components/QuotationExamples.astro';
+import { allCatalogAssemblies } from '../../../data/part-assemblies';
+import { catalogProcurement } from '../../../data/procurement-content';
+import { isRealPartImage, mtuCatalogHubs, mtuParts, searchPriorityPartRank, type MtuCatalogHub } from '../../../data/mtu-parts';
+import { breadcrumbSchema, itemListSchema, site } from '../../../data/site';
+import '../../../styles/resource-page.css';
+
+export function getStaticPaths() {
+  return mtuCatalogHubs.map((hub) => ({ params: { slug: hub.slug }, props: { hub } }));
+}
+
+const { hub } = Astro.props as { hub: MtuCatalogHub };
+const parts = mtuParts.filter(hub.partFilter);
+const drawingGroups = ['mtu-396-series', 'mtu-1163-series', 'mtu-956-series'].includes(hub.slug)
+  ? allCatalogAssemblies.filter((assembly) => assembly.parts.some((item) => parts.some((part) => part.partNumber === item.partNumber))) : [];
+const pageUrl = `${site.url}/part-products/catalog/${hub.slug}/`;
+const quoteHref = `/contact/?source=catalog-${hub.slug}`;
+const catalogHeading = /catalog/i.test(hub.h1Title) ? hub.h1Title : `${hub.h1Title} Catalog`;
+const seriesGuideLinks: Record<string, { href: string; label: string }> = {
+  'mtu-2000-series': { href: '/series/mtu-2000/', label: 'MTU 2000 model identification' },
+  'mtu-396-series': { href: '/series/mtu-396/', label: 'MTU 396 model identification' },
+  'mtu-1163-series': { href: '/series/mtu-1163/', label: 'MTU 1163 model identification' },
+  'mtu-4000-series': { href: '/series/mtu-4000-variants/', label: 'MTU 4000 model variants' },
+};
+const seriesGuide = seriesGuideLinks[hub.slug];
+
+// For series hubs: group by category. For category hubs: group by engine series.
+const categoryGroups = new Map<string, typeof parts>();
+for (const part of parts) {
+  const groupKeys = hub.type === 'series'
+    ? [part.category]
+    : part.series.length > 0
+      ? part.series
+      : [part.engineType ?? 'Verify by engine serial number'];
+
+  for (const key of groupKeys) {
+    if (!categoryGroups.has(key)) categoryGroups.set(key, []);
+    categoryGroups.get(key)!.push(part);
+  }
+}
+
+const groupLabel = hub.type === 'series' ? 'category' : 'series';
+const featuredParts = [...parts]
+  .sort((a, b) => {
+    const rankDifference = (searchPriorityPartRank.get(a.partNumber.toUpperCase()) ?? Infinity) -
+      (searchPriorityPartRank.get(b.partNumber.toUpperCase()) ?? Infinity);
+    if (rankDifference && !Number.isNaN(rankDifference)) return rankDifference;
+    const bScore =
+      Number(isRealPartImage(b.image)) * 4 +
+      Number(Boolean(b.engineType && b.dimensions && b.weightKg && b.hsCode)) * 3 +
+      Number(Boolean(b.replacementFor?.length)) * 2 +
+      Number(Boolean(b.applicableEngines));
+    const aScore =
+      Number(isRealPartImage(a.image)) * 4 +
+      Number(Boolean(a.engineType && a.dimensions && a.weightKg && a.hsCode)) * 3 +
+      Number(Boolean(a.replacementFor?.length)) * 2 +
+      Number(Boolean(a.applicableEngines));
+    return bScore - aScore || a.partNumber.localeCompare(b.partNumber);
+  })
+  .filter((part) => part.specificationChecks?.length)
+  .slice(0, 8);
+const hasPublishedSizes = featuredParts.some((part) => Boolean(part.dimensions));
+const partSlugSet = new Set(parts.map((part) => part.slug));
+const relatedCatalogHubs = mtuCatalogHubs
+    .filter((h) => h.slug !== hub.slug)
+  .map((h) => ({
+    hub: h,
+    overlap: mtuParts.filter(h.partFilter).filter((part) => partSlugSet.has(part.slug)).length,
+    crossTypeBoost: h.type === hub.type ? 0 : 1,
+  }))
+  .filter(({ overlap }) => overlap > 0)
+  .sort((a, b) => b.overlap - a.overlap || b.crossTypeBoost - a.crossTypeBoost || a.hub.h1Title.localeCompare(b.hub.h1Title))
+  .slice(0, 12)
+  .map(({ hub }) => hub);
+const catalogSeries = Array.from(new Set(parts.flatMap((part) => part.series.length > 0 ? part.series : [part.engineType ?? 'serial-number verified']))).slice(0, 8);
+const catalogCategories = Array.from(new Set(parts.map((part) => part.category))).slice(0, 8);
+const catalogScope = hub.type === 'series'
+  ? `${hub.h1Title} covers ${catalogCategories.join(', ')} and related service references.`
+  : `${hub.h1Title} includes catalog references listed under ${catalogSeries.join(', ')}. Engine-specific fitment remains subject to verification.`;
+// Authority concentration: series hubs link to the matching overhaul guide (hub-and-spoke).
+const overhaulGuideLink = hub.slug === 'mtu-2000-series'
+  ? { href: '/guides/mtu-2000-overhaul-parts/', label: 'MTU 2000 Series Overhaul Parts Guide' }
+  : hub.slug === 'mtu-4000-series'
+    ? { href: '/guides/mtu-4000-overhaul-parts/', label: 'MTU 4000 Series Overhaul Parts Guide' }
+    : undefined;
+const quoteChecklist = [
+  'Exact part number and quantity',
+  'Engine model, rating, and serial number',
+  'Nameplate photo or old-part photo when the marking is unclear',
+  'Destination country, delivery deadline, and preferred shipping method',
+];
+const catalogUseCases = hub.type === 'series'
+  ? ['Preventive maintenance list by engine serial number', 'Major overhaul quotation by category', 'Urgent downtime replacement for one confirmed part number', 'Fleet replenishment across several engines in the same series']
+  : ['Bulk replenishment for repeated service items', 'Cross-series part-number verification', 'Old-stock replacement and supersession checks', 'Mixed RFQ lists from service companies or shipyards'];
+---
+
+<BaseLayout
+  title={hub.title}
+  description={hub.summary}
+  currentPath="/products"
+  jsonLd={[
+    breadcrumbSchema([
+      { name: 'Home', url: site.url },
+      { name: 'MTU Parts Catalog', url: `${site.url}/part-products/` },
+      { name: hub.h1Title, url: pageUrl },
+    ]),
+    itemListSchema(
+      parts.slice(0, 50).map((p) => ({
+        name: `${p.partNumber} ${p.name}`,
+        url: `${site.url}/part-products/${p.slug}/`,
+      })),
+    ),
+  ]}
+>
+  <FunnelPageView stage="selection" label={`catalog-${hub.slug}`} />
+  <BreadcrumbHero
+    title={catalogHeading}
+    trail={[
+      { label: 'Home', href: '/' },
+      { label: 'MTU Parts Catalog', href: '/part-products/' },
+      { label: hub.type === 'series' ? hub.h1Title.replace(' Engine Parts', '') : hub.h1Title.replace('MTU ', '').replace(' & Seal Kits', '') },
+    ]}
+    variant="2"
+  />
+
+  <section class="blog-details-section resource-page-section">
+    <div class="section-gap bottom">
+      <div class="container">
+        <article class="blog-details-content-block resource-page fade-in">
+          <!-- ── Stat bar ── -->
+          <div class="catalog-stat-bar">
+            <div class="catalog-stat-item">
+              <span class="catalog-stat-icon catalog-stat-icon--docs">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              </span>
+              <span class="catalog-stat-value">{parts.length}</span>
+              <span class="catalog-stat-label">Part Numbers</span>
+            </div>
+            <div class="catalog-stat-item">
+              <span class="catalog-stat-icon catalog-stat-icon--grid">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+              </span>
+              <span class="catalog-stat-value">{categoryGroups.size}</span>
+              <span class="catalog-stat-label">{groupLabel === 'series' ? 'Series' : 'Categories'}</span>
+            </div>
+            <div class="catalog-stat-item">
+              <span class="catalog-stat-icon catalog-stat-icon--moq">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+              </span>
+              <span class="catalog-stat-value">Per RFQ</span>
+              <span class="catalog-stat-label">Quantity</span>
+            </div>
+            <div class="catalog-stat-item">
+              <span class="catalog-stat-icon catalog-stat-icon--globe">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              </span>
+              <span class="catalog-stat-value">Global</span>
+              <span class="catalog-stat-label">Delivery</span>
+            </div>
+          </div>
+
+          <!-- ── RFQ strip ── -->
+          <div class="detail-rfq-strip">
+            <span class="catalog-rfq-strip-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </span>
+            <p><strong>Send part numbers, engine model, serial number, quantity, and destination.</strong> We check compatibility, stock, and shipping options.</p>
+            <a
+              href={quoteHref}
+              class="detail-rfq-link"
+              data-rfq-modal
+              data-rfq-context={`${hub.h1Title} parts list inquiry`}
+              data-rfq-source={`catalog-${hub.slug}`}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+              Request Parts Inquiry
+            </a>
+          </div>
+
+          <h2>{hub.type === 'series' ? 'Parts by Category' : 'Parts by Engine Series'}</h2>
+          {seriesGuide && <p><a href={seriesGuide.href}>{seriesGuide.label}</a> · <a href={hub.slug === 'mtu-4000-series' ? '/products/mtu-4000-series-parts/' : hub.slug === 'mtu-2000-series' ? '/products/mtu-2000-series-parts/' : '/products/mtu-spare-parts/'}>Parts supply and quotation</a></p>}
+          <p class="catalog-intro-text">{hub.description}</p>
+          {catalogProcurement[hub.slug] && <ProcurementBrief brief={catalogProcurement[hub.slug]} source={`catalog-${hub.slug}-scope`} />}
+          {drawingGroups.length > 0 && <section class="catalog-depth-section">
+            <h2>Catalog Drawing Positions</h2>
+            <p>These are catalog drawing relationships, not a confirmed kit. Check the revision and your engine serial range before using the positions.</p>
+            {drawingGroups.map((assembly) => <>
+              <h3>{assembly.name}</h3>
+              {assembly.kind === 'derived' && <p>{assembly.provenance}</p>}
+              <ul>{assembly.parts.map((item) => {
+                const linked = mtuParts.find((part) => part.partNumber === item.partNumber);
+                const label = `${item.partNumber} ${item.description}`;
+                return <li>{item.position ? `Position ${item.position}: ` : ''}{linked ? <a href={`/part-products/${linked.slug}/`}>{label}</a> : label}</li>;
+              })}</ul>
+            </>)}
+          </section>}
+          {hub.slug === 'mtu-filters' && <QuotationExamples ids={['generator-service-filters']} source="filters-real-rfq" />}
+          {hub.slug === 'mtu-gasket-kits' && <QuotationExamples ids={['cylinder-head-components']} source="gaskets-real-rfq" />}
+
+          {hub.longDescription && (
+            <div class="catalog-long-description">
+              {hub.longDescription.split('\n\n').map((p) => <p>{p.trim()}</p>)}
+            </div>
+          )}
+
+          {hub.searchTopics && hub.searchTopics.length > 0 && (
+            <section class="catalog-depth-section">
+              <h2>{hub.type === 'series' ? 'Engine Model Coverage' : 'Component Coverage'}</h2>
+              <p>
+                Use these focused topics to narrow the catalog before sending a part-number list. Final fitment is
+                confirmed against the complete engine or component reference.
+              </p>
+              <div class="catalog-info-grid">
+                {hub.searchTopics.map((topic) => (
+                  <article class="catalog-info-card">
+                    <h3>
+                      {topic.href ? <a href={topic.href}>{topic.title}</a> : topic.title}
+                    </h3>
+                    <p>{topic.description}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
+          )}
+
+          <!-- ── Scope + coverage ── -->
+          <section class="catalog-depth-section">
+            <h2>Catalog Scope and Fitment Method</h2>
+            <p>{catalogScope} We do not treat a part number as interchangeable until the engine serial number, installation position, and any superseded reference have been checked.</p>
+            <div class="catalog-info-grid">
+              <article class="catalog-info-card">
+                <span class="catalog-info-card-icon" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8.45 2.09A10 10 0 0 0 2.05 8.5"/><path d="M12 2a10 10 0 0 1 10 10"/><circle cx="12" cy="12" r="10"/></svg>
+                </span>
+                <h3>Included engine coverage</h3>
+                <p>{catalogSeries.join(', ')}</p>
+              </article>
+              <article class="catalog-info-card">
+                <span class="catalog-info-card-icon" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+                </span>
+                <h3>Included part categories</h3>
+                <p>{catalogCategories.join(', ')}</p>
+              </article>
+            </div>
+          </section>
+
+          <!-- ── Part-number checks ── -->
+          {featuredParts.length > 0 && <section class="catalog-depth-section">
+            <h2>Part Numbers &amp; Selection Checks</h2>
+            <p>These numbers have part-specific identification checks. Catalog measurements, where shown, still require confirmation for the quoted item and engine.</p>
+            <div class:list={['catalog-spec-table', { 'catalog-spec-table--no-size': !hasPublishedSizes }]} role="table" aria-label={`${hub.h1Title} part-number selection checks`}>
+              <div class="catalog-spec-head" role="row">
+                <span role="columnheader">Part No.</span>
+                <span role="columnheader">Component</span>
+                <span role="columnheader">Engine Series</span>
+                {hasPublishedSizes && <span role="columnheader">Published Size</span>}
+                <span role="columnheader">Check Before Quote</span>
+              </div>
+              {featuredParts.map((part) => (
+                <a class="catalog-spec-row" role="row" href={`/part-products/${part.slug}/`}>
+                  <span role="cell" class="catalog-spec-cell-pn" data-label="Part No.">{part.partNumber}</span>
+                  <span role="cell" data-label="Component">{part.name}</span>
+                  <span role="cell" data-label="Engine Series">{part.series.join(', ') || 'Serial check'}</span>
+                  {hasPublishedSizes && <span role="cell" data-label="Published Size">{part.dimensions || 'Not published'}</span>}
+                  <span role="cell" data-label="Check Before Quote">{part.specificationChecks?.[0] ?? 'Confirm part marking and engine serial number.'}</span>
+                </a>
+              ))}
+            </div>
+          </section>}
+
+          <!-- ── Verification checklist ── -->
+          <section class="catalog-depth-section">
+            <h2>What We Verify Before Quoting</h2>
+            <div class="catalog-checklist-grid">
+              {quoteChecklist.map((item, i) => (
+                <article class="catalog-checklist-card">
+                  <span class="catalog-checklist-step">{String(i + 1).padStart(2, '0')}</span>
+                  <div class="catalog-checklist-body">
+                    <h3>{item}</h3>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <!-- ── RFQ scenarios ── -->
+          <section class="catalog-depth-section">
+            <h2>Common RFQ Scenarios</h2>
+            <ul class="catalog-scenarios-list">
+              {catalogUseCases.map((item) => (
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+            <p class="catalog-scenarios-note">For mixed lists, send the spreadsheet as-is. We return line-by-line availability, replacement notes, and practical shipping options instead of a generic catalog reply.</p>
+          </section>
+
+          <!-- ── Not listed? Just ask ── -->
+          <section class="catalog-depth-section catalog-just-ask">
+            <h2>Don't See Your Part Number Here? Just Ask.</h2>
+            <p>
+              This page lists the references indexed for {hub.h1Title.toLowerCase()} — it is not the
+              full MTU spare-parts range, and a missing number says nothing about availability. Send
+              the complete part number with your engine model and serial number: we check the
+              reference, trace supersessions, name the supply grade, and confirm stock before
+              quoting. If a number cannot be verified, we say so instead of shipping a guess.
+            </p>
+            <a
+              href={quoteHref}
+              class="detail-rfq-link"
+              data-rfq-modal
+              data-rfq-context="Unlisted part number sourcing check"
+              data-rfq-source={`catalog-${hub.slug}-just-ask`}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+              Send My Part Number
+            </a>
+          </section>
+
+          <!-- ── Grouped part cards ── -->
+          {
+            Array.from(categoryGroups.entries()).map(([groupKey, groupParts]) => (
+              <section class="catalog-group-section">
+                <h3 class="catalog-group-title">
+                  <span>{groupKey}</span>
+                  <span class="catalog-group-count">{groupParts.length} parts</span>
+                </h3>
+                <div class="hub-grid">
+                  {groupParts.slice(0, 12).map((part) => (
+                    <a href={`/part-products/${part.slug}/`} class="hub-card catalog-part-card">
+                      <div class="hub-card-image">
+                        <img
+                          src={part.image}
+                          alt={part.imageAlt ?? `${part.partNumber} ${part.name}`}
+                          width="320"
+                          height="200"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </div>
+                      <div class="hub-card-body">
+                        <p class="hub-card-meta">{part.partNumber}</p>
+                        <h4 class="hub-card-title">{part.name}</h4>
+                        <dl class="catalog-part-specs">
+                          <div>
+                            <dt>Engine</dt>
+                            <dd>{part.engineType ?? (part.series.length > 0 ? part.series.join(', ') : 'Serial check')}</dd>
+                          </div>
+                          <div>
+                            <dt>Category</dt>
+                            <dd>{part.category}</dd>
+                          </div>
+                          <div>
+                            <dt>Catalog Weight</dt>
+                            <dd>{part.weightKg ?? 'Quote check'}</dd>
+                          </div>
+                          <div>
+                            <dt>HS Code (ref.)</dt>
+                            <dd>{part.hsCode ?? 'Quote check'}</dd>
+                          </div>
+                          <div>
+                            <dt>Other References</dt>
+                            <dd>{part.replacementFor?.slice(0, 2).join(', ') || 'Verify'}</dd>
+                          </div>
+                          <div>
+                            <dt>Image</dt>
+                            <dd>{isRealPartImage(part.image) ? 'Catalog photo' : 'Category image'}</dd>
+                          </div>
+                        </dl>
+                        <p class="hub-card-summary">Availability confirmed for the quoted part number and quantity.</p>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+                {groupParts.length > 12 && (
+                  <p class="catalog-group-more">
+                    <span class="catalog-group-more-count">+{groupParts.length - 12}</span> more {groupKey.toLowerCase()} parts —
+                    <a
+                      href={quoteHref}
+                      data-rfq-modal
+                      data-rfq-context={`${hub.h1Title} full catalog list inquiry`}
+                      data-rfq-source={`catalog-${hub.slug}`}
+                    >send a part list for full catalog</a>
+                  </p>
+                )}
+              </section>
+            ))
+          }
+
+          <!-- Related catalog hubs -->
+          <hr class="catalog-divider" />
+          <h2>Browse More MTU Parts Catalogs</h2>
+          <div class="hub-grid">
+            {relatedCatalogHubs.map((h) => (
+                <a href={`/part-products/catalog/${h.slug}/`} class="hub-card catalog-related-card">
+                  <div class="hub-card-body">
+                    <span class="catalog-related-badge">{h.type === 'series' ? 'Engine Series' : 'Parts Category'}</span>
+                    <h4 class="hub-card-title">{h.h1Title}</h4>
+                    <p class="hub-card-summary">{h.summary}</p>
+                  </div>
+                </a>
+              ))}
+          </div>
+
+          <!-- ── Footer links ── -->
+          <div class="catalog-footer-links">
+            <a href="/part-products/" class="catalog-footer-link">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              All Part Numbers
+            </a>
+            <span class="catalog-footer-sep" aria-hidden="true">/</span>
+            <a href="/products/mtu-spare-parts/" class="catalog-footer-link">MTU Spare Parts</a>
+            {overhaulGuideLink && (
+              <>
+                <span class="catalog-footer-sep" aria-hidden="true">/</span>
+                <a href={overhaulGuideLink.href} class="catalog-footer-link">{overhaulGuideLink.label}</a>
+              </>
+            )}
+            <span class="catalog-footer-sep" aria-hidden="true">/</span>
+            <a
+              href={quoteHref}
+              class="catalog-footer-link catalog-footer-link--cta"
+              data-rfq-modal
+              data-rfq-context={`${hub.h1Title} parts inquiry`}
+              data-rfq-source={`catalog-${hub.slug}`}
+            >Request Parts Inquiry</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <BlogCta
+    stage="selection"
+    topic={`catalog-${hub.slug}`}
+    title="Ready to check engine parts?"
+    text="Send part numbers, engine model, serial number, quantity, and destination. We confirm availability before quotation."
+    primaryLabel="Send Parts Inquiry"
+    primaryHref={quoteHref}
+    primaryEvent={`catalog_${hub.slug}_rfq`}
+    useRfqModal
+    rfqContext={`${hub.h1Title} parts inquiry`}
+    rfqSource={`catalog-${hub.slug}`}
+    secondaryLabel="All part numbers"
+    secondaryHref="/part-products/"
+    secondaryEvent="catalog_all_parts"
+  />
+</BaseLayout>
+
+<style>
+  /* ── Stat bar ── */
+  .catalog-stat-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .catalog-stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 18px 12px 16px;
+    background: var(--color-white);
+    border: 1px solid var(--color-stroke);
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .catalog-stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    flex-shrink: 0;
+  }
+
+  .catalog-stat-icon--docs { background: rgba(20, 110, 245, 0.08); color: var(--color-primary); }
+  .catalog-stat-icon--grid { background: rgba(16, 185, 129, 0.1); color: #059669; }
+  .catalog-stat-icon--moq { background: rgba(245, 158, 11, 0.1); color: #d97706; }
+  .catalog-stat-icon--globe { background: rgba(139, 92, 246, 0.1); color: #7c3aed; }
+
+  .catalog-stat-value {
+    font-family: var(--font-title);
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--color-title);
+  }
+
+  .catalog-stat-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── RFQ strip ── */
+  .detail-rfq-strip {
+    margin-bottom: 24px;
+  }
+
+  .catalog-rfq-strip-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(20, 110, 245, 0.12), rgba(20, 110, 245, 0.06));
+    color: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  .detail-rfq-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 10px 22px;
+    background: linear-gradient(135deg, #146ef5, #0d5ad4);
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    border-radius: 8px;
+    white-space: nowrap;
+    transition: opacity 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+    box-shadow: 0 2px 8px rgba(20, 110, 245, 0.2);
+  }
+
+  .detail-rfq-link:hover {
+    opacity: 0.94;
+    box-shadow: 0 4px 16px rgba(20, 110, 245, 0.3);
+    transform: translateY(-1px);
+  }
+
+  .detail-rfq-link:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+    border-radius: 8px;
+  }
+
+  .catalog-intro-text {
+    font-size: 16px;
+    line-height: 1.65;
+    color: #475569;
+    margin: 0 0 8px;
+  }
+
+  /* ── Info cards (scope) ── */
+  .catalog-depth-section {
+    margin: 32px 0;
+  }
+
+  /* ── "Don't see your part number here? Just ask." ── */
+  .catalog-just-ask {
+    padding: 24px 26px;
+    background: #f0f6ff;
+    border: 1px solid rgba(20, 110, 245, 0.22);
+    border-radius: 12px;
+  }
+
+  .catalog-just-ask h2 {
+    margin: 0 0 10px;
+    font-size: 22px;
+  }
+
+  .catalog-just-ask p {
+    margin: 0 0 16px;
+    color: #334155;
+    line-height: 1.7;
+  }
+
+  .catalog-just-ask .detail-rfq-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .catalog-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 16px;
+  }
+
+  .catalog-info-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 22px;
+    background: var(--color-white);
+    border: 1px solid var(--color-stroke);
+    border-radius: 10px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .catalog-info-card:hover {
+    border-color: rgba(20, 110, 245, 0.25);
+    box-shadow: 0 2px 12px rgba(20, 110, 245, 0.06);
+  }
+
+  .catalog-info-card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: rgba(20, 110, 245, 0.07);
+    color: var(--color-primary);
+  }
+
+  .catalog-info-card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-title);
+    margin: 0;
+    text-transform: none;
+  }
+
+  .catalog-info-card p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #475569;
+    margin: 0;
+  }
+
+  /* ── Checklist (step numbers) ── */
+  .catalog-checklist-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 16px;
+  }
+
+  .catalog-checklist-card {
+    display: flex;
+    gap: 14px;
+    padding: 20px;
+    background: var(--color-white);
+    border: 1px solid var(--color-stroke);
+    border-radius: 10px;
+    transition: border-color 0.2s ease;
+  }
+
+  .catalog-checklist-card:hover {
+    border-color: rgba(20, 110, 245, 0.2);
+  }
+
+  .catalog-checklist-step {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(20, 110, 245, 0.08);
+    font-family: var(--font-title);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  .catalog-checklist-body h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-title);
+    margin: 0 0 4px;
+  }
+
+  .catalog-checklist-body p {
+    font-size: 13px;
+    line-height: 1.55;
+    color: #64748b;
+    margin: 0;
+  }
+
+  /* ── RFQ scenarios ── */
+  .catalog-scenarios-list {
+    list-style: none;
+    margin: 14px 0 12px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .catalog-scenarios-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 18px;
+    background: var(--color-white);
+    border: 1px solid var(--color-stroke);
+    border-radius: 8px;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--color-body-text);
+    transition: border-color 0.2s ease;
+  }
+
+  .catalog-scenarios-list li:hover {
+    border-color: rgba(20, 110, 245, 0.2);
+  }
+
+  .catalog-scenarios-list li svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: #10b981;
+  }
+
+  .catalog-scenarios-note {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #64748b;
+    padding: 14px 18px;
+    background: rgba(20, 110, 245, 0.04);
+    border-radius: 8px;
+    border: 1px solid rgba(20, 110, 245, 0.1);
+    margin: 0;
+  }
+
+  /* ── Grouped part sections ── */
+  .catalog-group-section {
+    margin-bottom: 36px;
+  }
+
+  .catalog-group-section:last-child {
+    margin-bottom: 8px;
+  }
+
+  .catalog-group-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--color-title);
+    margin: 0 0 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--color-stroke);
+    text-transform: none;
+  }
+
+  .catalog-group-count {
+    font-size: 13px;
+    font-weight: 500;
+    color: #64748b;
+    padding: 4px 12px;
+    background: var(--color-background);
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  .catalog-group-more {
+    margin-top: 12px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: #64748b;
+  }
+
+  .catalog-group-more-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 24px;
+    padding: 0 8px;
+    border-radius: 100px;
+    background: rgba(20, 110, 245, 0.08);
+    color: var(--color-primary);
+    font-size: 12px;
+    font-weight: 700;
+    font-family: var(--font-title);
+  }
+
+  .catalog-group-more a {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  .catalog-group-more a:hover {
+    text-decoration: underline;
+  }
+
+  .catalog-group-more a:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .catalog-divider {
+    margin: 40px 0 28px;
+    border: none;
+    border-top: 1px solid var(--color-stroke);
+  }
+
+  /* ── Part card with thumbnail ── */
+  .catalog-part-card {
+    padding: 0;
+    gap: 0;
+    overflow: hidden;
+  }
+
+  .catalog-part-card .hub-card-body {
+    padding: 16px;
+  }
+
+  .catalog-part-card .hub-card-title {
+    font-size: 15px;
+  }
+
+  .catalog-part-specs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    margin: 10px 0 0;
+  }
+
+  .catalog-part-specs div {
+    min-width: 0;
+    padding: 6px 7px;
+    border: 1px solid #d8e2ee;
+    border-radius: 6px;
+    background: #f8fafc;
+  }
+
+  .catalog-part-specs dt {
+    margin: 0 0 2px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #64748b;
+  }
+
+  .catalog-part-specs dd {
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.3;
+    color: #0f172a;
+    overflow-wrap: anywhere;
+  }
+
+  .catalog-part-card .hub-card-summary {
+    font-size: 13px;
+  }
+
+  /* ── Related hub cards ── */
+  .catalog-related-badge {
+    display: inline-block;
+    width: fit-content;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-primary);
+    background: rgba(20, 110, 245, 0.08);
+    border: 1px solid rgba(20, 110, 245, 0.12);
+    margin-bottom: 4px;
+  }
+
+  /* ── Footer links ── */
+  .catalog-footer-links {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px 8px;
+    margin-top: 32px;
+    padding: 20px 24px;
+    background: var(--color-white);
+    border: 1px solid var(--color-stroke);
+    border-radius: 10px;
+  }
+
+  .catalog-footer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 16px;
+    min-height: 44px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-decoration: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .catalog-footer-link:hover {
+    background: rgba(20, 110, 245, 0.06);
+  }
+
+  .catalog-footer-link--cta {
+    background: rgba(20, 110, 245, 0.08);
+    margin-left: auto;
+  }
+
+  .catalog-footer-link--cta:hover {
+    background: rgba(20, 110, 245, 0.14);
+  }
+
+  .catalog-footer-link:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+
+  .catalog-footer-sep {
+    color: #cbd5e1;
+    font-size: 16px;
+    user-select: none;
+    margin: 0 2px;
+  }
+
+  /* ── Spec table ── */
+  .catalog-spec-table {
+    border: 1px solid var(--color-stroke);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 16px;
+  }
+
+  .catalog-spec-head,
+  .catalog-spec-row {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1fr 1.1fr 1.9fr;
+    gap: 0;
+  }
+
+  .catalog-spec-table--no-size .catalog-spec-head,
+  .catalog-spec-table--no-size .catalog-spec-row {
+    grid-template-columns: 1fr 1.2fr 1fr 2fr;
+  }
+
+  .catalog-spec-head {
+    background: #f8fafc;
+    color: #475569;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .catalog-spec-row {
+    color: #0f172a;
+    text-decoration: none;
+    cursor: pointer;
+    border-top: 1px solid #f1f5f9;
+    transition: background-color 0.15s ease;
+  }
+
+  .catalog-spec-row:nth-child(even) {
+    background: #fafbfc;
+  }
+
+  .catalog-spec-row:hover {
+    background: #eff6ff;
+  }
+
+  .catalog-spec-row:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -2px;
+    border-radius: 2px;
+    background: #eff6ff;
+  }
+
+  .catalog-spec-cell-pn {
+    font-family: var(--font-title);
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  .catalog-spec-head span,
+  .catalog-spec-row span {
+    padding: 12px 14px;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .catalog-stat-bar {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .catalog-checklist-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .catalog-spec-head {
+      display: none;
+    }
+
+    .catalog-spec-row,
+    .catalog-spec-table--no-size .catalog-spec-row {
+      grid-template-columns: 1fr;
+      padding: 12px 0;
+    }
+
+    .catalog-spec-row span {
+      padding: 5px 14px;
+    }
+
+    .catalog-spec-row span::before {
+      content: attr(data-label);
+      display: block;
+      margin-bottom: 2px;
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .catalog-spec-cell-pn {
+      font-size: 14px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .catalog-info-grid,
+    .catalog-checklist-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .catalog-group-title {
+      font-size: 16px;
+      flex-wrap: wrap;
+    }
+
+    .catalog-stat-item {
+      padding: 14px 10px 12px;
+    }
+
+    .catalog-stat-value {
+      font-size: 18px;
+    }
+
+    .catalog-footer-links {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .catalog-footer-link--cta {
+      margin-left: 0;
+      justify-content: center;
+    }
+  }
+
+  /* ── Reduced motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    .catalog-spec-row,
+    .detail-rfq-link,
+    .catalog-group-more a,
+    .catalog-info-card,
+    .catalog-checklist-card,
+    .catalog-scenarios-list li,
+    .catalog-footer-link {
+      transition: none;
+    }
+
+    .detail-rfq-link:hover {
+      transform: none;
+    }
+  }
+</style>

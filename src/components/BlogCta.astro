@@ -1,0 +1,155 @@
+---
+import {
+  funnelCtaByStage,
+  getPostFunnelStage,
+  type BlogPostLike,
+  type FunnelStage,
+} from '../data/funnel';
+
+interface Props {
+  post?: BlogPostLike;
+  stage?: FunnelStage;
+  topic?: string;
+  title?: string;
+  text?: string;
+  primaryLabel?: string;
+  primaryHref?: string;
+  primaryEvent?: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+  secondaryEvent?: string;
+  useRfqModal?: boolean;
+  rfqContext?: string;
+  rfqSource?: string;
+}
+
+const {
+  post,
+  stage: stageProp,
+  topic,
+  title,
+  text,
+  primaryLabel,
+  primaryHref,
+  primaryEvent,
+  secondaryLabel,
+  secondaryHref,
+  secondaryEvent,
+  useRfqModal = false,
+  rfqContext,
+  rfqSource,
+} = Astro.props;
+const stage = stageProp ?? (post ? getPostFunnelStage(post) : 'quote');
+const baseCta = funnelCtaByStage[stage];
+const defaultPrimaryHref = post ? `/contact/?source=blog-${post.slug}` : baseCta.primaryHref;
+const cta = {
+  title: title ?? baseCta.title,
+  text: text ?? baseCta.text,
+  primaryLabel: primaryLabel ?? baseCta.primaryLabel,
+  primaryHref: primaryHref ?? defaultPrimaryHref,
+  primaryEvent: primaryEvent ?? baseCta.primaryEvent,
+  secondaryLabel: secondaryLabel ?? baseCta.secondaryLabel,
+  secondaryHref: secondaryHref ?? baseCta.secondaryHref,
+  secondaryEvent: secondaryEvent ?? baseCta.secondaryEvent,
+};
+const eventLabel = topic ?? post?.slug ?? stage;
+---
+
+<section class="blog-cta-section" data-funnel-stage={stage}>
+  <div class="container">
+    <div class="blog-cta-card fade-in">
+      <h2 class="blog-cta-title">{cta.title}</h2>
+      <p class="blog-cta-text">{cta.text}</p>
+      <div class="blog-cta-actions">
+        <a
+          href={cta.primaryHref}
+          class="primary-button dark-hover funnel-cta-primary"
+          data-funnel-event={cta.primaryEvent}
+          data-funnel-stage={stage}
+          data-funnel-label={eventLabel}
+          data-rfq-modal={useRfqModal ? true : undefined}
+          data-rfq-context={useRfqModal ? (rfqContext ?? cta.title) : undefined}
+          data-rfq-source={useRfqModal ? (rfqSource ?? eventLabel) : undefined}
+        >
+          <div class="button-content-block">
+            <div class="button-text">{cta.primaryLabel}</div>
+            <div class="button-text">{cta.primaryLabel}</div>
+          </div>
+        </a>
+        {cta.secondaryLabel && cta.secondaryHref && (
+          <a
+            href={cta.secondaryHref}
+            class="blog-cta-secondary funnel-cta-secondary"
+            data-funnel-event={cta.secondaryEvent}
+            data-funnel-stage={stage}
+            data-funnel-label={eventLabel}
+          >
+            {cta.secondaryLabel} →
+          </a>
+        )}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLAnchorElement>('[data-funnel-event]').forEach((link) => {
+    link.addEventListener('click', () => {
+      if (typeof window.gtag !== 'function') return;
+      window.gtag('event', link.dataset.funnelEvent ?? 'funnel_cta_click', {
+        event_category: 'Funnel',
+        event_label: link.dataset.funnelLabel ?? '',
+        funnel_stage: link.dataset.funnelStage ?? '',
+      });
+    });
+  });
+</script>
+
+<style>
+  .blog-cta-section {
+    padding-bottom: 40px;
+  }
+  .blog-cta-card {
+    /* max-width: 760px; */
+    margin: 0 auto;
+    padding: 36px 32px;
+    text-align: center;
+    border: 1px solid var(--color-stroke);
+    border-radius: 4px;
+    background: var(--color-background);
+  }
+  .blog-cta-title {
+    font-size: 26px;
+    margin-bottom: 12px;
+    color: var(--color-title);
+    text-transform: none;
+    font-weight: 600;
+  }
+  .blog-cta-text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--color-body-text);
+    margin-bottom: 24px;
+  }
+  .blog-cta-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .blog-cta-secondary {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .blog-cta-secondary:hover {
+    text-decoration: underline;
+  }
+  .blog-cta-secondary:focus-visible,
+  .funnel-cta-primary:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+</style>

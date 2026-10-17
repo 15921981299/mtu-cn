@@ -1,0 +1,25 @@
+---
+interface Props {
+  active: 'payment' | 'shipping' | 'samples';
+}
+
+const { active } = Astro.props;
+
+const items = [
+  { id: 'payment', label: '付款', href: '/terms/payment/' },
+  { id: 'shipping', label: '运输', href: '/terms/shipping/' },
+  { id: 'samples', label: '样品与试订单', href: '/terms/samples/' },
+] as const;
+---
+
+<nav class="terms-nav" aria-label="订单条款">
+  {items.map((item) => (
+    <a
+      href={item.href}
+      class:list={['terms-nav-link', { active: item.id === active }]}
+      aria-current={item.id === active ? 'page' : undefined}
+    >
+      {item.label}
+    </a>
+  ))}
+</nav>

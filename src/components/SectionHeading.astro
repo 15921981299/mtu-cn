@@ -1,0 +1,19 @@
+---
+interface Props {
+  title: string;
+  subtitle: string;
+}
+
+const { title, subtitle } = Astro.props;
+---
+
+<div class="section-heading-block">
+  <div class="section-title-block">
+    <h2 class="section-title mobile-middle">{title}</h2>
+  </div>
+  <div class="section-subtitle-block">
+    <div class="subtitle-dot"></div>
+    <div class="section-subtitle">{subtitle}</div>
+    <div class="subtitle-dot"></div>
+  </div>
+</div>

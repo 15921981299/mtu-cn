@@ -1,0 +1,348 @@
+---
+import { existsSync, statSync } from 'node:fs';
+import { resolve } from 'node:path';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../components/BreadcrumbHero.astro';
+import FunnelPageView from '../components/FunnelPageView.astro';
+import DetailRfqStrip from '../components/DetailRfqStrip.astro';
+import { breadcrumbSchema, faqSchema, site } from '../data/site';
+import catalogsJson from '../data/download-catalogs.json';
+import '../styles/resource-page.css';
+
+/**
+ * Downloadable catalog hub. The PDFs themselves are produced by
+ * `npm run catalogs` (scripts/build-catalogs.mjs) from src/data/mtu-parts.ts.
+ *
+ * The existence check below is deliberate and hard: the manifest and the files
+ * on disk are produced by two different steps, and a page that links to eight
+ * 404s is worse than no page at all. If a PDF is missing the build stops here
+ * rather than shipping dead download links.
+ */
+
+type Catalog = {
+  slug: string;
+  file: string;
+  title: string;
+  heading: string;
+  subtitle: string;
+  series: string;
+  parts: number;
+  pages: number;
+  bytes: number;
+  /** ISO date the PDF was generated, written by scripts/build-catalogs.mjs. */
+  generated: string;
+};
+
+const catalogs = catalogsJson as Catalog[];
+
+const missing: string[] = [];
+for (const catalog of catalogs) {
+  const onDisk = resolve('public', catalog.file.replace(/^\//, ''));
+  if (!existsSync(onDisk) || statSync(onDisk).size < 2000) {
+    missing.push(catalog.file);
+  } else if (!/^\d{4}-\d{2}-\d{2}$/.test(catalog.generated ?? '')) {
+    // A manifest without a generation date was written by an older revision of
+    // the script and would render a page claiming no date at all. Treat it the
+    // same as a missing PDF: rebuild rather than ship a half-true page.
+    missing.push(`${catalog.file} (manifest has no generation date)`);
+  }
+}
+if (missing.length > 0) {
+  throw new Error(
+    `Downloadable catalogs referenced by src/data/download-catalogs.json are missing or stale: ` +
+      `${missing.join(', ')}. Run \`npm run catalogs\` before building.`
+  );
+}
+
+const totalParts = catalogs.find((c) => c.slug === 'MTU-Engine-Parts-Catalog-Complete')?.parts ?? 0;
+const seriesCatalogs = catalogs.filter((c) => c.slug !== 'MTU-Engine-Parts-Catalog-Complete');
+const complete = catalogs.find((c) => c.slug === 'MTU-Engine-Parts-Catalog-Complete');
+
+const formatSize = (bytes: number) => `${Math.round(bytes / 1024)} KB`;
+
+const pageUrl = `${site.url}/catalog/`;
+
+const faqs = [
+  {
+    question: 'Is the catalog free, and do I have to register?',
+    answer:
+      'Both files are free and there is no form, no email gate, and no account. Click the download and you have the PDF. We would rather you check the part number before you write to us than trade your email address for a file.',
+  },
+  {
+    question: 'Do the catalogs contain prices?',
+    answer:
+      'No. The catalogs are part-number reference indexes: part number, part name, system, engine series, HS code, and unit weight. Prices, availability, and lead time depend on the supply route, the quantity, and the destination, so they are quoted per inquiry rather than printed in a list that would be out of date within a month.',
+  },
+  {
+    question: 'Does a part number appearing in the catalog mean it fits my engine?',
+    answer:
+      'No. The series column tells you which engine family the number belongs to, which is not the same as confirming it for your engine. Many positions changed across production runs, so the number must be checked against the full engine model and serial number before ordering. Send those two details with the number and we confirm it.',
+  },
+  {
+    question: 'How current are the catalogs?',
+    answer:
+      'Each catalog states the date it was generated, and it is rebuilt from our part records whenever they change. If the date looks old, send the part number anyway — the records behind it are checked live when you inquire, and supersession is traced before anything is quoted.',
+  },
+  {
+    question: 'My part number is not in the catalog. Can you still supply it?',
+    answer:
+      'Yes. The catalog is an index of the numbers we hold verified records for, not the limit of what we can source. Send the number you have, plus the engine model and serial number, and we will trace it — including where it has been superseded.',
+  },
+  {
+    question: 'Can I get the list as a spreadsheet instead?',
+    answer:
+      'Yes. If you need to compare a long list against your own stock system, send us the part numbers you are checking and we will return the comparison as a spreadsheet. The PDF is a plain text document, so part numbers can also be copied straight out of it.',
+  },
+];
+
+// No `hasPersonAuthor` here on purpose: this is a download/reference hub, not an
+// article, so it carries no Article schema to attribute. The trust signals on
+// this page are the disclosures (no prices, no email gate, "read the number,
+// not mine") and the live FAQ, not a byline.
+---
+
+<BaseLayout
+  title="MTU Spare Parts Catalog (PDF Download)"
+  description={`Download MTU spare parts catalogs as PDF — ${totalParts} part numbers across the 2000, 4000, 396, 1163, 956, 538 and 595 series, with part name, system, HS code and unit weight. Free, no sign-up.`}
+  currentPath="/catalog"
+  jsonLd={[
+    breadcrumbSchema([
+      { name: 'Home', url: site.url },
+      { name: 'Parts Catalog Downloads', url: pageUrl },
+    ]),
+    faqSchema(faqs),
+  ]}
+>
+  <FunnelPageView stage="comparison" label="catalog-downloads" />
+  <BreadcrumbHero
+    title="MTU Spare Parts Catalog — PDF Downloads"
+    trail={[{ label: 'Home', href: '/' }, { label: 'Parts Catalog Downloads' }]}
+    variant="2"
+  />
+
+  <div class="resource-page">
+    <section class="resource-page-section">
+      <p>
+        These are the downloadable versions of our part-number index: <strong>{totalParts} part numbers</strong>
+        across the MTU engine series we supply, each row listing the part number, the part name, the system it
+        belongs to, the engine series, the HS code, and the unit weight. They are built from the same verified
+        records the rest of this site is built from — not a scraped list, and not a sales brochure.
+      </p>
+      <p>
+        The files are plain text PDFs, so part numbers can be selected and copied out, searched with the
+        browser or reader search, or printed for the workshop. There is <strong>no sign-up and no email
+        gate</strong>.
+      </p>
+      <div class="resource-meta">
+        <span><strong>Part numbers</strong> {totalParts} indexed</span>
+        <span><strong>Series covered</strong> {seriesCatalogs.length} + complete list</span>
+        <span><strong>Reports</strong> Name, system, series, HS code, unit weight</span>
+        <span><strong>Price data</strong> Not included — quoted per inquiry</span>
+      </div>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>Start with the complete list, or take one series</h2>
+      {complete && (
+        <a class="catalog-card catalog-card--primary" href={complete.file} download>
+          <div class="catalog-card__head">
+            <h3>{complete.heading}</h3>
+            <span class="catalog-card__cta">Download PDF</span>
+          </div>
+          <p>{complete.subtitle}</p>
+          <span class="catalog-card__meta">
+            {complete.parts} part numbers · {complete.pages} pages · {formatSize(complete.bytes)} · generated{' '}
+            {complete.generated}
+          </span>
+        </a>
+      )}
+
+      <div class="catalog-grid">
+        {seriesCatalogs.map((catalog) => (
+          <a class="catalog-card" href={catalog.file} download>
+            <div class="catalog-card__head">
+              <h3>{catalog.heading}</h3>
+              <span class="catalog-card__cta">PDF</span>
+            </div>
+            <p>{catalog.subtitle}</p>
+            <span class="catalog-card__meta">
+              {catalog.parts} part numbers · {catalog.pages} pages · {formatSize(catalog.bytes)} ·{' '}
+              {catalog.generated}
+            </span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>What each column tells you</h2>
+      <ul class="resource-checklist">
+        <li><strong>Part number</strong> — the reference as we hold it, printed in full so it can be searched and copied</li>
+        <li><strong>Part name</strong> — the plain description of the item, e.g. gasket, injector, valve collet</li>
+        <li><strong>System</strong> — which assembly group the number belongs to, useful when you are working through a drawing</li>
+        <li><strong>Engine series</strong> — the engine family the number is catalogued against</li>
+        <li><strong>HS code</strong> — the customs classification, so you can estimate duty before you inquire</li>
+        <li><strong>Unit weight</strong> — shipping weight per piece, for freight planning; "On request" where the weight depends on the exact variant</li>
+      </ul>
+      <p>
+        What is deliberately <em>not</em> in the files: prices, stock levels, lead times, and supplier
+        information. Those depend on the supply route available at the time and belong in a quotation
+        against a specific engine, not in a list that would be stale within weeks.
+      </p>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>How to use a catalog to get a fast answer</h2>
+      <ol class="catalog-steps">
+        <li>
+          <h3>Find the number and note the system</h3>
+          <p>Search the PDF for the number you have. If you only have a description, browse by system to narrow the field.</p>
+        </li>
+        <li>
+          <h3>Add the engine model and serial number</h3>
+          <p>The catalog confirms the number exists in our records; the serial number decides whether it is the revision your engine carries.</p>
+        </li>
+        <li>
+          <h3>Send the list with quantity and destination</h3>
+          <p>A consolidated list across several positions is quoted line by line, with the supply route named on each line and freight included.</p>
+        </li>
+      </ol>
+      <p>
+        If your number is not in the catalog at all, that is not the end of it — send it anyway. The catalog
+        is an index, not a limit, and numbers that have been superseded will not appear under the reference
+        you are holding. See <a href="/guides/how-to-read-mtu-parts-diagram/">how to read a parts diagram</a>
+        if you are working from a drawing, or the
+        <a href="/cross-reference/">part number cross reference</a> if you need to map an old number forward.
+      </p>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>Related tools</h2>
+      <ul class="resource-olist">
+        <li><a href="/part-products/">MTU Part Number Catalog</a> — the same numbers online, each with full fitment and interchange detail</li>
+        <li><a href="/engine-models/">Parts Lists by Engine Model</a> — grouped by model code instead of by number</li>
+        <li><a href="/cross-reference/">Part Number Cross Reference</a> — OEM and superseded numbers mapped to current references</li>
+        <li><a href="/guides/">Engine Parts Guides</a> — overhaul planning and series identification</li>
+      </ul>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>FAQ</h2>
+      {faqs.map((item) => (
+        <details class="guide-faq-item">
+          <summary>{item.question}</summary>
+          <p>{item.answer}</p>
+        </details>
+      ))}
+    </section>
+
+    <DetailRfqStrip
+      title="Have the list ready? Send it as it is"
+      text="Part numbers, quantity, engine model and serial number, and the destination port. We check each line and quote it with the supply route named."
+      quoteHref="/contact/?source=catalog-downloads"
+      label="Request Parts Quote"
+      modalSource="catalog-downloads"
+    />
+  </div>
+</BaseLayout>
+
+<style>
+  .catalog-card {
+    display: block;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 18px 20px;
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .catalog-card:hover {
+    border-color: var(--color-primary, #146ef5);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  }
+
+  .catalog-card--primary {
+    border-color: #bcd6fb;
+    background: #f5f9ff;
+    margin-bottom: 18px;
+  }
+
+  .catalog-card__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .catalog-card h3 {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.3;
+  }
+
+  .catalog-card__cta {
+    color: var(--color-primary, #146ef5);
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .catalog-card p {
+    margin: 8px 0 10px;
+    color: #475569;
+    font-size: 14.5px;
+    line-height: 1.55;
+  }
+
+  .catalog-card__meta {
+    color: #64748b;
+    font-size: 13px;
+  }
+
+  .catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .catalog-steps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .catalog-steps li {
+    border-left: 3px solid #e2e8f0;
+    padding: 0 0 4px 18px;
+    margin-bottom: 20px;
+  }
+
+  .catalog-steps h3 {
+    margin: 0 0 6px;
+    font-size: 16px;
+  }
+
+  .catalog-steps p {
+    margin: 0;
+  }
+
+  .guide-faq-item {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+
+  .guide-faq-item summary {
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  .guide-faq-item p {
+    margin: 10px 0 0;
+    color: #475569;
+    line-height: 1.6;
+  }
+</style>

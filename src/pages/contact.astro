@@ -1,0 +1,1098 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../components/BreadcrumbHero.astro';
+import CustomerFeedback from '../components/CustomerFeedback.astro';
+import FaqSection from '../components/FaqSection.astro';
+import FunnelPageView from '../components/FunnelPageView.astro';
+import { faqs } from '../data/faqs';
+import { salesContact } from '../data/testimonials';
+import {
+  breadcrumbSchema,
+  contactPageSchema,
+  faqSchema,
+  howToSchema,
+  site,
+} from '../data/site';
+
+const checkIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+const pageUrl = `${site.url}/contact/`;
+const pageTitle = 'MTU 发动机零件询价 | 联系 Diesel Part Source';
+const pageDescription =
+  '从上海采购 MTU、Detroit Diesel、Cummins 与 DEUTZ 发动机零件。发送零件号、发动机出厂编号、数量与目的地，获取经核验的报价与全球运输方案。';
+
+/** Inquiry-focused FAQs — keep FAQPage schema aligned with visible Q&A. */
+const contactFaqs = faqs.filter((faq) =>
+  [
+    'Do you supply OEM or verified engine parts?',
+    'What information should I include in an inquiry?',
+    'Can you help identify MTU parts if I do not know the exact part number?',
+    'How fast can you ship?',
+    'Do you ship internationally?',
+    'Can you quote a full spare-parts list?',
+  ].includes(faq.question),
+);
+
+const inquirySteps = [
+  {
+    name: '发送零件信息',
+    text: '发送零件号、照片或零件清单，并尽可能附上发动机型号与出厂编号。',
+  },
+  {
+    name: '零件核验',
+    text: '报价前，我们核验零件号、替代选项、适配性与供货情况。',
+  },
+  {
+    name: '接收报价',
+    text: '您将收到价格、交货期、库存状态以及针对您目的地的实用运输方案。',
+  },
+  {
+    name: '确认并发货',
+    text: '确认报价后，我们进行出口包装，并从上海发往您的目的地。',
+  },
+];
+
+const quoteResponseFields = [
+  '待核验的已确认零件号或替代参考号',
+  '供货路线：OEM、OEM 替代件、再制造件、维修件或采购核查',
+  '单价、最小起订量（如有）、库存路线与交货期依据',
+  '大致重量、HS 编码、包装说明与可选运输方案（数据可得时）',
+  '放单前的待确认事项，如出厂编号、旧件照片或目的地详情',
+];
+
+const shipmentChecks = [
+  '包装前核查数量与零件可见标记',
+  '按零件尺寸、重量与出口路线选择包装方式',
+  '可应要求提供包装照片、标签照片或运输跟踪信息',
+  '按确认后的订单准备商业发票与装箱单',
+];
+
+const whatsappDigits = site.whatsapp.replace(/\D/g, '');
+const whatsappHref = `https://wa.me/${whatsappDigits}`;
+const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  currentPath="/contact"
+  image="/images/mtu-part-number-verification.webp"
+  hideFloatingCta
+  jsonLd={[
+    breadcrumbSchema([
+      { name: 'Home', url: site.url },
+      { name: 'Parts Inquiry', url: pageUrl },
+    ]),
+    contactPageSchema({
+      name: 'MTU Engine Parts Inquiry — Contact Diesel Part Source',
+      description: pageDescription,
+      url: pageUrl,
+    }),
+    howToSchema({
+      name: 'How to request diesel engine parts from Diesel Part Source',
+      description:
+        'Send your MTU or diesel engine part list, get verification and pricing, then approve shipment from Shanghai.',
+      steps: inquirySteps,
+    }),
+    faqSchema(contactFaqs.map((f) => ({ question: f.question, answer: f.answer }))),
+  ]}
+>
+  <FunnelPageView stage="quote" label="contact-rfq" />
+  <BreadcrumbHero
+    title="MTU &amp; Diesel Engine Parts Inquiry"
+    trail={[
+      { label: 'Home', href: '/' },
+      { label: 'Contact' },
+    ]}
+    variant="5"
+    image="/images/mtu-part-number-verification.webp"
+  />
+
+  <section class="contact-seo-intro fade-in" aria-labelledby="contact-seo-intro-heading">
+    <div class="container contact-seo-intro-inner">
+      <p class="contact-seo-kicker">Shanghai · Worldwide shipping</p>
+      <h2 id="contact-seo-intro-heading" class="contact-seo-intro-title">
+        Verified MTU and diesel engine parts inquiry
+      </h2>
+      <p class="contact-seo-intro-text">
+        Diesel Part Source supports marine, industrial, rail, and power generation teams with
+        <a href="/products/mtu-spare-parts/">MTU spare parts</a>,
+        <a href="/products/detroit-diesel-parts/">Detroit Diesel</a>,
+        <a href="/products/cummins-parts/">Cummins</a>, and
+        <a href="/products/deutz-parts/">DEUTZ</a>.
+        Send part numbers, engine serial, quantity, and destination — we verify fitment before quotation.
+      </p>
+      <p class="contact-seo-intro-meta">
+        <a href="#rfq-form">Inquiry form</a>
+        <span aria-hidden="true">·</span>
+        <a href="/part-products/">Part numbers</a>
+        <span aria-hidden="true">·</span>
+        <a href="/part-products/catalog/mtu-4000-series/">MTU 4000 catalog</a>
+        <span aria-hidden="true">·</span>
+        <a href="/industries/marine/">Marine support</a>
+      </p>
+    </div>
+  </section>
+
+  <nav class="contact-resource-links fade-in" aria-label="Helpful resources before you quote">
+    <a href="/products/mtu-spare-parts/?source=contact">MTU spare parts</a>
+    <a href="/part-products/?source=contact">MTU part numbers</a>
+    <a href="/part-products/catalog/mtu-filters/?source=contact">MTU filters</a>
+    <a href="/products/?source=contact">All engine brands</a>
+    <a href="/certifications/?source=contact">Quality policy</a>
+    <a href="/industries/marine/?source=contact">Marine applications</a>
+  </nav>
+
+  <section class="contact-form-section">
+    <div class="section-gap">
+      <div class="container">
+        <div class="contact-form-wrapper fade-in">
+          <div class="contact-leftside-block">
+            <div class="contact-form-block">
+              <div class="contact-form-title-block">
+                <h2 class="contact-form-title" id="inquiry-form-heading">Send an MTU or diesel engine parts inquiry</h2>
+                <p class="contact-form-lead">Send a part number, old-part photo, or parts list. If the exact number is unclear, add the engine model or serial number and we will help verify the correct MTU, Detroit Diesel, Cummins, or DEUTZ replacement.</p>
+                <ul class="contact-trust-badges" aria-label="Quote guarantees">
+                  <li><span class="contact-trust-check" set:html={checkIcon} />Fast inquiry response</li>
+                  <li><span class="contact-trust-check" set:html={checkIcon} />Part-number verification</li>
+                  <li><span class="contact-trust-check" set:html={checkIcon} />OEM / alternative route labelled</li>
+                  <li><span class="contact-trust-check" set:html={checkIcon} />Global delivery support</li>
+                </ul>
+                <div class="quote-package-card">
+                  <p class="quote-package-kicker">Your parts reply includes</p>
+                  <ul>
+                    {quoteResponseFields.slice(0, 4).map((item) => <li>{item}.</li>)}
+                  </ul>
+                </div>
+              </div>
+              <form class="contact-form" id="rfq-form" aria-labelledby="inquiry-form-heading" data-endpoint="/api/rfq/" data-fallback-email={site.email}>
+                <div class="contact-form-column">
+                  <label class="contact-field-label" for="rfq-name">Your Name</label>
+                  <input class="contact-form-input-field" type="text" id="rfq-name" name="name" placeholder="Jane Smith" autocomplete="name" />
+                </div>
+                <div class="contact-form-column">
+                  <label class="contact-field-label" for="rfq-email">Your Email *</label>
+                  <input class="contact-form-input-field" type="email" id="rfq-email" name="email" placeholder="jane@company.com" autocomplete="email" required />
+                </div>
+                <div class="contact-form-column">
+                  <label class="contact-field-label" for="rfq-phone">WhatsApp / Phone</label>
+                  <input class="contact-form-input-field" type="tel" id="rfq-phone" name="phone" placeholder="+1 555 000 0000" autocomplete="tel" />
+                </div>
+                <div class="contact-form-column">
+                  <label class="contact-field-label" for="rfq-country">Destination Country</label>
+                  <input class="contact-form-input-field" type="text" id="rfq-country" name="country" placeholder="e.g. United States, Germany, Australia" autocomplete="country-name" />
+                </div>
+                <div class="contact-form-column">
+                  <label class="contact-field-label" for="rfq-engine-model">Engine Model</label>
+                  <input class="contact-form-input-field" type="text" id="rfq-engine-model" name="engine_model" placeholder="e.g. MTU 12V4000, 16V2000" />
+                </div>
+                <div class="contact-form-column">
+                  <label class="contact-field-label" for="rfq-engine-serial">Engine Serial Number</label>
+                  <input class="contact-form-input-field" type="text" id="rfq-engine-serial" name="engine_serial" placeholder="From the engine nameplate" />
+                </div>
+                <div class="contact-form-column contact-form-column--full">
+                  <label class="contact-field-label" for="rfq-message">Part Number / Inquiry Details *</label>
+                  <textarea id="rfq-message" placeholder="Paste part numbers, engine model or serial number, quantity, destination, or describe the old part." name="message" class="contact-form-input-field large" required></textarea>
+                </div>
+                <div class="contact-form-column file-upload-column">
+                  <span class="contact-field-label" id="rfq-drawing-label">Upload Photo / Parts List</span>
+                  <label class="file-upload-label" for="drawing-upload" aria-labelledby="rfq-drawing-label">
+                    <input
+                      type="file"
+                      id="drawing-upload"
+                      name="drawing"
+                      accept=".pdf,.xls,.xlsx,.csv,.jpg,.jpeg,.png"
+                      class="file-upload-input"
+                    />
+                    <span class="file-upload-icon" aria-hidden="true">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 16V4M12 4L8 8M12 4L16 8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M4 14V18C4 19.1046 4.89543 20 6 20H18C19.1046 20 20 19.1046 20 18V14" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path>
+                      </svg>
+                    </span>
+                    <span class="file-upload-content">
+                      <span class="file-upload-title">Upload Photo / Parts List (Optional)</span>
+                      <span class="file-upload-hint">JPG, PNG, PDF, Excel, or CSV · Max 50MB</span>
+                      <span class="file-upload-filename" data-placeholder="No file selected">No file selected</span>
+                    </span>
+                  </label>
+                </div>
+                <input type="hidden" name="source" id="rfq-source" value="Contact form" />
+                <div class="hp-field" aria-hidden="true">
+                  <label for="rfq-website">Leave this field empty</label>
+                  <input type="text" id="rfq-website" name="website" tabindex="-1" autocomplete="off" />
+                </div>
+                <div class="contact-form-button-block">
+                  <button type="submit" class="contact-form-button">Send Parts Inquiry →</button>
+                  <p class="contact-form-submit-note">Only email and part details are required. We will ask follow-up questions if needed.</p>
+                </div>
+                <div class="form-result" aria-live="polite"></div>
+              </form>
+            </div>
+          </div>
+          <div class="contact-rightside-block">
+            <div class="contact-image-block">
+              <img src="/images/mtu-part-number-verification.webp" alt="MTU diesel engine parts inquiry and part number verification" class="contact-form-image" width="1200" height="1114" loading="lazy" decoding="async" />
+            </div>
+            <div class="contact-form-image-overlay"></div>
+            <div class="contact-image-contect-block">
+              <div class="contact-text-contect-block">
+                <h2 class="contact-form-title text-color-white">What happens after you inquire</h2>
+                <ol class="process-steps">
+                  {inquirySteps.map((step, i) => (
+                    <li class="process-step">
+                      <span class="step-number" aria-hidden="true">{i + 1}</span>
+                      <p class="contact-form-summary"><strong>{step.name}:</strong> {step.text}</p>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Info / NAP -->
+  <section class="contact-info-section" aria-labelledby="contact-nap-heading">
+    <div class="section-gap bottom">
+      <div class="container">
+        <h2 id="contact-nap-heading" class="contact-nap-heading">Diesel Part Source contact details</h2>
+        <p class="contact-nap-lead">
+          Shanghai Diesel Part Source Co., Ltd. supports verified diesel engine parts sourcing worldwide. Reach the sales desk by email, phone, or WhatsApp for MTU and multi-brand parts support.
+        </p>
+        <p class="contact-nap-lead contact-sales-contact">
+          Your inquiry is handled by <strong>{salesContact.name}</strong>, {salesContact.role}. Replies in {salesContact.languages}, within one business day.
+        </p>
+        <div class="contact-info-wrapper">
+          <div class="contact-info-single-block fade-in">
+            <div class="contact-info-icon-block"><img src="/images/contact-email-message-icon.svg" alt="" aria-hidden="true" class="contact-info-icon" width="24" height="24" loading="lazy" decoding="async" /></div>
+            <div class="contact-info-content-block">
+              <h3 class="contact-info-title">Email</h3>
+              <p class="contact-info-summary">
+                <a href={`mailto:${site.email}`} class="contact-info-link">{site.email}</a>
+              </p>
+            </div>
+          </div>
+          <div class="contact-info-single-block fade-in">
+            <div class="contact-info-icon-block"><img src="/images/contact-phone-call-icon.svg" alt="" aria-hidden="true" class="contact-info-icon" width="24" height="24" loading="lazy" decoding="async" /></div>
+            <div class="contact-info-content-block">
+              <h3 class="contact-info-title">Phone &amp; WhatsApp</h3>
+              <p class="contact-info-summary">
+                <a href={phoneHref} class="contact-info-link">{site.phone}</a>
+                <span class="contact-info-sep" aria-hidden="true">·</span>
+                <a href={whatsappHref} class="contact-info-link" rel="noopener noreferrer" target="_blank">WhatsApp</a>
+              </p>
+              <p class="contact-info-note">Urgent vessel or generator downtime? Mention it in your message for priority review.</p>
+            </div>
+          </div>
+          <div class="contact-info-single-block fade-in">
+            <div class="contact-info-icon-block"><img src="/images/contact-location-pin-icon.svg" alt="" aria-hidden="true" class="contact-info-icon" width="24" height="24" loading="lazy" decoding="async" /></div>
+            <div class="contact-info-content-block">
+              <h3 class="contact-info-title">Shanghai office</h3>
+              <p class="contact-info-summary">
+                <address class="contact-address">
+                  {site.company.legalNameEn}<br />
+                  {site.company.address.streetAddress},<br />
+                  {site.company.address.addressRegion}, {site.company.address.postalCode}, China
+                </address>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CustomerFeedback id="contact-feedback" />
+
+  <section class="contact-standard-section" aria-labelledby="contact-standard-heading">
+    <div class="section-gap bottom">
+      <div class="container">
+        <h2 id="contact-standard-heading" class="contact-nap-heading">RFQ and shipment release standard</h2>
+        <p class="contact-nap-lead">
+          A professional parts quote should reduce wrong-part risk before payment. These are the checks buyers can expect us to discuss before order release.
+        </p>
+        <div class="contact-standard-grid fade-in">
+          <article class="contact-standard-card">
+            <h3>Quote response fields</h3>
+            <ul>
+              {quoteResponseFields.map((item) => <li>{item}</li>)}
+            </ul>
+          </article>
+          <article class="contact-standard-card">
+            <h3>Before shipment checks</h3>
+            <ul>
+              {shipmentChecks.map((item) => <li>{item}</li>)}
+            </ul>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <FaqSection
+    items={contactFaqs}
+    title="Parts inquiry FAQs"
+    subtitle="Before You Quote"
+  />
+</BaseLayout>
+
+<style>
+  /* SEO intro */
+  .contact-seo-intro {
+    margin-bottom: 0.25rem;
+    margin-top: 4rem;
+  }
+
+  .contact-seo-intro-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px 1.1rem;
+    text-align: center;
+  }
+
+  .contact-seo-kicker {
+    margin: 0 0 0.45rem;
+    color: var(--color-primary);
+    font-family: var(--font-title);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .contact-seo-intro-title {
+    margin: 0 0 0.55rem;
+    font-size: clamp(1.3rem, 2.2vw, 1.65rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    text-transform: none;
+  }
+
+  .contact-seo-intro-text {
+    margin: 0 auto;
+    max-width: 96ch;
+    color: #475569;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .contact-seo-intro-text a {
+    color: var(--color-title);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(20, 110, 245, 0.35);
+    text-underline-offset: 0.15em;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+  }
+
+  .contact-seo-intro-text a:hover {
+    color: var(--color-primary);
+    text-decoration-color: var(--color-primary);
+  }
+
+  .contact-seo-intro-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 6px 10px;
+    margin: 14px 0 0;
+    color: #94a3b8;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .contact-seo-intro-meta a {
+    color: #334155;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .contact-seo-intro-meta a:hover {
+    color: var(--color-primary);
+  }
+
+  .contact-seo-intro-text a:focus-visible,
+  .contact-seo-intro-meta a:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Resource chips */
+  .contact-resource-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    max-width: 1220px;
+    margin: 0 auto 0px;
+    padding: 0 20px;
+  }
+
+  .contact-resource-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(20, 110, 245, 0.2);
+    background: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1e293b;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .contact-resource-links a:hover {
+    background: rgba(20, 110, 245, 0.07);
+    border-color: rgba(20, 110, 245, 0.4);
+    color: var(--color-primary);
+    box-shadow: 0 2px 8px rgba(20, 110, 245, 0.08);
+  }
+
+  .contact-resource-links a:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  /* Form header */
+  .contact-form-lead {
+    margin: 12px 0 0;
+    font-size: 15px;
+    line-height: 1.65;
+    color: #475569;
+  }
+
+  .contact-trust-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 14px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .contact-trust-badges li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 30px;
+    padding: 4px 10px 4px 6px;
+    border: 1px solid rgba(20, 110, 245, 0.14);
+    border-radius: 999px;
+    background: rgba(20, 110, 245, 0.05);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #334155;
+  }
+
+  .contact-trust-check {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: rgba(20, 110, 245, 0.12);
+    color: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  .quote-package-card {
+    margin-top: 16px;
+    padding: 14px 16px;
+    border: 1px solid rgba(20, 110, 245, 0.16);
+    border-radius: 10px;
+    background: rgba(20, 110, 245, 0.04);
+  }
+
+  .quote-package-kicker {
+    margin: 0 0 8px;
+    font-family: var(--font-title);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+  }
+
+  .quote-package-card ul {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 0;
+    padding-left: 18px;
+  }
+
+  .quote-package-card li {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #334155;
+  }
+
+  .contact-standard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  .contact-standard-card {
+    padding: 24px;
+    border: 1px solid rgba(20, 110, 245, 0.14);
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
+  }
+
+  .contact-standard-card h3 {
+    margin: 0 0 14px;
+    color: var(--color-title);
+    font-size: 18px;
+    line-height: 1.3;
+    text-transform: none;
+  }
+
+  .contact-standard-card ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .contact-standard-card li {
+    color: #475569;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .contact-field-label {
+    display: block;
+    margin-bottom: 6px;
+    font-family: var(--font-title);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--color-title);
+  }
+
+  .contact-form-column--full,
+  .file-upload-column {
+    grid-column: 1 / -1;
+  }
+
+  /* Scoped form polish — keep global layout, refine interaction */
+  .contact-form-section .contact-form-input-field {
+    border-radius: 8px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .contact-form-section .contact-form-input-field::placeholder {
+    color: #94a3b8;
+  }
+
+  .contact-form-section .contact-form-input-field:hover {
+    border-color: rgba(20, 110, 245, 0.35);
+  }
+
+  .contact-form-section .contact-form-input-field:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(20, 110, 245, 0.14);
+    outline: none;
+  }
+
+  .contact-form-section .contact-form-button {
+    min-height: 48px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .contact-form-section .contact-form-button:hover {
+    box-shadow: 0 6px 16px rgba(20, 110, 245, 0.25);
+  }
+
+  .contact-form-button:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+
+  .contact-form-button:disabled {
+    opacity: 0.72;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .contact-form-submit-note {
+    margin: 10px 0 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #64748b;
+    text-align: center;
+  }
+
+  .file-upload-label {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-height: 72px;
+    padding: 16px 20px;
+    border: 1.5px dashed rgba(20, 110, 245, 0.28);
+    border-radius: 10px;
+    background: rgba(20, 110, 245, 0.03);
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .file-upload-label:hover,
+  .file-upload-label.is-dragover {
+    border-color: var(--color-primary);
+    background-color: rgba(20, 110, 245, 0.06);
+  }
+
+  .file-upload-label:focus-within {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(20, 110, 245, 0.12);
+    outline: none;
+  }
+
+  .file-upload-label.has-file {
+    border-style: solid;
+    border-color: var(--color-primary);
+  }
+
+  .file-upload-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .file-upload-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background-color: rgba(20, 110, 245, 0.1);
+    color: var(--color-primary);
+  }
+
+  .file-upload-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  .file-upload-title {
+    font-family: var(--font-title);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-title);
+    line-height: 1.3;
+  }
+
+  .file-upload-hint {
+    font-size: 13px;
+    line-height: 1.4;
+    color: #64748b;
+  }
+
+  .file-upload-filename {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #475569;
+    word-break: break-all;
+  }
+
+  .file-upload-label.has-file .file-upload-filename {
+    color: var(--color-primary);
+  }
+
+  /* Process steps on image panel */
+  .process-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 10px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .process-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.16);
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .process-step .contact-form-summary {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* NAP */
+  .contact-nap-heading {
+    margin: 0 0 8px;
+    text-align: center;
+    font-size: clamp(1.3rem, 2vw, 1.65rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-transform: none;
+  }
+
+  .contact-nap-lead {
+    max-width: 54ch;
+    margin: 0 auto 28px;
+    text-align: center;
+    color: #475569;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .contact-info-single-block {
+    border: 1px solid var(--color-stroke);
+    background: #fff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .contact-info-single-block:hover {
+    border-color: rgba(20, 110, 245, 0.3);
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+  }
+
+  .contact-info-link {
+    cursor: pointer;
+    font-weight: 600;
+    transition: color 0.2s ease;
+  }
+
+  .contact-info-link:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  .contact-info-sep {
+    margin: 0 6px;
+    color: #94a3b8;
+  }
+
+  .contact-info-note {
+    margin: 6px 0 0;
+    font-size: 13px;
+    line-height: 1.45;
+    color: #64748b;
+  }
+
+  .contact-address {
+    font-style: normal;
+    font-size: 14px;
+    line-height: 1.55;
+    color: #334155;
+  }
+
+  .form-result {
+    grid-column: 1 / -1;
+    margin-top: 4px;
+    min-height: 1.2rem;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .form-result.is-error a {
+    color: inherit;
+    font-weight: 600;
+  }
+
+  .form-result.is-error a:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  .hp-field {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  @media (max-width: 640px) {
+    .contact-standard-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-standard-card {
+      padding: 20px;
+    }
+
+    .contact-seo-intro-inner {
+      text-align: left;
+    }
+
+    .contact-seo-intro-meta,
+    .contact-resource-links {
+      justify-content: flex-start;
+    }
+
+    .contact-nap-heading,
+    .contact-nap-lead {
+      text-align: left;
+    }
+
+    .contact-resource-links a {
+      min-height: 44px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .contact-seo-intro-text a,
+    .contact-seo-intro-meta a,
+    .contact-resource-links a,
+    .contact-form-section .contact-form-input-field,
+    .contact-form-section .contact-form-button,
+    .file-upload-label,
+    .contact-info-single-block,
+    .contact-info-link {
+      transition: none;
+    }
+  }
+</style>
+
+
+
+<script>
+  import { trackAcceptedInquiry, populateRfqAttributionFields } from '../scripts/attribution';
+
+  // ── 文件上传 UI ──
+  const fileLabel = document.querySelector<HTMLLabelElement>('.file-upload-label');
+  const fileInput = document.querySelector<HTMLInputElement>('#drawing-upload');
+  const fileNameEl = document.querySelector<HTMLElement>('.file-upload-filename');
+
+  if (fileLabel && fileInput && fileNameEl) {
+    const placeholder = fileNameEl.dataset.placeholder ?? 'No file selected';
+
+    const updateFileState = () => {
+      const file = fileInput.files?.[0];
+      if (file) {
+        fileLabel.classList.add('has-file');
+        fileNameEl.textContent = file.name;
+      } else {
+        fileLabel.classList.remove('has-file');
+        fileNameEl.textContent = placeholder;
+      }
+    };
+
+    fileInput.addEventListener('change', updateFileState);
+
+    ['dragenter', 'dragover'].forEach((eventName) => {
+      fileLabel.addEventListener(eventName, (event) => {
+        event.preventDefault();
+        fileLabel.classList.add('is-dragover');
+      });
+    });
+
+    ['dragleave', 'drop'].forEach((eventName) => {
+      fileLabel.addEventListener(eventName, () => {
+        fileLabel.classList.remove('is-dragover');
+      });
+    });
+
+    fileLabel.addEventListener('drop', (event) => {
+      event.preventDefault();
+      const file = event.dataTransfer?.files?.[0];
+      if (!file) return;
+
+      const transfer = new DataTransfer();
+      transfer.items.add(file);
+      fileInput.files = transfer.files;
+      updateFileState();
+    });
+  }
+
+  // ── AJAX 提交（不跳转） ──
+  const form = document.getElementById('rfq-form') as HTMLFormElement;
+  const resultEl = document.querySelector('.form-result') as HTMLElement;
+  const submitBtn = form?.querySelector('.contact-form-button') as HTMLButtonElement;
+
+  let formStarted = false;
+
+  if (form) {
+    populateRfqAttributionFields(form);
+    const params = new URLSearchParams(window.location.search);
+    const urlSource = params.get('source');
+    if (urlSource) {
+      const sourceInput = form.querySelector<HTMLInputElement>('input[name="source"]');
+      const sourceMap: Record<string, string> = {
+        comparison: 'Google Search',
+        compare: 'Google Search',
+        selection: 'Google Search',
+        resource: 'Google Search',
+        resources: 'Google Search',
+        floating: 'Google Search',
+        homepage: 'Google Search',
+        'parts-inquiry': 'Google Search',
+        'parts-review': 'Google Search',
+        'parts-list': 'Google Search',
+        'order-support': 'Google Search',
+        'related-parts-resources': 'Google Search',
+        engineer: 'Google Search',
+        procurement: 'Google Search',
+        quality: 'Google Search',
+        'engineer-hub': 'Google Search',
+        'procurement-hub': 'Google Search',
+        'quality-hub': 'Google Search',
+        'payment-terms': 'Google Search',
+        'shipping-terms': 'Google Search',
+        sample: 'Google Search',
+        rfq: 'Google Search',
+        products: 'Google Search',
+        capabilities: 'Google Search',
+        industries: 'Google Search',
+        applications: 'Google Search',
+        standard: 'Google Search',
+        certifications: 'Google Search',
+        about: 'Google Search',
+        'product-sub': 'Google Search',
+        '404': 'Other',
+      };
+      const mapped =
+        sourceMap[urlSource.toLowerCase()] ??
+        (urlSource.startsWith('product-') ||
+             urlSource.startsWith('capability-') ||
+             urlSource.startsWith('industry-') ||
+             urlSource.startsWith('application-') ||
+             urlSource.startsWith('product-sub-')
+            ? 'Google Search'
+            : '');
+      if (sourceInput && mapped) sourceInput.value = mapped;
+    }
+  }
+
+  form?.querySelectorAll('input, textarea, select').forEach((field) => {
+    field.addEventListener(
+      'focus',
+      () => {
+        if (formStarted || typeof window.gtag !== 'function') return;
+        formStarted = true;
+        window.gtag('event', 'form_start', {
+          event_category: 'Funnel',
+          event_label: 'contact_form',
+          funnel_stage: 'quote',
+        });
+        window.gtag('event', 'rfq_form_view', {
+          event_category: 'Funnel',
+          event_label: 'contact_form',
+          funnel_stage: 'quote',
+        });
+      },
+      { once: true }
+    );
+  });
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    resultEl.innerHTML = '';
+
+    populateRfqAttributionFields(form);
+    const formData = new FormData(form);
+
+    if (formData.get('website')) {
+      window.location.href = '/thank-you/?source=rfq';
+      return;
+    }
+
+    try {
+      const endpoint = form.dataset.endpoint;
+      if (!endpoint) throw new Error('Missing form endpoint');
+
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' },
+      });
+
+      const payload = res.ok ? await res.json() : null;
+      if (res.ok && payload?.ok === true) {
+        const source = formData.get('source')?.toString() ?? '';
+        const country = formData.get('country')?.toString() ?? '';
+        const message = formData.get('message')?.toString() ?? '';
+        const attachment = formData.get('drawing');
+        const hasAttachment = attachment instanceof File && attachment.size > 0 ? 'yes' : 'no';
+        const urlSource = formData.get('url_source')?.toString() ?? new URLSearchParams(window.location.search).get('source') ?? '';
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'rfq_form_submit', {
+            event_category: 'Funnel',
+            event_label: 'contact_form',
+            funnel_stage: 'quote',
+            lead_source: source || 'unspecified',
+            url_source: urlSource || 'unspecified',
+            destination_country: country || 'unspecified',
+            has_attachment: hasAttachment,
+            inquiry_length: message.length,
+          });
+        }
+        trackAcceptedInquiry(payload.inquiryId, {
+          event_label: source || 'contact_form',
+          lead_source: source || 'unspecified',
+          url_source: urlSource || 'unspecified',
+          destination_country: country || 'unspecified',
+          has_attachment: hasAttachment,
+        });
+        window.location.href = '/thank-you/?source=rfq';
+        return;
+      } else {
+        throw new Error('Server error');
+      }
+    } catch (err) {
+      resultEl.className = 'form-result is-visible is-error';
+      resultEl.innerHTML = `<p>Something went wrong. Please email us directly at <a href="mailto:${form.dataset.fallbackEmail ?? 'sales@dieselpartsource.com'}">${form.dataset.fallbackEmail ?? 'sales@dieselpartsource.com'}</a>.</p>`;
+    }
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Send Parts Inquiry →';
+  });
+</script>

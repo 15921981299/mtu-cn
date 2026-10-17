@@ -1,0 +1,108 @@
+[
+  {
+    "slug": "MTU-Engine-Parts-Catalog-Complete",
+    "file": "/downloads/MTU-Engine-Parts-Catalog-Complete.pdf",
+    "title": "MTU Engine Parts Catalog — Complete Reference List (PDF)",
+    "heading": "MTU Engine Parts — Complete Reference List",
+    "subtitle": "All catalogued part numbers across every engine series we supply.",
+    "series": "All engine series",
+    "parts": 891,
+    "pages": 18,
+    "bytes": 419808,
+    "generated": "2026-10-17",
+    "truncatedCells": {
+      "category": 4
+    }
+  },
+  {
+    "slug": "MTU-2000-Series-Parts-Catalog",
+    "file": "/downloads/MTU-2000-Series-Parts-Catalog.pdf",
+    "title": "MTU 2000 Series Parts Catalog (PDF) — Part Numbers by System",
+    "heading": "MTU 2000 Series Parts Catalog",
+    "subtitle": "12V, 16V and 18V 2000 series part numbers.",
+    "series": "MTU 2000",
+    "parts": 160,
+    "pages": 4,
+    "bytes": 77712,
+    "generated": "2026-10-17",
+    "truncatedCells": {}
+  },
+  {
+    "slug": "MTU-4000-Series-Parts-Catalog",
+    "file": "/downloads/MTU-4000-Series-Parts-Catalog.pdf",
+    "title": "MTU 4000 Series Parts Catalog (PDF) — Part Numbers by System",
+    "heading": "MTU 4000 Series Parts Catalog",
+    "subtitle": "12V, 16V and 20V 4000 series part numbers.",
+    "series": "MTU 4000",
+    "parts": 176,
+    "pages": 4,
+    "bytes": 85187,
+    "generated": "2026-10-17",
+    "truncatedCells": {}
+  },
+  {
+    "slug": "MTU-396-Series-Parts-Catalog",
+    "file": "/downloads/MTU-396-Series-Parts-Catalog.pdf",
+    "title": "MTU 396 Series Parts Catalog (PDF) — Part Numbers by System",
+    "heading": "MTU 396 Series Parts Catalog",
+    "subtitle": "8V, 12V and 16V 396 series part numbers.",
+    "series": "MTU 396",
+    "parts": 159,
+    "pages": 4,
+    "bytes": 76582,
+    "generated": "2026-10-17",
+    "truncatedCells": {}
+  },
+  {
+    "slug": "MTU-1163-Series-Parts-Catalog",
+    "file": "/downloads/MTU-1163-Series-Parts-Catalog.pdf",
+    "title": "MTU 1163 Series Parts Catalog (PDF) — Part Numbers by System",
+    "heading": "MTU 1163 Series Parts Catalog",
+    "subtitle": "12V, 16V and 20V 1163 series part numbers.",
+    "series": "MTU 1163",
+    "parts": 95,
+    "pages": 2,
+    "bytes": 46863,
+    "generated": "2026-10-17",
+    "truncatedCells": {}
+  },
+  {
+    "slug": "MTU-956-Series-Parts-Catalog",
+    "file": "/downloads/MTU-956-Series-Parts-Catalog.pdf",
+    "title": "MTU 956 Series Parts Catalog (PDF) — Part Numbers by System",
+    "heading": "MTU 956 Series Parts Catalog",
+    "subtitle": "Medium-speed 956 series part numbers.",
+    "series": "MTU 956",
+    "parts": 79,
+    "pages": 2,
+    "bytes": 39580,
+    "generated": "2026-10-17",
+    "truncatedCells": {}
+  },
+  {
+    "slug": "MTU-538-Series-Parts-Catalog",
+    "file": "/downloads/MTU-538-Series-Parts-Catalog.pdf",
+    "title": "MTU 538 Series Parts Catalog (PDF) — Part Numbers by System",
+    "heading": "MTU 538 Series Parts Catalog",
+    "subtitle": "High-speed marine 538 series part numbers.",
+    "series": "MTU 538",
+    "parts": 80,
+    "pages": 2,
+    "bytes": 39219,
+    "generated": "2026-10-17",
+    "truncatedCells": {}
+  },
+  {
+    "slug": "MTU-595-Series-Parts-Catalog",
+    "file": "/downloads/MTU-595-Series-Parts-Catalog.pdf",
+    "title": "MTU 595 Series Parts Catalog (PDF) — Part Numbers by System",
+    "heading": "MTU 595 Series Parts Catalog",
+    "subtitle": "Heavy-duty 595 series part numbers.",
+    "series": "MTU 595",
+    "parts": 48,
+    "pages": 2,
+    "bytes": 24865,
+    "generated": "2026-10-17",
+    "truncatedCells": {}
+  }
+]

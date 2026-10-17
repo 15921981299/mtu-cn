@@ -1,0 +1,138 @@
+---
+interface Props {
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+
+const fitItems = [
+  'You have a part number, engine model, nameplate photo, or old part photo.',
+  'You care about fitment, genuine sourcing, documentation, and delivery reliability.',
+  'You can evaluate a parts supplier beyond the lowest unit price.',
+];
+
+const notFitItems = [
+  'Blind price fishing with no part number, engine information, or quantity.',
+  'Orders where documentation, communication, or payment terms do not matter.',
+  'Requests that require unverified substitutions for critical engine parts.',
+];
+---
+
+<section class:list={['qualified-customer-note', { 'qualified-customer-note--compact': compact }]}>
+  <div class="qualified-customer-note__intro">
+    <p class="qualified-customer-note__kicker">Qualified parts inquiries only</p>
+    <h2>We are selective about the orders we take</h2>
+    <p>
+      We are built for serious maintenance, marine, generator, and procurement teams.
+      If the order needs correct engine parts, documentation, and clear communication, we want to compete for it.
+    </p>
+  </div>
+  <div class="qualified-customer-note__grid">
+    <article>
+      <h3>Good fit</h3>
+      <ul>
+        {fitItems.map((item) => <li>{item}</li>)}
+      </ul>
+    </article>
+    <article>
+      <h3>Not a good fit</h3>
+      <ul>
+        {notFitItems.map((item) => <li>{item}</li>)}
+      </ul>
+    </article>
+  </div>
+</section>
+
+<style>
+  .qualified-customer-note {
+    display: grid;
+    grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+    gap: 24px;
+    align-items: start;
+    margin: 28px 0;
+    padding: 24px;
+    border: 1px solid rgba(15, 23, 42, 0.12);
+    border-radius: 8px;
+    background: #0f172a;
+    color: #e2e8f0;
+  }
+
+  .qualified-customer-note__kicker {
+    margin: 0 0 8px;
+    color: #93c5fd;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .qualified-customer-note h2 {
+    margin: 0 0 12px;
+    color: #fff;
+    font-size: clamp(22px, 2.2vw, 28px);
+    line-height: 1.25;
+    text-transform: none;
+  }
+
+  .qualified-customer-note__intro p:last-child {
+    margin: 0;
+    color: #cbd5e1;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .qualified-customer-note__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .qualified-customer-note article {
+    padding: 18px;
+    border: 1px solid rgba(226, 232, 240, 0.16);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .qualified-customer-note h3 {
+    margin: 0 0 10px;
+    color: #fff;
+    font-size: 16px;
+    line-height: 1.35;
+    text-transform: none;
+  }
+
+  .qualified-customer-note ul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+    padding-left: 18px;
+  }
+
+  .qualified-customer-note li {
+    color: #cbd5e1;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .qualified-customer-note--compact {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  .qualified-customer-note--compact .qualified-customer-note__grid {
+    grid-template-columns: 1fr;
+  }
+
+  @media (max-width: 840px) {
+    .qualified-customer-note {
+      grid-template-columns: 1fr;
+      padding: 20px;
+    }
+
+    .qualified-customer-note__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

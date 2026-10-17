@@ -1,0 +1,131 @@
+---
+interface ProofCopy {
+  eyebrow: string;
+  title: string;
+  text: string;
+}
+
+const proofCopy: Record<string, ProofCopy> = {
+  blog: {
+    eyebrow: 'Editorial review',
+    title: 'Engineer-reviewed before publishing',
+    text:
+      'Our technical pages are checked against engine parts sourcing, part-number review, and documentation practice before publication. AI assistance does not replace inquiry-level verification; send your part number and engine details for project-specific feedback.',
+  },
+  comparison: {
+    eyebrow: 'Parts sourcing judgment',
+    title: 'Decision guidance from real inquiry review',
+    text:
+      'Each comparison is written for buyers choosing a sourcing path, brand option, or replacement route before quoting. We still confirm the final choice against your part number, engine model, serial number, quantity, and documentation requirement.',
+  },
+  product: {
+    eyebrow: 'Supplier capability check',
+    title: 'Quoted with sourcing and verification review',
+    text:
+      'Product pages describe the information we verify during inquiry review: part number, engine model, serial number, photos, stock route, documentation, and lead time risk.',
+  },
+  material: {
+    eyebrow: 'Parts review',
+    title: 'Reference guidance tied to sourcing and shipment',
+    text:
+      'Reference pages are reviewed from sourcing, purchasing, and documentation angles. We confirm fitment, supplier document needs, packing scope, and delivery risk before quoting engine parts.',
+  },
+};
+
+const { context = 'blog' } = Astro.props;
+const copy = proofCopy[context] ?? proofCopy.blog;
+---
+
+<section class="experience-proof-note" aria-label={copy.eyebrow}>
+  <div class="experience-proof-note__copy">
+    <p class="experience-proof-note__eyebrow">{copy.eyebrow}</p>
+    <h2>{copy.title}</h2>
+    <p>{copy.text}</p>
+  </div>
+  <nav class="experience-proof-note__links" aria-label="Trust resources">
+    <a href="/about/">About our team</a>
+    <a href="/certifications/">Quality system</a>
+    <a href="/part-products/">MTU part numbers</a>
+  </nav>
+</section>
+
+<style>
+  .experience-proof-note {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 20px;
+    align-items: center;
+    margin: 0 0 24px;
+    padding: 18px 20px;
+    border: 1px solid rgba(15, 23, 42, 0.1);
+    border-left: 4px solid var(--color-primary);
+    border-radius: 8px;
+    background: #f8fafc;
+  }
+
+  .experience-proof-note__copy {
+    min-width: 0;
+  }
+
+  .experience-proof-note__eyebrow {
+    margin: 0 0 6px;
+    color: var(--color-primary);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .experience-proof-note h2 {
+    margin: 0 0 8px;
+    color: var(--color-title);
+    font-size: 18px;
+    line-height: 1.35;
+    text-transform: none;
+  }
+
+  .experience-proof-note p {
+    margin: 0;
+    color: #475569;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .experience-proof-note__links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 10px;
+    min-width: 220px;
+  }
+
+  .experience-proof-note__links a {
+    color: var(--color-primary);
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .experience-proof-note__links a:hover {
+    text-decoration: underline;
+  }
+
+  .experience-proof-note__links a:focus-visible {
+    border-radius: 2px;
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 720px) {
+    .experience-proof-note {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+
+    .experience-proof-note__links {
+      justify-content: flex-start;
+      min-width: 0;
+    }
+  }
+</style>

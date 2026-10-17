@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../components/BreadcrumbHero.astro';
+import FunnelPageView from '../../components/FunnelPageView.astro';
+import DetailRfqStrip from '../../components/DetailRfqStrip.astro';
+import { partsGuides } from '../../data/guides';
+import { mtuParts } from '../../data/mtu-parts';
+import { breadcrumbSchema, site } from '../../data/site';
+import '../../styles/resource-page.css';
+
+const pageUrl = `${site.url}/guides/`;
+const guideCards = partsGuides.map((guide) => {
+  const seriesSet = new Set(guide.seriesFilter);
+  const count = mtuParts.filter((part) => part.series.some((s) => seriesSet.has(s))).length;
+  return { guide, count };
+});
+---
+
+<BaseLayout
+  title="Engine Parts Guides — Overhaul Planning & Series Identification"
+  description="Practical sourcing guides for MTU engine parts: overhaul planning checklists, series identification, superseded-number tracing, and the verified part groups we supply per series."
+  currentPath="/guides"
+  jsonLd={[
+    breadcrumbSchema([
+      { name: 'Home', url: site.url },
+      { name: 'Parts Guides', url: pageUrl },
+    ]),
+  ]}
+>
+  <FunnelPageView stage="service" label="guides-index" />
+  <BreadcrumbHero
+    title="Engine Parts Guides"
+    trail={[{ label: 'Home', href: '/' }, { label: 'Parts Guides' }]}
+    variant="3"
+  />
+
+  <div class="resource-page">
+    <section class="resource-page-section">
+      <p>
+        Sourcing guides written around one principle: the right part comes from the engine
+        <strong> serial number</strong>, not the model badge alone. Each guide combines an
+        identification checklist with the verified part groups we supply for that series —
+        no filler content, no invented specifications.
+      </p>
+    </section>
+
+    <section class="resource-page-section">
+      <div class="guides-grid">
+        {guideCards.map(({ guide, count }) => (
+          <a class="guide-card" href={`/guides/${guide.slug}/`}>
+            <h2>{guide.h1}</h2>
+            <p>{guide.description}</p>
+            <span class="guide-card__meta">{count} verified part numbers inside →</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>Which Guide to Start With</h2>
+      <p>
+        If you are planning a <strong>major overhaul</strong>, start with the overhaul guide for your series: it lists the
+        part groups that are always replaced, the ones that depend on measurements, and the information to collect before the
+        engine is opened. If you only have an <strong>old or unreadable part number</strong>, use the series identification
+        guide together with the <a href="/cross-reference/">cross-reference</a>, which maps earlier numbers to their current
+        references. For a <strong>single urgent item</strong>, skip the guides and search the
+        <a href="/part-products/">part-number catalog</a> directly.
+      </p>
+      <h2>What the Guides Do Not Replace</h2>
+      <p>
+        The guides help you prepare an accurate inquiry; they are not a substitute for the engine manufacturer's maintenance
+        documentation. Service intervals, tightening torques, and settings should always come from the operating and
+        maintenance manuals for your specific engine. When the guide and your documentation differ, your documentation and the
+        engine serial number take priority, and we will check the reference before quoting.
+      </p>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>More Sourcing Tools</h2>
+      <ul class="resource-olist">
+        <li><a href="/cross-reference/">Part Number Cross Reference</a> — OEM and superseded numbers mapped to the parts we supply</li>
+        <li><a href="/engine-models/">Parts Lists by Engine Model</a> — every catalogued part number for your model code, grouped by system</li>
+        <li><a href="/part-products/">MTU Part Number Catalog</a> — all part numbers, searchable</li>
+        <li><a href="/catalog/">Catalog PDF Downloads</a> — the same index as a printable, searchable PDF, one file per series</li>
+        <li><a href="/guides/how-to-read-mtu-parts-diagram/">How to Read a Parts Diagram</a> — find the position number, then find the part number behind it</li>
+        <li><a href="/how-to-source-mtu-parts/">Dealer or Independent Supplier</a> — which route suits your engine, and how we sit against both</li>
+        <li><a href="/certifications/">Quality & Certifications</a> — how parts are verified before shipment</li>
+      </ul>
+    </section>
+
+    <DetailRfqStrip
+      title="Skip the reading — send the part number"
+      text="Part number, engine model, and serial number are enough for a verified availability check."
+      quoteHref="/contact/?source=guides-index"
+      label="Request Parts Quote"
+      modalSource="guides-index"
+    />
+  </div>
+</BaseLayout>
+
+<style>
+  .guides-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 18px;
+  }
+
+  .guide-card {
+    display: block;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 20px;
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .guide-card:hover {
+    border-color: var(--color-primary, #146ef5);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  }
+
+  .guide-card h2 {
+    margin: 0 0 10px;
+    font-size: 20px;
+    line-height: 1.3;
+  }
+
+  .guide-card p {
+    margin: 0 0 12px;
+    color: #475569;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .guide-card__meta {
+    color: var(--color-primary, #146ef5);
+    font-size: 14px;
+    font-weight: 700;
+  }
+</style>

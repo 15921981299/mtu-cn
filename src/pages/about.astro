@@ -1,0 +1,962 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../components/BreadcrumbHero.astro';
+import FunnelPageView from '../components/FunnelPageView.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import CustomerFeedback from '../components/CustomerFeedback.astro';
+import {
+  aboutPageSchema,
+  breadcrumbSchema,
+  howToSchema,
+  site,
+  videoSchema,
+} from '../data/site';
+
+const pageUrl = `${site.url}/about/`;
+const pageTitle = '关于 Diesel Part Source | 上海柴油发动机零件供应商';
+const pageDescription =
+  '了解 Diesel Part Source——总部位于上海的柴油发动机零件供应商，供应 MTU、Detroit Diesel、Cummins 与 DEUTZ 零件。提供零件号核验、出口包装与全球交付支持。';
+
+const inquirySteps = [
+  {
+    name: '接收零件信息',
+    text: '请提供零件号、发动机品牌、型号、出厂编号、数量、目的国，以及铭牌或旧件照片（如有）。',
+  },
+  {
+    name: '核查适配性与供货路线',
+    text: '我们将询价与发动机系列、零件描述、替代参考号及可行的采购选项进行比对。',
+  },
+  {
+    name: '出具带实操备注的报价',
+    text: '回复可能包含供货情况、交货期说明、包装方案、运输方式，以及仍需采购方确认的事项。',
+  },
+];
+
+const companyStandards = [
+  '每份报价都应注明所询零件号、供货路线、交货期依据，以及仍需采购方确认的事项。',
+  '涉及 OEM、OEM 替代件、再制造件、维修件或替代路线时，会清晰标注。',
+  '发动机出厂编号、铭牌照片、旧件标记、数量与目的国均视为商务风控信息，而非可选装饰。',
+  '在数据可得的情况下，出口包装、大致重量、HS 编码、贸易术语讨论与运输路线会在放单前逐一核查。',
+];
+
+const buyerScenarios = [
+  {
+    title: '船厂与维修公司',
+    text: '针对大修清单、紧急缺件与替代参考号逐行审核询价，覆盖 MTU 2000、4000、396、956 及相关系列。',
+  },
+  {
+    title: '发电机组与电力运营方',
+    text: '维修零件、滤清器、传感器、燃油系统零件与停机更换需求，附交付期限与目的地说明。',
+  },
+  {
+    title: '机群与工业采购方',
+    text: '支持多品牌柴油发动机零件的重复保养件、旧库存替代，以及从上海合并出口发运。',
+  },
+];
+
+const workshopVideo = videoSchema({
+  name: 'Diesel Part Source 零件支持概览',
+  description:
+    '了解 Diesel Part Source 如何支持柴油发动机零件识别、库存核查与从上海出发的全球交付。',
+  thumbnailUrl: 'https://img.youtube.com/vi/M7uJEbDD-_8/hqdefault.jpg',
+  embedUrl: 'https://www.youtube.com/embed/M7uJEbDD-_8',
+  uploadDate: '2023-06-01',
+});
+
+const whatsappDigits = site.whatsapp.replace(/\D/g, '');
+const whatsappHref = `https://wa.me/${whatsappDigits}`;
+const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
+
+const linkArrow = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M15.0001 17L20 12L15 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4 12H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  currentPath="/about"
+  image="/images/mtu-engine-parts-hero.webp"
+  jsonLd={[
+    breadcrumbSchema([
+      { name: '首页', url: site.url },
+      { name: '关于我们', url: pageUrl },
+    ]),
+    aboutPageSchema({
+      name: pageTitle,
+      description: pageDescription,
+      url: pageUrl,
+    }),
+    howToSchema({
+      name: 'Diesel Part Source 如何处理柴油发动机零件询价',
+      description:
+        '提交零件信息，获得适配性与供货路线核查，然后收到来自上海的实用报价与运输备注。',
+      steps: inquirySteps,
+    }),
+    workshopVideo,
+  ]}
+>
+  <FunnelPageView stage="awareness" label="about" />
+  <BreadcrumbHero
+    title="关于 Diesel Part Source — 上海柴油发动机零件供应商"
+    trail={[
+      { label: '首页', href: '/' },
+      { label: '关于我们' },
+    ]}
+    variant="1"
+    image="/images/mtu-engine-parts-hero.webp"
+  />
+
+  <section class="about-seo-intro fade-in" aria-labelledby="about-seo-intro-heading">
+    <div class="container about-seo-intro-inner">
+      <p class="about-seo-kicker">上海 · MTU · 多品牌柴油零件</p>
+      <h2 id="about-seo-intro-heading" class="about-seo-intro-title">
+        务实的柴油机备件采购服务台
+      </h2>
+      <p class="about-seo-intro-text">
+        Diesel Part Source 帮助船用、工业、轨交与发电采购方采购
+        <a href="/products/mtu-spare-parts/">MTU 备件</a>、
+        <a href="/products/detroit-diesel-parts/">Detroit Diesel</a>、
+        <a href="/products/cummins-parts/">Cummins</a> 与
+        <a href="/products/deutz-parts/">DEUTZ</a> 零件，提供零件号核验与从上海出发的出口包装。
+      </p>
+    </div>
+  </section>
+
+  <nav class="about-resource-links fade-in" aria-label="相关柴油零件资源">
+    <a href="/products/mtu-spare-parts/?source=about">MTU 备件</a>
+    <a href="/part-products/?source=about">MTU 零件号</a>
+    <a href="/part-products/catalog/mtu-4000-series/?source=about">MTU 4000 零件目录</a>
+    <a href="/industries/marine/?source=about">船用应用</a>
+    <a href="/certifications/?source=about">质量政策</a>
+    <a href="/contact/?source=about">零件询价</a>
+  </nav>
+
+  <!-- Mission: Who We Are -->
+  <section id="about-mission" class="mission-and-vision-section about-section" aria-labelledby="about-mission-heading">
+    <div class="section-gap">
+      <div class="container">
+        <div class="mission-and-vision-wrapper">
+          <div id="about-mission-heading">
+            <SectionHeading title="为柴油发动机采购方打造的务实零件服务台" subtitle="我们是谁" />
+          </div>
+
+          <ul class="about-trust-meta" aria-label="公司资质">
+            <li><strong>核心品牌</strong> MTU、Detroit Diesel、Cummins、DEUTZ</li>
+            <li><strong>询价信息</strong> 零件号、出厂编号、照片、大修清单</li>
+            <li><strong>应用场景</strong> 船用、发电、工业、轨交、船厂</li>
+            <li><strong>出口</strong> 上海统筹与全球交付</li>
+          </ul>
+
+          <div class="about-legal-block fade-in">
+            <p class="about-legal-kicker">公司实体与联系信息</p>
+            <p class="about-legal-name">{site.company.legalNameEn}</p>
+            <p class="about-legal-aka">{site.company.legalName} · 交易名称 {site.name}</p>
+            <p class="about-legal-detail">
+              总部位于上海的柴油发动机零件供应商，服务全球维修团队、维修公司、船厂、发电运营方与机群采购方。
+              <a href="/certifications/">查看质量控制与认证范围</a>。
+            </p>
+            <address class="about-nap">
+              <a href={`mailto:${site.email}`}>{site.email}</a>
+              <span aria-hidden="true">·</span>
+              <a href={phoneHref}>{site.phone}</a>
+              <span aria-hidden="true">·</span>
+              <a href={whatsappHref} rel="noopener noreferrer" target="_blank">WhatsApp</a>
+              <span class="about-nap-address">
+                {site.company.address.singleLine}
+              </span>
+            </address>
+          </div>
+
+          <div class="about-scope-grid fade-in">
+            <article class="about-scope-card">
+              <span class="about-scope-kicker">主要方向</span>
+              <h3 class="about-scope-title">
+                <a href="/products/mtu-spare-parts/">MTU 全系列零件</a>
+              </h3>
+              <p>183、331、396、493、538、595、956、1163、2000、4000 与 8000 系列询价。</p>
+            </article>
+            <article class="about-scope-card">
+              <span class="about-scope-kicker">同时支持</span>
+              <h3 class="about-scope-title">Detroit Diesel、Cummins、DEUTZ</h3>
+              <p>面向混合机群的发动机零件、保养件、维修部件与替代参考号。</p>
+            </article>
+            <article class="about-scope-card">
+              <span class="about-scope-kicker">最适合</span>
+              <h3 class="about-scope-title">
+                <a href="/contact/?source=about-scope">以零件号驱动的询价</a>
+              </h3>
+              <p>单件紧急零件、重复保养件，以及大修或维修项目的 Excel 清单。</p>
+            </article>
+          </div>
+
+          <nav class="about-jump-nav" aria-label="本页导航">
+            <a href="#about-mission" class="about-jump-link">公司方向</a>
+            <a href="#about-different" class="about-jump-link">核验</a>
+            <a href="#about-standards" class="about-jump-link">商务标准</a>
+            <a href="#about-process" class="about-jump-link">询价流程</a>
+            <a href="#about-factory" class="about-jump-link">全球交付</a>
+          </nav>
+
+          <div class="mission-and-vision-content">
+            <div class="mission-block fade-in">
+              <div class="mission-content-block">
+                <div class="mission-subtitle-block"><div class="mission-subtitle-text">我们的使命</div></div>
+                <div class="mission-text-block">
+                  <h3 class="mission-title">正确的零件始于正确的识别</h3>
+                  <p class="mission-summary">柴油机备件很少只是一个名称。同一描述可能因发动机系列、出厂编号、应用场景与替代历史而不同。我们帮助采购方在确认供货情况与价格之前，先核查零件号、发动机型号、出厂编号与旧件照片。</p>
+                  <a href="/products/" class="mission-link-button"><div class="link-button-text">我们的零件范围</div><div class="link-button-icon" set:html={linkArrow} /></a>
+                </div>
+              </div>
+              <div class="mission-image-block">
+                <img src="/images/mtu-engine-parts-hero.webp" alt="MTU 柴油发动机备件与部件" class="mission-image" width="850" height="753" loading="lazy" decoding="async" />
+                <div class="image-overlay"></div>
+              </div>
+            </div>
+            <div class="vision-block fade-in">
+              <div class="vision-content-block">
+                <div class="vision-subtitle-block"><div class="vision-subtitle-text">我们的愿景</div></div>
+                <div class="vision-text-block">
+                  <h3 class="vision-title">为需要明确答案的采购方而建</h3>
+                  <p class="vision-summary">Diesel Part Source 定位为面向实际维修工作的采购服务台：确认可能的零件、核查可行的供货路线、准备出口包装，并保持沟通清晰。我们不自称官方品牌所有者；品牌名与零件号仅用于识别采购方的需求。</p>
+                  <a href="/contact/?source=about" class="vision-link-button"><div class="link-button-text">发送零件询价</div><div class="link-button-icon" set:html={linkArrow} /></a>
+                </div>
+              </div>
+              <div class="vision-image-block">
+                <img src="/images/mtu-part-number-verification.webp" alt="MTU 零件号核验与发动机零件质量检查" class="vision-image" width="850" height="753" loading="lazy" decoding="async" />
+                <div class="image-overlay"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Different -->
+  <section id="about-different" class="who-we-are-section about-section" aria-labelledby="about-different-heading">
+    <div class="section-gap bottom">
+      <div class="container">
+        <div id="about-different-heading">
+          <SectionHeading title="Diesel Part Source 的价值所在" subtitle="为何选择我们" />
+        </div>
+        <div class="funfact-wrapper about-differentiators-grid fade-in">
+          <article class="funfact-single-block">
+            <div class="funfact-number-block"><div class="chain-character" aria-hidden="true">01</div></div>
+            <div class="funfact-text-block">
+              <h3 class="funfact-title">先核验，再报价</h3>
+              <p class="funfact-summary">我们将零件号、发动机系列、型号、出厂编号与照片放在一起审核，之后才将该零件视为可报价。</p>
+            </div>
+          </article>
+          <div class="funfact-separtion-liner" aria-hidden="true"></div>
+          <article class="funfact-single-block">
+            <div class="funfact-number-block"><div class="chain-character" aria-hidden="true">02</div></div>
+            <div class="funfact-text-block">
+              <h3 class="funfact-title">清晰的替换件沟通</h3>
+              <p class="funfact-summary">涉及旧编号、替代关系或替代路线时，我们会要求确认，而不是掩盖风险。</p>
+            </div>
+          </article>
+          <div class="funfact-separtion-liner" aria-hidden="true"></div>
+          <article class="funfact-single-block">
+            <div class="funfact-number-block"><div class="chain-character" aria-hidden="true">03</div></div>
+            <div class="funfact-text-block">
+              <h3 class="funfact-title">出口订单就绪</h3>
+              <p class="funfact-summary">零件确认后，我们为中国以外采购方统筹包装、运输单证与交付方案。</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about-standards" class="who-we-are-section about-section" aria-labelledby="about-standards-heading">
+    <div class="section-gap bottom">
+      <div class="container">
+        <div id="about-standards-heading">
+          <SectionHeading title="零件采购方的商务标准" subtitle="我们的工作方式" />
+        </div>
+        <div class="about-standards-layout fade-in">
+          <div class="about-standards-panel">
+            <h3>一份靠谱的询价回复应明确的事项</h3>
+            <ul>
+              {companyStandards.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+          <div class="about-buyer-scenarios">
+            {buyerScenarios.map((item) => (
+              <article>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CustomerFeedback id="about-feedback" />
+
+  <!-- RFQ process -->
+  <section id="about-process" class="who-we-are-section about-section" aria-labelledby="about-process-heading">
+    <div class="section-gap bottom">
+      <div class="container">
+        <div id="about-process-heading">
+          <SectionHeading title="我们如何处理零件询价" subtitle="询价流程" />
+        </div>
+        <ol class="about-process-layout fade-in">
+          {inquirySteps.map((step, i) => (
+            <li class="about-process-card">
+              <span class="about-process-step" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <h3>{step.name}</h3>
+              <p>{step.text}</p>
+            </li>
+          ))}
+        </ol>
+
+        <div class="about-rfq-note fade-in">
+          <div>
+            <h3>怎样能让我们更快报价？</h3>
+            <p>准确的零件号、发动机出厂编号、旧件照片与 Excel 清单可以减少反复沟通。对于紧急停机订单，请在首条消息中注明要求的交付国家与期限。</p>
+          </div>
+          <a href="/contact/?source=about-process" class="about-inline-cta">发送询价详情 →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Factory tour -->
+  <section id="about-factory" class="who-we-are-section about-section" aria-labelledby="about-factory-heading">
+    <div class="section-gap bottom">
+      <div class="container">
+        <div id="about-factory-heading">
+          <SectionHeading title="从上海发往全球" subtitle="运输支持" />
+        </div>
+        <div class="who-we-are-wrapper fade-in">
+          <div class="who-we-are-content-block">
+            <p class="who-we-are-text">
+              Diesel Part Source 总部位于上海，为国际采购方提供快递、空运与海运方案。
+              对于紧急的船舶、发电或工业停机订单，请在首条
+              <a href="/contact/?source=about-shipping">零件询价</a>中注明目的地与期限。
+              包装与运输说明请参阅我们的<a href="/terms/shipping/">运输条款</a>。
+            </p>
+            <p class="who-we-are-text about-disclaimer">Diesel Part Source 是独立供应商。MTU、Detroit Diesel、Cummins、DEUTZ 及其他名称仅用于识别采购方所要求的兼容发动机零件。</p>
+            <p class="about-factory-cta-row">
+              <a href="/contact/?source=about-shipping" class="about-inline-cta">发送零件询价 →</a>
+              <a href="/terms/shipping/" class="about-inline-cta about-inline-cta--secondary">运输条款</a>
+              <a href="/products/" class="about-inline-cta about-inline-cta--secondary">浏览发动机品牌</a>
+            </p>
+          </div>
+          <div class="who-we-are-image-block about-factory-image">
+            <img src="/images/global-engine-parts-delivery.webp" alt="从上海出口的全球柴油发动机零件包装与空运交付" class="who-we-are-image" width="520" height="400" loading="lazy" decoding="async" />
+            <div class="who-we-are-lightbox">
+              <button type="button" class="lightbox-link-block primary" data-lightbox-trigger="https://www.youtube.com/watch?v=M7uJEbDD-_8&t=4s" aria-label="播放 Diesel Part Source 零件支持视频">
+                <div class="lightbox-inner-block primary"><img src="/images/video-play-icon.svg" alt="" aria-hidden="true" class="lightbox-play-icon primary" width="20" height="20" loading="lazy" decoding="async" /></div>
+                <div class="lightbox-circle-one primary"></div>
+                <div class="lightbox-circle-two primary"></div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .about-section {
+    scroll-margin-top: 100px;
+  }
+
+  /* Crawlable intro — E-E-A-T / topical clarity */
+  .about-seo-intro {
+    margin: 0;
+    margin-top: 4rem;
+  }
+
+  .about-seo-intro-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 20px 1.15rem;
+    text-align: center;
+  }
+
+  .about-seo-kicker {
+    margin: 0 0 0.45rem;
+    color: var(--color-primary);
+    font-family: var(--font-title);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .about-seo-intro-title {
+    margin: 0 0 0.55rem;
+    font-size: clamp(1.3rem, 2.2vw, 1.65rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    text-transform: none;
+  }
+
+  .about-seo-intro-text {
+    margin: 0 auto;
+    max-width: 58ch;
+    color: #334155;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .about-seo-intro-text a {
+    color: var(--color-title);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(20, 110, 245, 0.35);
+    text-underline-offset: 0.15em;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+  }
+
+  .about-seo-intro-text a:hover {
+    color: var(--color-primary);
+    text-decoration-color: var(--color-primary);
+  }
+
+  .about-resource-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    max-width: 920px;
+    margin: 0 auto .5rem;
+    padding: 0 20px;
+  }
+
+  .about-resource-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(20, 110, 245, 0.2);
+    background: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1e293b;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .about-resource-links a:hover {
+    background: rgba(20, 110, 245, 0.07);
+    border-color: rgba(20, 110, 245, 0.4);
+    color: var(--color-primary);
+    box-shadow: 0 2px 8px rgba(20, 110, 245, 0.08);
+  }
+
+  .about-trust-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 18px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .about-trust-meta li {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px;
+    min-height: 36px;
+    padding: 8px 12px;
+    border: 1px solid var(--color-stroke);
+    border-radius: 10px;
+    background: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #334155;
+  }
+
+  .about-trust-meta strong {
+    color: var(--color-title);
+    font-weight: 700;
+  }
+
+  .about-legal-block {
+    margin: 0 0 20px;
+    padding: 18px 20px;
+    color: var(--color-body-text);
+    background: linear-gradient(180deg, rgba(20, 110, 245, 0.06), #fff);
+    border: 1px solid rgba(20, 110, 245, 0.16);
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+  }
+
+  .about-legal-kicker {
+    margin: 0 0 6px;
+    color: var(--color-primary);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .about-legal-name {
+    margin: 0 0 4px;
+    font-family: var(--font-title);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-title);
+    letter-spacing: -0.01em;
+  }
+
+  .about-legal-aka {
+    margin: 0 0 10px;
+    font-size: 13px;
+    color: #64748b;
+  }
+
+  .about-legal-detail {
+    margin: 0 0 12px;
+    font-size: 14px;
+    line-height: 1.65;
+    color: #334155;
+  }
+
+  .about-legal-block a {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .about-legal-block a:hover {
+    text-decoration: underline;
+  }
+
+  .about-nap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 8px;
+    margin: 0;
+    padding-top: 12px;
+    border-top: 1px solid rgba(20, 110, 245, 0.12);
+    font-style: normal;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--color-title);
+  }
+
+  .about-nap a {
+    color: var(--color-title);
+  }
+
+  .about-nap a:hover {
+    color: var(--color-primary);
+  }
+
+  .about-nap-address {
+    flex: 1 1 100%;
+    margin-top: 4px;
+    font-weight: 500;
+    color: #475569;
+  }
+
+  .about-scope-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 0 0 22px;
+  }
+
+  .about-scope-card {
+    min-height: 150px;
+    padding: 18px;
+    background: var(--color-white);
+    border: 1px solid var(--color-stroke);
+    border-radius: 12px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .about-scope-card:hover {
+    border-color: rgba(20, 110, 245, 0.3);
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+  }
+
+  .about-scope-kicker {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--color-primary);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .about-scope-title {
+    margin: 0 0 8px;
+    color: var(--color-title);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.25;
+    text-transform: none;
+  }
+
+  .about-scope-title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .about-scope-title a:hover {
+    color: var(--color-primary);
+  }
+
+  .about-scope-card p {
+    margin: 0;
+    color: #475569;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .about-standards-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .about-standards-panel,
+  .about-buyer-scenarios article {
+    border: 1px solid rgba(20, 110, 245, 0.14);
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
+  }
+
+  .about-standards-panel {
+    padding: 24px;
+  }
+
+  .about-standards-panel h3,
+  .about-buyer-scenarios h3 {
+    margin: 0 0 12px;
+    color: var(--color-title);
+    font-size: 18px;
+    line-height: 1.3;
+    text-transform: none;
+  }
+
+  .about-standards-panel ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .about-standards-panel li,
+  .about-buyer-scenarios p {
+    color: #475569;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .about-buyer-scenarios {
+    display: grid;
+    gap: 12px;
+  }
+
+  .about-buyer-scenarios article {
+    padding: 18px;
+  }
+
+  .about-buyer-scenarios p {
+    margin: 0;
+  }
+
+  .about-jump-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .about-jump-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--color-stroke);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-body-text);
+    background: var(--color-white);
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+  }
+
+  .about-jump-link:hover {
+    border-color: rgba(20, 110, 245, 0.45);
+    background: rgba(20, 110, 245, 0.08);
+    color: var(--color-primary);
+  }
+
+  .about-seo-intro-text a:focus-visible,
+  .about-resource-links a:focus-visible,
+  .about-jump-link:focus-visible,
+  .about-legal-block a:focus-visible,
+  .about-scope-title a:focus-visible,
+  .mission-link-button:focus-visible,
+  .vision-link-button:focus-visible,
+  .about-inline-cta:focus-visible,
+  .who-we-are-text a:focus-visible,
+  .lightbox-link-block:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  .mission-link-button,
+  .vision-link-button {
+    cursor: pointer;
+  }
+
+  .about-differentiators-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 0;
+    background: var(--color-white);
+    border: 1px solid var(--color-stroke);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+  }
+
+  .about-differentiators-grid .funfact-single-block {
+    max-width: none;
+    padding: 36px 28px;
+    border-right: 1px solid var(--color-stroke);
+  }
+
+  .about-differentiators-grid .funfact-single-block:last-child {
+    border-right: none;
+  }
+
+  .about-differentiators-grid .funfact-separtion-liner {
+    display: none;
+  }
+
+  .about-differentiators-grid .funfact-title {
+    text-transform: none;
+  }
+
+  .about-process-layout {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .about-process-card {
+    position: relative;
+    min-height: 220px;
+    padding: 28px;
+    background: var(--color-white);
+    border: 1px solid var(--color-stroke);
+    border-radius: 12px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .about-process-card:hover {
+    border-color: rgba(20, 110, 245, 0.28);
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+  }
+
+  .about-process-step {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    margin-bottom: 22px;
+    color: var(--color-white);
+    background: var(--color-title);
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .about-process-card h3 {
+    margin-bottom: 10px;
+    font-size: 20px;
+    text-transform: none;
+  }
+
+  .about-process-card p {
+    margin: 0;
+    color: #475569;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .about-rfq-note {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    margin-top: 18px;
+    padding: 22px 24px;
+    background: rgba(20, 110, 245, 0.07);
+    border: 1px solid rgba(20, 110, 245, 0.16);
+    border-radius: 12px;
+  }
+
+  .about-rfq-note h3 {
+    margin-bottom: 6px;
+    font-size: 20px;
+    text-transform: none;
+  }
+
+  .about-rfq-note p {
+    margin: 0;
+    color: #475569;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .about-factory-image {
+    position: relative;
+  }
+
+  .about-factory-cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    margin-top: 16px;
+  }
+
+  .about-inline-cta {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  .about-inline-cta:hover {
+    text-decoration: underline;
+  }
+
+  .about-inline-cta--secondary {
+    color: var(--color-title);
+  }
+
+  .about-inline-cta--secondary:hover {
+    color: var(--color-primary);
+  }
+
+  .who-we-are-text a {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(20, 110, 245, 0.35);
+    text-underline-offset: 0.15em;
+  }
+
+  .who-we-are-text a:hover {
+    text-decoration-color: var(--color-primary);
+  }
+
+  .about-disclaimer {
+    margin-top: 14px;
+    padding: 12px 14px;
+    background: var(--color-background);
+    border-left: 3px solid var(--color-primary);
+    border-radius: 6px;
+    font-size: 15px;
+    line-height: 1.65;
+    color: #334155;
+  }
+
+  @media (max-width: 991px) {
+    .about-scope-grid,
+    .about-process-layout,
+    .about-standards-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .about-differentiators-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .about-differentiators-grid .funfact-single-block {
+      border-right: none;
+      border-bottom: 1px solid var(--color-stroke);
+    }
+
+    .about-differentiators-grid .funfact-single-block:last-child {
+      border-bottom: none;
+    }
+
+    .about-rfq-note {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .about-seo-intro-inner {
+      text-align: left;
+    }
+
+    .about-resource-links {
+      justify-content: flex-start;
+    }
+
+    .about-resource-links a,
+    .about-jump-link {
+      min-height: 44px;
+    }
+
+    .about-jump-nav {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .about-jump-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .about-jump-link {
+      flex-shrink: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .about-seo-intro-text a,
+    .about-resource-links a,
+    .about-jump-link,
+    .about-scope-card,
+    .about-process-card,
+    .about-inline-cta {
+      transition: none;
+    }
+
+    .about-scope-card:hover,
+    .about-process-card:hover {
+      box-shadow: none;
+    }
+  }
+</style>
+

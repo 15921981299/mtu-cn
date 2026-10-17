@@ -1,0 +1,284 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../../components/BreadcrumbHero.astro';
+import FunnelPageView from '../../../components/FunnelPageView.astro';
+import DetailRfqStrip from '../../../components/DetailRfqStrip.astro';
+import { mtuParts } from '../../../data/mtu-parts';
+import { parseModels } from '../../../data/engine-models';
+import { breadcrumbSchema, faqSchema, site } from '../../../data/site';
+import '../../../styles/resource-page.css';
+
+/**
+ * MTU Series 1600 parts + the newer-generation (F-build) models of Series
+ * 2000 and 4000 that the site's indexed catalog data does not yet cover.
+ *
+ * Model codes, layouts, displacement and power figures below are taken from
+ * MTU's published product data (Power Generation product finder, 60 Hz
+ * ratings) and cross-checked against independent packager tables. They are
+ * reference figures for identification — the engine nameplate always governs.
+ *
+ * Honest framing: this page publishes verified *model* coverage. Part-number
+ * coverage for 1600 and the F-build models is built per inquiry, so every
+ * block ends in a sourcing check instead of an invented parts list.
+ */
+
+type Model = {
+  code: string;
+  layout: string;
+  application: string;
+  rating: string;
+  cooling: string;
+  note: string;
+};
+
+/** Series 1600 — MTU's post-2013 platform. 6R/8V/10V/12V, 122/150 mm, 21.0 L (12V). */
+const models1600: Model[] = [
+  { code: '6R 1600 G10', layout: '6R 直列', application: '发电机组', rating: '—', cooling: '空气/水冷增压', note: '1600 系列入门功率段' },
+  { code: '6R 1600 G20', layout: '6R 直列', application: '发电机组', rating: '—', cooling: '空气/水冷增压', note: '' },
+  { code: '6R 1600 G40 / G50', layout: '6R 直列', application: '发电机组', rating: '—', cooling: '空气/水冷增压', note: '较高功率段' },
+  { code: '8V 1600 G10', layout: '8V', application: '发电机组', rating: '—', cooling: '空气/水冷增压', note: '' },
+  { code: '8V 1600 G20', layout: '8V', application: '发电机组', rating: '—', cooling: '空气/水冷增压', note: '' },
+  { code: '8V 1600 G40 / G50', layout: '8V', application: '发电机组', rating: '—', cooling: '空气/水冷增压', note: '较高功率段' },
+  { code: '10V 1600 G10', layout: '10V', application: '发电机组', rating: '—', cooling: '空气/水冷增压', note: '' },
+  { code: '10V 1600 G20', layout: '10V', application: '发电机组', rating: '—', cooling: '空气/水冷增压', note: '' },
+  { code: '10V 1600 G40 / G50', layout: '10V', application: '发电机组', rating: '—', cooling: '空气/水冷增压', note: '较高功率段' },
+  { code: '12V 1600 G10F', layout: '12V', application: '发电机组', rating: '524 kW', cooling: '空气冷却增压', note: '数据中心连续/主用/备用' },
+  { code: '12V 1600 G11F', layout: '12V', application: '发电机组', rating: '673 kW', cooling: '空气冷却增压', note: '数据中心连续/主用/备用' },
+  { code: '12V 1600 G20F', layout: '12V', application: '发电机组', rating: '576 kW', cooling: '空气冷却增压', note: '主用/数据中心连续/备用' },
+  { code: '12V 1600 G21F', layout: '12V', application: '发电机组', rating: '715 kW', cooling: '空气冷却增压', note: '数据中心连续/主用/备用' },
+  { code: '12V 1600 G31F', layout: '12V', application: '发电机组', rating: '806 kW', cooling: '空气冷却增压', note: '公布范围内的最高主用功率' },
+  { code: '12V 1600 G70F', layout: '12V', application: '发电机组', rating: '634 kW 备用', cooling: '空气冷却增压', note: '备用功率段' },
+  { code: '12V 1600 G71F', layout: '12V', application: '发电机组', rating: '787 kW 备用', cooling: '空气冷却增压', note: '备用功率段' },
+  { code: '12V 1600 G80F', layout: '12V', application: '发电机组', rating: '665 kW 连续', cooling: '空气冷却增压', note: '连续运行功率段' },
+  { code: '12V 1600 G81F / G91F', layout: '12V', application: '发电机组', rating: '备用功率段', cooling: '空气冷却增压', note: '较高备用功率' },
+  { code: '12V 1600 R50', layout: '12V', application: '船用推进', rating: '690 kW (925 bhp) @ 1,900 rpm', cooling: '—', note: '参考机型：总排量 21.0 L，1,850 × 1,200 × 1,200 mm，干重 2,350 kg' },
+];
+
+/**
+ * Newer-generation F-build models of Series 2000 and 4000 published by MTU
+ * (60 Hz product line). The site's indexed catalog data does not yet carry
+ * applicableEngines references for these builds.
+ */
+const fBuildModels: Model[] = [
+  { code: '12V 2000 G16F', layout: '12V', application: '发电机组', rating: '665 kW', cooling: '空气冷却增压', note: '已公布连续/主用/应急功率' },
+  { code: '12V 2000 G26F', layout: '12V', application: '发电机组', rating: '709 kW 主用', cooling: '空气冷却增压', note: '' },
+  { code: '12V 2000 G76F', layout: '12V', application: '发电机组', rating: '740 kW 备用', cooling: '空气冷却增压', note: '' },
+  { code: '12V 2000 G86F', layout: '12V', application: '发电机组', rating: '备用功率段', cooling: '空气冷却增压', note: '' },
+  { code: '16V 2000 G16F', layout: '16V', application: '发电机组', rating: '—', cooling: '空气冷却增压', note: '见于 60 Hz 产品线；功率以铭牌为准' },
+  { code: '16V 2000 G26F', layout: '16V', application: '发电机组', rating: '—', cooling: '空气冷却增压', note: '' },
+  { code: '16V 2000 G36F', layout: '16V', application: '发电机组', rating: '—', cooling: '空气冷却增压', note: '' },
+  { code: '16V 2000 G76F / G86F', layout: '16V', application: '发电机组', rating: '备用功率段', cooling: '空气冷却增压', note: '' },
+  { code: '12V / 16V / 18V 2000 B26F', layout: '12–18V', application: '发电机组（B = 备用/应急构型）', rating: '665 kW 连续（12V）', cooling: '空气冷却增压', note: 'B 构型覆盖 12V、16V 与 18V' },
+  { code: '12V 4000 G14F / G14RF', layout: '12V', application: '发电机组', rating: '—', cooling: '空气冷却增压', note: '4000 发电产品线的首个 F 构型功率段' },
+  { code: '12V 4000 G24F', layout: '12V', application: '发电机组', rating: '—', cooling: '空气冷却增压', note: '' },
+  { code: '12V 4000 G34F', layout: '12V', application: '发电机组', rating: '—', cooling: '空气冷却增压', note: '' },
+  { code: '12V 4000 G74F / G94F', layout: '12V', application: '发电机组', rating: '备用功率段', cooling: '空气冷却增压', note: '' },
+  { code: '16V 4000 G14F / G24F / G34F', layout: '16V', application: '发电机组', rating: '—', cooling: '空气冷却增压', note: '' },
+  { code: '16V 4000 G74F / G84F / G94F', layout: '16V', application: '发电机组', rating: '备用功率段', cooling: '空气冷却增压', note: '' },
+  { code: '20V 4000 G14F / G24F / G34F', layout: '20V', application: '发电机组', rating: '—', cooling: '空气冷却增压', note: '' },
+  { code: '20V 4000 G44F / G64F / G74F / G94F', layout: '20V', application: '发电机组', rating: '备用功率段', cooling: '空气冷却增压', note: '' },
+];
+
+/** How many distinct engine series the indexed catalog data actually covers. */
+const coveredSeries = new Set<string>();
+for (const part of mtuParts) {
+  for (const model of parseModels(part.applicableEngines)) {
+    coveredSeries.add(model.series);
+  }
+}
+const coveredSeriesList = [...coveredSeries].sort((a, b) => Number(a) - Number(b));
+
+const pageUrl = `${site.url}/products/mtu-spare-parts/mtu-1600-series-parts/`;
+const faqItems = [
+  {
+    question: '本页为何不列出 1600 系列的零件号？',
+    answer:
+      '本站索引目录数据目前覆盖' +
+      coveredSeriesList.map((s) => `系列 ${s}`).join('、') +
+      '。上文型号代码均为已公布的 MTU 参考信息，经制造商公开产品数据核验，但 1600 系列的零件号清单尚未收录索引。与其公布未经核验的清单，我们按行逐项报价：请提供型号代码、出厂编号与零件清单，我们将在报价前逐条对照供应商数据确认。',
+  },
+  {
+    question: '1600 发电型号的 F 与 S 后缀有什么区别？',
+    answer:
+      '按 MTU 公布的产品数据，F 代表空气冷却增压（中冷器安装于散热器、取消缸套水冷），S 代表水冷增压冷却。该后缀直接影响增压管路、冷却回路及若干相邻零件，因此确认任何零件参考之前，必须提供铭牌上的完整型号代码。',
+  },
+  {
+    question: '1600 系列是 2000 系列的替代产品吗？',
+    answer:
+      '不是。1600 系列是独立平台（缸径/行程 122/150 mm，12 缸总排量 21.0 L），与 2000 系列并列存在于 MTU 产品线中，架构、额定参数与零件均不相同。搭载 1600 系列发动机的机组通常自 2013 年起投入使用；2000 系列发动机的在役数量仍远大于此。两者的识别都依赖各自的型号代码。',
+  },
+  {
+    question: '型号在本页列出但未收录索引的发动机，可以供应零件吗？',
+    answer:
+      '可以——这正是本页的用途。请提供完整型号代码、出厂编号以及所需零件的零件号或照片。我们将逐条对照当前供应商数据核查，并反馈供货情况、品质等级（全新原厂件、工厂翻新件、OEM 品质替代件）与可行的运输方案。未收录索引绝不等于无货。',
+  },
+];
+---
+
+<BaseLayout
+  title="MTU 1600 系列配件 — 型号覆盖与采购"
+  description="MTU 1600 系列（6R–12V 1600 G/R）及 2000 与 4000 系列新款 F 构型：已核验型号代码、结构形式与公布功率，零件号逐行确认供货。"
+  currentPath="/products/mtu-spare-parts/mtu-1600-series-parts"
+  jsonLd={[
+    breadcrumbSchema([
+      { name: '首页', url: site.url },
+      { name: '产品', url: `${site.url}/products/` },
+      { name: 'MTU 备件', url: `${site.url}/products/mtu-spare-parts/` },
+      { name: '1600 系列与 F 构型', url: pageUrl },
+    ]),
+    faqSchema(faqItems),
+  ]}
+>
+  <FunnelPageView stage="selection" label="mtu-1600-series-parts" />
+  <BreadcrumbHero
+    title="MTU 1600 系列与新款 F 构型"
+    trail={[
+      { label: '首页', href: '/' },
+      { label: '产品', href: '/products/' },
+      { label: 'MTU 备件', href: '/products/mtu-spare-parts/' },
+      { label: '1600 系列与 F 构型' },
+    ]}
+    variant="2"
+  />
+
+  <div class="resource-page">
+    <section class="resource-page-section">
+      <p>
+        有两类 MTU 型号在多数配件网站上都查不到：一是 2013 年后推出的
+        <strong>1600 系列</strong>平台（6R、8V、10V 与 12V，缸径/行程 122/150 mm），二是 2000 与 4000 系列的<strong>新款 F 构型</strong>（G16F、G26F、G34F、B26F 等）。这两类发动机的装机量正在增长，相关询价通常带着型号代码和铭牌信息而来——而不是零件号。
+      </p>
+      <p>
+        本页发布经核验的<strong>型号</strong>覆盖信息：代码、结构形式、应用场景、冷却类型与公布功率。这些构型的零件号清单将逐行对照供应商数据确认，因此每个章节的落点都是采购核验，而非凭空拼凑的零件清单。
+      </p>
+      <p class="resource-note">
+        型号代码与功率数据来自 MTU 公布的产品数据及独立成套商资料。功率随频率、海拔、温度与机组配置而变化——一律以发动机铭牌为准。本站索引目录数据目前覆盖{' '}
+        {coveredSeriesList.map((s) => `系列 ${s}`).join('、')}。
+      </p>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>1600 系列 — 公布型号覆盖</h2>
+      <p>
+        1600 系列是 MTU 当前的中功率平台：6R、8V、10V 与 12 缸构型，缸径/行程 122/150 mm，单缸排量 1.75 L，转速范围 1,800–2,100 rpm。12 缸总排量 21.0 L，参考船用机型 R50 在 1,900 rpm 时输出 690 kW（925 bhp）。G 代码为发电机组功率档；后缀 F 代表空气冷却增压，S 代表水冷增压。
+      </p>
+      <div class="xref-table-wrap">
+        <table class="xref-table">
+          <thead>
+            <tr>
+              <th scope="col">型号代码</th>
+              <th scope="col">结构形式</th>
+              <th scope="col">应用</th>
+              <th scope="col">公布功率</th>
+              <th scope="col">增压冷却方式</th>
+              <th scope="col">备注</th>
+            </tr>
+          </thead>
+          <tbody>
+            {models1600.map((m) => (
+              <tr>
+                <td class="pn-engine">{m.code}</td>
+                <td>{m.layout}</td>
+                <td>{m.application}</td>
+                <td class="pn-kw">{m.rating}</td>
+                <td>{m.cooling}</td>
+                <td>{m.note || '—'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="resource-note">
+        表中 12 缸发电型号的功率档为 MTU 公布的 60 Hz 数据（主用、备用、连续与数据中心功率）。6、8、10 缸变型按 G10/G20/G40/G50 功率段公布，后缀 F（空气冷却增压）与 S（水冷增压）；具体功率段以铭牌为准。
+      </p>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>2000 与 4000 系列 — 新款 F 构型</h2>
+      <p>
+        MTU 持续在 2000 与 4000 平台上发布新款发电构型。下列 F 构型出现在 MTU 当前 60 Hz 产品线中；本站索引目录数据尚未收录它们的 applicableEngines 参考，因此列于此处的目的是识别与采购，而非作为已索引的零件清单。
+      </p>
+      <div class="xref-table-wrap">
+        <table class="xref-table">
+          <thead>
+            <tr>
+              <th scope="col">型号代码</th>
+              <th scope="col">结构形式</th>
+              <th scope="col">应用</th>
+              <th scope="col">公布功率</th>
+              <th scope="col">增压冷却方式</th>
+              <th scope="col">备注</th>
+            </tr>
+          </thead>
+          <tbody>
+            {fBuildModels.map((m) => (
+              <tr>
+                <td class="pn-engine">{m.code}</td>
+                <td>{m.layout}</td>
+                <td>{m.application}</td>
+                <td class="pn-kw">{m.rating}</td>
+                <td>{m.cooling}</td>
+                <td>{m.note || '—'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="resource-note">
+        「—」表示在核查的资料中未公布该型号功率。请提供铭牌照片，我们将直接读取功率与构型代码。
+      </p>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>1600 系列询价处理流程</h2>
+      <p>
+        这些构型的询价按行逐项报价，分三个步骤——与全站一致的核验流程：
+      </p>
+      <div class="catalog-depth-section">
+        <div class="catalog-depth-card">
+          <h3>01 — 凭证</h3>
+          <p>
+            请提供完整型号代码、发动机出厂编号与零件清单（或零部件及安装位置照片）。我们将据此凭证判读构型、冷却类型与功率变型。
+          </p>
+        </div>
+        <div class="catalog-depth-card">
+          <h3>02 — 核验</h3>
+          <p>
+            每一行都按确切构型对照供应商数据核查：供货情况、品质等级（全新原厂件、工厂翻新件、OEM 品质替代件），以及该参考是否已被替代。任何结论都不会仅凭系列名推断。
+          </p>
+        </div>
+        <div class="catalog-depth-card">
+          <h3>03 — 报价</h3>
+          <p>
+            您将收到自上海发出的逐行供货情况、品质等级与可行运输方案——无法确认的行将明确标注，而非给出笼统的目录式回复。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>相关覆盖内容</h2>
+      <ul class="catalog-scenarios-list">
+        <li>按功率段划分的发电机组配件（2000 与 4000 系列）：<a href="/products/mtu-spare-parts/mtu-genset-parts-by-power/">按功率段的 MTU 发电机组配件</a></li>
+        <li>完整零件号索引（EN · DE 标识）：<a href="/part-number-index/">MTU 零件号索引</a></li>
+        <li>按发动机型号划分的零件清单：<a href="/engine-models/">按型号划分的零件清单</a></li>
+        <li>老机型与气体发动机覆盖：<a href="/products/mtu-spare-parts/mtu-legacy-gas-engine-parts/">老机型与气体发动机配件</a></li>
+      </ul>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>1600 系列与 F 构型常见问题</h2>
+      {faqItems.map((item) => (
+        <details class="resource-faq-item">
+          <summary>{item.question}</summary>
+          <p>{item.answer}</p>
+        </details>
+      ))}
+    </section>
+
+    <DetailRfqStrip
+      context="1600 系列 / F 构型采购"
+      heading="请提供型号代码与出厂编号"
+      text="1600 系列与新款 F 构型的询价按行逐项报价。请提供完整型号代码、出厂编号与零件清单——或零部件及安装位置照片。"
+    />
+  </div>
+</BaseLayout>

@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../components/BreadcrumbHero.astro';
+import DetailPageShell from '../../components/DetailPageShell.astro';
+import { modelGroups } from '../../data/engine-models';
+import { breadcrumbSchema, itemListSchema, site } from '../../data/site';
+import '../../styles/resource-page.css';
+
+const pageUrl = `${site.url}/engine-models/`;
+const bySeries = new Map<string, typeof modelGroups>();
+for (const group of modelGroups) bySeries.set(group.series, [...(bySeries.get(group.series) ?? []), group]);
+const totalModels = modelGroups.reduce((sum, group) => sum + group.models.length, 0);
+
+const jsonLd = [
+  breadcrumbSchema([
+    { name: 'Home', url: site.url },
+    { name: 'MTU Engine Parts Lists', url: pageUrl },
+  ]),
+  itemListSchema(modelGroups.map((group) => ({ name: group.title, url: `${site.url}/engine-models/${group.slug}/` }))),
+];
+---
+
+<BaseLayout
+  title="MTU Engine Parts Lists by Model | Diesel Part Source"
+  noTitleSuffix
+  description={`Parts lists for ${totalModels} MTU engine models across Series ${[...bySeries.keys()].join(', ')}, grouped by model family with superseded numbers.`}
+  currentPath="/engine-models"
+  jsonLd={jsonLd}
+>
+  <BreadcrumbHero title="MTU Engine Parts Lists by Model" trail={[{ label: 'Home', href: '/' }, { label: 'Engine Parts Lists' }]} variant="1" />
+
+  <DetailPageShell intro="Find parts by the model code on your engine data plate. Models that share almost the same parts list are grouped on one page, so you see every part number for your model family in one place, sorted by system.">
+    <p>
+      Start with the full model code, for example 16V 4000 M90 or 12V 396 TE94. The cylinder count and series narrow the family, while the application letters and build digits decide which version of a part fits. Each list links to the individual part pages, where fitment notes, earlier numbers, and parts usually ordered together are shown.
+    </p>
+    {[...bySeries.entries()].map(([series, groups]) => (
+      <section class="hub-section">
+        <h2>MTU Series {series}</h2>
+        <ul>
+          {groups.map((group) => (
+            <li>
+              <a href={`/engine-models/${group.slug}/`}>{group.title}</a>: {group.parts.length} part numbers for {group.models.map((model) => model.code).join(', ')}
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </DetailPageShell>
+</BaseLayout>

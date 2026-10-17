@@ -1,0 +1,105 @@
+﻿---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../components/BreadcrumbHero.astro';
+import BlogCta from '../../components/BlogCta.astro';
+import DetailPageShell from '../../components/DetailPageShell.astro';
+import DetailRfqStrip from '../../components/DetailRfqStrip.astro';
+import FunnelPageView from '../../components/FunnelPageView.astro';
+import ServiceSidebar from '../../components/ServiceSidebar.astro';
+import { services, getServiceDetailHtml } from '../../data/services';
+import { breadcrumbSchema, serviceSchema, site } from '../../data/site';
+import '../../styles/resource-page.css';
+
+export function getStaticPaths() {
+  return services.map((service) => ({ params: { slug: service.slug }, props: { service } }));
+}
+
+const { service } = Astro.props;
+const content = getServiceDetailHtml(service.title);
+const pageUrl = `${site.url}/capabilities/${service.slug}/`;
+const quoteHref = `/contact/?source=capability-${service.slug}`;
+---
+
+<BaseLayout
+  title={service.seoTitle}
+  description={service.summary}
+  currentPath="/capabilities"
+  image={service.mainImage}
+  jsonLd={[
+    breadcrumbSchema([
+      { name: 'Home', url: site.url },
+      { name: 'Capabilities', url: `${site.url}/capabilities/` },
+      { name: service.title, url: pageUrl },
+    ]),
+    serviceSchema({
+      name: service.title,
+      description: service.summary,
+      url: pageUrl,
+      image: `${site.url}${service.mainImage}`,
+    }),
+  ]}
+>
+  <FunnelPageView stage="selection" label={`capability-${service.slug}`} />
+  <BreadcrumbHero
+    title={service.h1Title}
+    trail={[
+      { label: 'Home', href: '/' },
+      { label: 'Capabilities', href: '/capabilities/' },
+      { label: service.title },
+    ]}
+    variant="2"
+  />
+
+  <DetailPageShell intro={service.summary}>
+    <img
+      slot="hero"
+      src={service.mainImage}
+      alt={`${service.title} engine parts support`}
+      width="1400"
+      height="692"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+    <div class="resource-meta">
+      <span><strong>Part check</strong> Included</span>
+      <span><strong>Verification</strong> Part number and serial number</span>
+      <span><strong>Response</strong> Fast stock review</span>
+    </div>
+
+    <DetailRfqStrip
+      quoteHref={quoteHref}
+      title="Quote this parts scope"
+      text="Send your part number, engine model, serial number, quantity, and destination for availability review."
+    />
+
+    <div set:html={content.partOne} />
+    <figure class="detail-page-figure">
+      <img src={service.secondImage} alt={`${service.title} parts examples`} width="1200" height="662" loading="lazy" decoding="async" />
+    </figure>
+    <div set:html={content.partTwo} />
+    <p class="resource-note detail-page-back">
+      <a href="/capabilities/">All capabilities</a>
+      ·
+      <a href="/part-products/">Part category guide</a>
+      ·
+      <a href="/contact/?source=parts-list">Inquiry checklist</a>
+      ·
+      <a href={quoteHref}>Request a quote</a>
+    </p>
+    <ServiceSidebar slot="sidebar" activeSlug={service.slug} quoteHref={quoteHref} />
+  </DetailPageShell>
+
+  <BlogCta
+    stage="selection"
+    topic={service.slug}
+    title="Quote this parts scope"
+    text="Send your part number, engine model, serial number, quantity, and destination for availability review."
+    primaryLabel="Send Parts Inquiry"
+    primaryHref={quoteHref}
+    primaryEvent={`capability_${service.slug}_rfq`}
+    secondaryLabel="Part category guide"
+    secondaryHref="/part-products/"
+    secondaryEvent="capability_process_selection"
+  />
+</BaseLayout>

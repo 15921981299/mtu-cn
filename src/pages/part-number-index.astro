@@ -1,0 +1,414 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../components/BreadcrumbHero.astro';
+import FunnelPageView from '../components/FunnelPageView.astro';
+import DetailRfqStrip from '../components/DetailRfqStrip.astro';
+import { mtuParts } from '../data/mtu-parts';
+import { germanCategoryName, germanPartName, germanSeriesName } from '../data/part-names-de';
+import { breadcrumbSchema, faqSchema, site } from '../data/site';
+import '../styles/resource-page.css';
+
+/**
+ * Flat index of every indexed MTU part number, one row per part.
+ *
+ * The German column exists because a large share of the fleet that searches
+ * for these parts works in German (Germany, Austria, Switzerland, much of
+ * the East European fleet), and every competitor parts list carries a
+ * DESIGNATION(DE) column. Ours did not — which meant German-language part
+ * searches had no reason to land here.
+ */
+
+type Row = {
+  partNumber: string;
+  name: string;
+  nameDe: string;
+  category: string;
+  categoryDe: string;
+  series: string;
+  seriesDe: string;
+  slug: string;
+};
+
+const rows: Row[] = mtuParts.map((part) => {
+  const series = part.series.join(', ');
+  const seriesDe = part.series.map(germanSeriesName).join(', ');
+  return {
+    partNumber: part.partNumber,
+    name: part.name,
+    nameDe: germanPartName(part.name),
+    category: part.category,
+    categoryDe: germanCategoryName(part.category),
+    series,
+    seriesDe,
+    slug: part.slug,
+  };
+});
+
+const seriesCounts = new Map<string, number>();
+for (const row of rows) {
+  for (const s of row.series.split(', ')) {
+    if (s) seriesCounts.set(s, (seriesCounts.get(s) ?? 0) + 1);
+  }
+}
+const seriesFilters = [...seriesCounts.entries()]
+  .map(([label, count]) => ({ label, count }))
+  .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
+
+const translatedCount = rows.filter((r) => r.nameDe && r.nameDe !== r.name).length;
+
+// URL-query support for ?q= — the header search form submits here (it is also
+// the SearchAction target). NOTE: the build is static, so at build time there is
+// no query string and this branch is inert; it only produces pre-filtered HTML
+// under an SSR/hybrid output. On the static build the client script below reads
+// ?q= on load and applies the same filter, so the URL works either way.
+const rawQuery = Astro.url.searchParams.get('q')?.trim() ?? '';
+const normQuery = rawQuery.toUpperCase().replace(/[^A-Z0-9]/g, '');
+const hasServerQuery = normQuery.length >= 2;
+const rowMatchesQuery = (row: Row): boolean => {
+  if (!hasServerQuery) return true;
+  const key = `${row.partNumber} ${row.name} ${row.nameDe} ${row.category} ${row.categoryDe} ${row.series} ${row.seriesDe}`
+    .toUpperCase()
+    .replace(/[^A-Z0-9]/g, '');
+  return key.includes(normQuery);
+};
+// All rows stay in the DOM; non-matching ones are hidden with inline CSS so the
+// client filter can still reveal them when the query is cleared.
+const visibleRowCount = rows.filter(rowMatchesQuery).length;
+
+const pageUrl = `${site.url}/part-number-index/`;
+const faqItems = [
+  {
+    question: 'What is this part number index?',
+    answer:
+      'A flat list of every MTU part number indexed on this site, with the English designation, a German designation, the component category, and the engine series. Filter by any fragment — part number, name, category, or series — then open the part page for fitment, weight, HS code, and availability details.',
+  },
+  {
+    question: 'Why is there a German designation column?',
+    answer:
+      'MTU is a German brand and much of the fleet works in German. Every printed MTU parts list carries a German designation column, so we publish standard technical German terms alongside the English names to make identification easier. These are standard translations for search and identification support; the manufacturer’s printed parts list and the engine serial number remain authoritative for ordering.',
+  },
+  {
+    question: 'My part number is not in the index. Can you still supply it?',
+    answer:
+      'Send the complete number, engine model, and serial number for a sourcing check. Absence from this index does not establish availability or unavailability — the index covers the catalog data published on this site, not the full MTU spare-parts range.',
+  },
+  {
+    question: 'A designation looks wrong for my part. What should I do?',
+    answer:
+      'Trust the number on the part and the engine nameplate, not the text label. Send us photos of the part marking, the nameplate, and the installation position, and we will verify the reference before quoting.',
+  },
+];
+---
+
+<BaseLayout
+  title={hasServerQuery ? `"${rawQuery}" — MTU Part Number Index Results` : "MTU Part Number Index — All Series, English & German Designations"}
+  description={hasServerQuery
+    ? `${visibleRows.length} MTU part numbers matching "${rawQuery}" in the part number index, with English and German designations, component category, and engine series.`
+    : `Flat index of ${rows.length} MTU part numbers with English and German designations, component category, and engine series. Filter by number, name, or series, then open the part page for fitment and availability.`}
+  currentPath="/part-number-index"
+  noindex={hasServerQuery}
+  jsonLd={[
+    breadcrumbSchema([
+      { name: 'Home', url: site.url },
+      { name: 'Part Number Index', url: pageUrl },
+    ]),
+    faqSchema(faqItems),
+  ]}
+>
+  <FunnelPageView stage="comparison" label="part-number-index" />
+  <BreadcrumbHero
+    title="MTU Part Number Index"
+    trail={[{ label: 'Home', href: '/' }, { label: 'Part Number Index' }]}
+    variant="2"
+  />
+
+  <div class="resource-page">
+    <section class="resource-page-section">
+      <p>
+        Every MTU part number indexed on this site in one filterable list —
+        <strong>{rows.length} part numbers</strong> across {seriesFilters.length} engine-series
+        labels, from Series 183 to Series 8000. Each row carries the English designation, a
+        <strong>German designation</strong> ({translatedCount} of {rows.length} differ from the
+        English name), the component category, and the engine series.
+      </p>
+      <p>
+        Type any fragment below to filter — part number, English or German name, category, or
+        series — then open the linked part page for fitment notes, weight, HS code, and availability.
+        The German designations are standard technical terms published for identification support;
+        the number on the part and the engine nameplate remain authoritative.
+      </p>
+    </section>
+
+    <section class="resource-page-section">
+      <div class="xref-filter">
+        <input
+          type="search"
+          id="pn-filter-input"
+          placeholder="Type a part number, name, or category, e.g. 52407500064, Ölfilter, injector"
+          aria-label="Filter part number index"
+          autocomplete="off"
+          value={rawQuery}
+        />
+        <span class="xref-filter__count" id="pn-count">
+          {hasServerQuery ? `${visibleRowCount} of ${rows.length} part numbers` : `${rows.length} part numbers`}
+        </span>
+      </div>
+      {hasServerQuery && (
+        <p class="pn-server-query">
+          <strong>{visibleRowCount}</strong> part {visibleRowCount === 1 ? 'number' : 'numbers'} matching
+          <strong> “{rawQuery}”</strong> — open a row for fitment notes, weight, HS code, and availability.
+        </p>
+      )}
+      <div class="pn-series-chips" id="pn-series-chips" role="group" aria-label="Filter by engine series">
+        <button type="button" class="pn-chip is-active" data-series="">All series</button>
+        {seriesFilters.map((s) => (
+          <button type="button" class="pn-chip" data-series={s.label} title={germanSeriesName(s.label)}>
+            {s.label} <span class="pn-chip__count">{s.count}</span>
+          </button>
+        ))}
+      </div>
+      <div class="xref-table-wrap">
+        <table class="xref-table pn-table" id="pn-table">
+          <thead>
+            <tr>
+              <th scope="col">Part Number</th>
+              <th scope="col">Designation (EN)</th>
+              <th scope="col">Designation (DE)</th>
+              <th scope="col">Category</th>
+              <th scope="col">Engine Series</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row) => {
+              const show = rowMatchesQuery(row);
+              return (
+              <tr
+                data-pn-key={`${row.partNumber} ${row.name} ${row.nameDe} ${row.category} ${row.categoryDe} ${row.series} ${row.seriesDe}`}
+                data-pn-series={row.series}
+                style={show ? undefined : 'display:none'}
+              >
+                <td>
+                  <a href={`/part-products/${row.slug}/`}>{row.partNumber}</a>
+                </td>
+                <td>{row.name}</td>
+                <td class="pn-de">{row.nameDe}</td>
+                <td>
+                  {row.category}
+                  {row.categoryDe !== row.category && <span class="pn-cell-de">{row.categoryDe}</span>}
+                </td>
+                <td>
+                  {row.series}
+                  {row.seriesDe !== row.series && <span class="pn-cell-de">{row.seriesDe}</span>}
+                </td>
+              </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        <p class="xref-empty" id="pn-empty" hidden={visibleRowCount > 0}>
+          No match in the part number index. <a href="/contact/?source=pn-index-not-found" data-rfq-modal data-rfq-source="pn-index-not-found" data-rfq-context="Unlisted part number sourcing check">Send us the number</a> —
+          we check availability manually before quoting.
+        </p>
+      </div>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>Part Number Index FAQ</h2>
+      {faqItems.map((item) => (
+        <details class="resource-faq-item">
+          <summary>{item.question}</summary>
+          <p>{item.answer}</p>
+        </details>
+      ))}
+    </section>
+
+    <DetailRfqStrip
+      title="Don't see your part number here? Just ask."
+      text="Send the complete part number, engine model, and serial number. We verify the reference and availability before quoting — absence from this index does not mean the part is unavailable."
+      quoteHref="/contact/?source=part-number-index"
+      label="Send My Part Number"
+      modalSource="part-number-index"
+    />
+  </div>
+</BaseLayout>
+
+<script>
+  const input = document.getElementById('pn-filter-input') as HTMLInputElement | null;
+  const table = document.getElementById('pn-table');
+  const empty = document.getElementById('pn-empty');
+  const count = document.getElementById('pn-count');
+  const chips = Array.from(document.querySelectorAll<HTMLButtonElement>('.pn-chip'));
+  const rows = table ? Array.from(table.querySelectorAll<HTMLTableRowElement>('tbody tr')) : [];
+  let activeSeries = '';
+
+  const norm = (value: string) => value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+
+  function applyFilters() {
+    const q = norm(input?.value ?? '');
+    let visible = 0;
+    for (const row of rows) {
+      const key = norm((row as HTMLElement).dataset.pnKey ?? '');
+      const series = (row as HTMLElement).dataset.pnSeries ?? '';
+      const matchesText = !q || key.includes(q);
+      const matchesSeries = !activeSeries || series.split(', ').includes(activeSeries);
+      const show = matchesText && matchesSeries;
+      row.style.display = show ? '' : 'none';
+      if (show) visible++;
+    }
+    if (empty) empty.hidden = visible > 0;
+    if (count) {
+      count.textContent = q || activeSeries
+        ? `${visible} of ${rows.length} part numbers`
+        : `${rows.length} part numbers`;
+    }
+  }
+
+  input?.addEventListener('input', applyFilters);
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      chips.forEach((c) => c.classList.remove('is-active'));
+      chip.classList.add('is-active');
+      activeSeries = chip.dataset.series ?? '';
+      applyFilters();
+    });
+  });
+
+  // The header search form submits to /part-number-index/?q=… (also the
+  // SearchAction target). The build is static, so the frontmatter filter only
+  // activates under SSR — on the static build the filter is applied here on
+  // load from the URL, which keeps the query URL directly usable.
+  const urlQuery = new URLSearchParams(window.location.search).get('q');
+  if (urlQuery && input) {
+    input.value = urlQuery;
+    applyFilters();
+  }
+</script>
+
+<style>
+  .pn-server-query {
+    margin: 0 0 16px;
+    color: #475569;
+  }
+
+  .xref-filter {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .xref-filter input {
+    flex: 1;
+    border: 1px solid var(--color-stroke, #d7dee8);
+    border-radius: 6px;
+    padding: 12px 14px;
+    font: inherit;
+  }
+
+  .xref-filter__count {
+    color: #64748b;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  .pn-series-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .pn-chip {
+    border: 1px solid var(--color-stroke, #d7dee8);
+    background: #fff;
+    border-radius: 999px;
+    padding: 6px 14px;
+    font: inherit;
+    font-size: 14px;
+    color: #334155;
+    cursor: pointer;
+  }
+
+  .pn-chip:hover {
+    border-color: var(--color-primary, #146ef5);
+    color: var(--color-primary, #146ef5);
+  }
+
+  .pn-chip.is-active {
+    background: var(--color-primary, #146ef5);
+    border-color: var(--color-primary, #146ef5);
+    color: #fff;
+  }
+
+  .pn-chip__count {
+    opacity: 0.7;
+    font-size: 12px;
+    margin-left: 2px;
+  }
+
+  .xref-table-wrap {
+    overflow-x: auto;
+  }
+
+  .xref-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+
+  .xref-table th,
+  .xref-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .xref-table th {
+    background: #f8fafc;
+    font-weight: 700;
+    position: sticky;
+    top: 0;
+  }
+
+  .xref-table a {
+    color: var(--color-primary, #146ef5);
+    font-weight: 700;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    white-space: nowrap;
+  }
+
+  .pn-de {
+    color: #475569;
+  }
+
+  .pn-cell-de {
+    display: block;
+    font-size: 0.82em;
+    color: #64748b;
+  }
+
+  .xref-empty {
+    padding: 24px;
+    text-align: center;
+    color: #475569;
+  }
+
+  .resource-faq-item {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+
+  .resource-faq-item summary {
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  .resource-faq-item p {
+    margin: 10px 0 0;
+    color: #475569;
+    line-height: 1.6;
+  }
+</style>

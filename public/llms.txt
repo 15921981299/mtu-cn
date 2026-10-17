@@ -1,0 +1,59 @@
+# Diesel Part Source — LLM / AI crawler index
+# https://dieselpartsource.com
+
+> Diesel engine parts supplier based in Shanghai. Diesel Part Source supplies MTU, Detroit Diesel, Cummins, and DEUTZ parts for marine, industrial, power generation, rail, shipyard, and repair customers. Buyers can inquire by part number, engine model, serial number, nameplate photo, old part photo, quantity, and destination.
+
+## Part number catalog (core asset)
+
+- [All part numbers](https://dieselpartsource.com/part-products/) — 840+ individual part pages with weight, HS code, NATO number, superseded references, and fitment notes. URL pattern: /part-products/{partnumber-part-name}/
+- [Machine-readable part index (JSON)](https://dieselpartsource.com/search-index.json) — flat list of every part number, name, engine series, and page slug for programmatic lookup
+- [Cross-reference index](https://dieselpartsource.com/cross-reference/) — 1,400+ verified interchange pairs: OEM / superseded / other-supplier part number → the part we supply
+- [MTU 2000 series catalog](https://dieselpartsource.com/part-products/catalog/mtu-2000-series/)
+- [MTU 4000 series catalog](https://dieselpartsource.com/part-products/catalog/mtu-4000-series/)
+- [MTU 396 series catalog](https://dieselpartsource.com/part-products/catalog/mtu-396-series/)
+- [MTU injectors](https://dieselpartsource.com/part-products/catalog/mtu-injectors/)
+- [MTU filters](https://dieselpartsource.com/part-products/catalog/mtu-filters/)
+- [MTU sensors](https://dieselpartsource.com/part-products/catalog/mtu-sensors/)
+
+## Parts guides (data-backed)
+
+- [MTU 2000 overhaul parts guide](https://dieselpartsource.com/guides/mtu-2000-overhaul-parts/) — real in-catalog parts grouped by system, with serial-number verification workflow
+- [MTU 4000 overhaul parts guide](https://dieselpartsource.com/guides/mtu-4000-overhaul-parts/)
+- [MTU 396 series parts selection guide](https://dieselpartsource.com/guides/mtu-396-series-parts/)
+
+## Brand hubs
+
+- [MTU Spare Parts](https://dieselpartsource.com/products/mtu-spare-parts/)
+- [MTU 2000 Series Parts](https://dieselpartsource.com/products/mtu-2000-series-parts/)
+- [MTU 4000 Series Parts](https://dieselpartsource.com/products/mtu-4000-series-parts/)
+- [Cummins Parts](https://dieselpartsource.com/products/cummins-parts/)
+- [DEUTZ Parts](https://dieselpartsource.com/products/deutz-parts/)
+
+## Service and support
+
+- [MTU Engine Parts](https://dieselpartsource.com/capabilities/mtu-engine-parts/)
+- [Cummins Engine Parts](https://dieselpartsource.com/capabilities/cummins-engine-parts/)
+- [DEUTZ Engine Parts](https://dieselpartsource.com/capabilities/deutz-engine-parts/)
+- [Marine Engine Service](https://dieselpartsource.com/capabilities/marine-engine-service/)
+- [Industrial Engine Service](https://dieselpartsource.com/capabilities/industrial-engine-service/)
+- [Verified OEM Sourcing](https://dieselpartsource.com/capabilities/genuine-oem-parts/)
+
+## Industries and applications
+
+- [Marine](https://dieselpartsource.com/industries/marine/)
+- [Industrial Engines](https://dieselpartsource.com/industries/industrial-engines/)
+- [Power Generation](https://dieselpartsource.com/industries/power-generation/)
+- [Rail](https://dieselpartsource.com/industries/rail/)
+- [Shipyards & Repair](https://dieselpartsource.com/industries/shipyards-repair/)
+- [Energy Suppliers](https://dieselpartsource.com/industries/energy-suppliers/)
+
+## How to request a quote
+
+Buyers get fastest pricing by sending: part number (or old-part photo / nameplate photo), engine model, engine serial number, quantity, and destination country. Superseded and interchange numbers are verified before quoting; both OEM and OEM-alternative routes are quoted when available.
+
+- Inquiry form: https://dieselpartsource.com/contact/
+- Email: sales@dieselpartsource.com
+- Phone: +8615921981299
+- WhatsApp: +8615921981299
+- Legal name: Shanghai Diesel Part Source Co., Ltd.
+- Address: Room 401, No. 655 Jialin Road, Pudong New Area, Shanghai, 201206, China

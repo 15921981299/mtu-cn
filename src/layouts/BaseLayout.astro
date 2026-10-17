@@ -1,0 +1,135 @@
+---
+import '@fontsource/urbanist/400.css';
+import '@fontsource/urbanist/500.css';
+import '@fontsource/inter-tight/400.css';
+import '@fontsource/inter-tight/500.css';
+import '@fontsource/inter-tight/600.css';
+import '../styles/global.css';
+import '../styles/pages.css';
+import '../styles/forms.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import VideoLightbox from '../components/VideoLightbox.astro';
+import JsonLd from '../components/JsonLd.astro';
+import Analytics from '../components/Analytics.astro';
+import AttributionTracker from '../components/AttributionTracker.astro';
+import Gtm from '../components/Gtm.astro';
+import FloatingQuote from '../components/FloatingQuote.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import RfqModal from '../components/RfqModal.astro';
+import { organizationSchema, site } from '../data/site';
+
+interface Props {
+  title: string;
+  description?: string;
+  currentPath?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  hideFloatingCta?: boolean;
+  /** Per-page Open Graph image (absolute path from site root, e.g. "/images/foo.webp"). Falls back to the default. */
+  image?: string;
+  /** Set true on confirmation/utility pages to keep them out of the index. */
+  noindex?: boolean;
+  /** og:type — "website" (default) or "article" for blog posts. */
+  ogType?: 'website' | 'article';
+  /** ISO date for blog article Open Graph tags. */
+  articlePublishedTime?: string;
+  /** Skip the "| <site.name>" title suffix — for long part-number titles where SERP real estate matters. */
+  noTitleSuffix?: boolean;
+}
+
+const {
+  title,
+  description = site.defaultDescription,
+  currentPath = Astro.url.pathname.replace(/\/$/, '') || '/',
+  jsonLd,
+  hideFloatingCta = false,
+  image,
+  noindex = false,
+  ogType = 'website',
+  articlePublishedTime,
+  noTitleSuffix = false,
+} = Astro.props;
+
+const fullTitle = noTitleSuffix || title.includes(site.name) ? title : `${title} | ${site.name}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(image ?? '/images/og-mtu-engine-parts.jpg', Astro.site);
+const schemas = [
+  organizationSchema,
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: site.name,
+    url: site.url,
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${site.url}/part-number-index/?q={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
+  },
+  ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []),
+];
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {site.googleSiteVerification && (
+      <meta name="google-site-verification" content={site.googleSiteVerification} />
+    )}
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" type="image/png" href="/favicon.png" />
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    {site.gaMeasurementId && <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />}
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:url" content={canonical} />
+    {articlePublishedTime && (
+      <>
+        <meta property="article:published_time" content={articlePublishedTime} />
+        <meta property="article:author" content={site.name} />
+      </>
+    )}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <JsonLd schema={schemas} />
+    <Gtm placement="head" />
+    {!site.gtmContainerId && <Analytics />}
+    <AttributionTracker />
+  </head>
+  <body>
+    <Gtm placement="body" />
+    <div class="page-wrapper">
+      <Header currentPath={currentPath} />
+      <main class="main-wrapper">
+        <slot />
+      </main>
+      <Footer />
+    </div>
+    <VideoLightbox />
+    <RfqModal />
+    {!hideFloatingCta && <WhatsAppButton />}
+    {!hideFloatingCta && <FloatingQuote />}
+    <script>
+      import '../scripts/lightbox.ts';
+      import '../scripts/animations.ts';
+      import '../scripts/tabs.ts';
+      import '../scripts/forms.ts';
+      import '../scripts/tracking.ts';
+    </script>
+  </body>
+</html>

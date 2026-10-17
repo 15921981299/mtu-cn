@@ -1,0 +1,126 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../components/BreadcrumbHero.astro';
+import DetailPageShell from '../../components/DetailPageShell.astro';
+import DetailRfqStrip from '../../components/DetailRfqStrip.astro';
+import { describeModel, getSeriesCatalogHub, isListedPart, modelApplication, modelBuildLabel, modelGroups, type ModelGroup } from '../../data/engine-models';
+import { breadcrumbSchema, itemListSchema, site } from '../../data/site';
+import '../../styles/resource-page.css';
+
+export function getStaticPaths() {
+  return modelGroups.map((group) => ({ params: { slug: group.slug }, props: { group } }));
+}
+
+const { group } = Astro.props as { group: ModelGroup };
+const pageUrl = `${site.url}/engine-models/${group.slug}/`;
+const quoteHref = `/contact/?source=engine-models-${group.slug}`;
+const modelCodes = group.models.map((model) => model.code);
+const modelText = modelCodes.length <= 4 ? modelCodes.join(', ') : `${modelCodes.slice(0, 3).join(', ')} and ${modelCodes.length - 3} more`;
+
+const byCategory = new Map<string, typeof group.parts>();
+for (const part of group.parts) byCategory.set(part.category, [...(byCategory.get(part.category) ?? []), part]);
+const categories = [...byCategory.entries()].sort((a, b) => b[1].length - a[1].length);
+const withHistory = group.parts.filter((part) => (part.replacementFor ?? []).length > 0);
+const applications = [...new Set(group.models.map(modelApplication).filter((value): value is string => Boolean(value)))];
+const cylinderOptions = [...new Set(group.models.map((model) => `${model.cylinders}${model.arrangement}`))];
+const hub = getSeriesCatalogHub(group.series);
+
+const description = `${group.parts.length} catalogued MTU part numbers for ${modelText}, grouped by system, with superseded numbers and model-code notes. Send your engine serial number for a quote.`.slice(0, 158);
+
+const jsonLd = [
+  breadcrumbSchema([
+    { name: 'Home', url: site.url },
+    { name: 'MTU Engine Parts Lists', url: `${site.url}/engine-models/` },
+    { name: group.title, url: pageUrl },
+  ]),
+  itemListSchema(group.parts.filter(isListedPart).slice(0, 50).map((part) => ({ name: `${part.partNumber} ${part.name}`, url: `${site.url}/part-products/${part.slug}/` }))),
+];
+---
+
+<BaseLayout title={`${group.title} (${group.parts.length} Part Numbers)`} noTitleSuffix description={description} currentPath="/engine-models" jsonLd={jsonLd}>
+  <BreadcrumbHero
+    title={group.title}
+    trail={[
+      { label: 'Home', href: '/' },
+      { label: 'Engine Parts Lists', href: '/engine-models/' },
+      { label: group.title },
+    ]}
+    variant="1"
+  />
+
+  <DetailPageShell intro={`This list brings together the ${group.parts.length} part numbers our catalog records for ${modelText}. The engines share most of their service parts, so they are listed on one page; the exact fitment of each part is still confirmed against the engine serial number before quotation.`}>
+    <div class="resource-meta">
+      <span><strong>Series</strong> MTU {group.series}</span>
+      <span><strong>Models</strong> {group.models.length}</span>
+      <span><strong>Part numbers</strong> {group.parts.length}</span>
+      <span><strong>With earlier numbers</strong> {withHistory.length}</span>
+    </div>
+
+    <DetailRfqStrip
+      quoteHref={quoteHref}
+      title={`Request parts for ${modelCodes[0]}${modelCodes.length > 1 ? ' and related models' : ''}`}
+      text="Send the engine model, serial number, part numbers or a parts list, quantity, and destination."
+      secondaryHref={hub ? `/part-products/catalog/${hub.slug}/` : '/part-products/'}
+      secondaryLabel={hub ? hub.title : 'MTU parts catalog'}
+    />
+
+    <h2>Engine Models Covered</h2>
+    <p>
+      The list covers {cylinderOptions.join(', ')} versions of the Series {group.series}
+      {applications.length > 0 ? ` for ${applications.join(' and ')}` : ''}. Each model code below is read from left to right: cylinder count and arrangement, series, then the application and build codes. The <a href="/products/mtu-spare-parts/mtu-engine-series-guide/">MTU engine series guide</a> explains the naming systems in full.
+    </p>
+    <div class="part-reference-scroll" tabindex="0" role="region" aria-label="Engine models in this parts list">
+      <table class="part-reference-table">
+        <thead><tr><th scope="col">Model</th><th scope="col">Cylinders</th><th scope="col">Arrangement</th><th scope="col">Application</th><th scope="col">Group / build</th><th scope="col">How the code reads</th></tr></thead>
+        <tbody>{group.models.map((model) => (
+          <tr>
+            <th scope="row">{model.code}</th>
+            <td>{model.cylinders}</td>
+            <td>{model.arrangement === 'V' ? 'V' : 'In-line'}</td>
+            <td>{modelApplication(model) ?? '—'}</td>
+            <td>{modelBuildLabel(model)}</td>
+            <td>{describeModel(model)}</td>
+          </tr>
+        ))}</tbody>
+      </table>
+    </div>
+
+    <h2>Parts by System</h2>
+    <p>{categories.map(([category, parts]) => `${category} (${parts.length})`).join(', ')}.</p>
+    {categories.map(([category, parts]) => (
+      <section class="hub-section">
+        <h3>{category}</h3>
+        <div class="part-reference-scroll" tabindex="0" role="region" aria-label={`${category} part numbers`}>
+          <table class="part-reference-table">
+            <thead><tr><th scope="col">Part number</th><th scope="col">Description</th><th scope="col">Earlier numbers</th></tr></thead>
+            <tbody>{parts.map((part) => (
+              <tr>
+                <th scope="row"><a href={`/part-products/${part.slug}/`}>{part.partNumber}</a></th>
+                <td>{part.name}</td>
+                <td>{(part.replacementFor ?? []).slice(0, 3).join(', ') || '-'}</td>
+              </tr>
+            ))}</tbody>
+          </table>
+        </div>
+      </section>
+    ))}
+
+    <h2>Superseded Numbers in This List</h2>
+    <p>
+      {withHistory.length > 0
+        ? `${withHistory.length} of the ${group.parts.length} parts have earlier numbers on record. Older parts lists and engine manuals often still quote those numbers. Send them as they appear and we match them to the current number, checking whether the change affects related parts.`
+        : 'No earlier numbers are recorded for the parts in this list. If your documents show a different number, send it as it appears and we check it against the catalog history.'}
+    </p>
+
+    <h2>What to Send for a Quotation</h2>
+    <ul>
+      <li>Full model code from the data plate, for example {modelCodes[0]}</li>
+      <li>Engine serial number, which decides the build standard and fitment</li>
+      <li>Part numbers as listed in your documents, including old numbers</li>
+      <li>Quantity, destination, and required delivery date</li>
+    </ul>
+    <p>
+      For background on the series, see {hub ? <a href={`/part-products/catalog/${hub.slug}/`}>{hub.title}</a> : <a href="/part-products/">the MTU parts catalog</a>} and <a href="/products/mtu-spare-parts/mtu-engine-series-guide/">how to read MTU model codes</a>.
+    </p>
+  </DetailPageShell>
+</BaseLayout>

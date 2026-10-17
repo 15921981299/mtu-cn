@@ -1,0 +1,234 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../components/BreadcrumbHero.astro';
+import DetailPageShell from '../../components/DetailPageShell.astro';
+import DetailRfqStrip from '../../components/DetailRfqStrip.astro';
+import FaqSection from '../../components/FaqSection.astro';
+import { breadcrumbSchema, itemListSchema, faqSchema, site } from '../../data/site';
+import '../../styles/resource-page.css';
+
+const title = 'MTU 12V 396 TE94 Spare Parts';
+const seoTitle = 'MTU 12V 396 TE94 Spare Parts — 1,680 kW High-Speed Marine & Genset Engine (165 × 185 mm)';
+const description = 'MTU 12V 396 TE94 spare parts: genuine, reconditioned-exchange and documented-alternative supply for the 1,680 kW / 2,253 bhp high-speed V12 marine & genset engine. Cross-reference table with live RFQ-verified numbers, part-identification guide, and global shipping from Shanghai.';
+const pageUrl = `${site.url}/series/12v396te94/`;
+const quoteHref = `/contact/?source=12v396te94`;
+
+const specs = [
+  { k: 'Configuration', v: '90° V12, four-stroke, turbocharged + aftercooled' },
+  { k: 'Bore × stroke', v: '165 × 185 mm' },
+  { k: 'Displacement', v: '~47.5 L (3.96 L/cylinder)' },
+  { k: 'Rated power', v: '1,680 kW / 2,253 bhp @ 1,950–2,000 rpm' },
+  { k: 'Specific fuel consumption', v: '218 g/kWh (≈346.5 L/h at rated, genset)' },
+  { k: 'Dry mass', v: '~6,000 kg' },
+  { k: 'Dimensions (L × W × H)', v: '~2562 × 1482 × 1916 mm' },
+  { k: 'Emission', v: 'IMO Tier II / EPA Tier 2; EIAPP certificate' },
+  { k: 'Starting', v: '24V electric' },
+  { k: 'Applications', v: 'Crewboats, patrol craft, yachts, marine generator sets' },
+];
+
+// 396 family seeds + RFQ-verified numbers (apply to the 12V396TE94).
+const crossRef = [
+  { pn: '0005350260', desc: 'Exhaust gas thermocouple', fit: '396 exhaust temp sensing', src: 'RFQ · Israel buyer', tag: 'rfq' },
+  { pn: '0005353960', desc: 'Exhaust gas thermocouple', fit: '396 exhaust temp sensing', src: 'RFQ · Israel buyer', tag: 'rfq' },
+  { pn: '5600160180', desc: 'Gasket', fit: '396 general', src: 'RFQ · Oman buyer', tag: 'rfq' },
+  { pn: '5582040406', desc: 'Impeller (cooling pump)', fit: '396 seawater pump', src: 'catalog seed', tag: 'cat' },
+  { pn: '5110809821', desc: 'Turbine wheel', fit: '396 turbocharger', src: 'catalog seed', tag: 'cat' },
+  { pn: '5501800016', desc: 'Oil filter element', fit: '396 lubrication', src: 'catalog seed', tag: 'cat' },
+  { pn: '5090850060', desc: 'Piston ring', fit: '396 piston', src: 'catalog seed', tag: 'cat' },
+  { pn: '5500500333 / 5500500334', desc: 'Rocker arm (inlet / exhaust)', fit: '396 valve train', src: 'catalog seed', tag: 'cat' },
+  { pn: '5550533244', desc: 'Valve guide (inlet)', fit: '396 cylinder head', src: 'catalog seed', tag: 'cat' },
+  { pn: '0045427217', desc: 'Temperature monitor', fit: '396 sensing', src: 'catalog seed', tag: 'cat' },
+  { pn: '0011535528', desc: 'Pressure transmitter', fit: '396 sensing', src: 'catalog seed', tag: 'cat' },
+  { pn: '—', desc: 'Exhaust thermocouple cross-ref (non-MTU brand)', fit: '396', src: 'catalog · "Thermo Fisher 33.700.040" — unverified, request photo', tag: 'cat' },
+];
+
+const listItems = crossRef.filter((r) => r.pn !== '—').map((r) => ({ name: `${r.pn} — ${r.desc}`, url: pageUrl }));
+
+const faqItems = [
+  {
+    question: 'Is "MTU 396" enough to order a 12V396TE94 part?',
+    answer: 'No. The 12V396TE94 is one configuration of the 396 family (TE = enhanced fast-craft duty, 94 = rating). Add the complete designation, the engine serial number, and the number marked on the old part so we match the exact gasket set, thermocouple, or liner for your TE94 build.',
+  },
+  {
+    question: 'Do you supply genuine MTU thermocouples for the 396?',
+    answer: 'Yes — we quote genuine branded OE thermocouples for the 396 family. Numbers 0005350260 and 0005353960 on this page were verified from a live inbound enquiry (Israel buyer) who required branded OE parts, no white-label. Where a number crosses to a non-MTU sensor brand we confirm with a photo before quoting.',
+  },
+  {
+    question: 'What is the 12V396TE94 rated power?',
+    answer: 'The 12V396TE94 is rated ~1,680 kW (2,253 bhp) at 1,950–2,000 rpm. A 46 m crewboat case study selected three 12V396TE94 units at 1,680 kW each over a CAT 3516B alternative. Confirm the exact rating on the identification plate.',
+  },
+  {
+    question: 'What do you need to quote a 12V396TE94 part?',
+    answer: 'Engine model + serial + part number + description + quantity. A photo of the old part shortens identification significantly. For thermocouples and sensors, the engine rating and build year also help.',
+  },
+  {
+    question: 'How fast can you quote an identified number?',
+    answer: 'Typically within one business day for a number we can confirm against the 12V396TE94 designation. RFQ-verified numbers on this page (0005350260, 0005353960, 5600160180) are quoted from stock or named-supplier channels the same business day.',
+  },
+];
+
+const jsonLd = [
+  breadcrumbSchema([
+    { name: 'Home', url: site.url },
+    { name: 'MTU Spare Parts', url: `${site.url}/products/mtu-spare-parts/` },
+    { name: 'MTU 396 Series', url: `${site.url}/series/mtu-396/` },
+    { name: title, url: pageUrl },
+  ]),
+  itemListSchema(listItems),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout
+  title={seoTitle}
+  description={description}
+  currentPath="/series/12v396te94"
+  image="/images/mtu-engine-parts-hero.webp"
+  jsonLd={jsonLd}
+>
+  <BreadcrumbHero
+    title={title}
+    trail={[
+      { label: 'Home', href: '/' },
+      { label: 'MTU Spare Parts', href: '/products/mtu-spare-parts/' },
+      { label: 'MTU 396 Series', href: '/series/mtu-396/' },
+      { label: title },
+    ]}
+    variant="1"
+  />
+
+  <DetailPageShell intro="The MTU 12V 396 TE94 is a high-speed, four-stroke V12 marine and genset diesel rated at 1,680 kW (2,253 bhp) at 1,950–2,000 rpm — a common propulsion choice for crewboats, patrol craft and fast commercial vessels, and a proven marine generator set. This page is a single-model deep dive: confirmed engine specifications, the parts we regularly supply with live RFQ-verified cross-references, and a part-identification process built for the exact TE94 build.">
+    <img
+      slot="hero"
+      src="/images/mtu-engine-parts-hero.webp"
+      alt="MTU 12V 396 TE94 engine parts inquiry"
+      width="1400"
+      height="692"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+
+    <div class="resource-meta">
+      <span><strong>Model</strong> 12V 396 TE94</span>
+      <span><strong>Power</strong> 1,680 kW @ 2,000 rpm</span>
+      <span><strong>Bore × Stroke</strong> 165 × 185 mm</span>
+      <span><strong>Delivery</strong> Global shipping</span>
+    </div>
+
+    <DetailRfqStrip
+      quoteHref={quoteHref}
+      title="Request 12V 396 TE94 parts"
+      text="Send engine serial number, part numbers, quantity, destination, and required delivery date."
+      secondaryHref="/series/mtu-396/"
+      secondaryLabel="MTU 396 series hub"
+    />
+
+    <h2>1. Engine specifications (12V 396 TE94)</h2>
+    <div class="resource-table-wrap">
+      <table class="resource-table">
+        <thead>
+          <tr><th>Parameter</th><th>Value</th></tr>
+        </thead>
+        <tbody>
+          {specs.map((r) => (
+            <tr>
+              <td><strong>{r.k}</strong></td>
+              <td>{r.v}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="resource-note">Confirm the exact rating and suffix (TE94) against the engine identification plate. The 396 family has run for decades, so verify against serial before ordering.</p>
+
+    <h2>2. Spare parts we supply, by system</h2>
+    <div class="hub-grid">
+      <a class="hub-card" href="/part-products/catalog/mtu-396-series/"><div class="hub-card-body"><h3 class="hub-card-title">Cylinder head &amp; valve train</h3><p class="hub-card-summary">Valve guides, seats, springs, rocker arms, cylinder-head gaskets.</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-injectors/"><div class="hub-card-body"><h3 class="hub-card-title">Fuel system</h3><p class="hub-card-summary">Injectors &amp; nozzles, nozzle holders, injection pumps, fuel delivery pumps.</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-gasket-kits/"><div class="hub-card-body"><h3 class="hub-card-title">Gaskets &amp; seals</h3><p class="hub-card-summary">Head gaskets, O-rings, copper sealing rings, gasket sets.</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-turbocharger-parts/"><div class="hub-card-body"><h3 class="hub-card-title">Turbocharger</h3><p class="hub-card-summary">Turbine wheels, cartridges, ZR140 / ZR170 / ZR210 service kits.</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-filters/"><div class="hub-card-body"><h3 class="hub-card-title">Cooling &amp; lube</h3><p class="hub-card-summary">Seawater &amp; freshwater pumps, impellers, heat-exchanger kits, thermostats.</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-sensors/"><div class="hub-card-body"><h3 class="hub-card-title">Sensors &amp; MDEC</h3><p class="hub-card-summary">Exhaust thermocouples, temp / pressure transmitters, engine-management modules.</p></div></a>
+    </div>
+
+    <h2>3. Part-number cross-reference (live + catalog)</h2>
+    <p>Tags: <span class="rfq-badge rfq">RFQ</span> = verified from an inbound enquiry we received; <span class="rfq-badge cat">catalog</span> = public MTU 396 cross-reference seed. The RFQ numbers below were confirmed from real 396 enquiries and apply to the TE94.</p>
+    <div class="resource-table-wrap">
+      <table class="resource-table">
+        <thead>
+          <tr><th>Part number</th><th>Description</th><th>396 fitment</th><th>Source / cross-ref</th></tr>
+        </thead>
+        <tbody>
+          {crossRef.map((r) => (
+            <tr>
+              <td><code>{r.pn}</code></td>
+              <td>{r.desc}</td>
+              <td>{r.fit}</td>
+              <td>
+                {r.tag === 'rfq' ? <span class="rfq-badge rfq">RFQ</span> : <span class="rfq-badge cat">catalog</span>}
+                {' '}{r.src}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="resource-note">Don't see your number? Send it (with the engine serial) via the form — we add confirmed numbers to this page and the 396 hub's growing list.</p>
+
+    <h2>4. How to identify your exact part</h2>
+    <ul class="resource-list">
+      <li><strong>Complete engine designation</strong> (e.g. <code>12V396TE94</code>, not just "396")</li>
+      <li><strong>Engine serial number</strong> from the identification plate</li>
+      <li><strong>Existing component part number</strong> — the marking on the old part beats any photo title</li>
+      <li><strong>Component description + quantity</strong>, and a photo of the old part where possible</li>
+    </ul>
+
+    <h2>5. Supply options</h2>
+    <div class="hub-grid">
+      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">Genuine new</h3><p class="hub-card-summary">Original MTU-packaged components with full traceability — best where the documentation chain has to stand up to inspection.</p></div></div>
+      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">Reconditioned / exchange</h3><p class="hub-card-summary">Factory-level overhaul of pumps, injectors, turbochargers — typically 30–40% lower cost, faster lead time.</p></div></div>
+      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">Documented alternative</h3><p class="hub-card-summary">Verified equivalents for non-critical items where the buyer accepts them — best value for routine overhaul.</p></div></div>
+    </div>
+
+    <h2>6. MTU series cluster</h2>
+    <div class="hub-grid">
+      <a class="hub-card" href="/series/mtu-396/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 396 Series Hub</h3><p class="hub-card-summary">Full 8V / 12V / 16V family overview.</p></div></a>
+      <a class="hub-card" href="/series/mtu-396-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 396 Variant Decoder</h3><p class="hub-card-summary">TB / TC / TE / SE duty codes and per-model table.</p></div></a>
+      <a class="hub-card" href="/series/mtu-2000/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 2000 Series Hub</h3><p class="hub-card-summary">8V / 12V / 16V / 18V high-speed engines.</p></div></a>
+      <a class="hub-card" href="/series/mtu-4000-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 4000 Variant Decoder</h3><p class="hub-card-summary">M05 / M03 / C05 / R03 / R04 / T05 + M-duty notation.</p></div></a>
+    </div>
+
+    <FaqSection items={faqItems} title="MTU 12V 396 TE94 FAQ" subtitle="FAQ" />
+  </DetailPageShell>
+</BaseLayout>
+
+<style>
+  .rfq-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    letter-spacing: 0.03em;
+    vertical-align: middle;
+  }
+  .rfq-badge.rfq {
+    background: #fdeccb;
+    color: #9a5b00;
+  }
+  .rfq-badge.cat {
+    background: #e4eef7;
+    color: var(--color-primary);
+  }
+  .hub-card h3.hub-card-title {
+    font-size: 17px;
+  }
+  .resource-table code {
+    background: #eef3f8;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #0a3d66;
+  }
+</style>

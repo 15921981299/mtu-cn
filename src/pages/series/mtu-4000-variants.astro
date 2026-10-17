@@ -1,0 +1,260 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../components/BreadcrumbHero.astro';
+import DetailPageShell from '../../components/DetailPageShell.astro';
+import DetailRfqStrip from '../../components/DetailRfqStrip.astro';
+import FaqSection from '../../components/FaqSection.astro';
+import { breadcrumbSchema, itemListSchema, faqSchema, site } from '../../data/site';
+import '../../styles/resource-page.css';
+
+const title = 'MTU 4000 Variant Decoder';
+const seoTitle = 'MTU 4000 Variant Decoder — M05 / M03 / C05 / R03 / R04 / T05 Versions & M-Duty Notation';
+const description = 'Decode the MTU 4000 designation: application versions (M05 / M03 / C05 / R03 / R04 / T05), the M-duty notation (M53 → M93), and bore/stroke differences by version. Per-model power table and part-identification guide for the 12V / 16V / 20V family.';
+const pageUrl = `${site.url}/series/mtu-4000-variants/`;
+const quoteHref = `/contact/?source=mtu-4000-variants`;
+
+const verRows = [
+  { ver: 'M05', app: 'Marine main propulsion & onboard power', cyl: '12V / 16V / 20V', emis: 'IMO III, EPA T4', note: 'Core marine version; 1500–3200 kW.' },
+  { ver: 'M05-N', app: 'Gas', cyl: '8V / 16V', emis: 'IMO III, EPA T4, EU V', note: 'Spark-ignited gas variant of M05.' },
+  { ver: 'M03', app: 'Yacht', cyl: '12V / 16V / 20V', emis: 'IMO II, EPA T2', note: 'Yacht-rated, 1920–4300 kW.' },
+  { ver: 'C05', app: 'Mining', cyl: '12V / 16V', emis: 'EPA T4', note: 'Continuous-duty mining version.' },
+  { ver: 'R03', app: 'Rail', cyl: '20V', emis: 'UIC IIIA, EU IIIA', note: 'Rail push-pull / locomotive; 2700–3300 kW.' },
+  { ver: 'R04', app: 'Rail', cyl: '12V / 16V', emis: 'UIC IIIA, EU IIIB', note: 'Later rail version; 1500–2400 kW.' },
+  { ver: 'T05', app: 'Oil & gas frac', cyl: '12V / 16V', emis: 'EPA T4', note: 'Frac-duty version; 1680–2240 kW.' },
+];
+
+const dutyRows = [
+  { duty: 'M53 / M63', profile: 'Light', app: 'Yachts, light workboats', note: 'Lower permitted annual full-load hours; lighter-duty internals.' },
+  { duty: 'M73 / M73L', profile: 'Commercial', app: 'Fast ferries, offshore, commercial craft', note: 'Higher full-load profile; heavier-section conrod / crank than M53.' },
+  { duty: 'M90', profile: 'Heavy', app: 'Patrol craft, fast ferries', note: 'Sustained high output; heavier internals than M73.' },
+  { duty: 'M93 / M93L', profile: 'Naval', app: 'OPVs, fast attack, frigates, corvettes', note: 'Most demanding full-power hours; heaviest-section conrod / crank of the family.' },
+];
+
+const boreRows = [
+  { ver: 'M-family (M05 / M53 / M63 / M73 / M90 / M93)', bore: '165 / 190 mm', note: 'Most marine M-duty versions.' },
+  { ver: 'R-family (R03 / R04 rail)', bore: '170 / 210 mm', note: 'Rail versions use a longer stroke.' },
+  { ver: 'C05 / T05', bore: '170 / 190 mm', note: 'Mining & frac versions.' },
+];
+
+const modelRows = [
+  { desig: '12V 4000 M53 / M63', out: '1100–1500 kW', rpm: '1800', app: 'Yacht, patrol, small ferry' },
+  { desig: '12V 4000 M73', out: '~1600 kW', rpm: '1800', app: 'Commercial, offshore' },
+  { desig: '12V 4000 M90', out: '~1800 kW', rpm: '1800', app: 'Patrol, fast ferry' },
+  { desig: '16V 4000 M53 / M63', out: '1450–2000 kW', rpm: '1800', app: 'Large yacht, fast ferry' },
+  { desig: '16V 4000 M73', out: '~2200 kW', rpm: '1800', app: 'Fast ferry, offshore' },
+  { desig: '16V 4000 M90', out: '~2400 kW', rpm: '1800', app: 'Fast ferry, patrol craft' },
+  { desig: '16V 4000 M93L', out: '~3000 kW', rpm: '1800', app: 'Naval OPV, fast attack' },
+  { desig: '20V 4000 M53 / M63', out: '1800–2500 kW', rpm: '1800', app: 'Large yacht, fast ferry' },
+  { desig: '20V 4000 M90', out: '~3600 kW', rpm: '1800', app: 'Patrol, frigate auxiliary' },
+  { desig: '20V 4000 M93', out: '~4300 kW', rpm: '1800', app: 'Naval frigate, corvette' },
+];
+
+const listItems = [
+  { name: 'MTU 4000 M-duty notation M53 to M93', url: pageUrl },
+  { name: 'MTU 4000 M05 marine version', url: pageUrl },
+  { name: 'MTU 4000 R03 R04 rail versions', url: pageUrl },
+  { name: 'MTU 4000 20V M93 naval', url: pageUrl },
+];
+
+const faqItems = [
+  {
+    question: 'What does the 4000 version letter mean (M05 / M03 / C05 / R03 / R04 / T05)?',
+    answer: 'The letter+number identifies the application version: M05 = marine main propulsion & onboard power, M03 = yacht, C05 = mining, R03 / R04 = rail (locomotive), T05 = oil & gas frac. Each version carries its own emission certification and duty profile, which decide the correct parts.',
+  },
+  {
+    question: 'What does the M-duty number mean (M53, M73, M90, M93)?',
+    answer: 'The M-duty notation tracks the permitted annual full-load operating profile. M53 / M63 are light-duty (yachts), M73 / M73L commercial, M90 heavy (patrol / fast ferry), and M93 / M93L the most demanding naval duty. A higher M-number uses heavier-section connecting rods and crankshaft than a same-cylinder-count M53 block, so the duty suffix is required to quote internals correctly.',
+  },
+  {
+    question: 'Do all 4000 engines share the same bore and stroke?',
+    answer: 'No. The M-family marine versions run 165 / 190 mm; the R-family rail versions run 170 / 210 mm (longer stroke); C05 / T05 run 170 / 190 mm. The bore/stroke therefore changes which liners, pistons and seals you need — confirm the version before ordering.',
+  },
+  {
+    question: 'Is there one 4000 overhaul gasket set?',
+    answer: 'No. The required seals depend on the version (M/R/C/T), the M-duty, the cylinder count, and the serial number. Verified references from the Series 2000 family (e.g. liner seals 5410110059, 0229974948) show the format, but the full 4000 kit must be confirmed against your engine.',
+  },
+];
+
+const jsonLd = [
+  breadcrumbSchema([
+    { name: 'Home', url: site.url },
+    { name: 'MTU Spare Parts', url: `${site.url}/products/mtu-spare-parts/` },
+    { name: 'MTU 4000 Series Parts', url: `${site.url}/products/mtu-4000-series-parts/` },
+    { name: title, url: pageUrl },
+  ]),
+  itemListSchema(listItems),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout
+  title={seoTitle}
+  description={description}
+  currentPath="/series/mtu-4000-variants"
+  image="/images/mtu-engine-parts-hero.webp"
+  jsonLd={jsonLd}
+>
+  <BreadcrumbHero
+    title={title}
+    trail={[
+      { label: 'Home', href: '/' },
+      { label: 'MTU Spare Parts', href: '/products/mtu-spare-parts/' },
+      { label: 'MTU 4000 Series Parts', href: '/products/mtu-4000-series-parts/' },
+      { label: title },
+    ]}
+    variant="1"
+  />
+
+  <DetailPageShell intro="The MTU 4000 designation carries two codes that decide your parts list: the application version (M05 / M03 / C05 / R03 / R04 / T05) and the M-duty notation (M53 → M93). Together they set the emission certification, duty profile, bore/stroke and — critically — the internal section of the connecting rods and crankshaft. This decoder explains both, the per-model power table, and which parts differ by build.">
+    <img
+      slot="hero"
+      src="/images/mtu-engine-parts-hero.webp"
+      alt="MTU 4000 variant decoder"
+      width="1400"
+      height="692"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+
+    <div class="resource-meta">
+      <span><strong>Section</strong> MTU 4000</span>
+      <span><strong>Cyl.</strong> 8V / 12V / 16V / 20V</span>
+      <span><strong>Versions</strong> M05 / M03 / C05 / R03 / R04 / T05</span>
+      <span><strong>Delivery</strong> Global shipping</span>
+    </div>
+
+    <DetailRfqStrip
+      quoteHref={quoteHref}
+      title="Decode your 4000 & request parts"
+      text="Send the full designation (e.g. 16V4000M93L), serial number, and the number marked on the old part."
+      secondaryHref="/products/mtu-4000-series-parts/"
+      secondaryLabel="MTU 4000 parts hub"
+    />
+
+    <h2>1. Application version decoder</h2>
+    <p>The letter+number after "4000" identifies the application version and its emission certification. This is the first code to read off the identification plate.</p>
+    <div class="resource-table-wrap">
+      <table class="resource-table">
+        <thead>
+          <tr><th>Version</th><th>Application</th><th>Cylinders</th><th>Emission</th><th>Note</th></tr>
+        </thead>
+        <tbody>
+          {verRows.map((r) => (
+            <tr>
+              <td><strong>{r.ver}</strong></td>
+              <td>{r.app}</td>
+              <td>{r.cyl}</td>
+              <td>{r.emis}</td>
+              <td>{r.note}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <h2>2. M-duty notation (M53 → M93)</h2>
+    <p>The M-duty number tracks the permitted annual full-load operating profile. A higher number means a more demanding duty and <strong>heavier-section connecting rods and crankshaft</strong> — even on the same cylinder count. This is why a 16V4000M93 block is not the same internally as a 16V4000M53.</p>
+    <div class="resource-table-wrap">
+      <table class="resource-table">
+        <thead>
+          <tr><th>Duty</th><th>Profile</th><th>Typical application</th><th>Note</th></tr>
+        </thead>
+        <tbody>
+          {dutyRows.map((r) => (
+            <tr>
+              <td><strong>{r.duty}</strong></td>
+              <td>{r.profile}</td>
+              <td>{r.app}</td>
+              <td>{r.note}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <h2>3. Bore &amp; stroke by version</h2>
+    <p>Not every 4000 shares the same bore and stroke. The marine M-family and the rail R-family differ, which changes liners, pistons and seals.</p>
+    <div class="resource-table-wrap">
+      <table class="resource-table">
+        <thead>
+          <tr><th>Version group</th><th>Bore × Stroke</th><th>Note</th></tr>
+        </thead>
+        <tbody>
+          {boreRows.map((r) => (
+            <tr>
+              <td><strong>{r.ver}</strong></td>
+              <td>{r.bore}</td>
+              <td>{r.note}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <h2>4. Per-model power table</h2>
+    <div class="resource-table-wrap">
+      <table class="resource-table">
+        <thead>
+          <tr><th>Model</th><th>Output</th><th>Rated speed</th><th>Primary application</th></tr>
+        </thead>
+        <tbody>
+          {modelRows.map((r) => (
+            <tr>
+              <td><strong>{r.desig}</strong></td>
+              <td>{r.out}</td>
+              <td>{r.rpm} rpm</td>
+              <td>{r.app}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="resource-note">Figures are representative of the family; confirm exact rating, version and M-duty against the engine identification plate before ordering.</p>
+
+    <h2>5. How to identify your exact 4000 part</h2>
+    <ul class="resource-list">
+      <li><strong>Complete designation</strong> (e.g. <code>16V4000M93L</code>)</li>
+      <li><strong>Version + M-duty</strong> — M05/M03/C05/R03/R04/T05 and M53→M93 change the parts</li>
+      <li><strong>Engine serial number</strong> from the identification plate</li>
+      <li><strong>Old-part number</strong> — the marking on the component beats any photo title</li>
+      <li><strong>Photo of the identification plate</strong> where available</li>
+    </ul>
+
+    <h2>6. MTU series cluster</h2>
+    <div class="hub-grid">
+      <a class="hub-card" href="/products/mtu-4000-series-parts/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 4000 Series Parts Hub</h3><p class="hub-card-summary">Full parts hub for the 12V / 16V / 20V larger siblings.</p></div></a>
+      <a class="hub-card" href="/series/mtu-1163/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 1163 Series Hub</h3><p class="hub-card-summary">12V / 16V / 20V large-bore family (230 × 280 mm).</p></div></a>
+      <a class="hub-card" href="/series/mtu-396/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 396 Series Hub</h3><p class="hub-card-summary">8V / 12V / 16V workhorse — carries live RFQ numbers.</p></div></a>
+      <a class="hub-card" href="/series/mtu-2000/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 2000 Series Hub</h3><p class="hub-card-summary">8V / 12V / 16V / 18V high-speed engines.</p></div></a>
+    </div>
+
+    <FaqSection items={faqItems} title="MTU 4000 Variant Decoder FAQ" subtitle="FAQ" />
+  </DetailPageShell>
+</BaseLayout>
+
+<style>
+  .rfq-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    letter-spacing: 0.03em;
+    vertical-align: middle;
+  }
+  .rfq-badge.cat {
+    background: #e4eef7;
+    color: var(--color-primary);
+  }
+  .hub-card h3.hub-card-title {
+    font-size: 17px;
+  }
+  .resource-table code {
+    background: #eef3f8;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #0a3d66;
+  }
+</style>

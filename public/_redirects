@@ -1,0 +1,111 @@
+# Hand-written redirect rules.
+#
+# This file is the human-edited half of the site's redirects. At build time
+# scripts/create-worker-entry.mjs merges it with the part-page dedup map and
+# writes the combined list to dist/_redirects, which is the single file
+# Cloudflare actually reads.
+#
+# Syntax:   <from>  <to>  <status>       (one rule per line, whitespace-separated)
+#   - paths only: `_redirects` cannot match scheme or hostname, so http:// and
+#     www. collapsing is configured in the Cloudflare dashboard instead.
+#   - rules are evaluated top-down and the FIRST match wins; a duplicate source
+#     path would silently shadow every rule below it.
+#   - `#` starts a comment; blank lines are ignored.
+#   - Cloudflare only honours 301, 302, 303, 307, 308 and 200 (rewrite).
+#     410 Gone is NOT supported here and would be silently ignored.
+#     Retired URLs that must answer 410 live in src/data/retired-urls.txt and
+#     are served by dist/_worker.js/index.js instead. Do not add 410 rules to
+#     this file - the build strips them and warns.
+#
+# Sections:
+#   A. legacy marketing URLs -> their current home
+#   B. the retired engine-family.com category tree -> surviving brand hubs
+#      (one-time migration, 2026-10-10; every target verified to exist)
+#   C. retired imported shells -> the page that genuinely replaces them
+
+# ---------------------------------------------------------------------------
+# A. Legacy marketing URLs -> their current home
+# ---------------------------------------------------------------------------
+
+/products/mtu-2000-series/ /products/mtu-2000-series-parts/ 301
+/marine/ /applications/marine-propulsion-engines/ 301
+/industrial-engines/ /industries/industrial-engines/ 301
+/power-generation/ /industries/power-generation/ 301
+/mtu-filters/ /part-products/catalog/mtu-filters/ 301
+/part/mtu-spare-parts/ /products/mtu-spare-parts/ 301
+/part/mtu-2000-parts/ /part-products/catalog/mtu-2000-series/ 301
+/part/mtu-4000-parts/ /part-products/catalog/mtu-4000-series/ 301
+/part/mtu-396-parts/ /part-products/catalog/mtu-396-series/ 301
+/part/mtu-595-parts/ /part-products/catalog/mtu-595-series/ 301
+/part/mtu-956-1163-parts/ /part-products/catalog/mtu-956-series/ 301
+/products/mtu-series-2000-gensets/ /applications/auxiliary-generator-engines/ 301
+/products/mtu-series-4000-engines/ /products/mtu-4000-series-parts/ 301
+/products/mtu-series-4000-gensets/ /applications/auxiliary-generator-engines/ 301
+
+# ---------------------------------------------------------------------------
+# B. Retired engine-family.com category tree -> surviving brand hubs
+#
+# The /categories/* tree below was lifted wholesale from competitor
+# engine-family.com and removed on 2026-10-10. Each URL lands on the page
+# that actually still covers the products it named: Cummins series (incl.
+# G-Drive) -> Cummins hub, DEUTZ -> DEUTZ hub, marine variants -> the marine
+# application hub, generator / construction type pages -> the matching
+# application hub. No wildcards: a /categories/* splat would also swallow
+# any future category page.
+# ---------------------------------------------------------------------------
+/categories/4b-series/ /products/cummins-parts/ 301
+/categories/6B-Series/ /products/cummins-parts/ 301
+/categories/6C-Series/ /products/cummins-parts/ 301
+/categories/6L-Series/ /products/cummins-parts/ 301
+/categories/automotive-engine/ /products/cummins-parts/ 301
+/categories/b-series/ /products/cummins-parts/ 301
+/categories/C-Series/ /products/cummins-parts/ 301
+/categories/Construction-Engines/ /industries/industrial-engines/ 301
+/categories/Cummins/ /products/cummins-parts/ 301
+/categories/deutz-diesel-engine/ /products/deutz-parts/ 301
+/categories/G-Drive-6L-series/ /products/cummins-parts/ 301
+/categories/G-Drive-B-series/ /products/cummins-parts/ 301
+/categories/G-Drive-C-series/ /products/cummins-parts/ 301
+/categories/G-Drive-K19-series/ /products/cummins-parts/ 301
+/categories/G-Drive-K38-series/ /products/cummins-parts/ 301
+/categories/G-Drive-K50-series/ /products/cummins-parts/ 301
+/categories/G-Drive-M-series/ /products/cummins-parts/ 301
+/categories/G-Drive-N-series/ /products/cummins-parts/ 301
+/categories/G-Drive-QSZ-series/ /products/cummins-parts/ 301
+/categories/generator-engine/ /industries/power-generation/ 301
+/categories/ISB-Series/ /products/cummins-parts/ 301
+/categories/ISDe-Series/ /products/cummins-parts/ 301
+/categories/ISF-Series/ /products/cummins-parts/ 301
+/categories/ISLe-Series/ /products/cummins-parts/ 301
+/categories/ISM-Series/ /products/cummins-parts/ 301
+/categories/k-series/ /products/cummins-parts/ 301
+/categories/k19-series/ /products/cummins-parts/ 301
+/categories/l-series/ /products/cummins-parts/ 301
+/categories/M-Series/ /products/cummins-parts/ 301
+/categories/Marine-Engine/ /applications/marine-propulsion-engines/ 301
+/categories/marine-engine-6b-series/ /applications/marine-propulsion-engines/ 301
+/categories/marine-engine-6c-series/ /applications/marine-propulsion-engines/ 301
+/categories/marine-engine-l-series/ /applications/marine-propulsion-engines/ 301
+/categories/marine-engine-n-series/ /applications/marine-propulsion-engines/ 301
+/categories/marine-k38-series/ /applications/marine-propulsion-engines/ 301
+/categories/n-series/ /products/cummins-parts/ 301
+/categories/qsb-series/ /products/cummins-parts/ 301
+/categories/QSL-Series/ /products/cummins-parts/ 301
+/categories/QSZ-Series/ /products/cummins-parts/ 301
+
+# Retired /part/* aliases whose brand hub survived (the rest of /part/* is
+# already covered in section A).
+/part/cummins-parts/ /products/cummins-parts/ 301
+/part/deutz-parts/ /products/deutz-parts/ 301
+
+# ---------------------------------------------------------------------------
+# C. Retired imported shells -> the page that genuinely replaces them
+#
+# Four MTU-named pages came in with the engine-family import as template
+# shells. Two of them name an engine family that the catalogue actually covers,
+# so they forward to that family page. The other two (mtu-2000cr-series,
+# mtu-series-8000-engines) have no catalogue rows behind them at all and are
+# answered 410 from src/data/retired-urls.txt instead.
+# ---------------------------------------------------------------------------
+/products/mtu-16v-396-te74l/ /engine-models/mtu-12v-396-tb94-to-te94-parts/ 301
+/products/mtu-series-1163-engines/ /engine-models/mtu-1163-tb73-to-tb93-parts/ 301

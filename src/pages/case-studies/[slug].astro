@@ -1,0 +1,147 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../components/BreadcrumbHero.astro';
+import FunnelPageView from '../../components/FunnelPageView.astro';
+import DetailRfqStrip from '../../components/DetailRfqStrip.astro';
+import { publishedCaseStudies } from '../../data/case-studies';
+import { breadcrumbSchema, caseStudySchema, site } from '../../data/site';
+import '../../styles/resource-page.css';
+
+export function getStaticPaths() {
+  return publishedCaseStudies.map((study) => ({ params: { slug: study.slug }, props: { study } }));
+}
+
+const { study } = Astro.props;
+const pageUrl = `${site.url}/case-studies/${study.slug}/`;
+---
+
+<BaseLayout
+  title={study.title}
+  description={study.summary}
+  currentPath="/case-studies"
+  jsonLd={[
+    breadcrumbSchema([
+      { name: 'Home', url: site.url },
+      { name: 'Customer Cases', url: `${site.url}/case-studies/` },
+      { name: study.title, url: pageUrl },
+    ]),
+    caseStudySchema({
+      title: study.title,
+      description: study.summary,
+      url: pageUrl,
+      image: `${site.url}/images/mtu-engine-parts-hero.webp`,
+      datePublished: study.datePublished,
+      industry: study.industry,
+      authorName: study.reviewerName,
+      authorUrl: `${site.url}/about/`,
+      authorJobTitle: study.reviewerJobTitle,
+    }),
+  ]}
+>
+  <FunnelPageView stage="signing" label={`case-${study.slug}`} />
+  <BreadcrumbHero
+    title={study.title}
+    trail={[{ label: 'Home', href: '/' }, { label: 'Customer Cases', href: '/case-studies/' }, { label: study.title }]}
+    variant="2"
+  />
+
+  <div class="resource-page">
+    <section class="resource-page-section">
+      <div class="resource-meta">
+        <span><strong>Industry</strong> {study.industry}</span>
+        <span><strong>Region</strong> {study.region}</span>
+        <span><strong>Engine</strong> {study.engineModel}</span>
+        <span><strong>Reviewed by</strong> {study.reviewerName}, {study.reviewerJobTitle}</span>
+      </div>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>The Challenge</h2>
+      {study.challenge.map((paragraph) => <p>{paragraph}</p>)}
+    </section>
+
+    <section class="resource-page-section">
+      <h2>What We Supplied</h2>
+      {study.solution.map((paragraph) => <p>{paragraph}</p>)}
+      {study.suppliedParts.length > 0 && (
+        <table class="case-parts-table">
+          <thead>
+            <tr><th>Part Number</th><th>Part</th></tr>
+          </thead>
+          <tbody>
+            {study.suppliedParts.map((part) => (
+              <tr>
+                <td class="case-pn"><a href={`/part-products/${part.slug}/`}>{part.partNumber}</a></td>
+                <td>{part.name}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </section>
+
+    <section class="resource-page-section">
+      <h2>The Outcome</h2>
+      {study.outcome.map((paragraph) => <p>{paragraph}</p>)}
+      {study.quote && (
+        <blockquote class="case-quote">
+          <p>“{study.quote.text}”</p>
+          <footer>— {study.quote.person}, {study.quote.role}, {study.quote.company}</footer>
+        </blockquote>
+      )}
+    </section>
+
+    <DetailRfqStrip
+      title="Similar requirement?"
+      text="Send your engine model, serial number, and part list. The same verification process applies to every inquiry."
+      quoteHref={`/contact/?source=case-${study.slug}`}
+      label="Request Parts Quote"
+      modalSource={`case-${study.slug}`}
+    />
+  </div>
+</BaseLayout>
+
+<style>
+  .case-parts-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 14px;
+    font-size: 15px;
+  }
+
+  .case-parts-table th,
+  .case-parts-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: left;
+  }
+
+  .case-parts-table th {
+    background: #f8fafc;
+  }
+
+  .case-pn a {
+    color: var(--color-primary, #146ef5);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-weight: 700;
+  }
+
+  .case-quote {
+    margin: 18px 0 0;
+    padding: 16px 20px;
+    border-left: 4px solid var(--color-primary, #146ef5);
+    background: #f8fafc;
+    border-radius: 0 8px 8px 0;
+  }
+
+  .case-quote p {
+    margin: 0 0 8px;
+    font-size: 17px;
+    line-height: 1.6;
+  }
+
+  .case-quote footer {
+    color: #64748b;
+    font-size: 14px;
+  }
+</style>

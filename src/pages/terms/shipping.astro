@@ -1,0 +1,161 @@
+﻿---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../components/BreadcrumbHero.astro';
+import BlogCta from '../../components/BlogCta.astro';
+import FunnelPageView from '../../components/FunnelPageView.astro';
+import TermsNav from '../../components/TermsNav.astro';
+import { breadcrumbSchema, site } from '../../data/site';
+import '../../styles/terms-page.css';
+---
+
+<BaseLayout
+  title="Shipping & Logistics — Engine Parts Global Delivery | Diesel Part Source"
+  description="Shipping options for diesel engine parts: DHL/FedEx express, air freight, sea freight. EXW, FOB, and DDP Incoterms explained."
+  currentPath="/terms/shipping"
+  jsonLd={breadcrumbSchema([
+    { name: 'Home', url: site.url },
+    { name: 'Shipping Terms', url: `${site.url}/terms/shipping/` },
+  ])}
+>
+  <FunnelPageView stage="signing" label="shipping-terms" />
+  <BreadcrumbHero
+    title="Shipping &amp; Logistics"
+    trail={[
+      { label: 'Home', href: '/' },
+      { label: 'Shipping Terms' },
+    ]}
+    variant="5"
+  />
+
+  <section class="blog-details-section terms-page-section">
+    <div class="section-gap bottom">
+      <div class="container">
+        <article class="blog-details-content-block terms-page fade-in">
+          <TermsNav active="shipping" />
+
+          <p class="terms-intro">
+            We ship diesel engine parts worldwide from Shanghai. Choose express for urgent and small orders or freight for heavy and large orders — Incoterm and carrier are confirmed on your quotation.
+          </p>
+
+          <div class="terms-meta" aria-label="Shipping overview">
+            <span><strong>DHL / FedEx / UPS</strong> express</span>
+            <span>Air &amp; sea freight for volume</span>
+            <span><strong>EXW · FOB · DDP</strong> Incoterms</span>
+            <span><strong>3–45</strong> days transit by method</span>
+          </div>
+
+          <div class="terms-rfq-strip">
+            <p>Note destination, Incoterm, and urgency on the RFQ — we confirm carrier, transit time, and freight cost in the quote.</p>
+            <a href="/contact/?source=shipping-terms" class="terms-rfq-link">Confirm on RFQ</a>
+          </div>
+
+          <div class="terms-table-wrap">
+            <table class="terms-table">
+              <caption class="terms-table-caption">Shipping methods, transit times, and typical use cases</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Method</th>
+                  <th scope="col">Transit time</th>
+                  <th scope="col">Typical use</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Express courier</strong> (DHL / FedEx / UPS)</td>
+                  <td>3–7 business days to North America and Europe</td>
+                  <td>Urgent breakdown parts and orders under 50 kg</td>
+                </tr>
+                <tr>
+                  <td><strong>Air freight</strong></td>
+                  <td>7–14 days</td>
+                  <td>Maintenance lists and mid-size overhaul orders</td>
+                </tr>
+                <tr>
+                  <td><strong>Sea freight</strong> (FCL / LCL)</td>
+                  <td>25–45 days</td>
+                  <td>Major overhaul lists, cylinder heads, and other heavy parts</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <nav class="terms-jump-nav" aria-label="On this page">
+            <a href="#express-courier" class="terms-jump-link">Express courier</a>
+            <a href="#air-sea-freight" class="terms-jump-link">Air &amp; sea freight</a>
+            <a href="#incoterms" class="terms-jump-link">Incoterms</a>
+          </nav>
+
+          <h2 id="express-courier">Express Courier (Urgent &amp; Small Orders)</h2>
+          <ul class="terms-list">
+            <li>Door-to-door tracking; commercial invoice and HS codes prepared</li>
+            <li>Moisture-barrier packaging for machined and sealing surfaces when required</li>
+            <li>Balance payment due before shipment per <a href="/terms/payment/">payment terms →</a></li>
+          </ul>
+
+          <h2 id="air-sea-freight">Air &amp; Sea Freight (Large &amp; Heavy Orders)</h2>
+          <ul class="terms-list">
+            <li>Palletized or crated with packing list and certificate of origin when required</li>
+            <li>Import duties and customs clearance per agreed Incoterm below</li>
+            <li>Sourcing lead time for sourced-to-order lines quoted separately from transit time</li>
+          </ul>
+
+          <h2 id="incoterms">Incoterms We Support</h2>
+          <div class="terms-table-wrap">
+            <table class="terms-table">
+              <caption class="terms-table-caption">Supported Incoterms and buyer vs. seller responsibilities</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Term</th>
+                  <th scope="col">Meaning</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>EXW</strong></td>
+                  <td>Buyer arranges pickup and all freight from our facility</td>
+                </tr>
+                <tr>
+                  <td><strong>FOB</strong></td>
+                  <td>We deliver to port; buyer handles ocean/air freight and import</td>
+                </tr>
+                <tr>
+                  <td><strong>DDP</strong></td>
+                  <td>Delivered duty paid to your door (quote includes freight + import)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="terms-note">
+            <strong>Logistics tip:</strong> State your preferred Incoterm and destination on the RFQ — DDP quotes need your delivery address and any import compliance requirements upfront. See our <a href="/terms/shipping/">Incoterms glossary</a> for definitions.
+          </div>
+
+          <p class="terms-related">
+            <a href="/terms/shipping/">Incoterms glossary</a>
+            <span aria-hidden="true">·</span>
+            <a href="/terms/payment/">Payment terms</a>
+            <span aria-hidden="true">·</span>
+            <a href="/terms/samples/">Sample policy</a>
+            <span aria-hidden="true">·</span>
+            <a href="/about/">Project proof</a>
+            <span aria-hidden="true">·</span>
+            <a href="/contact/?source=shipping-terms">Request a shipping quote →</a>
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <BlogCta
+    stage="signing"
+    topic="shipping"
+    title="Confirm shipping on your quote"
+    text="Send your part number and note destination, Incoterm, and urgency — we confirm carrier, transit time, and freight cost in the quotation response."
+    primaryLabel="Request a Quote"
+    primaryHref="/contact/?source=shipping-terms"
+    primaryEvent="shipping_terms_rfq"
+    secondaryLabel="Payment terms"
+    secondaryHref="/terms/payment/"
+    secondaryEvent="shipping_terms_payment"
+  />
+</BaseLayout>

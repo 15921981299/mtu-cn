@@ -1,0 +1,134 @@
+﻿---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../components/BreadcrumbHero.astro';
+import BlogCta from '../../components/BlogCta.astro';
+import FunnelPageView from '../../components/FunnelPageView.astro';
+import { industryFaqs } from '../../data/page-faqs';
+import { industries } from '../../data/industries';
+import { breadcrumbSchema, faqSchema, site } from '../../data/site';
+import '../../styles/resource-page.css';
+
+const featuredSlugs = new Set(['marine', 'industrial-engines', 'power-generation']);
+const featuredCount = featuredSlugs.size;
+---
+
+<BaseLayout
+  title="Industries Served — Marine, Industrial, Power Generation & Rail Engine Parts"
+  description="Diesel Part Source supplies diesel engine parts for marine, industrial engines, power generation, rail, shipyards, repair companies, and energy suppliers."
+  currentPath="/industries"
+  jsonLd={[
+    breadcrumbSchema([
+      { name: 'Home', url: site.url },
+      { name: 'Industries', url: `${site.url}/industries/` },
+    ]),
+    faqSchema(industryFaqs.map((f) => ({ question: f.question, answer: f.answer }))),
+  ]}
+>
+  <FunnelPageView stage="selection" label="industries-index" />
+  <BreadcrumbHero
+    title="Industries We Serve"
+    trail={[
+      { label: 'Home', href: '/' },
+      { label: 'Industries' },
+    ]}
+    variant="1"
+  />
+
+  <section class="blog-details-section resource-page-section">
+    <div class="section-gap bottom">
+      <div class="container">
+        <article class="blog-details-content-block resource-page fade-in">
+          <nav class="resource-nav" aria-label="Industries navigation">
+            <a href="/industries/" class="resource-nav-link active" aria-current="page">
+              All industries
+            </a>
+            <a href="/industries/marine/" class="resource-nav-link">Marine</a>
+            <a href="/industries/industrial-engines/" class="resource-nav-link">Industrial</a>
+            <a href="/industries/power-generation/" class="resource-nav-link">Power</a>
+            <a href="/part-products/" class="resource-nav-link resource-nav-all">Parts Guides</a>
+          </nav>
+
+          <p class="resource-intro">
+            Diesel Part Source supports maintenance and procurement teams that operate MTU, Detroit Diesel, Cummins, and DEUTZ engines in marine, industrial, power generation, rail, shipyard, repair, and energy applications.
+          </p>
+
+          <div class="resource-meta">
+            <span><strong>{industries.length}</strong> buyer groups</span>
+            <span><strong>{featuredCount}</strong> featured</span>
+            <span>Marine · Industrial · Power</span>
+            <span>Parts by <strong>engine series</strong></span>
+          </div>
+
+          <div class="detail-rfq-strip">
+            <p>Send your part list, engine model, serial number, quantity, and destination. We verify correct parts for your application.</p>
+            <a href="/contact/?source=industries" class="detail-rfq-link">Send Parts Inquiry</a>
+          </div>
+
+          <div class="hub-grid">
+            {industries.map((industry) => (
+              <article class:list={['hub-card', { featured: featuredSlugs.has(industry.slug) }]}>
+                {featuredSlugs.has(industry.slug) && <span class="hub-featured-badge">Featured</span>}
+                <a href={`/industries/${industry.slug}/`} class="hub-card-image">
+                  <img
+                    src={industry.image}
+                    alt={industry.title}
+                    width="400"
+                    height="280"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </a>
+                <div class="hub-card-body">
+                  <h2 class="hub-card-title">
+                    <a href={`/industries/${industry.slug}/`}>{industry.title}</a>
+                  </h2>
+                  <p class="hub-card-summary">{industry.summary}</p>
+                  <a href={`/industries/${industry.slug}/`} class="hub-card-link">
+                    View industry →
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <div class="resource-note">
+            <strong>Procurement tip:</strong> For fleet or overhaul orders, send your parts list as early as possible so availability, alternatives, and freight can be checked together.
+          </div>
+
+          <h2 class="hub-faq-heading">Engine Parts Industry FAQ</h2>
+          <div class="hub-faq-list">
+            {industryFaqs.map((faq) => (
+              <details class="hub-faq-item">
+                <summary>{faq.question}</summary>
+                <p>{faq.answer}</p>
+              </details>
+            ))}
+          </div>
+
+          <p class="resource-related">
+            <a href="/products/mtu-spare-parts/">MTU spare parts</a>
+            <span aria-hidden="true">·</span>
+            <a href="/products/cummins-parts/">Cummins parts</a>
+            <span aria-hidden="true">·</span>
+            <a href="/products/deutz-parts/">DEUTZ parts</a>
+            <span aria-hidden="true">·</span>
+            <a href="/contact/">Contact</a>
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <BlogCta
+    stage="selection"
+    topic="industries-index"
+    title="Check parts for your engine application"
+    text="Send part numbers, engine serial number, quantity, and destination. We confirm availability and compatibility before quotation."
+    primaryLabel="Send Parts Inquiry"
+    primaryHref="/contact/?source=industries"
+    primaryEvent="industries_index_rfq"
+    secondaryLabel="Parts guides"
+    secondaryHref="/part-products/"
+    secondaryEvent="industries_index_cases"
+  />
+</BaseLayout>

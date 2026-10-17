@@ -1,0 +1,115 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../components/BreadcrumbHero.astro';
+import FunnelPageView from '../../components/FunnelPageView.astro';
+import DetailRfqStrip from '../../components/DetailRfqStrip.astro';
+import QuotationExamples from '../../components/QuotationExamples.astro';
+import { quotationExamples } from '../../data/quotation-examples';
+import { publishedCaseStudies } from '../../data/case-studies';
+import { breadcrumbSchema, site } from '../../data/site';
+import '../../styles/resource-page.css';
+
+const pageUrl = `${site.url}/case-studies/`;
+const hasCases = publishedCaseStudies.length > 0 || quotationExamples.length > 0;
+---
+
+<BaseLayout
+  title="Customer Supply Cases — Engine Parts in Service"
+  description="Real engine-parts supply cases, published with written customer permission: the application, the parts supplied, and the outcome."
+  currentPath="/case-studies"
+  noindex={!hasCases}
+  jsonLd={[
+    breadcrumbSchema([
+      { name: 'Home', url: site.url },
+      { name: 'Customer Cases', url: pageUrl },
+    ]),
+  ]}
+>
+  <FunnelPageView stage="signing" label="case-studies-index" />
+  <BreadcrumbHero
+    title="Customer Supply Cases"
+    trail={[{ label: 'Home', href: '/' }, { label: 'Customer Cases' }]}
+    variant="2"
+  />
+
+  <div class="resource-page">
+    {quotationExamples.length > 0 && <QuotationExamples ids={quotationExamples.map((example) => example.id)} source="completed-order-cases" />}
+    {publishedCaseStudies.length > 0 ? (
+      <section class="resource-page-section">
+        <div class="guides-grid">
+          {publishedCaseStudies.map((study) => (
+            <a class="guide-card" href={`/case-studies/${study.slug}/`}>
+              <h2>{study.title}</h2>
+              <p>{study.summary}</p>
+              <span class="guide-card__meta">{study.industry} · {study.region} →</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    ) : !hasCases && (
+      <section class="resource-page-section">
+        <p>
+          We publish supply cases only with the customer's written permission — including the
+          application, the part numbers supplied, and the outcome in the customer's own terms.
+          The first cases are currently being prepared with the customers involved.
+        </p>
+        <p>
+          Until they are ready, the fastest way to evaluate us is direct: send one part number
+          with your engine model and serial number, and judge the verification and quotation
+          process yourself.
+        </p>
+        <ul class="resource-olist">
+          <li><a href="/certifications/">Quality &amp; Certifications</a> — how parts are verified before shipment</li>
+          <li><a href="/terms/payment/">Payment &amp; Shipping Terms</a></li>
+          <li><a href="/part-products/">MTU Part Number Catalog</a></li>
+        </ul>
+      </section>
+    )}
+
+    <DetailRfqStrip
+      title="Evaluate us on a real inquiry"
+      text="One part number is enough. We verify fitment against your engine serial number before quoting."
+      quoteHref="/contact/?source=case-studies"
+      label="Start an Inquiry"
+      modalSource="case-studies"
+    />
+  </div>
+</BaseLayout>
+
+<style>
+  .guides-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 18px;
+  }
+
+  .guide-card {
+    display: block;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 20px;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .guide-card:hover {
+    border-color: var(--color-primary, #146ef5);
+  }
+
+  .guide-card h2 {
+    margin: 0 0 10px;
+    font-size: 20px;
+  }
+
+  .guide-card p {
+    margin: 0 0 12px;
+    color: #475569;
+    font-size: 15px;
+  }
+
+  .guide-card__meta {
+    color: var(--color-primary, #146ef5);
+    font-size: 14px;
+    font-weight: 700;
+  }
+</style>

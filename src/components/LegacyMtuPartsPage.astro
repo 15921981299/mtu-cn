@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BreadcrumbHero from './BreadcrumbHero.astro';
+import BlogCta from './BlogCta.astro';
+import DetailPageShell from './DetailPageShell.astro';
+import DetailRfqStrip from './DetailRfqStrip.astro';
+import { breadcrumbSchema, site } from '../data/site';
+
+interface Props {
+  legacyTopic: string;
+  currentPath?: string;
+}
+
+const { legacyTopic, currentPath = '/products' } = Astro.props;
+const title = `${legacyTopic} | MTU Engine Parts Support`;
+const description =
+  'Diesel Part Source supports MTU engine spare-parts lookup, verified sourcing route review, full-series MTU coverage, and global delivery from Shanghai.';
+---
+
+<BaseLayout
+  title={`${title} | Diesel Part Source`}
+  description={description}
+  currentPath={currentPath}
+  noindex={true}
+  jsonLd={[
+    breadcrumbSchema([
+      { name: 'Home', url: site.url },
+      { name: 'MTU Engine Parts', url: `${site.url}/products/mtu-spare-parts/` },
+      { name: legacyTopic, url: `${site.url}${Astro.url.pathname}` },
+    ]),
+  ]}
+>
+  <BreadcrumbHero
+    title={title}
+    trail={[
+      { label: 'Home', href: '/' },
+      { label: 'MTU Engine Parts', href: '/products/mtu-spare-parts/' },
+      { label: legacyTopic },
+    ]}
+    variant="3"
+  />
+
+  <DetailPageShell intro={description}>
+    <div class="resource-meta">
+      <span>MTU 183 / 331 / 396 / 493 / 538 / 595</span>
+      <span>MTU 956 / 1163 / 2000 / 4000 / 8000</span>
+      <span>OEM and replacement routes labelled</span>
+    </div>
+
+    <h2>Use This Page for MTU Parts Inquiries</h2>
+    <p>
+      This legacy page has been repurposed for Diesel Part Source's MTU engine parts business. Send your part number,
+      engine model, serial number, nameplate photo, old part photo, quantity, destination country, and required delivery
+      date. We check compatibility before quotation so urgent maintenance orders do not move forward on uncertain part
+      references.
+    </p>
+
+    <h2>Parts We Commonly Check</h2>
+    <ul>
+      <li>Filters, seals, gaskets, sensors, belts, hoses, and service kits</li>
+      <li>Injectors, fuel pumps, turbocharger-related parts, cooling parts, and lubrication components</li>
+      <li>Liners, pistons, bearings, valve-train parts, overhaul kits, and replacement assemblies</li>
+      <li>MTU, Detroit Diesel, Cummins, and DEUTZ diesel engine parts for marine, generator, rail, and industrial use</li>
+    </ul>
+
+    <DetailRfqStrip
+      quoteHref="/contact/?source=legacy-mtu-parts"
+      title="Send an MTU parts list"
+      text="Attach Excel lists, photos, nameplates, and serial-number details. Diesel Part Source will verify line items and quote stock or sourcing options."
+      secondaryHref="/products/mtu-spare-parts/mtu-part-number-lookup/"
+      secondaryLabel="MTU part number lookup"
+    />
+
+    <h2>Why the Old URL Is Still Here</h2>
+    <p>
+      The site structure is kept stable for existing bookmarks and crawled URLs, but the commercial content now focuses on
+      MTU engine spare parts, verified sourcing route review, and global parts delivery.
+    </p>
+
+    <BlogCta />
+  </DetailPageShell>
+</BaseLayout>

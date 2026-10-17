@@ -1,0 +1,333 @@
+﻿---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../components/BreadcrumbHero.astro';
+import BlogCta from '../../components/BlogCta.astro';
+import FunnelPageView from '../../components/FunnelPageView.astro';
+import { additionalServices } from '../../data/additional-services';
+import { faqs } from '../../data/faqs';
+import { services } from '../../data/services';
+import { breadcrumbSchema, faqSchema, site } from '../../data/site';
+import '../../styles/resource-page.css';
+
+const featuredSlugs = new Set(['mtu-engine-parts', 'marine-engine-service', 'genuine-oem-parts']);
+const additionalLinks: Record<string, string> = {
+  'Parts Identification': '/products/mtu-spare-parts/mtu-part-number-lookup/',
+  'Stock Check': '/contact/?source=stock-check',
+  'Export Packing': '/terms/shipping/',
+  'Global Shipping': '/terms/shipping/',
+};
+const additionalSummaries: Record<string, string> = {
+  'Parts Identification': 'Part-number, engine model, serial number, and nameplate checks before quotation.',
+  'Stock Check': 'Availability and replacement checks for urgent maintenance and planned overhaul lists.',
+  'Export Packing': 'International packing and documents prepared for engine parts shipment.',
+  'Global Shipping': 'Express, air, and freight shipment from Shanghai to worldwide buyers.',
+};
+const chevronIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+---
+
+<BaseLayout
+  title="Engine Parts Service & Support — MTU, Cummins, DEUTZ"
+  description="Diesel Part Source supports MTU, Detroit Diesel, Cummins, and DEUTZ parts inquiries, including part identification, verified sourcing routes, marine service, industrial service, and global delivery."
+  currentPath="/capabilities"
+  jsonLd={[
+    breadcrumbSchema([
+      { name: 'Home', url: site.url },
+      { name: 'Capabilities', url: `${site.url}/capabilities/` },
+    ]),
+    faqSchema(faqs.map((f) => ({ question: f.question, answer: f.answer }))),
+  ]}
+>
+  <FunnelPageView stage="selection" label="capabilities-index" />
+  <BreadcrumbHero
+    title="Engine Parts<br>Service & Support"
+    trail={[
+      { label: 'Home', href: '/' },
+      { label: 'Capabilities' },
+    ]}
+    variant="1"
+  />
+
+  <section class="blog-details-section detail-page-section">
+    <div class="section-gap bottom">
+      <div class="container">
+        <article class="blog-details-content-block resource-page fade-in">
+          <nav class="resource-nav" aria-label="Capabilities navigation">
+            <a href="/capabilities/" class="resource-nav-link active" aria-current="page">
+              All support
+            </a>
+            <a href="/products/mtu-spare-parts/" class="resource-nav-link">MTU Parts</a>
+            <a href="/products/cummins-parts/" class="resource-nav-link">Cummins</a>
+            <a href="/products/deutz-parts/" class="resource-nav-link">DEUTZ</a>
+            <a href="/part-products/" class="resource-nav-link resource-nav-all">Parts Guides</a>
+          </nav>
+
+          <p class="resource-intro">
+            Diesel Part Source supports diesel engine parts identification, stock checking, verified sourcing route review, urgent marine service, industrial service, and global delivery from Shanghai.
+          </p>
+
+          <div class="resource-meta capabilities-meta">
+            <span><strong>{services.length}</strong> support areas</span>
+            <span>MTU · Cummins · DEUTZ</span>
+            <span>Part number · <strong>serial number</strong></span>
+          </div>
+
+          <div class="detail-rfq-strip capabilities-rfq-strip">
+            <p>Send your part list, engine model, serial number, and destination. We verify compatibility and shipping options.</p>
+            <a href="/contact/?source=capabilities" class="detail-rfq-link">Send Parts Inquiry</a>
+          </div>
+
+          <nav class="hub-jump-nav resource-nav capabilities-jump-nav" aria-label="On this page">
+            <a href="#core-capabilities" class="resource-nav-link hub-jump-link">Core support</a>
+            <a href="#value-added" class="resource-nav-link hub-jump-link">Value-added</a>
+            <a href="#capabilities-faq" class="resource-nav-link hub-jump-link">FAQ</a>
+          </nav>
+
+          <section id="core-capabilities" class="hub-section capabilities-hub-section">
+            <div class="hub-section-header">
+              <h2>Core support areas</h2>
+              <p>MTU, Cummins, DEUTZ, marine, industrial, and verified parts sourcing support for urgent and planned maintenance.</p>
+            </div>
+            <div class="hub-grid">
+              {services.map((service) => (
+                <article class:list={['hub-card', 'capabilities-hub-card', { featured: featuredSlugs.has(service.slug) }]}>
+                  {featuredSlugs.has(service.slug) && (
+                    <span class="capabilities-hub-badge">Popular</span>
+                  )}
+                  <a href={`/capabilities/${service.slug}/`} class="hub-card-image">
+                    <img
+                      src={service.mainImage}
+                      alt={service.title}
+                      width="400"
+                      height="280"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </a>
+                  <div class="hub-card-body">
+                    <h3 class="hub-card-title">
+                      <a href={`/capabilities/${service.slug}/`}>{service.title}</a>
+                    </h3>
+                    <p class="hub-card-summary">{service.summary}</p>
+                    <a href={`/capabilities/${service.slug}/`} class="hub-card-link">
+                      View support →
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section id="value-added" class="hub-section capabilities-hub-section">
+            <div class="hub-section-header">
+              <h2>Value-added services</h2>
+              <p>Support around the parts order: identification, stock check, export packing, and global delivery.</p>
+            </div>
+            <div class="capabilities-addon-grid">
+              {additionalServices.map((item) => (
+                <a
+                  href={additionalLinks[item.title] ?? '/part-products/'}
+                  class="capabilities-addon-card"
+                >
+                  <span class="capabilities-addon-title">{item.title}</span>
+                  <span class="capabilities-addon-desc">{additionalSummaries[item.title]}</span>
+                  <span class="capabilities-addon-cta">Learn more →</span>
+                </a>
+              ))}
+            </div>
+          </section>
+
+          <div class="resource-note">
+            <strong>Parts tip:</strong> Not sure which part number is correct?
+            <a href="/products/mtu-spare-parts/mtu-part-number-lookup/">Use the MTU lookup guide</a>
+            ·
+            <a href="/products/mtu-spare-parts/mtu-engine-series-guide/">MTU series guide</a>
+            ·
+            <a href="/contact/">send photos</a>
+            before you order.
+          </div>
+
+          <section id="capabilities-faq" class="hub-section capabilities-hub-section">
+            <h2 class="hub-faq-heading">Capabilities FAQ</h2>
+            <div class="hub-faq-list capabilities-faq-list">
+              {faqs.slice(0, 6).map((faq) => (
+                <details class="hub-faq-item capabilities-faq-item">
+                  <summary>
+                    <span>{faq.question}</span>
+                    <span class="capabilities-faq-chevron" set:html={chevronIcon} />
+                  </summary>
+                  <p>{faq.answer}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+
+          <p class="resource-related">
+            <a href="/products/">Engine parts</a>
+            <span aria-hidden="true">·</span>
+            <a href="/part-products/">Parts guides</a>
+            <span aria-hidden="true">·</span>
+            <a href="/terms/shipping/">Shipping</a>
+            <span aria-hidden="true">·</span>
+            <a href="/contact/">Contact</a>
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <BlogCta stage="selection" topic="capabilities-index" primaryHref="/contact/?source=capabilities" />
+</BaseLayout>
+
+<style>
+  .capabilities-rfq-strip {
+    margin-bottom: 20px;
+  }
+
+  .capabilities-jump-nav {
+    margin-bottom: 24px;
+  }
+
+  .capabilities-hub-section {
+    scroll-margin-top: 100px;
+  }
+
+  .capabilities-hub-card {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .capabilities-hub-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 2;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--color-primary);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+
+  .capabilities-hub-card .hub-card-image,
+  .capabilities-hub-card .hub-card-title a,
+  .capabilities-hub-card .hub-card-link {
+    cursor: pointer;
+  }
+
+  .capabilities-hub-card .hub-card-image:focus-visible,
+  .capabilities-hub-card .hub-card-title a:focus-visible,
+  .capabilities-hub-card .hub-card-link:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .capabilities-addon-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-bottom: 8px;
+  }
+
+  .capabilities-addon-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px 22px;
+    background: var(--color-white);
+    border: 1px solid var(--color-stroke);
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .capabilities-addon-card:hover {
+    border-color: rgba(20, 110, 245, 0.35);
+    box-shadow: 0 4px 18px rgba(20, 110, 245, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .capabilities-addon-card:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .capabilities-addon-title {
+    font-family: var(--font-title);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-title);
+    line-height: 1.35;
+  }
+
+  .capabilities-addon-desc {
+    flex: 1;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #475569;
+  }
+
+  .capabilities-addon-cta {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  .capabilities-faq-item summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .capabilities-faq-chevron {
+    flex-shrink: 0;
+    display: flex;
+    color: var(--color-primary);
+    transition: transform 0.2s ease;
+  }
+
+  .capabilities-faq-item[open] .capabilities-faq-chevron {
+    transform: rotate(180deg);
+  }
+
+  .capabilities-faq-item summary:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  .resource-nav-link:focus-visible,
+  .detail-rfq-link:focus-visible,
+  .resource-note a:focus-visible,
+  .resource-related a:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  @media (max-width: 768px) {
+    .capabilities-addon-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .capabilities-hub-card:hover .hub-card-image img,
+    .capabilities-addon-card:hover {
+      transform: none;
+    }
+    .capabilities-faq-chevron {
+      transition: none;
+    }
+  }
+</style>

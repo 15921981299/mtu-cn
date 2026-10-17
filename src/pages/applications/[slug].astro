@@ -1,0 +1,213 @@
+﻿---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProcurementBrief from '../../components/ProcurementBrief.astro';
+import QuotationExamples from '../../components/QuotationExamples.astro';
+import { marineProcurement } from '../../data/procurement-content';
+import BreadcrumbHero from '../../components/BreadcrumbHero.astro';
+import ApplicationSidebar from '../../components/ApplicationSidebar.astro';
+import BlogCta from '../../components/BlogCta.astro';
+import DetailPageShell from '../../components/DetailPageShell.astro';
+import DetailRfqStrip from '../../components/DetailRfqStrip.astro';
+import FunnelPageView from '../../components/FunnelPageView.astro';
+import SubpageLinks from '../../components/SubpageLinks.astro';
+import { applications } from '../../data/applications';
+import { industries } from '../../data/industries';
+import { products } from '../../data/products';
+import { breadcrumbSchema, serviceSchema, site } from '../../data/site';
+import '../../styles/resource-page.css';
+
+export function getStaticPaths() {
+  return applications.map((a) => ({ params: { slug: a.slug }, props: { app: a } }));
+}
+
+const { app } = Astro.props;
+const pageUrl = `${site.url}/applications/${app.slug}/`;
+const quoteHref = `/contact/?source=application-${app.slug}`;
+const productSlugs = app.productSlugs as readonly string[];
+const linkedProducts = products.filter((p) => productSlugs.includes(p.slug));
+
+const applicationIndustryMap: Record<string, string[]> = {
+  'motor-drive-components': ['industrial-automation', 'automotive'],
+  'fluid-handling-components': ['oil-gas', 'industrial-automation'],
+  'structural-mounting-components': ['industrial-automation', 'aerospace'],
+  'enclosure-housing-components': ['consumer-electronics', 'semiconductor-electronics'],
+  'wear-bearing-components': ['industrial-automation', 'robotics'],
+  'ev-battery-components': ['automotive', 'renewable-energy'],
+  'medical-instrument-components': ['medical-devices'],
+  'aerospace-structural-components': ['aerospace', 'defense-military'],
+  'robotics-automation-components': ['robotics', 'industrial-automation'],
+  'semiconductor-equipment-components': ['semiconductor-electronics'],
+};
+const relatedIndustries = (applicationIndustryMap[app.slug] ?? [])
+  .map((slug) => industries.find((i) => i.slug === slug))
+  .filter((i): i is (typeof industries)[number] => Boolean(i))
+  .map((i) => ({ href: `/industries/${i.slug}/`, title: i.title, summary: i.summary }));
+const heroProduct = linkedProducts[0];
+const heroImage = heroProduct?.mainImage ?? '/images/mtu-engine-parts-hero.webp';
+const inlineImage =
+  heroProduct?.secondImage ??
+  linkedProducts[1]?.mainImage ??
+  '/images/mtu-part-number-verification.webp';
+---
+
+<BaseLayout
+  title={app.seoTitle}
+  description={app.summary}
+  currentPath="/applications"
+  image={heroImage}
+  jsonLd={[
+    breadcrumbSchema([
+      { name: 'Home', url: site.url },
+      { name: 'Parts by Application', url: `${site.url}/applications/` },
+      { name: app.title, url: pageUrl },
+    ]),
+    serviceSchema({
+      name: app.title,
+      description: app.summary,
+      url: pageUrl,
+      image: `${site.url}${heroImage}`,
+    }),
+  ]}
+>
+  <FunnelPageView stage="selection" label={`application-${app.slug}`} />
+  <BreadcrumbHero
+    title={app.h1Title}
+    trail={[
+      { label: 'Home', href: '/' },
+      { label: 'Applications', href: '/applications/' },
+      { label: app.title },
+    ]}
+    variant="2"
+  />
+
+  <DetailPageShell intro={app.summary}>
+    <img
+      slot="hero"
+      src={heroImage}
+      alt={`${app.title} engine parts support`}
+      width="1400"
+      height="692"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+
+    <div class="resource-meta">
+      <span><strong>Part types</strong> {linkedProducts.length} linked guides</span>
+      <span><strong>Verification</strong> Part number and serial number</span>
+      <span><strong>Lead time</strong> Quoted by stock and destination</span>
+      <span><strong>Support</strong> Planned or urgent maintenance</span>
+    </div>
+
+    <DetailRfqStrip
+      quoteHref={quoteHref}
+      title={`Check parts for ${app.title.toLowerCase()}`}
+      text="Send the part number, engine model, serial number, quantity, destination, and required delivery date for an availability check."
+      modalSource={`application-${app.slug}`}
+      modalContext={app.h1Title}
+    />
+
+    {linkedProducts.length > 0 && (
+      <>
+        <p class="detail-quick-label">Related part types</p>
+        <nav class="resource-nav detail-quick-nav" aria-label="Related part types for this application">
+          {linkedProducts.map((product) => (
+            <a href={`/products/${product.slug}/`} class="resource-nav-link">
+              {product.title}
+            </a>
+          ))}
+        </nav>
+      </>
+    )}
+
+    <div set:html={app.content.partOne} />
+    {app.slug === 'marine-propulsion-engines' && <ProcurementBrief brief={marineProcurement} source="marine-delivery-rfq" />}
+    {app.slug === 'marine-propulsion-engines' && <QuotationExamples ids={['mixed-parts-list']} source="marine-parts-list-example" />}
+    <figure class="detail-page-figure">
+      <img
+        src={inlineImage}
+        alt={`${app.title} engine parts and service support`}
+        width="1200"
+        height="662"
+        loading="lazy"
+        decoding="async"
+      />
+    </figure>
+    <div set:html={app.content.partTwo} />
+
+    {linkedProducts.length > 0 && (
+      <section class="application-related" aria-labelledby="application-related-heading">
+        <h2 id="application-related-heading" class="hub-faq-heading">Related part type guides</h2>
+        <div class="hub-grid">
+          {linkedProducts.map((product) => (
+            <article class="hub-card">
+              <a href={`/products/${product.slug}/`} class="hub-card-image">
+                <img
+                  src={product.mainImage}
+                  alt={product.title}
+                  width="400"
+                  height="250"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+              <div class="hub-card-body">
+                <h3 class="hub-card-title">
+                  <a href={`/products/${product.slug}/`}>{product.title}</a>
+                </h3>
+                <p class="hub-card-summary">{product.summary}</p>
+                <a href={`/products/${product.slug}/`} class="hub-card-link">
+                  View part type
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <SubpageLinks title="Industries for this application" items={relatedIndustries} />
+
+    <p class="resource-note detail-page-back">
+      <a href="/applications/">All applications</a>
+      ·
+      <a href="/products/">Part types</a>
+      ·
+      <a href="/part-products/">Comparisons</a>
+      ·
+      <a href="/part-products/">MTU part numbers</a>
+      ·
+      <a href={quoteHref}>Request a quote</a>
+    </p>
+
+    <ApplicationSidebar slot="sidebar" activeSlug={app.slug} quoteHref={quoteHref} />
+  </DetailPageShell>
+
+  <BlogCta
+    stage="selection"
+    topic={app.slug}
+    title={`Check parts for ${app.title.toLowerCase()}`}
+    text="Send part numbers, engine details, photos, quantity, and destination. We verify fitment and availability before quotation."
+    primaryLabel="Check Parts"
+    primaryHref={quoteHref}
+    primaryEvent={`application_${app.slug}_rfq`}
+    secondaryLabel="MTU part numbers"
+    secondaryHref="/part-products/"
+    secondaryEvent="application_part_numbers"
+  />
+</BaseLayout>
+
+<style>
+  .application-related {
+    margin-top: 32px;
+  }
+
+  .application-related .hub-grid {
+    margin-top: 16px;
+  }
+
+  .application-related .hub-card-body {
+    margin-top: 0;
+    padding: 16px 18px 18px;
+  }
+</style>

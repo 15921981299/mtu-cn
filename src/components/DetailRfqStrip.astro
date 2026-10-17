@@ -1,0 +1,60 @@
+---
+interface Props {
+  quoteHref: string;
+  title?: string;
+  text?: string;
+  label?: string;
+  secondaryHref?: string;
+  secondaryLabel?: string;
+  modalContext?: string;
+  modalSource?: string;
+}
+
+const {
+  quoteHref,
+  title = '询价该类别配件',
+  text = '请提供零件号、发动机型号、出厂编号、数量与收货地区，我们将核实实际供货情况。',
+  label = '发起询价',
+  secondaryHref,
+  secondaryLabel = 'MTU 零件号',
+  modalContext = title,
+  modalSource,
+} = Astro.props;
+---
+
+<div class="detail-rfq-strip">
+  <p>
+    <strong>{title}:</strong> {text}
+  </p>
+  <div class="detail-rfq-actions">
+    <a
+      href={quoteHref}
+      class="detail-rfq-link"
+      data-rfq-modal
+      data-rfq-context={modalContext}
+      data-rfq-source={modalSource}
+    >{label}</a>
+    {secondaryHref && (
+      <a href={secondaryHref} class="detail-rfq-link detail-rfq-link--secondary">{secondaryLabel}</a>
+    )}
+  </div>
+</div>
+
+<style>
+  .detail-rfq-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 14px;
+    margin-top: 12px;
+  }
+
+  .detail-rfq-link--secondary {
+    background: var(--color-white);
+    color: var(--color-primary);
+    border: 1px solid rgba(20, 110, 245, 0.35);
+  }
+
+  .detail-rfq-link--secondary:hover {
+    background: rgba(20, 110, 245, 0.06);
+  }
+</style>

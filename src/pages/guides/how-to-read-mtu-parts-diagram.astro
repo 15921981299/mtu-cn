@@ -1,0 +1,419 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../components/BreadcrumbHero.astro';
+import FunnelPageView from '../../components/FunnelPageView.astro';
+import DetailRfqStrip from '../../components/DetailRfqStrip.astro';
+import { mtuParts } from '../../data/mtu-parts';
+import { articleSchema, breadcrumbSchema, faqSchema, site } from '../../data/site';
+import '../../styles/resource-page.css';
+
+/**
+ * "How to read an MTU parts diagram" — a self-contained guide that teaches the
+ * reader to go from a diagram/exploded view to a part number and then to a
+ * usable RFQ. Everything here is original: the zone map is drawn by us from our
+ * own category data. No manufacturer handbook artwork and no supplier artwork is
+ * reproduced (copyright + supplier-identity rules).
+ */
+
+const pageUrl = `${site.url}/guides/how-to-read-mtu-parts-diagram/`;
+
+const categoryCount = (name: string) => mtuParts.filter((part) => part.category === name).length;
+
+/** Zones are drawn from real category totals so the diagram never overstates coverage. */
+const zones = [
+  { key: 'valve-train', label: 'Valve train', count: categoryCount('Valve train'), href: '/part-products/catalog/mtu-valve-train/' },
+  { key: 'gaskets', label: 'Cylinder head, gaskets & seals', count: categoryCount('Gaskets and seals'), href: '/part-products/catalog/mtu-gasket-kits/' },
+  { key: 'pistons', label: 'Pistons, liners & rings', count: categoryCount('Pistons and liners'), href: '/part-products/catalog/mtu-pistons-liners/' },
+  { key: 'bearings', label: 'Bearings & crankshaft', count: categoryCount('Bearings'), href: '/part-products/catalog/mtu-bearings/' },
+];
+
+const leftModules = [
+  { label: 'Fuel system', note: 'Injectors, pumps, high-pressure lines', count: categoryCount('Fuel system'), href: '/part-products/catalog/mtu-fuel-pumps/' },
+  { label: 'Filters', note: 'Oil, fuel, air, coolant elements', count: categoryCount('Filters'), href: '/part-products/catalog/mtu-filters/' },
+  { label: 'Drive components', note: 'Gears, couplings, drive shafts', count: categoryCount('Drive components'), href: '/part-products/' },
+];
+
+const rightModules = [
+  { label: 'Turbocharging', note: 'Cartridges, housings, heat shields', count: categoryCount('Turbocharging'), href: '/part-products/catalog/mtu-turbocharger-parts/' },
+  { label: 'Cooling system', note: 'Pumps, impellers, thermostats', count: categoryCount('Cooling system'), href: '/part-products/catalog/mtu-cooling-system/' },
+  { label: 'Sensors & electrical', note: 'Sensors, starters, alternators', count: categoryCount('Sensors and electrical'), href: '/part-products/catalog/mtu-sensors/' },
+];
+
+const totalCatalogued = mtuParts.length;
+
+const steps = [
+  {
+    title: '1. Find the drawing that matches your engine generation',
+    body: 'A parts diagram or exploded view is drawn for one engine generation, not for a series name. Two engines badged "16V 2000" from different production runs can have a different injector, liner, or gasket shown in the same position on the page. Start from the drawing number or the engine designation on your nameplate, not from the model badge alone.',
+  },
+  {
+    title: '2. Walk the drawing by system, not by position number',
+    body: 'Exploded views are laid out by assembly: cylinder head and valve train at the top, piston and liner in the middle, crankcase and bearings at the bottom, with fuel, cooling, and turbocharging drawn as separate sub-assemblies. Work one sub-assembly at a time and note the position number shown on the drawing.',
+  },
+  {
+    title: '3. Read the position number, then look up the reference it points to',
+    body: 'The position number on the drawing is an index into that drawing\u2019s parts list \u2014 it is not the part number. Read across to the reference the list gives for that position. On MTU drawings this is normally the long numeric reference, and on older documentation it may be a short reference with a slash suffix.',
+  },
+  {
+    title: '4. Expect the reference on the drawing to be superseded',
+    body: 'Drawings stay in print for decades. The number you read off an old drawing is frequently superseded, and the current supply reference is a different number. This is the single most common reason a buyer orders the wrong item, so the reference should always be checked against the serial number range before it is quoted.',
+  },
+  {
+    title: '5. Confirm by engine serial number before ordering',
+    body: 'The drawing tells you which position and which family of part. The engine serial number tells you which revision of it your engine actually carries. Send the drawing reference together with the serial number and we confirm the current number, the supply route, and the lead time before anything is ordered.',
+  },
+];
+
+const faqs = [
+  {
+    question: 'Can you send me a parts diagram or the workshop manual?',
+    answer:
+      'We do not distribute manufacturer drawings or manuals \u2014 they are published by the engine maker and supplied under their own terms. What we can do is read the reference you take off your own drawing and tell you the current part number, the interchange options, and the lead time. Send the position number, the drawing or engine designation, and your engine serial number.',
+  },
+  {
+    question: 'I only have a photo of the old part. Is that enough?',
+    answer:
+      'Often yes. A clear photo of the part plus the engine model and serial number is usually enough for us to identify the reference, especially where the original number is stamped on the component. Include a second photo of any stamped or cast number on the part, and tell us which position it came from.',
+  },
+  {
+    question: 'Why does the same position show different numbers on different drawings?',
+    answer:
+      'Because the drawing belongs to a specific engine generation and configuration. Injection, cooling, and management systems changed across production runs, so a position that carries one reference on an early drawing carries another on a later one. The serial number range decides which applies to your engine.',
+  },
+  {
+    question: 'Do you publish part-number ranges for each system?',
+    answer:
+      'No. Part numbers do not follow a range that maps cleanly onto a system \u2014 the same prefix appears across unrelated groups, and the suffix decides the exact item. We publish the part numbers we supply, grouped by system and engine series, each verified against engine details before quoting. Use the zone map above to browse by system, then confirm your reference with us.',
+  },
+];
+
+const today = new Date().toISOString().slice(0, 10);
+const hasPersonAuthor = Boolean(site.author.name);
+---
+
+<BaseLayout
+  title="How to Read an MTU Parts Diagram"
+  description="Work from an MTU parts diagram or exploded view to a usable part number: how position numbers map to references, why the number on the drawing is often superseded, and how to verify it by engine serial number."
+  currentPath="/guides"
+  jsonLd={[
+    breadcrumbSchema([
+      { name: 'Home', url: site.url },
+      { name: 'Parts Guides', url: `${site.url}/guides/` },
+      { name: 'How to Read an MTU Parts Diagram', url: pageUrl },
+    ]),
+    articleSchema({
+      title: 'How to Read an MTU Parts Diagram',
+      description:
+        'A method for turning an MTU parts diagram into a verified part number: system-by-system reading, position numbers vs references, supersession, and serial-number confirmation.',
+      url: pageUrl,
+      image: `${site.url}/images/mtu-4000-series-overhaul-parts.webp`,
+      datePublished: today,
+      dateModified: today,
+      authorName: hasPersonAuthor ? site.author.name : site.name,
+      authorType: hasPersonAuthor ? 'Person' : 'Organization',
+      authorJobTitle: hasPersonAuthor && site.author.jobTitle ? site.author.jobTitle : undefined,
+      authorSameAs: hasPersonAuthor && site.author.linkedin ? [site.author.linkedin] : undefined,
+    }),
+    faqSchema(faqs),
+  ]}
+>
+  <FunnelPageView stage="service" label="guide-parts-diagram" />
+  <BreadcrumbHero
+    title="How to Read an MTU Parts Diagram"
+    trail={[
+      { label: 'Home', href: '/' },
+      { label: 'Parts Guides', href: '/guides/' },
+      { label: 'How to Read an MTU Parts Diagram' },
+    ]}
+    variant="3"
+  />
+
+  <div class="resource-page">
+    <section class="resource-page-section">
+      <p>
+        A parts diagram or exploded view is the fastest way to point at the item you need, and the
+        slowest way to order it — because the number printed next to the position on the drawing is
+        usually <strong>not</strong> the number you can buy. This guide covers what to read off a
+        drawing, what to ignore, and how to turn it into a reference we can confirm against your engine.
+      </p>
+      <p>
+        It is a sourcing guide, not a workshop manual. We do not reproduce manufacturer drawings, and we
+        do not publish torque values, clearances, or assembly procedures — those belong to the official
+        documentation for your engine.
+      </p>
+      <div class="resource-meta">
+        <span><strong>Part numbers indexed</strong> {totalCatalogued} verified records</span>
+        <span><strong>Grouped by</strong> Engine series and system</span>
+        <span><strong>Fitment check</strong> By engine serial number</span>
+        {hasPersonAuthor ? (
+          <span><strong>Reviewed by</strong> {site.author.name}{site.author.jobTitle ? `, ${site.author.jobTitle}` : ''}</span>
+        ) : (
+          <span><strong>Maintained by</strong> The {site.name} parts desk</span>
+        )}
+      </div>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>Engine systems you will see on a diagram</h2>
+      <p>
+        The map below is drawn by us from our own catalogue, so the counts are the part numbers we
+        actually hold records for — not an illustration. Click any system to browse that group, or use
+        it as a checklist while you work through a drawing. A small number of records sit outside
+        these groups (general engine components, lubrication, intake) and are reachable from the
+        full <a href="/part-products/">part-number catalog</a>.
+      </p>
+
+      <div class="diagram-map-wrap">
+        <svg
+          class="diagram-map"
+          viewBox="0 0 940 546"
+          width="100%"
+          role="img"
+          aria-labelledby="diagram-map-title diagram-map-desc"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <title id="diagram-map-title">MTU engine systems grouped as they appear on an exploded view</title>
+          <desc id="diagram-map-desc">
+            A block map of the main MTU engine systems: valve train, cylinder head gaskets and seals,
+            pistons and liners, and bearings in the central engine block; fuel system, filters and drive
+            components to the left; turbocharging, cooling and electrical to the right; gaskets and seals
+            across the full width.
+          </desc>
+
+          <text x="40" y="30" class="dm-title">Main systems on an MTU parts diagram</text>
+
+          <rect x="300" y="70" width="340" height="380" rx="20" class="dm-block" />
+          <text x="470" y="60" class="dm-block-label" text-anchor="middle">Engine block</text>
+
+          {zones.map((zone, index) => (
+            <a href={zone.href} class="dm-link">
+              <g class="dm-node">
+                <rect x="318" y={88 + index * 90} width="304" height="74" rx="10" class="dm-zone" />
+                <text x="336" y={88 + index * 90 + 30} class="dm-zone-label">{zone.label}</text>
+                <text x="336" y={88 + index * 90 + 52} class="dm-zone-count">{zone.count} part numbers →</text>
+              </g>
+            </a>
+          ))}
+
+          {leftModules.map((module, index) => (
+            <a href={module.href} class="dm-link">
+              <g class="dm-node">
+                <rect x="40" y={88 + index * 121} width="230" height="101" rx="10" class="dm-module" />
+                <text x="58" y={88 + index * 121 + 30} class="dm-zone-label">{module.label}</text>
+                <text x="58" y={88 + index * 121 + 52} class="dm-module-note">{module.note}</text>
+                <text x="58" y={88 + index * 121 + 76} class="dm-zone-count">{module.count} part numbers →</text>
+              </g>
+            </a>
+          ))}
+
+          {rightModules.map((module, index) => (
+            <a href={module.href} class="dm-link">
+              <g class="dm-node">
+                <rect x="670" y={88 + index * 121} width="230" height="101" rx="10" class="dm-module" />
+                <text x="688" y={88 + index * 121 + 30} class="dm-zone-label">{module.label}</text>
+                <text x="688" y={88 + index * 121 + 52} class="dm-module-note">{module.note}</text>
+                <text x="688" y={88 + index * 121 + 76} class="dm-zone-count">{module.count} part numbers →</text>
+              </g>
+            </a>
+          ))}
+
+          <a href="/part-products/catalog/mtu-gasket-kits/" class="dm-link">
+            <g class="dm-node">
+              <rect x="40" y="470" width="860" height="56" rx="10" class="dm-band" />
+              <text x="58" y="492" class="dm-zone-label">Gaskets and seals — present in every system above</text>
+              <text x="58" y="512" class="dm-zone-count">{categoryCount('Gaskets and seals')} part numbers →</text>
+            </g>
+          </a>
+        </svg>
+      </div>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>From the drawing to a part number</h2>
+      <ol class="diagram-steps">
+        {steps.map((step) => (
+          <li>
+            <h3>{step.title}</h3>
+            <p>{step.body}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>What to send with a diagram reference</h2>
+      <p>
+        A diagram reference on its own is not enough to quote against, because it does not identify the
+        production revision. Send these and we can confirm the current number instead of quoting the one
+        printed on a drawing that may be older than your engine:
+      </p>
+      <ul class="resource-checklist">
+        <li>The reference or position number as it appears on your drawing</li>
+        <li>The drawing, parts-book, or engine designation the reference came from</li>
+        <li>Engine model as shown on the nameplate, with the full suffix (for example 12V 4000 M93L)</li>
+        <li>Engine serial number — this decides which revision of the part fits</li>
+        <li>Quantity, and whether the engine is in service or going into an overhaul</li>
+        <li>A photo of the old part, including any stamped or cast number</li>
+        <li>Destination, so lead time and freight can be quoted with the price</li>
+      </ul>
+      <p>
+        If the reference is unreadable or missing entirely, that is not a dead end — send the photos and
+        the serial number and we identify it from the position and the engine record.
+      </p>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>Related reference tools</h2>
+      <ul class="resource-olist">
+        <li><a href="/engine-models/">Parts Lists by Engine Model</a> — every catalogued part number for your model code, grouped by system</li>
+        <li><a href="/cross-reference/">Part Number Cross Reference</a> — superseded and OEM numbers mapped to the parts we supply</li>
+        <li><a href="/series/mtu-4000-variants/">MTU 4000 Variant Decoder</a> — what the M-duty suffix on the nameplate changes</li>
+        <li><a href="/part-products/">MTU Part Number Catalog</a> — all {totalCatalogued} part numbers, searchable</li>
+        <li><a href="/catalog/">Catalog PDF Downloads</a> — the same index as a printable, searchable PDF, one file per series</li>
+        <li><a href="/how-to-source-mtu-parts/">Dealer or Independent Supplier</a> — which sourcing route suits the engine</li>
+        <li><a href="/guides/">All parts guides</a> — overhaul planning and series identification</li>
+      </ul>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>FAQ</h2>
+      {faqs.map((item) => (
+        <details class="guide-faq-item">
+          <summary>{item.question}</summary>
+          <p>{item.answer}</p>
+        </details>
+      ))}
+    </section>
+
+    <DetailRfqStrip
+      title="Send the reference and the serial number"
+      text="Position number, engine model, and serial number are enough for us to trace the current part number and quote availability."
+      quoteHref="/contact/?source=guide-parts-diagram"
+      label="Request Parts Quote"
+      modalSource="guide-parts-diagram"
+    />
+  </div>
+</BaseLayout>
+
+<style>
+  .diagram-map-wrap {
+    margin: 8px 0 4px;
+    overflow-x: auto;
+  }
+
+  .diagram-map {
+    min-width: 660px;
+    max-width: 940px;
+    height: auto;
+  }
+
+  .diagram-map .dm-title {
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    fill: #0f172a;
+  }
+
+  .diagram-map .dm-block {
+    fill: #f1f5f9;
+    stroke: #cbd5e1;
+    stroke-width: 1.5;
+  }
+
+  .diagram-map .dm-block-label {
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    fill: #64748b;
+  }
+
+  .diagram-map .dm-link {
+    text-decoration: none;
+  }
+
+  .diagram-map .dm-node rect {
+    transition: stroke 0.15s ease, fill 0.15s ease;
+  }
+
+  .diagram-map .dm-node:hover rect {
+    stroke: #146ef5;
+  }
+
+  .diagram-map .dm-zone {
+    fill: #e3edfd;
+    stroke: #a9c6f2;
+    stroke-width: 1;
+  }
+
+  .diagram-map .dm-module {
+    fill: #e8f4ee;
+    stroke: #a9d6c1;
+    stroke-width: 1;
+  }
+
+  .diagram-map .dm-band {
+    fill: #eef2f7;
+    stroke: #c3d0de;
+    stroke-width: 1;
+  }
+
+  .diagram-map .dm-zone-label {
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    fill: #0f172a;
+  }
+
+  .diagram-map .dm-module-note {
+    font-family: inherit;
+    font-size: 12px;
+    fill: #52616f;
+  }
+
+  .diagram-map .dm-zone-count {
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    fill: #146ef5;
+  }
+
+  .diagram-steps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+  }
+
+  .diagram-steps li {
+    border-left: 3px solid #e2e8f0;
+    padding: 0 0 4px 18px;
+    margin-bottom: 22px;
+  }
+
+  .diagram-steps h3 {
+    margin: 0 0 6px;
+    font-size: 17px;
+  }
+
+  .diagram-steps p {
+    margin: 0;
+  }
+
+  .guide-faq-item {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+
+  .guide-faq-item summary {
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  .guide-faq-item p {
+    margin: 10px 0 0;
+    color: #475569;
+    line-height: 1.6;
+  }
+</style>

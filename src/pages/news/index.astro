@@ -1,0 +1,131 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../components/BreadcrumbHero.astro';
+import FunnelPageView from '../../components/FunnelPageView.astro';
+import DetailRfqStrip from '../../components/DetailRfqStrip.astro';
+import { newsArticles } from '../../data/news';
+import { breadcrumbSchema, site } from '../../data/site';
+import '../../styles/resource-page.css';
+
+const pageUrl = `${site.url}/news/`;
+const articles = [...newsArticles].sort((a, b) => b.datePublished.localeCompare(a.datePublished));
+---
+
+<BaseLayout
+  title="Engine Parts Industry Notes — MTU Series & Emission Systems"
+  description="Dated notes on MTU engine programs, emission systems and sourcing practice. Every factual claim is cited to the manufacturer or the original publication."
+  currentPath="/news"
+  jsonLd={[
+    breadcrumbSchema([
+      { name: 'Home', url: site.url },
+      { name: 'Industry Notes', url: pageUrl },
+    ]),
+  ]}
+>
+  <FunnelPageView stage="service" label="news-index" />
+  <BreadcrumbHero
+    title="Industry Notes"
+    trail={[{ label: 'Home', href: '/' }, { label: 'Industry Notes' }]}
+    variant="3"
+  />
+
+  <div class="resource-page">
+    <section class="resource-page-section">
+      <p>
+        Short, dated notes on the engine programs and emission systems our customers actually run.
+        The rule here is the same one we apply to quotations: <strong>every factual claim is cited</strong>
+        to the manufacturer or the original publication, and anything we cannot source is not stated.
+        No press-release rewriting, no invented specifications.
+      </p>
+      <p>
+        These notes are not a stock report or a price list. Availability, lead time and supplied
+        condition are confirmed per enquiry after the part number and engine serial number are checked.
+      </p>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>Latest Notes</h2>
+      <div class="news-grid">
+        {articles.map((article) => (
+          <a class="news-card" href={`/news/${article.slug}/`}>
+            <span class="news-card__meta">{article.category} · {article.datePublished}</span>
+            <h3>{article.h1}</h3>
+            <p>{article.description}</p>
+            <span class="news-card__more">Read the note →</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="resource-page-section">
+      <h2>Related Resources</h2>
+      <ul class="resource-olist">
+        <li><a href="/part-number-index/">Search all part numbers (EN · DE)</a></li>
+        <li><a href="/products/mtu-spare-parts/regularly-sourced-parts/">Regularly sourced MTU parts</a> — categories and series coverage</li>
+        <li><a href="/guides/">Engine parts guides</a> — overhaul planning and series identification</li>
+        <li><a href="/genuine-oem-parts/">Genuine, OEM-quality and aftermarket routes</a></li>
+      </ul>
+    </section>
+
+    <DetailRfqStrip
+      title="Send your engine details"
+      text="Model, serial number, and the positions you need — we verify fitment and supersessions, then quote with availability per line."
+      quoteHref="/contact/?source=news-index"
+      label="Request Parts Quote"
+      modalSource="news-index"
+    />
+  </div>
+</BaseLayout>
+
+<style>
+  .news-grid {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  }
+
+  .news-card {
+    display: block;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 18px 20px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .news-card:hover {
+    border-color: var(--color-primary, #146ef5);
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+  }
+
+  .news-card__meta {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #64748b;
+    margin-bottom: 8px;
+  }
+
+  .news-card h3 {
+    margin: 0 0 10px;
+    font-size: 19px;
+    line-height: 1.35;
+  }
+
+  .news-card p {
+    margin: 0;
+    color: #475569;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .news-card__more {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-primary, #146ef5);
+  }
+</style>

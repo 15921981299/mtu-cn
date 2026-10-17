@@ -1,0 +1,41 @@
+---
+import { quotationExamples } from '../data/quotation-examples';
+import { mtuParts } from '../data/mtu-parts';
+interface Props { ids: string[]; source: string; }
+const { ids, source } = Astro.props;
+const examples = quotationExamples.filter((example) => ids.includes(example.id));
+const findPart = (number: string) => mtuParts.find((part) => part.partNumber === number);
+---
+{examples.length > 0 && <section class="quotation-examples">
+  <h2>已完成配件订单</h2>
+  <p>以下为经客户授权、匿名的订单，均由 Diesel Part Source 完成交付。所列项目取自对应报价单；价格与买方信息不予公开，报价选项与数量亦不作为发货清单。</p>
+  {examples.map((example) => <article data-quotation-example={example.id}>
+    <h3 id={example.id}>{example.title}</h3>
+    <p class="quotation-date">报价日期：<time datetime={example.date}>{example.date}</time></p>
+    <p class="quotation-date">订单状态：已交付。实际交货日期与选定的供货方案不予公开。</p>
+    <p>{example.context}</p>
+    <div class="quotation-table-wrap" tabindex="0" aria-label={`${example.title} 报价明细`}>
+      <table>
+        <thead><tr><th scope="col">零件号</th><th scope="col">报价项目</th><th scope="col">询价数量</th><th scope="col">来源背景</th></tr></thead>
+        <tbody>{example.lines.map((line) => {
+          const part = findPart(line.number);
+          return <tr><th scope="row">{part ? <a href={`/part-products/${part.slug}/`}>{line.number}</a> : line.number}</th><td>{line.name}</td><td>{line.quantity}</td><td>{[line.model, line.weightKg === undefined ? undefined : `报价单位重量 ${line.weightKg} kg`, line.hsCode ? `HS 参考 ${line.hsCode}` : undefined].filter(Boolean).join('；') || '报价中未注明发动机/安装位置'}</td></tr>;
+        })}</tbody>
+      </table>
+    </div>
+    <p>{example.lesson}</p>
+  </article>)}
+  <p><a class="detail-rfq-link" href={`/contact/?source=${source}`} data-rfq-modal data-rfq-source={source} data-rfq-context="MTU 配件逐项报价；请注明数量与所要求状态">索取您的零件清单报价</a></p>
+</section>}
+<style>
+  .quotation-examples { margin: 32px 0; padding: 24px 0; border-top: 1px solid #dbe3e8 }
+  article { margin: 22px 0; padding-bottom: 16px; border-bottom: 1px solid #dbe3e8; }
+  h3 { margin-bottom: 6px; font-size: 20px; }
+  .quotation-date { color: #566575; font-size: 14px; }
+  .quotation-table-wrap { max-width: 100%; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; vertical-align: top; padding: 12px; border-bottom: 1px solid #dbe3e8; line-height: 1.6; }
+  thead { background: #f1f5f7; }
+  tbody th { white-space: nowrap; font-family: ui-monospace, monospace; }
+  @media (max-width: 600px) { table { min-width: 660px; } }
+</style>

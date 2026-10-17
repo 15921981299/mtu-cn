@@ -1,0 +1,33 @@
+{
+  "name": "dieselpartsource-site",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "node scripts/build.mjs",
+    "build:pages": "astro build",
+    "catalogs": "node scripts/build-catalogs.mjs",
+    "preview": "astro preview",
+    "check": "astro check",
+    "check:links": "node scripts/check-internal-links.mjs",
+    "audit:encoding": "node scripts/audit-encoding.mjs",
+    "test:rfq": "node --test scripts/test-rfq-download.mjs",
+    "test:attribution": "node --experimental-strip-types --test scripts/test-attribution.mjs",
+    "test:seo": "node --test scripts/test-search-pages.mjs scripts/test-procurement-pages.mjs",
+    "optimize:images": "node scripts/optimize-images.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "dependencies": {
+    "@fontsource/inter-tight": "^5.2.5",
+    "@fontsource/urbanist": "^5.2.5",
+    "astro": "^5.7.10"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.5",
+    "@astrojs/sitemap": "^3.6.1",
+    "exceljs": "^4.4.0",
+    "prettier": "^3.6.2",
+    "prettier-plugin-astro": "^0.14.1"
+  }
+}

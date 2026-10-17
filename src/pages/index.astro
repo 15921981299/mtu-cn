@@ -1,0 +1,2298 @@
+﻿---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import FunnelPageView from "../components/FunnelPageView.astro";
+import { services } from "../data/services";
+import { industries } from "../data/industries";
+import { itemListSchema, site, videoSchema } from "../data/site";
+import { isRealPartImage, mtuParts, searchPriorityPartNumbers } from "../data/mtu-parts";
+
+const homepageVideos = [
+  videoSchema({
+    name: "Diesel Part Source 柴油机零件支持概览",
+    description:
+      "柴油发动机零件识别、库存核查、包装与全球交付支持概览。",
+    thumbnailUrl: "https://img.youtube.com/vi/M7uJEbDD-_8/hqdefault.jpg",
+    embedUrl: "https://www.youtube.com/embed/M7uJEbDD-_8",
+    uploadDate: "2023-06-01",
+  }),
+  videoSchema({
+    name: "柴油发动机零件核验流程",
+    description:
+      "零件号审核、询价处理、包装与发运协调的背后流程。",
+    thumbnailUrl: `${site.url}/images/mtu-part-number-verification.webp`,
+    contentUrl: `${site.url}/images/mtu-part-number-verification.webp`,
+  }),
+];
+
+const workflowSteps = [
+  {
+    image: "/images/mtu-part-number-verification.webp",
+    step: "01",
+    title: "提交发动机与零件信息",
+    summary:
+      "请提供发动机品牌、型号、出厂编号、零件号、数量、目的国，以及铭牌或旧件照片（如有）。",
+  },
+  {
+    image: "/images/mtu-part-number-verification.webp",
+    step: "02",
+    title: "零件核验与报价",
+    summary:
+      "我们核验适配性，核查库存或采购渠道，并尽快给出价格、交货期与运输路线。",
+  },
+  {
+    image: "/images/global-engine-parts-delivery.webp",
+    step: "03",
+    title: "包装与出口准备",
+    summary:
+      "为全球维修团队备好出口包装、随附单证与运输跟踪信息。",
+  },
+  {
+    image: "/images/global-engine-parts-delivery.webp",
+    step: "04",
+    title: "快速全球交付",
+    summary:
+      "根据紧急程度、零件尺寸与目的地，采用快递、空运或海运发货。",
+  },
+];
+
+const quoteStandards = [
+  {
+    title: "零件号核验",
+    body: "在将该零件视为可报价之前，我们对照发动机系列、出厂编号上下文、旧件照片与已知替代参考号，核查所询编号。",
+  },
+  {
+    title: "清晰标注的供货路线",
+    body: "报价会注明实际可行的路线：原厂配套（OEM）、OEM 替代件、再制造件、维修路线或替代参考号。未经确认的替换不会作为直接等效件呈现。",
+  },
+  {
+    title: "可直接用于出口的报价字段",
+    body: "给采购方的回复包含价格、库存路线、交货期、大致重量、HS 编码（如有）、包装说明、贸易术语讨论以及针对目的地的运输方案。",
+  },
+  {
+    title: "发货前确认",
+    body: "对于已确认的订单，我们可在上海发货前确认数量、可见标记、标签照片、包装方式与运输跟踪信息。",
+  },
+];
+
+const identificationSteps = [
+  {
+    step: '01',
+    name: '凭证',
+    title: '把手头的资料发给我们',
+    summary:
+      '一个零件号、一个发动机型号代码、一个出厂编号（Serial Number），或者一张铭牌或旧件的照片即可。信息不全也足以开始。',
+  },
+  {
+    step: '02',
+    name: '核验',
+    title: '我们确认适配性',
+    summary:
+      '我们对照您的发动机系列与出厂编号区间核查该编号，追溯被替代的参考号，并在报价前确认供货状态。',
+  },
+  {
+    step: '03',
+    name: '报价',
+    title: '您拿到可用的报价',
+    summary:
+      '每行都列出价格、供货等级、交货期、重量、HS 编码与运输选项——便于您在相同基础上比较报价，并放心做出决定。',
+  },
+];
+
+const supplyGrades = [
+  {
+    name: '原厂件 — 全新',
+    body: '经制造商渠道供货，全新未使用。其他所有供货等级都以它为基准。',
+  },
+  {
+    name: '原厂件 — 以旧换新（再制造）',
+    body: '以您的旧总成换取的工厂再制造单元，旧件退回后返还押金。功能保修相同，价格明显更低，交货期往往更短。',
+  },
+  {
+    name: 'OEM 同质替代件',
+    body: '由第三方按制造商规格生产。适配与功能是设计目标，但渠道、单证与保修路径与原厂件不同。',
+  },
+  {
+    name: '副厂件',
+    body: '第三方制造。在应用允许的磨损部位是合理的降本选择——精密燃油系统零件仅在获得书面认可的情况下报价。',
+  },
+];
+
+/**
+ * Quantified service commitments. Deliberately process promises the operation
+ * can keep — response time, labelling discipline, verification coverage — not
+ * outcome promises (stock levels, delivery dates) that depend on upstream.
+ */
+const serviceCommitments = [
+  {
+    metric: '1 个工作日',
+    title: '每条询价的回复时限',
+    body: '凡带零件号、型号代码或铭牌照片的询价，均在一个工作日内得到实质性回复——包括在诚实的答案就是“无法核验”时明确告知。',
+  },
+  {
+    metric: '4 个供货等级',
+    title: '每条报价都标明等级',
+    body: '原厂全新、原厂换新、OEM 同质或副厂件——各自作为独立标注的行报价。不做会掩盖您实际所购产品的混合报价。',
+  },
+  {
+    metric: `${mtuParts.length} 个零件号`,
+    title: '发货前逐一核查',
+    body: `发货前对照完整型号代码与出厂编号核验适配性，并追溯被替代的参考号——覆盖 ${mtuParts.length} 个已收录零件号与 10 个发动机系列。`,
+  },
+  {
+    metric: '0 个猜测',
+    title: '替换件或未核验编号',
+    body: '如果某个编号无法核验或无法采购，我们会直说，并提供经核验的替代号。沉默和一个看似合理的零件号都不是答案。',
+  },
+];
+
+const catalogHubs = [
+  {
+    href: "/part-products/catalog/mtu-filters/",
+    title: "MTU 滤清器",
+    subtitle: "机油、燃油与空气滤芯",
+    image: "/images/engine-parts-sensors-catalog.webp",
+  },
+  {
+    href: "/part-products/catalog/mtu-injectors/",
+    title: "MTU 喷油器",
+    subtitle: "喷油器、喷嘴与喷嘴体",
+    image: "/images/engine-parts-hero.webp",
+  },
+  {
+    href: "/part-products/catalog/mtu-fuel-pumps/",
+    title: "MTU 燃油泵",
+    subtitle: "高压泵与低压泵",
+    image: "/images/engine-parts-verification-desk.webp",
+  },
+  {
+    href: "/part-products/catalog/mtu-2000-series/",
+    title: "MTU 2000 系列零件",
+    subtitle: "覆盖 8V、12V 与 16V 型号",
+    image: "/images/mtu-2000-series-parts.webp",
+  },
+  {
+    href: "/part-products/catalog/mtu-4000-series/",
+    title: "MTU 4000 系列零件",
+    subtitle: "覆盖 12V、16V 与 20V 型号",
+    image: "/images/mtu-4000-series-overhaul-parts.webp",
+  },
+  {
+    href: "/part-products/catalog/mtu-gasket-kits/",
+    title: "MTU 垫片组",
+    subtitle: "气缸盖垫片与密封件套装",
+    image: "/images/engine-parts-verification-desk.webp",
+  },
+  {
+    href: "/part-products/catalog/mtu-turbocharger-parts/",
+    title: "MTU 涡轮增压器",
+    subtitle: "涡轮叶轮与增压器部件",
+    image: "/images/industrial-diesel-engine-parts.webp",
+  },
+  {
+    href: "/part-products/catalog/mtu-4000-fuel-system-parts/",
+    title: "MTU 4000 燃油系统",
+    subtitle: "喷油器、油泵与油管",
+    image: "/images/engine-parts-hero.webp",
+  },
+  {
+    href: "/part-products/catalog/mtu-cooling-system/",
+    title: "MTU 冷却系统零件",
+    subtitle: "水泵、叶轮与冷却器",
+    image: "/images/marine-diesel-engine-parts.webp",
+  },
+  {
+    href: "/part-products/catalog/mtu-sensors/",
+    title: "MTU 传感器",
+    subtitle: "转速、压力与温度传感器",
+    image: "/images/engine-parts-sensors-catalog.webp",
+  },
+  {
+    href: "/part-products/catalog/mtu-starter-motors-alternators/",
+    title: "MTU 起动机与交流发电机",
+    subtitle: "启动与充电总成",
+    image: "/images/generator-engine-parts.webp",
+  },
+];
+
+const engineBrands = [
+  {
+    href: "/products/mtu-spare-parts/",
+    title: "MTU",
+    summary: "183、331、396、493、538、595、956、1163、2000、4000 与 8000 系列零件。",
+  },
+  {
+    href: "/part-products/catalog/mtu-2000-series/",
+    title: "MTU 2000 系列",
+    summary: "8V-18V 配置。船用、发电、轨交与工业零件。",
+  },
+  {
+    href: "/part-products/catalog/mtu-4000-series/",
+    title: "MTU 4000 系列",
+    summary: "12V-20V 配置。大功率船用、机车与发电用零件。",
+  },
+  {
+    href: "/products/mtu-2000-series-parts/16v-2000-engine-parts/",
+    title: "MTU 16V 2000",
+    summary: "M84 / M86 / M96L 船用变型——零件经型号代码与发动机出厂编号核验。",
+  },
+  {
+    href: "/engine-models/",
+    title: "按发动机型号列出的零件清单",
+    summary: "您型号代码对应的全部已收录零件号，按系统分组——从 183 到 8000 系列。",
+  },
+  {
+    href: "/products/mtu-4000-series-parts/12v-4000-engine-parts/",
+    title: "MTU 12V 4000",
+    summary: "燃油、冷却、滤清、传感器、涡轮增压器与大修部件。",
+  },
+  {
+    href: "/products/mtu-4000-series-parts/16v-4000-engine-parts/",
+    title: "MTU 16V 4000",
+    summary: "为船用、机车、发电与重型工业发动机提供零件支持。",
+  },
+  {
+    href: "/products/mtu-series-8000-engines/",
+    title: "MTU 8000 系列",
+    summary: "大功率船用发动机的服务、控制、冷却、涡轮增压器与大修零件。",
+  },
+  {
+    href: "/part-products/catalog/mtu-filters/",
+    title: "MTU 滤清器",
+    summary: "机油、燃油、空气与冷却液滤芯。可提供机群批量数量。",
+  },
+  {
+    href: "/part-products/catalog/mtu-injectors/",
+    title: "MTU 喷油器",
+    summary: "喷油器、喷嘴体与喷嘴芯，均经钢印参考号核验。",
+  },
+  {
+    href: "/part-products/catalog/mtu-fuel-pumps/",
+    title: "MTU 燃油泵",
+    summary: "高压泵、低压泵、手动泵与输送泵，均经泵体标签核验。",
+  },
+  {
+    href: "/part-products/catalog/mtu-turbocharger-parts/",
+    title: "MTU 涡轮增压器零件",
+    summary: "涡轮叶轮、轴承壳体、密封件。提供 OEM 与再制造选项。",
+  },
+  {
+    href: "/part-products/catalog/mtu-starter-motors-alternators/",
+    title: "MTU 起动机与交流发电机",
+    summary: "起动机与充电总成，均经电压、安装方式与标签核验。",
+  },
+  {
+    href: "/contact/",
+    title: "零件识别",
+    summary: "发送铭牌照片、旧件标记或出厂编号，由我们核验。",
+  },
+  {
+    href: "/capabilities/",
+    title: "其他发动机品牌",
+    summary: "Cummins、Detroit Diesel、DEUTZ 等——按品牌划分的采购页面，并为未设专页的型号提供逐行核查。",
+  },
+];
+
+const homepageHotPartNumbers = searchPriorityPartNumbers.slice(0, 12);
+
+const homepageHotParts = homepageHotPartNumbers
+  .map((partNumber) => mtuParts.find((part) => part.partNumber.toUpperCase() === partNumber.toUpperCase()))
+  .filter((part): part is (typeof mtuParts)[number] => Boolean(part));
+
+const getHomepagePartEngine = (part: (typeof mtuParts)[number]) =>
+  part.engineType || part.series.join(', ') || '按出厂编号核验';
+
+const homepageHotSlugs = new Set(homepageHotParts.map((part) => part.slug));
+const homepageFeaturedParts = [...mtuParts]
+  .filter((part) => isRealPartImage(part.image) && part.weightKg && part.hsCode && !homepageHotSlugs.has(part.slug))
+  .sort((a, b) => {
+    const bScore =
+      Number(Boolean(b.replacementFor?.length)) +
+      Number(Boolean(b.applicableEngines)) +
+      Number(Boolean(b.commonFailureScenarios?.length));
+    const aScore =
+      Number(Boolean(a.replacementFor?.length)) +
+      Number(Boolean(a.applicableEngines)) +
+      Number(Boolean(a.commonFailureScenarios?.length));
+    return bScore - aScore || a.partNumber.localeCompare(b.partNumber);
+  })
+  .slice(0, 48);
+
+const getHomepageGroupParts = (predicate: (part: (typeof mtuParts)[number]) => boolean, limit = 12) =>
+  [...mtuParts]
+    .filter((part) => predicate(part) && part.weightKg && part.hsCode)
+    .sort((a, b) => {
+      const bScore =
+        Number(isRealPartImage(b.image)) * 4 +
+        Number(Boolean(b.replacementFor?.length)) * 2 +
+        Number(Boolean(b.applicableEngines));
+      const aScore =
+        Number(isRealPartImage(a.image)) * 4 +
+        Number(Boolean(a.replacementFor?.length)) * 2 +
+        Number(Boolean(a.applicableEngines));
+      return bScore - aScore || a.partNumber.localeCompare(b.partNumber);
+    })
+    .slice(0, limit);
+
+const homepagePartNumberGroups = [
+  {
+    title: 'MTU 4000 系列零件',
+    href: '/part-products/catalog/mtu-4000-series/',
+    parts: getHomepageGroupParts((part) => part.series.includes('MTU 4000') || /4000/i.test(part.engineType ?? '')),
+  },
+  {
+    title: 'MTU 2000 系列零件',
+    href: '/part-products/catalog/mtu-2000-series/',
+    parts: getHomepageGroupParts((part) => part.series.includes('MTU 2000') || /2000/i.test(part.engineType ?? '')),
+  },
+  {
+    title: 'MTU 396 / 956 系列零件',
+    href: '/part-products/catalog/mtu-396-series/',
+    parts: getHomepageGroupParts((part) =>
+      part.series.some((series) => ['MTU 396', 'MTU 956', 'MTU 956/1163'].includes(series)) ||
+      /(396|956|1163)/i.test(part.engineType ?? ''),
+    ),
+  },
+  {
+    title: '滤清器与传感器',
+    href: '/part-products/catalog/mtu-filters/',
+    parts: getHomepageGroupParts((part) => /filter|sensor|monitor|switch|solenoid|actuator/i.test(`${part.name} ${part.category}`)),
+  },
+  {
+    title: '垫片、密封件与 O 型圈',
+    href: '/part-products/catalog/mtu-gasket-kits/',
+    parts: getHomepageGroupParts((part) => /gasket|seal|o-?ring|washer|plug/i.test(`${part.name} ${part.category}`)),
+  },
+  {
+    title: '燃油、冷却与增压',
+    href: '/part-products/catalog/mtu-4000-fuel-system-parts/',
+    parts: getHomepageGroupParts((part) => /injector|fuel|pump|coolant|water|impeller|turbo|turbine/i.test(`${part.name} ${part.category}`)),
+  },
+].filter((group) => group.parts.length > 0);
+
+---
+
+<BaseLayout
+  title="MTU 发动机零件供应商 | Diesel Part Source"
+  description="总部位于上海的柴油发动机零件供应商，专注 MTU 发动机零件与备件。收录 800+ 个零件号，提供适配核验、库存核查与从上海出发的全球交付服务。"
+  currentPath="/"
+  jsonLd={[
+    ...homepageVideos,
+    itemListSchema(
+      homepageHotParts.map((part) => ({
+        name: `${part.partNumber} ${part.name}`,
+        url: `${site.url}/part-products/${part.slug}/`,
+      }))
+    ),
+  ]}
+>
+  <FunnelPageView stage="selection" label="homepage" />
+  <!-- ═══ HERO ═══ -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-wrapper">
+        <div class="hero-content-block">
+          <div class="hero-subtitle-block fade-in">
+            <img
+              src="/images/precision-manufacturing-badge-icon.svg"
+              alt="精密制造图标"
+              class="hero-subtitle-icon"
+              width="24"
+              height="24"
+              loading="eager"
+              decoding="async"
+            />
+            <div class="hero-subtitle-text">
+              {site.tagline}
+            </div>
+          </div>
+          <div class="hero-title-block">
+            <h1 class="hero-title fade-in">
+              选对 MTU 零件，<br />发货前完成核验
+            </h1>
+          </div>
+          <div class="hero-bottom-content-block">
+            <div class="hero-summary-block">
+              <p class="hero-summary">
+                总部位于上海的柴油发动机零件供应商，专注 MTU 备件。发送零件号、型号代码或铭牌照片，我们即可核验适配性、追溯被替代的编号，并在每条报价中注明供货等级。
+              </p>
+            </div>
+            <div class="hero-button-block">
+              <div class="hero-cta-row">
+                <a href="/contact/?source=homepage" class="secondary-button hero">
+                  <div class="button-content-block">
+                    <div class="button-text">零件询价</div>
+                    <div class="button-text">零件询价</div>
+                  </div>
+                </a>
+                <a href="/products/mtu-spare-parts/" class="hero-secondary-cta">MTU 备件</a>
+              </div>
+              <ul class="hero-trust-row" aria-label="核心服务保障">
+                <li>已收录 {mtuParts.length}+ 个 MTU 零件号</li>
+                <li>10 个发动机系列 — 从 183 到 8000</li>
+                <li>每条报价均标注供货等级</li>
+                <li>从上海发往全球</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="hero-image-block">
+          <img
+            src="/images/mtu-engine-parts-hero.webp"
+            alt="MTU 柴油发动机备件，包括喷油器、滤清器、涡轮增压器（Turbocharger）、泵、传感器、垫片与密封件"
+            class="hero-image"
+            width="800"
+            height="649"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+          <div class="hero-image-overlay image-overlay fade-in"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PART IDENTIFICATION SERVICE (P1) ═══ -->
+  <section class="identify-section section-gap bottom" aria-labelledby="identify-heading">
+    <div class="container">
+      <SectionHeading
+        title="零件识别服务"
+        subtitle="信息不全也足以开始"
+      />
+      <div class="identify-grid fade-in">
+        {
+          identificationSteps.map((item) => (
+            <article class="identify-card">
+              <div class="identify-card-head">
+                <span class="identify-step" aria-hidden="true">{item.step}</span>
+                <span class="identify-name">{item.name}</span>
+              </div>
+              <h3 class="identify-card-title">{item.title}</h3>
+              <p class="identify-card-summary">{item.summary}</p>
+            </article>
+          ))
+        }
+      </div>
+      <p class="identify-note">
+        还没有零件号？发动机铭牌、磨损的标签或旧件的照片，就足够我们开始工作。<a href="/contact/?source=identify">把您手头的资料发给我们 →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══ CAPABILITIES ═══ -->
+  <section class="service-section">
+    <div class="section-gap bottom">
+      <div class="container">
+        <div class="service-wrapper">
+          <SectionHeading
+            title="发动机零件与服务支持"
+            subtitle="供货范围"
+          />
+          <div class="service-bottom-block fade-in">
+            <p class="service-bottom-text service-bottom-hint">
+              不确定哪个零件号适合您的发动机？<a
+                href="/contact/"
+                class="service-bottom-link"
+                >发送您的发动机详情</a>，我们将在发货前协助核验替换件。
+            </p>
+          </div>
+          <div class="service-card-sticky-block fade-in">
+            {
+              services.map((service) => (
+                <div class="service-card-item-block">
+                  <a
+                    href={`/capabilities/${service.slug}/`}
+                    class="service-card-image-block"
+                  >
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      class="service-card-image"
+                      width="400"
+                      height="441"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <div class="service-card-image-overlay">
+                      <div class="service-card-icon-block">
+                        <div class="service-hover-icon">
+                          <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M24 1.02211V16.5472C24 17.1117 23.5424 17.5693 22.9779 17.5693C22.4134 17.5693 21.9558 17.1117 21.9558 16.5472V3.48989L1.74492 23.7007C1.54528 23.9002 1.28377 24 1.02216 24C0.760547 24 0.499031 23.9002 0.299391 23.7007C-0.0997969 23.3015 -0.0997969 22.6543 0.299391 22.2551L20.5103 2.04422H7.4528C6.88833 2.04422 6.43069 1.58658 6.43069 1.02211C6.43069 0.457641 6.88833 0 7.4528 0H22.9779C23.5424 0 24 0.457641 24 1.02211Z"
+                              fill="white"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                  <div class="service-card-content-block">
+                    <div class="service-card-text-block">
+                      <a
+                        href={`/capabilities/${service.slug}/`}
+                        class="service-title-link-block"
+                      >
+                        <h3 class="service-card-title">{service.title}</h3>
+                      </a>
+                      <p class="service-card-summary">{service.summary}</p>
+                    </div>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ WORKFLOW ═══ -->
+  <section class="booking-steps-section">
+    <div class="section-gap bottom">
+      <div class="container">
+        <div class="booking-steps-wrapper">
+          <SectionHeading
+            title="流程说明"
+            subtitle="从零件号到交付"
+          />
+          <div class="booking-steps-content-block fade-in">
+            <div class="booking-steps-sticky-block">
+              {
+                workflowSteps.map((item, i) => (
+                  <div class:list={["booking-step-card-block", `is-${i + 1}`]}>
+                    <div class="booking-step-image-block">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        class="booking-step-image"
+                        width="400"
+                        height="251"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <div class="booking-step-card-text-block">
+                      <span class="booking-step-number" aria-hidden="true">{item.step}</span>
+                      <h3 class="booking-step-title">{item.title}</h3>
+                      <p class="booking-step-summary">{item.summary}</p>
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ QUOTE STANDARD ═══ -->
+  <section class="quote-standard-section section-gap bottom" aria-labelledby="quote-standard-heading">
+    <div class="container">
+      <SectionHeading
+        title="核验与报价标准"
+        subtitle="如何降低错发零件风险"
+      />
+      <div class="quote-standard-grid fade-in">
+        {quoteStandards.map((item, i) => (
+          <article class="quote-standard-card">
+            <span class="quote-standard-number" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </article>
+        ))}
+      </div>
+      <p class="quote-standard-note">
+        Diesel Part Source 是独立供应商。品牌名与零件号仅用于识别采购方的需求；最终报价会说明可行的采购路线与确认要求。
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══ SUPPLY GRADES (P6) ═══ -->
+  <section class="grades-section section-gap bottom" aria-labelledby="grades-heading">
+    <div class="container">
+      <SectionHeading
+        title="每条报价都标明供货等级"
+        subtitle="原厂件、换新件、OEM 件与副厂件"
+      />
+      <p class="grades-lead">
+        大多数“别处更便宜”的比较，实则是供货等级的比较——全新件、换新件与第三方零件是三个不同价位的不同产品。我们对每个等级单独报价并标注，让取舍始终清晰可见。
+      </p>
+      <div class="grades-grid fade-in">
+        {
+          supplyGrades.map((grade, i) => (
+            <article class="grade-card">
+              <span class="grade-number" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="grade-name">{grade.name}</h3>
+              <p class="grade-body">{grade.body}</p>
+            </article>
+          ))
+        }
+      </div>
+      <p class="grades-note">
+        完整对比：<a href="/guides/mtu-parts-grades/">原厂件、OEM 件、再制造件还是副厂件——如何比较报价</a>
+        ｜ 换新编号（X、XP、EX）：<a href="/guides/mtu-exchange-reman-parts/">MTU 换新与再制造零件详解</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══ SERVICE COMMITMENTS ═══ -->
+  <section class="commitments-section section-gap bottom" aria-labelledby="commitments-heading">
+    <div class="container">
+      <SectionHeading
+        title="您可以期待我们什么"
+        subtitle="可量化的服务承诺"
+      />
+      <p class="commitments-lead">
+        四项您可以用来约束我们的承诺——是我们可控的流程承诺，而不是关于库存与交付的空话。
+      </p>
+      <div class="commitments-grid fade-in">
+        {
+          serviceCommitments.map((item) => (
+            <article class="commitment-card">
+              <span class="commitment-metric">{item.metric}</span>
+              <h3 class="commitment-title">{item.title}</h3>
+              <p class="commitment-body">{item.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ MATERIALS ═══ -->
+  <section class="pricing-section">
+    <div class="section-gap bottom">
+      <div class="container">
+        <SectionHeading
+          title="我们支持的发动机品牌"
+          subtitle="品牌覆盖"
+        />
+        <div class="materials-grid fade-in">
+          {
+            engineBrands.map((m) => (
+              <a
+                href={m.href}
+                class="material-card material-card-link"
+              >
+                <h3 class="material-name">{m.title}</h3>
+                <p class="material-grades">{m.summary}</p>
+              </a>
+            ))
+          }
+        </div>
+        <p class="materials-note">
+          没有看到您的品牌？直接问就行。<a href="/contact/">发送型号与零件清单</a>
+          ——我们会核查采购选项与替代供货情况，包括上表未列出的系列。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ INDUSTRIES ═══ -->
+  <section class="map-section">
+    <div class="section-gap map map-section--flush">
+      <div class="container">
+        <SectionHeading title="我们服务的应用领域" subtitle="您的行业" />
+        <div class="industries-grid fade-in">
+          {
+            industries.map((ind) => (
+              <a
+                href={`/industries/${ind.slug}/`}
+                class="industry-card industry-card-link"
+              >
+                <div class="industry-icon">
+                  <img
+                    src={ind.icon}
+                    alt=""
+                    aria-hidden="true"
+                    class="industry-icon-image"
+                    width="148"
+                    height="148"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div class="industry-name">{ind.title}</div>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ POPULAR MTU PART NUMBERS ═══ -->
+  <section class="section-gap bottom" style="padding-top: 60px;">
+    <div class="container">
+      <SectionHeading
+        title="热门 MTU 零件号"
+        subtitle="询价最多"
+      />
+      <p class="popular-parts-intro">
+        <strong>{mtuParts.length}+ 个 MTU 零件号</strong>，按发动机系列与类别收录。请从准确编号开始，然后确认适配性、替代历史与所询零件的供货情况。
+      </p>
+      <div class="popular-parts-grid">
+        {homepageHotParts.map((part) => (
+          <article class="popular-part-card">
+            <a href={`/part-products/${part.slug}/`} class="popular-part-main-link">
+              <span class="popular-part-number">{part.partNumber}</span>
+              <span class="popular-part-name">{part.name}</span>
+            </a>
+            <dl class="popular-part-specs">
+              <div>
+                <dt>发动机</dt>
+                <dd>{getHomepagePartEngine(part)}</dd>
+              </div>
+              <div>
+                <dt>类别</dt>
+                <dd>{part.category}</dd>
+              </div>
+              <div>
+                <dt>目录重量</dt>
+                <dd>{part.weightKg ?? '询价确认'}</dd>
+              </div>
+              <div>
+                <dt>HS 编码（参考）</dt>
+                <dd>{part.hsCode ?? '询价确认'}</dd>
+              </div>
+              <div>
+                <dt>NATO 号</dt>
+                <dd>{part.natoNumber && part.natoNumber !== 'N/A' ? part.natoNumber : 'N/A'}</dd>
+              </div>
+              <div>
+                <dt>供货情况</dt>
+                <dd>询价后确认</dd>
+              </div>
+            </dl>
+            {part.replacementFor && part.replacementFor.length > 0 && (
+              <p class="popular-part-replacement">其他目录编号：{part.replacementFor.slice(0, 2).join(', ')}</p>
+            )}
+            <a
+              href={`/contact/?source=hot-part-${part.slug}`}
+              class="popular-part-rfq"
+              data-rfq-modal
+              data-rfq-context={`${part.partNumber} ${part.name} - homepage hot part`}
+              data-rfq-source={`hot-part-${part.slug}`}
+            >查询价格与供货情况</a>
+          </article>
+        ))}
+      </div>
+      <p class="popular-parts-cta">
+        <a href="/part-products/">浏览全部 {mtuParts.length}+ 个 MTU 零件号 →</a>
+        ·
+        <a href="/part-products/catalog/mtu-2000-series/">MTU 2000 零件目录</a>
+        ·
+        <a href="/part-products/catalog/mtu-4000-series/">MTU 4000 零件目录</a>
+      </p>
+
+      <div class="featured-parts-block">
+        <h3 class="featured-parts-title">带目录照片的精选 MTU 零件</h3>
+        <div class="featured-parts-grid">
+          {homepageFeaturedParts.map((part) => (
+            <a href={`/part-products/${part.slug}/`} class="featured-part-tile">
+              <span class="featured-part-image">
+                <img
+                  src={part.image}
+                  alt={part.imageAlt ?? `${part.partNumber} ${part.name}`}
+                  width="120"
+                  height="90"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
+              <span class="featured-part-copy">
+                <strong>{part.partNumber}</strong>
+                <span>{part.name}</span>
+                <small>{part.weightKg} · HS {part.hsCode}</small>
+              </span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div class="part-number-index-block">
+        <h3 class="featured-parts-title">高频需求 MTU 零件号索引</h3>
+        <div class="part-number-group-grid">
+          {homepagePartNumberGroups.map((group) => (
+            <section class="part-number-group">
+              <div class="part-number-group-header">
+                <h4>{group.title}</h4>
+                <a href={group.href}>查看目录</a>
+              </div>
+              <ul class="part-number-list">
+                {group.parts.map((part) => (
+                  <li>
+                    <a href={`/part-products/${part.slug}/`}>
+                      <strong>{part.partNumber}</strong>
+                      <span>{part.name}</span>
+                      <small>{part.category} · HS {part.hsCode}</small>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-rfq-hub section-gap bottom" aria-labelledby="home-rfq-hub-heading">
+    <div class="container">
+      <div class="home-rfq-hub-card fade-in">
+        <h2 id="home-rfq-hub-heading" class="home-rfq-hub-title">手头有零件号或发动机铭牌？</h2>
+        <p class="home-rfq-hub-lead">
+          发送您的 MTU 零件清单与发动机出厂编号。我们核验适配性、核查库存，并报价从上海到您目的地的运输方案。
+        </p>
+        <div class="home-rfq-hub-actions">
+          <a
+            href="/contact/?source=homepage-hub"
+            class="secondary-button hero home-rfq-hub-primary"
+            data-rfq-modal
+            data-rfq-context="Homepage parts list inquiry"
+            data-rfq-source="homepage-hub"
+          >
+            <div class="button-content-block">
+              <div class="button-text">零件询价</div>
+              <div class="button-text">零件询价</div>
+            </div>
+          </a>
+          <a href="/products/mtu-spare-parts/" class="home-rfq-hub-secondary">MTU 备件 →</a>
+        </div>
+        <div class="home-rfq-hub-catalog">
+          <div class="home-rfq-hub-catalog-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            浏览零件目录
+          </div>
+          <div class="home-rfq-hub-catalog-grid" role="list">
+            {catalogHubs.map((hub) => (
+              <a href={hub.href} class="catalog-hub-card" role="listitem">
+                <div class="catalog-hub-card-media">
+                  <img
+                    src={hub.image}
+                    alt=""
+                    aria-hidden="true"
+                    class="catalog-hub-card-img"
+                    width="400"
+                    height="240"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div class="catalog-hub-card-body">
+                  <h3 class="catalog-hub-card-title">{hub.title}</h3>
+                  <p class="catalog-hub-card-subtitle">{hub.subtitle}</p>
+                </div>
+                <span class="catalog-hub-card-arrow" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<script>
+  import "../scripts/hero-video.ts";
+</script>
+
+<!-- ═══ INLINE STYLES ═══ -->
+<style>
+  /* ── Hero trust row ── */
+  .hero-cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 20px;
+  }
+  .hero-secondary-cta {
+    font-family: var(--font-title);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-title);
+    text-decoration: none;
+    padding: 12px 4px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  .hero-secondary-cta:hover {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+  }
+  .hero-secondary-cta:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .hero-trust-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    margin-top: 16px;
+    padding: 0;
+    list-style: none;
+  }
+  .hero-trust-row li {
+    position: relative;
+    padding-left: 18px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #475569;
+  }
+  .hero-trust-row li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    transform: translateY(-50%);
+  }
+
+  .quote-standard-section {
+    /* background: #f8fafc; */
+  }
+
+  .quote-standard-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .quote-standard-card {
+    min-height: 230px;
+    padding: 22px;
+    border: 1px solid rgba(20, 110, 245, 0.14);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
+  }
+
+  .quote-standard-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 28px;
+    margin-bottom: 18px;
+    border-radius: 999px;
+    background: rgba(20, 110, 245, 0.1);
+    color: var(--color-primary);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .quote-standard-card h3 {
+    margin: 0 0 10px;
+    color: var(--color-title);
+    font-size: 17px;
+    line-height: 1.3;
+    text-transform: none;
+  }
+
+  .quote-standard-card p,
+  .quote-standard-note {
+    margin: 0;
+    color: #475569;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .quote-standard-note {
+    max-width: 920px;
+    margin: 20px auto 0;
+    text-align: center;
+  }
+
+  /* ── Part identification service (P1) ── */
+  .identify-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .identify-card {
+    position: relative;
+    padding: 24px 22px 22px;
+    border: 1px solid rgba(20, 110, 245, 0.14);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .identify-card:hover {
+    border-color: rgba(20, 110, 245, 0.3);
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+  }
+
+  .identify-card-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .identify-step {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 30px;
+    border-radius: 999px;
+    background: rgba(20, 110, 245, 0.1);
+    color: var(--color-primary);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+  }
+
+  .identify-name {
+    font-family: var(--font-title);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #0f172a;
+  }
+
+  .identify-card-title {
+    margin: 0 0 10px;
+    color: var(--color-title);
+    font-size: 17px;
+    line-height: 1.3;
+    text-transform: none;
+  }
+
+  .identify-card-summary {
+    margin: 0;
+    color: #475569;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .identify-note {
+    max-width: 860px;
+    margin: 20px auto 0;
+    text-align: center;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #475569;
+  }
+
+  .identify-note a {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .identify-note a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 991px) {
+    .identify-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ── Supply grades (P6) ── */
+  .grades-lead {
+    max-width: 880px;
+    margin: 0 auto 4px;
+    text-align: center;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #475569;
+  }
+
+  .grades-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .grade-card {
+    position: relative;
+    min-height: 220px;
+    padding: 22px;
+    border: 1px solid rgba(20, 110, 245, 0.14);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .grade-card:hover {
+    border-color: rgba(20, 110, 245, 0.3);
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+  }
+
+  .grade-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 28px;
+    margin-bottom: 18px;
+    border-radius: 999px;
+    background: rgba(20, 110, 245, 0.1);
+    color: var(--color-primary);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .grade-name {
+    margin: 0 0 10px;
+    color: var(--color-title);
+    font-size: 16px;
+    line-height: 1.3;
+    text-transform: none;
+  }
+
+  .grade-body {
+    margin: 0;
+    color: #475569;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .grades-note {
+    max-width: 920px;
+    margin: 20px auto 0;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #475569;
+  }
+
+  .grades-note a {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .grades-note a:hover {
+    text-decoration: underline;
+  }
+
+  /* ── Service commitments ── */
+  .commitments-lead {
+    max-width: 880px;
+    margin: 0 auto 4px;
+    text-align: center;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #475569;
+  }
+
+  .commitments-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .commitment-card {
+    position: relative;
+    min-height: 210px;
+    padding: 22px;
+    border: 1px solid rgba(20, 110, 245, 0.14);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .commitment-card:hover {
+    border-color: rgba(20, 110, 245, 0.3);
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+  }
+
+  .commitment-metric {
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    margin-bottom: 16px;
+    padding: 0 14px;
+    border-radius: 999px;
+    background: rgba(20, 110, 245, 0.1);
+    color: var(--color-primary);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+  }
+
+  .commitment-title {
+    margin: 0 0 10px;
+    color: var(--color-title);
+    font-size: 16px;
+    line-height: 1.3;
+    text-transform: none;
+  }
+
+  .commitment-body {
+    margin: 0;
+    color: #475569;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  @media (max-width: 991px) {
+    .grades-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .commitments-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .grades-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .commitments-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 991px) {
+    .quote-standard-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .quote-standard-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ── Service hint ── */
+  .service-bottom-hint {
+    margin-top: -40px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #475569;
+  }
+
+  /* ── Section spacing overrides ── */
+  .map-section--flush {
+    padding-top: 0 !important;
+  }
+  .case-studies-home-section--compact {
+    padding-bottom: 60px !important;
+  }
+  .testimonial-section--flush {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  /* ── Key features polish ── */
+  .key-feature-section .key-feature-block {
+    border: 1px solid var(--color-stroke);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .key-feature-section .key-feature-block:hover {
+    border-color: rgba(20, 110, 245, 0.25);
+    box-shadow: 0 4px 16px rgba(20, 110, 245, 0.06);
+  }
+
+  /* ── Workflow cards ── */
+  .booking-steps-section .booking-step-card-block {
+    border: 1px solid var(--color-stroke);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .booking-steps-section .booking-step-card-block:hover {
+    border-color: rgba(20, 110, 245, 0.25);
+    box-shadow: 0 4px 20px rgba(20, 110, 245, 0.07);
+  }
+
+  /* ── Service cards ── */
+  .service-section .service-card-image-block,
+  .service-section .service-title-link-block {
+    cursor: pointer;
+  }
+  .service-section .service-card-image-block:focus-visible,
+  .service-section .service-title-link-block:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  .service-section .service-card-item-block {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .service-section .service-card-item-block:hover {
+    border-color: rgba(20, 110, 245, 0.3);
+    box-shadow: 0 6px 24px rgba(20, 110, 245, 0.08);
+  }
+  .service-bottom-link:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* ── Blog footer ── */
+  .blog-section-footer {
+    margin-top: 28px;
+    text-align: center;
+    font-size: 15px;
+  }
+  .blog-section-footer a {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .blog-section-footer a:hover {
+    text-decoration: underline;
+  }
+  .blog-section-footer a:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  .materials-note a:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  .lightbox-link-block:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 4px;
+    border-radius: 50%;
+  }
+
+  /* ── Workflow step numbers ── */
+  .booking-step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    padding: 4px 10px;
+    border-radius: 100px;
+    background: rgba(20, 110, 245, 0.1);
+    color: var(--color-primary);
+    font-family: var(--font-title);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+
+  /* ── Popular guides grid ── */
+  .guides-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    max-width: 1880px;
+    margin: 0 auto;
+  }
+  .guide-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px 24px;
+    background: var(--color-white);
+    border: 1px solid var(--color-stroke);
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
+  }
+  .guide-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 20px rgba(20, 110, 245, 0.1);
+    transform: translateY(-2px);
+  }
+  .guide-card:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+  .guide-card-title {
+    font-family: var(--font-title);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--color-title);
+    margin: 0;
+  }
+  .guide-card-excerpt {
+    flex: 1;
+    font-size: 13px;
+    line-height: 1.55;
+    color: #475569;
+    margin: 0;
+  }
+  .guide-card-cta {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-top: 4px;
+  }
+  .guide-card--featured {
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    border-color: transparent;
+  }
+  .guide-card--featured:hover {
+    border-color: rgba(56, 189, 248, 0.5);
+    box-shadow: 0 8px 28px rgba(15, 23, 42, 0.35);
+  }
+  .guide-card--featured .guide-card-title {
+    color: #fff;
+  }
+  .guide-card--featured .guide-card-excerpt {
+    color: #cbd5e1;
+  }
+  .guide-card--featured .guide-card-cta {
+    color: #38bdf8;
+  }
+
+  .hero-video-poster {
+    display: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .hero-video-poster.is-visible {
+    display: block;
+  }
+  .hero-video-element {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .case-studies-home-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 24px;
+  }
+  @media (max-width: 991px) {
+    .case-studies-home-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .case-studies-home-link {
+    margin-top: 28px;
+    text-align: center;
+    font-size: 15px;
+  }
+  .case-studies-home-link a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+  }
+  .case-studies-home-link a:hover {
+    text-decoration: underline;
+  }
+  .case-studies-home-link a:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  .testimonial-case-link {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+  .testimonial-anonymity-note {
+    max-width: 720px;
+    margin: 0 auto 24px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #64748b;
+  }
+
+  .testimonial-case-link:hover {
+    text-decoration: underline;
+  }
+
+  /* ── Materials grid ── */
+  .materials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+  @media (max-width: 768px) {
+    .materials-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 480px) {
+    .materials-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .material-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 24px 32px;
+    border: 1px solid var(--color-stroke);
+    border-radius: 4px;
+    text-align: center;
+    background: var(--color-white);
+    transition:
+      border-color 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+  .material-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+  }
+  .material-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 2px 16px rgba(20, 110, 245, 0.08);
+  }
+  .material-card:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+  .material-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 16px;
+    border-radius: 4px;
+    background: var(--color-body);
+  }
+  .material-icon-image {
+    width: 36px;
+    height: 36px;
+    display: block;
+    transition: transform 0.25s ease;
+  }
+  .material-card:hover .material-icon-image {
+    transform: scale(1.08);
+  }
+  .material-name {
+    font-family: var(--font-title);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--color-title);
+    margin-bottom: 6px;
+  }
+  .material-grades {
+    font-size: 14px;
+    color: var(--color-body-text);
+  }
+  .materials-note {
+    margin-top: 28px;
+    text-align: center;
+    font-size: 15px;
+    color: var(--color-body-text);
+  }
+  .materials-note a {
+    color: var(--color-primary);
+    font-weight: 500;
+  }
+  .materials-note a:hover {
+    text-decoration: underline;
+  }
+
+  /* ── Industries grid ── */
+  .industries-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    margin-top: 24px;
+  }
+  @media (max-width: 991px) {
+    .industries-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (max-width: 480px) {
+    .industries-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  .industry-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    padding: 0px 0px 30px;
+    border: 1px solid var(--color-stroke);
+    border-radius: 4px;
+    background: var(--color-white);
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition:
+      border-color 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+  .industry-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 2px 16px rgba(20, 110, 245, 0.08);
+  }
+  .industry-card:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+  .industry-icon {
+    width: 100%;
+    height: auto;
+    flex-shrink: 0;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--color-stroke);
+    background: var(--color-body);
+  }
+  .industry-icon-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: transform 0.25s ease;
+  }
+  .industry-card:hover .industry-icon-image {
+    transform: scale(1.06);
+  }
+  .industry-name {
+    font-family: var(--font-title);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-title);
+  }
+
+  .testimonial-case-link:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  .feature-highlight-video--interactive:focus-visible {
+    outline: 2px solid #38bdf8;
+    outline-offset: 3px;
+  }
+
+  .secondary-button.hero:focus-visible,
+  .primary-button.primary-hover:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+
+  /* ── RFQ hub (priority compare internal links) ── */
+  .home-rfq-hub-card {
+    padding: 32px 36px;
+    background: var(--color-white);
+    border: 1px solid var(--color-stroke);
+    border-radius: 8px;
+  }
+
+  .home-rfq-hub-title {
+    margin: 0 0 10px;
+    font-size: clamp(24px, 3vw, 32px);
+    line-height: 1.25;
+    text-transform: none;
+  }
+
+  .home-rfq-hub-lead {
+    margin: 0;
+    max-width: 720px;
+    font-size: 16px;
+    line-height: 1.65;
+    color: #475569;
+  }
+
+  .home-rfq-hub-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 20px;
+    margin-top: 22px;
+  }
+
+  .home-rfq-hub-secondary {
+    font-family: var(--font-title);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .home-rfq-hub-secondary:hover {
+    text-decoration: underline;
+  }
+
+  .home-rfq-hub-catalog {
+    margin-top: 22px;
+    padding-top: 24px;
+    border-top: 1px solid var(--color-stroke);
+  }
+
+  .home-rfq-hub-catalog-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 18px;
+    font-family: var(--font-title);
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .home-rfq-hub-catalog-label svg {
+    flex-shrink: 0;
+    color: var(--color-primary);
+  }
+
+  .home-rfq-hub-catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+
+  @media (max-width: 991px) {
+    .home-rfq-hub-catalog-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .home-rfq-hub-catalog-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+  }
+
+  /* Catalog hub card */
+  .catalog-hub-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-white);
+    border: 1px solid var(--color-stroke);
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    overflow: hidden;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .catalog-hub-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 20px rgba(20, 110, 245, 0.12);
+    transform: translateY(-2px);
+  }
+
+  .catalog-hub-card:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .catalog-hub-card-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-bottom: 1px solid var(--color-stroke);
+    background: var(--color-body);
+  }
+
+  .catalog-hub-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.35s ease;
+  }
+
+  .catalog-hub-card:hover .catalog-hub-card-img {
+    transform: scale(1.06);
+  }
+
+  .catalog-hub-card-body {
+    flex: 1;
+    padding: 14px 16px 16px;
+  }
+
+  .catalog-hub-card-title {
+    font-family: var(--font-title);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--color-title);
+    margin: 0 0 4px;
+    text-transform: none;
+  }
+
+  .catalog-hub-card-subtitle {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #64748b;
+    margin: 0;
+  }
+
+  .catalog-hub-card-arrow {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(4px);
+    color: var(--color-primary);
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .catalog-hub-card:hover .catalog-hub-card-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .home-rfq-hub-secondary:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  @media (max-width: 767px) {
+    .home-rfq-hub-card {
+      padding: 24px 20px;
+    }
+  }
+
+  /* ── Popular parts grid ── */
+  .popular-parts-intro {
+    max-width: 860px;
+    margin: 0 auto 24px;
+    text-align: center;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #475569;
+  }
+  .popular-parts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    max-width: 1880px;
+    margin: 0 auto;
+  }
+  @media (max-width: 991px) {
+    .popular-parts-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .popular-parts-grid { grid-template-columns: 1fr; }
+  }
+  .popular-part-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px;
+    background: var(--color-white);
+    border: 1px solid var(--color-stroke);
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .popular-part-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+  }
+  .popular-part-main-link {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    text-decoration: none;
+  }
+  .popular-part-number {
+    font-family: var(--font-title);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-primary);
+    letter-spacing: 0.02em;
+  }
+  .popular-part-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-title);
+    line-height: 1.3;
+  }
+  .popular-part-specs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    margin: 0;
+  }
+  .popular-part-specs div {
+    min-width: 0;
+    padding: 7px 8px;
+    border: 1px solid #d8e2ee;
+    border-radius: 6px;
+    background: #f8fafc;
+  }
+  .popular-part-specs dt {
+    margin: 0 0 2px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #64748b;
+  }
+  .popular-part-specs dd {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.35;
+    color: #0f172a;
+    overflow-wrap: anywhere;
+  }
+  .popular-part-replacement {
+    margin: 0;
+    padding: 7px 9px;
+    border-radius: 6px;
+    background: rgba(3, 105, 161, 0.07);
+    color: #075985;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  .popular-part-rfq {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 38px;
+    margin-top: auto;
+    padding: 9px 12px;
+    border-radius: 6px;
+    background: #0369a1;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+    text-decoration: none;
+    transition: background-color 0.2s, box-shadow 0.2s;
+  }
+  .popular-part-rfq:hover {
+    background: #075985;
+    box-shadow: 0 10px 22px rgba(3, 105, 161, 0.18);
+  }
+  .popular-parts-cta {
+    margin-top: 24px;
+    text-align: center;
+    font-size: 15px;
+    color: #64748b;
+  }
+  .popular-parts-cta a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .popular-parts-cta a:hover { text-decoration: underline; }
+
+  .popular-part-main-link:focus-visible,
+  .popular-part-rfq:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  .featured-parts-block {
+    margin-top: 34px;
+    padding-top: 28px;
+    border-top: 1px solid var(--color-stroke);
+  }
+
+  .featured-parts-title {
+    margin: 0 0 16px;
+    font-size: 18px;
+    line-height: 1.35;
+    text-align: center;
+    text-transform: none;
+  }
+
+  .featured-parts-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .part-number-index-block {
+    margin-top: 34px;
+    padding-top: 28px;
+    border-top: 1px solid var(--color-stroke);
+  }
+
+  .part-number-group-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .part-number-group {
+    min-width: 0;
+    padding: 14px;
+    border: 1px solid #d8e2ee;
+    border-radius: 8px;
+    background: #fff;
+  }
+
+  .part-number-group-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .part-number-group-header h4 {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.3;
+    color: #0f172a;
+  }
+
+  .part-number-group-header a {
+    flex: 0 0 auto;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .part-number-group-header a:hover {
+    text-decoration: underline;
+  }
+
+  .part-number-list {
+    display: grid;
+    gap: 7px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .part-number-list a {
+    display: grid;
+    grid-template-columns: 112px minmax(0, 1fr);
+    gap: 4px 10px;
+    padding: 8px 0;
+    border-top: 1px solid #eef2f7;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .part-number-list li:first-child a {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  .part-number-list strong {
+    font-family: var(--font-title);
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--color-primary);
+    overflow-wrap: anywhere;
+  }
+
+  .part-number-list span {
+    min-width: 0;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: #0f172a;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .part-number-list small {
+    grid-column: 2;
+    font-size: 11px;
+    line-height: 1.3;
+    color: #64748b;
+  }
+
+  .part-number-list a:hover span {
+    color: var(--color-primary);
+  }
+
+  .featured-part-tile {
+    display: grid;
+    grid-template-columns: 62px minmax(0, 1fr);
+    gap: 10px;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #d8e2ee;
+    border-radius: 8px;
+    background: #fff;
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .featured-part-tile:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+  }
+
+  .featured-part-tile:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+
+  .featured-part-image {
+    display: block;
+    aspect-ratio: 1 / 1;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #f8fafc;
+  }
+
+  .featured-part-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .featured-part-copy {
+    min-width: 0;
+    display: grid;
+    gap: 2px;
+  }
+
+  .featured-part-copy strong,
+  .featured-part-copy span,
+  .featured-part-copy small {
+    overflow-wrap: anywhere;
+  }
+
+  .featured-part-copy strong {
+    font-family: var(--font-title);
+    font-size: 12px;
+    color: var(--color-primary);
+  }
+
+  .featured-part-copy span {
+    font-size: 12px;
+    line-height: 1.25;
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  .featured-part-copy small {
+    font-size: 10px;
+    line-height: 1.25;
+    color: #64748b;
+  }
+
+  @media (max-width: 479px) {
+    .popular-part-specs {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 1180px) {
+    .featured-parts-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .part-number-group-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 820px) {
+    .featured-parts-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .part-number-group-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 460px) {
+    .featured-parts-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .part-number-list a {
+      grid-template-columns: 104px minmax(0, 1fr);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .guide-card:hover,
+    .material-card:hover .material-icon-image,
+    .industry-card:hover .industry-icon-image {
+      transform: none;
+    }
+    .guide-card {
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .catalog-hub-card:hover {
+      transform: none;
+      box-shadow: none;
+    }
+    .catalog-hub-card:hover .catalog-hub-card-img {
+      transform: none;
+    }
+    .catalog-hub-card:hover .catalog-hub-card-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .key-feature-section .key-feature-block:hover,
+    .booking-steps-section .booking-step-card-block:hover,
+    .service-section .service-card-item-block:hover {
+      box-shadow: none;
+    }
+  }
+</style>

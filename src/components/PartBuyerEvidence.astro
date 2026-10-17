@@ -1,0 +1,34 @@
+---
+import type { PartBuyerEvidence } from '../data/part-buyer-evidence';
+import { buyerEvidenceReviewed } from '../data/part-buyer-evidence';
+
+interface Props { number: string; evidence: PartBuyerEvidence; }
+const { number, evidence } = Astro.props;
+---
+<section class="buyer-evidence" data-buyer-evidence={number}>
+  <h2>{number} 已记录的配件核验</h2>
+  <dl>
+    {evidence.facts.map((fact) => <div>
+      <dt>{fact.label}</dt>
+      <dd>{fact.value} <a href={`#part-source-${fact.source}`} class="evidence-link" aria-label={`${fact.label} 的依据`}>依据</a></dd>
+    </div>)}
+  </dl>
+  <details>
+    <summary>依据文件与照片</summary>
+    <ul>{evidence.sources.map((source) => <li id={`part-source-${source.id}`}><a href={source.url}>{source.title}</a></li>)}</ul>
+    <p class="reference-date">依据核验于 {buyerEvidenceReviewed}。当前库存与所供单元规格另行确认。</p>
+  </details>
+</section>
+<style>
+  .buyer-evidence { margin: 28px 0; padding: 22px 0; border-top: 1px solid #dbe3e8; }
+  dl { margin: 18px 0; }
+  dl > div { display: grid; grid-template-columns: minmax(150px, 1fr) minmax(0, 3fr); gap: 18px; padding: 14px 0; border-bottom: 1px solid #e2e8f0; }
+  dt { font-weight: 600; }
+  dd { margin: 0; line-height: 1.65; overflow-wrap: anywhere; }
+  .evidence-link { font-size: 13px; white-space: nowrap; }
+  a { color: #126bdf; text-decoration: underline; text-underline-offset: 3px; }
+  summary { cursor: pointer; font-weight: 600; }
+  .reference-date { color: #566575; font-size: 13px; }
+  li { overflow-wrap: anywhere; }
+  @media (max-width: 600px) { dl > div { grid-template-columns: minmax(0, 1fr); gap: 5px; } }
+</style>

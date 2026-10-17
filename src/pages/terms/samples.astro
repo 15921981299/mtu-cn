@@ -1,0 +1,148 @@
+﻿---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../components/BreadcrumbHero.astro';
+import BlogCta from '../../components/BlogCta.astro';
+import FunnelPageView from '../../components/FunnelPageView.astro';
+import TermsNav from '../../components/TermsNav.astro';
+import { breadcrumbSchema, site } from '../../data/site';
+import '../../styles/terms-page.css';
+---
+
+<BaseLayout
+  title="Sample & Trial Order Policy — Engine Parts | Diesel Part Source"
+  description="How to start with a small trial order for MTU and diesel engine parts: what a trial order includes, arrival checks, photos before dispatch, and moving to repeat or framework orders."
+  currentPath="/terms/samples"
+  jsonLd={breadcrumbSchema([
+    { name: 'Home', url: site.url },
+    { name: 'Sample Policy', url: `${site.url}/terms/samples/` },
+  ])}
+>
+  <FunnelPageView stage="signing" label="sample-policy" />
+  <BreadcrumbHero
+    title="Sample &amp; Trial Order Policy"
+    trail={[
+      { label: 'Home', href: '/' },
+      { label: 'Sample Policy' },
+    ]}
+    variant="5"
+  />
+
+  <section class="blog-details-section terms-page-section">
+    <div class="section-gap bottom">
+      <div class="container">
+        <article class="blog-details-content-block terms-page fade-in">
+          <TermsNav active="samples" />
+
+          <p class="terms-intro">
+            Many buyers start with a small trial order before placing a full maintenance or overhaul list with a new supplier. This page explains how a trial order works with us and what you can check before ordering more.
+          </p>
+
+          <div class="terms-meta" aria-label="Trial order overview">
+            <span><strong>Paid trial</strong> orders</span>
+            <span>Photos <strong>before dispatch</strong></span>
+            <span>Same documents as full orders</span>
+            <span>Express shipping available</span>
+          </div>
+
+          <div class="terms-rfq-strip">
+            <p>Send the part numbers you want to trial — we confirm availability, supply route, and shipping cost in one quote.</p>
+            <a href="/contact/?source=sample" class="terms-rfq-link">Request Trial Quote</a>
+          </div>
+
+          <div class="terms-table-wrap">
+            <table class="terms-table">
+              <caption class="terms-table-caption">From trial order to repeat supply</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Stage</th>
+                  <th scope="col">What's included</th>
+                  <th scope="col">What you check</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Trial order</strong></td>
+                  <td>A few lines from your real maintenance list, quoted with supply route and dispatch estimate</td>
+                  <td>Quote clarity and response speed</td>
+                </tr>
+                <tr>
+                  <td><strong>Before dispatch</strong></td>
+                  <td>Photos of parts, labels, and packing on request; packing list and invoice draft</td>
+                  <td>Part markings against your old parts</td>
+                </tr>
+                <tr>
+                  <td><strong>On arrival</strong></td>
+                  <td>Commercial invoice, packing list, and HS codes as on a full order</td>
+                  <td>Fit, labels, packaging, and documents</td>
+                </tr>
+                <tr>
+                  <td><strong>Repeat supply</strong></td>
+                  <td>Same references, packing format, and marking kept for later orders</td>
+                  <td>Consistency across orders</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <nav class="terms-jump-nav" aria-label="On this page">
+            <a href="#trial-order" class="terms-jump-link">Trial order</a>
+            <a href="#arrival-check" class="terms-jump-link">Arrival check</a>
+            <a href="#repeat-supply" class="terms-jump-link">Repeat supply</a>
+          </nav>
+
+          <h2 id="trial-order">Choosing Parts for a Trial Order</h2>
+          <ul class="terms-list">
+            <li>Pick parts you use regularly, such as filters, seals, or sensors, so the comparison with your current supplier is meaningful</li>
+            <li>Include at least one item that is harder to find, to see how sourcing and lead times are handled</li>
+            <li>Trial orders are paid in advance — see <a href="/terms/payment/">payment terms →</a></li>
+            <li>Express courier is usually the most practical shipping method for small trial orders</li>
+          </ul>
+
+          <h2 id="arrival-check">Checking the Trial Order on Arrival</h2>
+          <ul class="terms-list">
+            <li>Compare part numbers, labels, and packaging with the quotation and your old parts</li>
+            <li>Check that the invoice, packing list, and box labels match line by line</li>
+            <li>Use our buyer checklist on <a href="/genuine-oem-parts/">how to check genuine MTU parts</a></li>
+            <li>If anything does not match, send photos before installing the part</li>
+          </ul>
+
+          <h2 id="repeat-supply">Moving to Repeat or Framework Orders</h2>
+          <ul class="terms-list">
+            <li>Larger maintenance and overhaul lists can follow once the trial order has been checked</li>
+            <li>For regular orders we keep your preferred references, packing, and case marking on file</li>
+            <li>Payment options for repeat customers are described on the <a href="/terms/payment/">payment terms</a> page</li>
+          </ul>
+
+          <div class="terms-note">
+            <strong>Buyer tip:</strong> Send the same short list to every supplier you are comparing, including engine serial number and destination, so quotes can be compared on part reference, supply route, and delivered cost rather than unit price alone.
+          </div>
+
+          <p class="terms-related">
+            <a href="/certifications/">Quality process</a>
+            <span aria-hidden="true">·</span>
+            <a href="/about/">About us</a>
+            <span aria-hidden="true">·</span>
+            <a href="/terms/payment/">Payment terms</a>
+            <span aria-hidden="true">·</span>
+            <a href="/terms/shipping/">Shipping terms</a>
+            <span aria-hidden="true">·</span>
+            <a href="/contact/?source=sample">Request a trial quote →</a>
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <BlogCta
+    stage="signing"
+    topic="samples"
+    title="Start with a small trial order"
+    text="Send a few part numbers from your maintenance list — we confirm availability, supply route, and shipping cost in one quote."
+    primaryLabel="Request a Trial Quote"
+    primaryHref="/contact/?source=sample"
+    primaryEvent="sample_terms_rfq"
+    secondaryLabel="Quality process"
+    secondaryHref="/certifications/"
+    secondaryEvent="sample_terms_inspection"
+  />
+</BaseLayout>

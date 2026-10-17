@@ -1,0 +1,101 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { testimonials } from '../data/testimonials';
+
+interface Props {
+  id?: string;
+}
+
+const { id = 'customer-feedback' } = Astro.props;
+---
+
+<section id={id} class="who-we-are-section customer-feedback" aria-labelledby={`${id}-heading`}>
+  <div class="section-gap bottom">
+    <div class="container">
+      <div id={`${id}-heading`}>
+        <SectionHeading title="长期客户评价" subtitle="客户反馈" />
+      </div>
+      <div class="customer-feedback-grid fade-in">
+        {testimonials.map((item) => (
+          <figure class="customer-feedback-card">
+            <p class="customer-feedback-scope">{item.scope}</p>
+            <div class="customer-feedback-summary">
+              <p>{item.summary}</p>
+            </div>
+            <figcaption>
+              <strong>{item.name}</strong>
+              <span>{item.role}, {item.country}</span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+      <p class="customer-feedback-note">
+        以上评价经客户同意后发布，内容由我们概括转述。
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .customer-feedback-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .customer-feedback-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 0;
+    padding: 24px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #fff;
+  }
+
+  .customer-feedback-scope {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .customer-feedback-summary {
+    flex: 1;
+  }
+
+  .customer-feedback-summary p {
+    margin: 0;
+    color: #334155;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .customer-feedback-card figcaption {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-top: 12px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 14px;
+  }
+
+  .customer-feedback-card figcaption span {
+    color: #64748b;
+  }
+
+  .customer-feedback-note {
+    margin: 16px 0 0;
+    color: #64748b;
+    font-size: 13px;
+  }
+
+  @media (max-width: 991px) {
+    .customer-feedback-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

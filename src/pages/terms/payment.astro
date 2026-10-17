@@ -1,0 +1,141 @@
+﻿---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../components/BreadcrumbHero.astro';
+import BlogCta from '../../components/BlogCta.astro';
+import FunnelPageView from '../../components/FunnelPageView.astro';
+import TermsNav from '../../components/TermsNav.astro';
+import { breadcrumbSchema, site } from '../../data/site';
+import '../../styles/terms-page.css';
+---
+
+<BaseLayout
+  title="Payment Terms — Engine Parts RFQ & Orders | Diesel Part Source"
+  description="Payment terms for engine parts orders: T/T wire transfer, PayPal for small orders, L/C for large overhaul and project POs, proforma invoices, and balance timing."
+  currentPath="/terms/payment"
+  jsonLd={breadcrumbSchema([
+    { name: 'Home', url: site.url },
+    { name: 'Payment Terms', url: `${site.url}/terms/payment/` },
+  ])}
+>
+  <FunnelPageView stage="signing" label="payment-terms" />
+  <BreadcrumbHero
+    title="Payment Terms"
+    trail={[
+      { label: 'Home', href: '/' },
+      { label: 'Payment Terms' },
+    ]}
+    variant="5"
+  />
+
+  <section class="blog-details-section terms-page-section">
+    <div class="section-gap bottom">
+      <div class="container">
+        <article class="blog-details-content-block terms-page fade-in">
+          <TermsNav active="payment" />
+
+          <p class="terms-intro">
+            Clear payment terms reduce friction at contract stage. Below is our standard structure — specific terms are confirmed on your quotation.
+          </p>
+
+          <div class="terms-meta" aria-label="Payment overview">
+            <span><strong>T/T wire</strong> standard</span>
+            <span>PayPal under <strong>USD 2,000</strong></span>
+            <span><strong>Net 30</strong> after 3 orders</span>
+            <span>L/C for large POs</span>
+          </div>
+
+          <div class="terms-rfq-strip">
+            <p>Note your preferred payment structure on the RFQ — we confirm deposit, balance timing, and methods in the quote.</p>
+            <a href="/contact/?source=payment-terms" class="terms-rfq-link">Confirm on RFQ</a>
+          </div>
+
+          <div class="terms-table-wrap">
+            <table class="terms-table">
+              <caption class="terms-table-caption">Standard payment structures by order type</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Order type</th>
+                  <th scope="col">Payment structure</th>
+                  <th scope="col">Methods</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Small or first orders</td>
+                  <td><strong>100% prepayment</strong> before dispatch</td>
+                  <td>T/T wire transfer; PayPal for orders under USD 2,000</td>
+                </tr>
+                <tr>
+                  <td>Standard parts orders</td>
+                  <td><strong>50% deposit</strong>, 50% before shipment</td>
+                  <td>T/T wire transfer</td>
+                </tr>
+                <tr>
+                  <td>Established customers</td>
+                  <td><strong>Net 30</strong> after credit review</td>
+                  <td>Available after 3 successful orders</td>
+                </tr>
+                <tr>
+                  <td>Large overhaul or project POs</td>
+                  <td>Irrevocable <strong>L/C</strong> at sight or usance</td>
+                  <td>Qualified buyers — case by case</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>Quotation Validity and Currency</h2>
+          <ul class="terms-list">
+            <li>Quote valid <strong>30 days</strong>; currency USD unless otherwise stated</li>
+            <li>Ready-stock lines are reserved after payment is received, not at quotation stage</li>
+            <li>Sourced-to-order lines are purchased after the deposit or prepayment is received</li>
+            <li>Sample policy details: <a href="/terms/samples/">sample terms →</a></li>
+          </ul>
+
+          <h2>How a Parts Order Is Paid</h2>
+          <p>After you confirm the quotation, we issue a proforma invoice listing every part number, quantity, unit price, freight, and the agreed Incoterm. Payment is made against the proforma invoice. For orders with a deposit, the balance is due once all lines are packed and we have sent you the packing list and, if requested, photos of the parts and cases. The final commercial invoice and packing list travel with the shipment.</p>
+
+          <h3>Bank Charges and Payment References</h3>
+          <p>International wire transfers usually involve sender, intermediary, and receiving bank charges. Please instruct your bank to pay the sender charges and quote the proforma invoice number as the payment reference, so the payment can be matched to your order without delay.</p>
+
+          <h2>What Affects Payment Structure</h2>
+          <ul class="terms-list">
+            <li>First-time vs. repeat customer relationship</li>
+            <li>Order value and the share of sourced-to-order lines</li>
+            <li>High-value items such as cylinder heads, turbochargers, or injector sets bought specifically for your order</li>
+            <li>Tender or government procurement rules that require L/C or payment after delivery</li>
+          </ul>
+
+          <div class="terms-note">
+            <strong>Procurement tip:</strong> State your preferred payment structure on the RFQ so we can confirm feasibility in the quote response — especially for Net 30 or L/C programs.
+          </div>
+
+          <p class="terms-related">
+            <a href="/terms/shipping/">Shipping terms</a>
+            <span aria-hidden="true">·</span>
+            <a href="/terms/samples/">Sample policy</a>
+            <span aria-hidden="true">·</span>
+            <a href="/certifications/">Quality &amp; certifications</a>
+            <span aria-hidden="true">·</span>
+            <a href="/about/">Project proof</a>
+            <span aria-hidden="true">·</span>
+            <a href="/contact/?source=payment-terms">Confirm terms on your RFQ →</a>
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <BlogCta
+    stage="signing"
+    topic="payment"
+    title="Confirm payment terms on your quote"
+    text="Send your part number and note preferred payment structure — we confirm deposit, balance timing, and methods in the quotation response."
+    primaryLabel="Request a Quote"
+    primaryHref="/contact/?source=payment-terms"
+    primaryEvent="payment_terms_rfq"
+    secondaryLabel="Shipping terms"
+    secondaryHref="/terms/shipping/"
+    secondaryEvent="payment_terms_shipping"
+  />
+</BaseLayout>

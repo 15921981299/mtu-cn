@@ -1,0 +1,107 @@
+﻿---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../components/BreadcrumbHero.astro';
+import BlogCta from '../../components/BlogCta.astro';
+import DetailPageShell from '../../components/DetailPageShell.astro';
+import DetailRfqStrip from '../../components/DetailRfqStrip.astro';
+import FunnelPageView from '../../components/FunnelPageView.astro';
+import IndustrySidebar from '../../components/IndustrySidebar.astro';
+import { industries } from '../../data/industries';
+import { breadcrumbSchema, serviceSchema, site } from '../../data/site';
+import '../../styles/resource-page.css';
+
+export function getStaticPaths() {
+  return industries.map((item) => ({ params: { slug: item.slug }, props: { item } }));
+}
+
+const { item } = Astro.props;
+const pageUrl = `${site.url}/industries/${item.slug}/`;
+const quoteHref = `/contact/?source=industry-${item.slug}`;
+const heroImage = item.image;
+const secondaryImage = item.image;
+---
+
+<BaseLayout
+  title={item.seoTitle}
+  description={item.summary}
+  currentPath="/industries"
+  image={heroImage}
+  jsonLd={[
+    breadcrumbSchema([
+      { name: 'Home', url: site.url },
+      { name: 'Industries', url: `${site.url}/industries/` },
+      { name: item.title, url: pageUrl },
+    ]),
+    serviceSchema({
+      name: item.title,
+      description: item.summary,
+      url: pageUrl,
+      image: `${site.url}${heroImage}`,
+    }),
+  ]}
+>
+  <FunnelPageView stage="selection" label={`industry-${item.slug}`} />
+  <BreadcrumbHero
+    title={item.h1Title}
+    trail={[
+      { label: 'Home', href: '/' },
+      { label: 'Industries', href: '/industries/' },
+      { label: item.title },
+    ]}
+    variant="2"
+  />
+
+  <DetailPageShell intro={item.summary}>
+    <img
+      slot="hero"
+      src={heroImage}
+      alt={`${item.title} engine parts support`}
+      width="1400"
+      height="692"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+    <div class="resource-meta">
+      <span><strong>parts verification</strong> Free with quote</span>
+      <span><strong>Lead time</strong> 7–15 days typical</span>
+      <span><strong>Inspection</strong> supplier document reports included</span>
+    </div>
+
+    <DetailRfqStrip
+      quoteHref={quoteHref}
+      title={`Quote ${item.title.toLowerCase()} parts`}
+      text="Send your part number for industry-specific parts verification feedback, compliance notes, and a reply within one business day."
+    />
+
+    <div set:html={item.content.partOne} />
+    <figure class="detail-page-figure">
+      <img src={secondaryImage} alt={`${item.title} engine parts examples`} width="1200" height="662" loading="lazy" decoding="async" />
+    </figure>
+    <div set:html={item.content.partTwo} />
+
+    <p class="resource-note detail-page-back">
+      <a href="/industries/">All industries</a>
+      ·
+      <a href="/certifications/">Compliance paths</a>
+      ·
+      <a href="/about/">Case studies</a>
+      ·
+      <a href={quoteHref}>Request a quote</a>
+    </p>
+    <IndustrySidebar slot="sidebar" activeSlug={item.slug} quoteHref={quoteHref} />
+  </DetailPageShell>
+
+  <BlogCta
+    stage="selection"
+    topic={item.slug}
+    title={`Quote ${item.title.toLowerCase()} parts`}
+    text="Send your part number with industry and compliance notes — we confirm scope and reply within one business day."
+    primaryLabel="Request a Quote"
+    primaryHref={quoteHref}
+    primaryEvent={`industry_${item.slug}_rfq`}
+    secondaryLabel="Case studies"
+    secondaryHref="/about/"
+    secondaryEvent="industry_case_studies"
+  />
+</BaseLayout>

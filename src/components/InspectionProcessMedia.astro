@@ -1,0 +1,182 @@
+---
+import { site } from '../data/site';
+
+interface Props {
+  showYoutube?: boolean;
+  compact?: boolean;
+}
+
+const { showYoutube = true, compact = false } = Astro.props;
+const youtubeId = site.quality.inspectionMedia.youtubeVideoId;
+const hasYoutube = showYoutube && Boolean(youtubeId);
+---
+
+<section class:list={['inspection-media', { 'inspection-media--compact': compact }]}>
+  <div class="inspection-media-grid">
+    <div class="inspection-media-video-wrap">
+      <p class="inspection-media-kicker">Parts support process</p>
+      <h2 class="inspection-media-title">How parts are checked &amp; released</h2>
+      {!compact && (
+        <p class="inspection-media-desc">
+          See part-number checks, documentation review, packing confirmation, and shipment release. Pair this with our
+          <a href="/part-products/">MTU part-number catalog</a> to prepare a cleaner inquiry.
+        </p>
+      )}
+      {hasYoutube && (
+        <div class="inspection-media-youtube">
+          <p class="inspection-media-youtube-label">Parts support video</p>
+          <div class="inspection-media-youtube-embed">
+            <iframe
+              src={`https://www.youtube.com/embed/${youtubeId}`}
+              title="Engine parts verification process video"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            />
+          </div>
+        </div>
+      )}
+    </div>
+    <div class="inspection-media-steps">
+      <p class="inspection-media-kicker">Verification workflow</p>
+      <h3 class="inspection-media-steps-title">4 gates before shipment</h3>
+      <ol class="inspection-media-step-list">
+        <li>
+          <strong>Inquiry intake</strong>
+          <span>Part number, engine model, serial number, quantity, and destination are logged.</span>
+        </li>
+        <li>
+          <strong>Fitment check</strong>
+          <span>Engine series, old-part photos, and supersession notes are reviewed.</span>
+        </li>
+        <li>
+          <strong>Documentation scope</strong>
+          <span>Available supplier documents, photos, and packing notes are confirmed.</span>
+        </li>
+        <li>
+          <strong>Release package</strong>
+          <span>Dispatch details, shipment route, and tracking are prepared per order scope.</span>
+        </li>
+      </ol>
+      <a href="/part-products/" class="inspection-media-samples-link">View MTU part numbers -></a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .inspection-media {
+    margin-top: 8px;
+  }
+
+  .inspection-media-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+    gap: 28px;
+    align-items: start;
+  }
+
+  .inspection-media-video-wrap,
+  .inspection-media-steps {
+    border: 1px solid var(--color-stroke);
+    border-radius: 8px;
+    background: var(--color-white);
+    padding: 24px;
+  }
+
+  .inspection-media-kicker {
+    margin: 0 0 8px;
+    color: var(--color-primary);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .inspection-media-title,
+  .inspection-media-steps-title {
+    margin: 0 0 12px;
+    color: var(--color-title);
+    text-transform: none;
+  }
+
+  .inspection-media-title {
+    font-size: 24px;
+  }
+
+  .inspection-media-steps-title {
+    font-size: 20px;
+  }
+
+  .inspection-media-desc {
+    margin: 0 0 18px;
+    color: var(--color-body-text);
+    line-height: 1.6;
+  }
+
+  .inspection-media-desc a,
+  .inspection-media-samples-link {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .inspection-media-desc a:hover,
+  .inspection-media-samples-link:hover {
+    text-decoration: underline;
+  }
+
+  .inspection-media-youtube {
+    margin-top: 18px;
+  }
+
+  .inspection-media-youtube-label {
+    margin: 0 0 10px;
+    color: var(--color-title);
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .inspection-media-youtube-embed {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 6px;
+    background: #0f172a;
+  }
+
+  .inspection-media-youtube-embed iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .inspection-media-step-list {
+    display: grid;
+    gap: 14px;
+    margin: 0 0 18px;
+    padding-left: 20px;
+  }
+
+  .inspection-media-step-list li {
+    color: var(--color-body-text);
+    line-height: 1.55;
+  }
+
+  .inspection-media-step-list strong {
+    display: block;
+    color: var(--color-title);
+  }
+
+  .inspection-media--compact .inspection-media-grid {
+    grid-template-columns: 1fr;
+  }
+
+  @media (max-width: 860px) {
+    .inspection-media-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,230 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../components/BreadcrumbHero.astro';
+import DetailPageShell from '../../components/DetailPageShell.astro';
+import DetailRfqStrip from '../../components/DetailRfqStrip.astro';
+import FaqSection from '../../components/FaqSection.astro';
+import { breadcrumbSchema, itemListSchema, faqSchema, site } from '../../data/site';
+import '../../styles/resource-page.css';
+
+const title = 'MTU 16V 2000 M96 Spare Parts';
+const seoTitle = 'MTU 16V 2000 M96 Spare Parts — 1,790 kW High-Speed Marine Engine (135 × 156 mm)';
+const description = 'MTU 16V 2000 M96 spare parts: genuine, reconditioned-exchange and documented-alternative supply for the 1,790 kW / 2,400 bhp high-speed V16 marine engine. Cross-reference table (incl. Bosch injector equivalent), part-identification guide, and global shipping from Shanghai.';
+const pageUrl = `${site.url}/series/16v2000m96/`;
+const quoteHref = `/contact/?source=16v2000m96`;
+
+const specs = [
+  { k: 'Configuration', v: '90° V16, four-stroke, 4 valves/cylinder' },
+  { k: 'Bore × stroke', v: '135 × 156 mm' },
+  { k: 'Displacement', v: '35.7 L (2.23 L/cylinder)' },
+  { k: 'Rated power', v: '1,790 kW / 2,400 bhp @ 2,450 rpm' },
+  { k: 'M96L rating', v: '1,939 kW / 2,600 bhp @ 2,450 rpm' },
+  { k: 'Specific fuel consumption', v: '~215 g/kWh (≈464 L/h at rated)' },
+  { k: 'Flywheel / gearbox', v: 'SAE 0 / ZF 3060' },
+  { k: 'Emission', v: 'IMO Tier II / EPA Tier 3 Recreational / Directive 2013/53/EU' },
+  { k: 'Dry mass', v: '~3,450 kg' },
+  { k: 'Fuel system', v: 'Common rail; sequential turbocharging (3 turbochargers); ADEC' },
+  { k: 'Applications', v: 'Fast yachts, patrol craft, crew-transfer vessels' },
+];
+
+// Series 2000 catalog seeds apply to the 16V2000M96 (verify against serial).
+const crossRef = [
+  { pn: '5410110059', desc: 'Sealing ring (liner / crankcase)', fit: 'M96 liner & crankcase', tag: 'cat' },
+  { pn: '0229974948', desc: 'Lower cylinder-liner sealing ring', fit: 'M96 liner arrangement', tag: 'cat' },
+  { pn: '5410160920', desc: 'Cylinder-head gasket', fit: 'M96 cylinder head', tag: 'cat' },
+  { pn: '0249975047', desc: 'Radial shaft seal', fit: 'M96', tag: 'cat' },
+  { pn: '5369970147', desc: 'Seal ring', fit: 'M96', tag: 'cat' },
+  { pn: '700429036001', desc: 'O-ring 36 × 5', fit: 'M96 cylinder-head cover', tag: 'cat' },
+  { pn: 'X51107500011', desc: 'Fuel injector (Bosch 0986435617 / F00BL0J005)', fit: 'M96 fuel system', tag: 'cat' },
+  { pn: '5420382211', desc: 'Connecting-rod bearing', fit: 'M96 bottom end', tag: 'cat' },
+  { pn: '0005357433', desc: 'Speed sensor', fit: 'M96 sensing', tag: 'cat' },
+  { pn: '0005356430', desc: 'Temperature sensor', fit: 'M96 sensing', tag: 'cat' },
+  { pn: '0035352531', desc: 'Pressure sensor', fit: 'M96 sensing', tag: 'cat' },
+  { pn: '0031845301', desc: 'Oil filter element', fit: 'M96 (also S4000)', tag: 'cat' },
+  { pn: '0020922801', desc: 'Fuel filter (spin-on)', fit: 'M96 fuel system', tag: 'cat' },
+  { pn: 'X000040776', desc: 'Turbocharger asm GTA5523', fit: 'M96 charged air', tag: 'cat' },
+];
+
+const listItems = crossRef.map((r) => ({ name: `${r.pn} — ${r.desc}`, url: pageUrl }));
+
+const faqItems = [
+  {
+    question: 'Is "MTU 2000" enough to order a 16V2000M96 part?',
+    answer: 'No. The 16V2000M96 is one configuration of the Series 2000 (135 × 156 mm, common rail, ADEC). Add the complete designation, the engine serial number, and the number marked on the old part so we match the exact gasket set, injector, or bearing for your M96 build — an overhaul set for a 12V2000G83 will not fit an M96.',
+  },
+  {
+    question: 'Do you supply genuine MTU injectors for the M96?',
+    answer: 'We supply genuine MTU X51107500011 injectors and the documented Bosch equivalent (0986435617 / F00BL0J005). We state genuine vs cross-referenced on every quote so you can choose based on criticality and budget.',
+  },
+  {
+    question: 'What is the difference between M96 and M96L?',
+    answer: 'The M96L is the higher-output variant: 1,939 kW / 2,600 bhp vs 1,790 kW / 2,400 bhp at the same 2,450 rpm. Most external parts are shared, but confirm the exact rating on the identification plate because some internal ratings differ.',
+  },
+  {
+    question: 'What do you need to quote a 16V2000M96 part?',
+    answer: 'Engine model + serial + part number + description + quantity. For injector and sensor cross-references, the engine rating and build year help confirm the right Bosch or MTU equivalent.',
+  },
+  {
+    question: 'How fast can you quote an identified number?',
+    answer: 'Typically within one business day for a number we can confirm against the 16V2000M96 designation. The catalog numbers on this page are verified against public MTU BOM and procurement references.',
+  },
+];
+
+const jsonLd = [
+  breadcrumbSchema([
+    { name: 'Home', url: site.url },
+    { name: 'MTU Spare Parts', url: `${site.url}/products/mtu-spare-parts/` },
+    { name: 'MTU 2000 Series', url: `${site.url}/series/mtu-2000/` },
+    { name: title, url: pageUrl },
+  ]),
+  itemListSchema(listItems),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout
+  title={seoTitle}
+  description={description}
+  currentPath="/series/16v2000m96"
+  image="/images/mtu-engine-parts-hero.webp"
+  jsonLd={jsonLd}
+>
+  <BreadcrumbHero
+    title={title}
+    trail={[
+      { label: 'Home', href: '/' },
+      { label: 'MTU Spare Parts', href: '/products/mtu-spare-parts/' },
+      { label: 'MTU 2000 Series', href: '/series/mtu-2000/' },
+      { label: title },
+    ]}
+    variant="1"
+  />
+
+  <DetailPageShell intro="The MTU 16V 2000 M96 is a high-speed, four-stroke V16 marine diesel rated at 1,790 kW (2,400 bhp) at 2,450 rpm — a popular propulsion package for fast yachts, patrol craft and crew-transfer vessels. This page is a single-model deep dive: confirmed engine specifications, the parts we regularly supply with verified cross-references, and a part-identification process built for the exact M96 build.">
+    <img
+      slot="hero"
+      src="/images/mtu-engine-parts-hero.webp"
+      alt="MTU 16V 2000 M96 engine parts inquiry"
+      width="1400"
+      height="692"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+
+    <div class="resource-meta">
+      <span><strong>Model</strong> 16V 2000 M96</span>
+      <span><strong>Power</strong> 1,790 kW @ 2,450 rpm</span>
+      <span><strong>Bore × Stroke</strong> 135 × 156 mm</span>
+      <span><strong>Delivery</strong> Global shipping</span>
+    </div>
+
+    <DetailRfqStrip
+      quoteHref={quoteHref}
+      title="Request 16V 2000 M96 parts"
+      text="Send engine serial number, part numbers, quantity, destination, and required delivery date."
+      secondaryHref="/series/mtu-2000/"
+      secondaryLabel="MTU 2000 series hub"
+    />
+
+    <h2>1. Engine specifications (16V 2000 M96)</h2>
+    <div class="resource-table-wrap">
+      <table class="resource-table">
+        <thead>
+          <tr><th>Parameter</th><th>Value</th></tr>
+        </thead>
+        <tbody>
+          {specs.map((r) => (
+            <tr>
+              <td><strong>{r.k}</strong></td>
+              <td>{r.v}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="resource-note">Confirm the exact rating and M-suffix (M96 vs M96L) against the engine identification plate. The M96L reaches 1,939 kW / 2,600 bhp at the same 2,450 rpm.</p>
+
+    <h2>2. Spare parts we supply, by system</h2>
+    <div class="hub-grid">
+      <a class="hub-card" href="/part-products/catalog/mtu-2000-series/"><div class="hub-card-body"><h3 class="hub-card-title">Cylinder head &amp; valve train</h3><p class="hub-card-summary">Liners, piston rings, valve guides, seats, rocker arms, cylinder-head gaskets.</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-injectors/"><div class="hub-card-body"><h3 class="hub-card-title">Fuel system</h3><p class="hub-card-summary">Injectors &amp; nozzles (incl. Bosch cross-ref), nozzle holders, injection pumps.</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-gasket-kits/"><div class="hub-card-body"><h3 class="hub-card-title">Gaskets &amp; seals</h3><p class="hub-card-summary">Overhaul gasket sets, O-rings, liner seals, radial shaft seals.</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-turbocharger-parts/"><div class="hub-card-body"><h3 class="hub-card-title">Turbocharger</h3><p class="hub-card-summary">GTA-series cartridges, turbine wheels, V-band clamps, service kits.</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-filters/"><div class="hub-card-body"><h3 class="hub-card-title">Cooling &amp; lube</h3><p class="hub-card-summary">Seawater &amp; freshwater pumps, impellers, oil / fuel filter elements.</p></div></a>
+      <a class="hub-card" href="/part-products/catalog/mtu-sensors/"><div class="hub-card-body"><h3 class="hub-card-title">Sensors &amp; ADEC</h3><p class="hub-card-summary">Speed, temperature, pressure sensors and engine-management modules.</p></div></a>
+    </div>
+
+    <h2>3. Part-number cross-reference (verified Series 2000 seeds)</h2>
+    <p>These numbers are verified against public MTU BOM and procurement references and apply to the Series 2000 family including the 16V2000M96. Confirm each against your engine serial before ordering. Tags: <span class="rfq-badge cat">catalog</span> = verified public cross-reference seed.</p>
+    <div class="resource-table-wrap">
+      <table class="resource-table">
+        <thead>
+          <tr><th>Part number</th><th>Description</th><th>M96 fitment</th><th>Source / cross-ref</th></tr>
+        </thead>
+        <tbody>
+          {crossRef.map((r) => (
+            <tr>
+              <td><code>{r.pn}</code></td>
+              <td>{r.desc}</td>
+              <td>{r.fit}</td>
+              <td><span class="rfq-badge cat">catalog</span> {r.tag === 'cat' ? 'verified MTU BOM / Bosch' : ''}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="resource-note">Don't see your number? Send it (with the engine serial) via the form — we add confirmed numbers to this page and the 2000 hub's growing list.</p>
+
+    <h2>4. How to identify your exact part</h2>
+    <ul class="resource-list">
+      <li><strong>Complete engine designation</strong> (e.g. <code>16V2000M96</code>, not just "2000")</li>
+      <li><strong>Engine serial number</strong> from the identification plate</li>
+      <li><strong>Existing component part number</strong> — the marking on the old part beats any photo title</li>
+      <li><strong>Component description + quantity</strong>, and a photo of the old part where possible</li>
+    </ul>
+
+    <h2>5. Supply options</h2>
+    <div class="hub-grid">
+      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">Genuine new</h3><p class="hub-card-summary">Original MTU-packaged components with full traceability — best where the documentation chain has to stand up to inspection.</p></div></div>
+      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">Reconditioned / exchange</h3><p class="hub-card-summary">Factory-level overhaul of injectors, turbochargers, pumps — typically 30–40% lower cost, faster lead time.</p></div></div>
+      <div class="hub-card"><div class="hub-card-body"><h3 class="hub-card-title">Documented alternative</h3><p class="hub-card-summary">Verified equivalents (incl. Bosch for injectors) for non-critical items where the buyer accepts them.</p></div></div>
+    </div>
+
+    <h2>6. MTU series cluster</h2>
+    <div class="hub-grid">
+      <a class="hub-card" href="/series/mtu-2000/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 2000 Series Hub</h3><p class="hub-card-summary">Full 8V / 12V / 16V / 18V family overview.</p></div></a>
+      <a class="hub-card" href="/series/mtu-2000-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 2000 Variant Decoder</h3><p class="hub-card-summary">M61 → M9x generation decoder and per-model table.</p></div></a>
+      <a class="hub-card" href="/series/mtu-396/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 396 Series Hub</h3><p class="hub-card-summary">8V / 12V / 16V workhorse — carries live RFQ numbers.</p></div></a>
+      <a class="hub-card" href="/series/mtu-4000-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 4000 Variant Decoder</h3><p class="hub-card-summary">M05 / M03 / C05 / R03 / R04 / T05 + M-duty notation.</p></div></a>
+    </div>
+
+    <FaqSection items={faqItems} title="MTU 16V 2000 M96 FAQ" subtitle="FAQ" />
+  </DetailPageShell>
+</BaseLayout>
+
+<style>
+  .rfq-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    letter-spacing: 0.03em;
+    vertical-align: middle;
+  }
+  .rfq-badge.cat {
+    background: #e4eef7;
+    color: var(--color-primary);
+  }
+  .hub-card h3.hub-card-title {
+    font-size: 17px;
+  }
+  .resource-table code {
+    background: #eef3f8;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #0a3d66;
+  }
+</style>

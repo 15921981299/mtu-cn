@@ -1,0 +1,431 @@
+---
+import { site } from '../data/site';
+---
+
+<div class="rfq-modal" id="rfq-modal" aria-hidden="true">
+  <div class="rfq-modal__backdrop" data-rfq-close></div>
+  <section
+    class="rfq-modal__panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="rfq-modal-title"
+    tabindex="-1"
+  >
+    <button type="button" class="rfq-modal__close" data-rfq-close aria-label="关闭询价表单">&times;</button>
+    <div class="rfq-modal__header">
+      <p class="rfq-modal__kicker">快速配件询价</p>
+      <h2 id="rfq-modal-title">查询价格与供货情况</h2>
+      <p>发送零件号或简要零件清单；如有发动机出厂编号或照片，请一并提供。</p>
+    </div>
+
+    <form class="rfq-modal__form" id="rfq-modal-form" data-endpoint="/api/rfq/" data-fallback-email={site.email}>
+      <div class="rfq-modal__context" id="rfq-modal-context">当前页面询价</div>
+      <label>
+        <span>您的姓名</span>
+        <input type="text" name="name" autocomplete="name" />
+      </label>
+      <label>
+        <span>邮箱 *</span>
+        <input type="email" name="email" autocomplete="email" required />
+      </label>
+      <label>
+        <span>微信 / 电话</span>
+        <input type="tel" name="phone" autocomplete="tel" />
+      </label>
+      <label>
+        <span>数量</span>
+        <input type="text" name="quantity" placeholder="例如：2 件、1 套，或数量待定" />
+      </label>
+      <label class="rfq-modal__full">
+        <span>零件号 / 询价详情 *</span>
+        <textarea
+          name="message"
+          rows="4"
+          placeholder="请粘贴零件号与数量；如知晓发动机出厂编号或收货地区，请一并注明。"
+          required
+        ></textarea>
+      </label>
+      <label class="rfq-modal__upload rfq-modal__full">
+        <span>上传照片或零件清单（最大 10 MB）</span>
+        <input type="file" name="drawing" accept=".pdf,.xls,.xlsx,.csv,.jpg,.jpeg,.png" />
+      </label>
+      <input type="hidden" name="source" value="Modal RFQ" />
+      <input type="hidden" name="page_url" />
+      <input type="hidden" name="page_title" />
+      <input type="hidden" name="rfq_context" />
+      <input type="hidden" name="part_number" />
+      <div class="rfq-modal__hp" aria-hidden="true">
+        <label>此项请留空 <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+      </div>
+      <button type="submit" class="rfq-modal__submit">发送询价</button>
+      <p class="rfq-modal__note">
+        需要更完整的信息？<a href="/contact/?source=modal-full-form">打开完整联系表单</a>
+      </p>
+      <div class="form-result rfq-modal__result" aria-live="polite"></div>
+    </form>
+  </section>
+</div>
+
+<script>
+  import { trackAcceptedInquiry, populateRfqAttributionFields } from '../scripts/attribution';
+
+  const modal = document.getElementById('rfq-modal');
+  const panel = modal?.querySelector<HTMLElement>('.rfq-modal__panel');
+  const form = document.getElementById('rfq-modal-form') as HTMLFormElement | null;
+  const contextEl = document.getElementById('rfq-modal-context');
+  const submitBtn = form?.querySelector<HTMLButtonElement>('.rfq-modal__submit');
+  const resultEl = form?.querySelector<HTMLElement>('.rfq-modal__result');
+  const messageEl = form?.querySelector<HTMLTextAreaElement>('textarea[name="message"]');
+  let lastFocus: HTMLElement | null = null;
+  let formStarted = false;
+
+  const setHidden = (name: string, value: string) => {
+    const input = form?.querySelector<HTMLInputElement>(`input[name="${name}"]`);
+    if (input) input.value = value;
+  };
+
+  const openModal = (trigger: HTMLAnchorElement) => {
+    if (!modal || !form || !panel) return;
+    lastFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const context = trigger.dataset.rfqContext || trigger.dataset.rfqTitle || document.title;
+    const source = trigger.dataset.rfqSource || new URL(trigger.href, window.location.href).searchParams.get('source') || 'modal-rfq';
+    const partNumber = trigger.dataset.rfqPartNumber || document.querySelector<HTMLElement>('[data-part-number]')?.dataset.partNumber || '';
+
+    contextEl && (contextEl.textContent = context);
+    setHidden('source', source);
+    setHidden('page_url', window.location.href);
+    setHidden('page_title', document.title);
+    setHidden('rfq_context', context);
+    setHidden('part_number', partNumber);
+    if (messageEl && !messageEl.value.trim()) {
+      messageEl.value = partNumber ? `零件号：${partNumber}\n` : '';
+    }
+    populateRfqAttributionFields(form);
+
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.documentElement.classList.add('rfq-modal-lock');
+    panel.focus();
+
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'rfq_modal_open', {
+        event_category: 'Funnel',
+        event_label: source,
+        funnel_stage: 'quote',
+        part_number: partNumber,
+      });
+    }
+  };
+
+  const closeModal = () => {
+    if (!modal) return;
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.documentElement.classList.remove('rfq-modal-lock');
+    lastFocus?.focus();
+  };
+
+  const keepFocusInsideModal = (event: KeyboardEvent) => {
+    if (event.key !== 'Tab' || !modal?.classList.contains('is-open') || !panel) return;
+    const focusable = Array.from(
+      panel.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      )
+    ).filter((element) => element.offsetParent !== null);
+    if (focusable.length === 0) {
+      event.preventDefault();
+      panel.focus();
+      return;
+    }
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
+
+  document.querySelectorAll<HTMLAnchorElement>('[data-rfq-modal]').forEach((trigger) => {
+    trigger.addEventListener('click', (event) => {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      openModal(trigger);
+    });
+  });
+
+  modal?.querySelectorAll<HTMLElement>('[data-rfq-close]').forEach((closeTrigger) => {
+    closeTrigger.addEventListener('click', closeModal);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && modal?.classList.contains('is-open')) {
+      closeModal();
+      return;
+    }
+    keepFocusInsideModal(event);
+  });
+
+  form?.querySelectorAll('input, textarea').forEach((field) => {
+    field.addEventListener(
+      'focus',
+      () => {
+        if (formStarted || typeof window.gtag !== 'function') return;
+        formStarted = true;
+        window.gtag('event', 'form_start', {
+          event_category: 'Funnel',
+          event_label: 'rfq_modal',
+          funnel_stage: 'quote',
+        });
+      },
+      { once: true }
+    );
+  });
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!form || !submitBtn || !resultEl) return;
+    submitBtn.disabled = true;
+    submitBtn.textContent = '发送中...';
+    resultEl.className = 'form-result rfq-modal__result';
+    resultEl.innerHTML = '';
+
+    populateRfqAttributionFields(form);
+    const formData = new FormData(form);
+    const attachment = formData.get('drawing');
+    if (attachment instanceof File && attachment.size > 10 * 1024 * 1024) {
+      resultEl.className = 'form-result rfq-modal__result is-visible is-error';
+      resultEl.textContent = '附件超过 10 MB。请上传更小的文件，或改用完整联系表单。';
+      submitBtn.disabled = false;
+      submitBtn.textContent = '发送询价';
+      return;
+    }
+    if (formData.get('website')) {
+      window.location.href = '/thank-you/?source=rfq-modal';
+      return;
+    }
+
+    try {
+      const endpoint = form.dataset.endpoint;
+      if (!endpoint) throw new Error('Missing form endpoint');
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        body: formData,
+        headers: { Accept: 'application/json' },
+      });
+
+      if (!response.ok) throw new Error('Server error');
+      const payload = await response.json();
+      if (payload.ok !== true) throw new Error('Inquiry not accepted');
+
+      const source = formData.get('source')?.toString() || 'rfq_modal';
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'rfq_modal_submit', {
+          event_category: 'Funnel',
+          event_label: source,
+          funnel_stage: 'quote',
+          has_attachment: attachment instanceof File && attachment.size > 0 ? 'yes' : 'no',
+        });
+      }
+      trackAcceptedInquiry(payload.inquiryId, {
+        event_label: source,
+        lead_source: source,
+        part_number: formData.get('part_number')?.toString() || '',
+        url_source: formData.get('url_source')?.toString() || 'unspecified',
+      });
+      window.location.href = '/thank-you/?source=rfq-modal';
+    } catch {
+      const fallbackEmail = form.dataset.fallbackEmail ?? 'sales@dieselpartsource.com';
+      resultEl.className = 'form-result rfq-modal__result is-visible is-error';
+      resultEl.innerHTML = `<p>提交失败。请发送邮件至 <a href="mailto:${fallbackEmail}">${fallbackEmail}</a>，或使用<a href="/contact/?source=modal-error">完整联系表单</a>。</p>`;
+      submitBtn.disabled = false;
+      submitBtn.textContent = '发送询价';
+    }
+  });
+</script>
+
+<style>
+  :global(.rfq-modal-lock) {
+    overflow: hidden;
+  }
+
+  .rfq-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: none;
+  }
+
+  .rfq-modal.is-open {
+    display: block;
+  }
+
+  .rfq-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.58);
+  }
+
+  .rfq-modal__panel {
+    position: relative;
+    width: min(720px, calc(100vw - 32px));
+    max-height: calc(100vh - 32px);
+    margin: 16px auto;
+    overflow-y: auto;
+    padding: 28px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 24px 80px rgba(15, 23, 42, 0.28);
+    outline: none;
+  }
+
+  .rfq-modal__close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--color-stroke);
+    border-radius: 50%;
+    background: #fff;
+    color: #0f172a;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .rfq-modal__header {
+    padding-right: 32px;
+    margin-bottom: 18px;
+  }
+
+  .rfq-modal__kicker {
+    margin: 0 0 6px;
+    color: var(--color-primary);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .rfq-modal__header h2 {
+    margin: 0 0 8px;
+    font-size: 28px;
+    line-height: 1.15;
+  }
+
+  .rfq-modal__header p {
+    margin: 0;
+    color: #475569;
+    line-height: 1.55;
+  }
+
+  .rfq-modal__form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .rfq-modal__context,
+  .rfq-modal__full,
+  .rfq-modal__submit,
+  .rfq-modal__note,
+  .rfq-modal__result {
+    grid-column: 1 / -1;
+  }
+
+  .rfq-modal__context {
+    padding: 10px 12px;
+    border: 1px solid rgba(20, 110, 245, 0.18);
+    border-radius: 6px;
+    background: rgba(20, 110, 245, 0.06);
+    color: #1e3a8a;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .rfq-modal__form label {
+    display: grid;
+    gap: 6px;
+    color: #0f172a;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .rfq-modal__form input,
+  .rfq-modal__form textarea {
+    width: 100%;
+    border: 1px solid var(--color-stroke);
+    border-radius: 6px;
+    padding: 11px 12px;
+    background: #fff;
+    color: #0f172a;
+    font: inherit;
+    font-weight: 400;
+  }
+
+  .rfq-modal__form textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .rfq-modal__upload input {
+    padding: 10px;
+    background: #f8fafc;
+  }
+
+  .rfq-modal__submit {
+    border: 0;
+    border-radius: 6px;
+    padding: 13px 18px;
+    background: var(--color-primary, #146ef5);
+    color: #fff;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .rfq-modal__submit:disabled {
+    opacity: 0.72;
+    cursor: not-allowed;
+  }
+
+  .rfq-modal__note {
+    margin: -4px 0 0;
+    text-align: center;
+    color: #64748b;
+    font-size: 13px;
+  }
+
+  .rfq-modal__note a,
+  .rfq-modal__result a {
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+
+  .rfq-modal__hp {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  @media (max-width: 640px) {
+    .rfq-modal__panel {
+      width: calc(100vw - 20px);
+      max-height: calc(100vh - 20px);
+      margin: 10px auto;
+      padding: 22px 18px;
+    }
+
+    .rfq-modal__form {
+      grid-template-columns: 1fr;
+    }
+
+    .rfq-modal__header h2 {
+      font-size: 24px;
+    }
+  }
+</style>

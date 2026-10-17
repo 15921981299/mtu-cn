@@ -1,0 +1,39 @@
+﻿---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/resource-page.css';
+import '../styles/utility-page.css';
+---
+
+<BaseLayout
+  title="Page Not Found | Diesel Part Source"
+  description="The page you are looking for does not exist."
+  currentPath="/404"
+  hideFloatingCta
+  noindex
+>
+  <section class="blog-details-section utility-section">
+    <div class="section-gap bottom">
+      <div class="container">
+        <article class="blog-details-content-block resource-page fade-in utility-card">
+          <h1>404 — Page Not Found</h1>
+          <p>The page you are looking for doesn't exist or has been moved.</p>
+
+          <nav class="utility-pill-nav" aria-label="Helpful links">
+            <a href="/" class="utility-pill-link">Home</a>
+            <a href="/products/" class="utility-pill-link">Engine parts</a>
+            <a href="/part-products/" class="utility-pill-link">MTU part numbers</a>
+            <a href="/part-products/" class="utility-pill-link">Resources</a>
+            <a href="/contact/" class="utility-pill-link">Check parts</a>
+          </nav>
+
+          <a href="/contact/?source=404" class="primary-button dark-hover">
+            <div class="button-content-block">
+              <div class="button-text">Send Parts Inquiry</div>
+              <div class="button-text">Send Parts Inquiry</div>
+            </div>
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

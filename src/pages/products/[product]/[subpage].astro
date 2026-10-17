@@ -1,0 +1,94 @@
+﻿---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ProcurementBrief from '../../../components/ProcurementBrief.astro';
+import { modelProcurement } from '../../../data/procurement-content';
+import BreadcrumbHero from '../../../components/BreadcrumbHero.astro';
+import BlogCta from '../../../components/BlogCta.astro';
+import DetailPageShell from '../../../components/DetailPageShell.astro';
+import DetailRfqStrip from '../../../components/DetailRfqStrip.astro';
+import FunnelPageView from '../../../components/FunnelPageView.astro';
+import { productSubpages } from '../../../data/product-subpages';
+import { isSubpageNoindex } from '../../../data/subpage-quality';
+import { products } from '../../../data/products';
+import { breadcrumbSchema, site } from '../../../data/site';
+import '../../../styles/resource-page.css';
+
+export function getStaticPaths() {
+  return productSubpages.map((sp) => ({ params: { product: sp.productSlug, subpage: sp.slug }, props: { subpage: sp } }));
+}
+
+const { subpage } = Astro.props;
+const parent = products.find((p) => p.slug === subpage.productSlug);
+const parentTitle = parent?.title ?? subpage.productSlug;
+const pageUrl = `${site.url}/products/${subpage.productSlug}/${subpage.slug}/`;
+const funnelLabel = `product-sub-${subpage.slug}`;
+const quoteHref = `/contact/?source=${funnelLabel}`;
+const noindex = isSubpageNoindex(subpage.productSlug, subpage.slug);
+---
+
+<BaseLayout
+  title={subpage.seoTitle}
+  description={subpage.summary}
+  currentPath="/products"
+  noindex={noindex}
+  jsonLd={breadcrumbSchema([
+    { name: '首页', url: site.url },
+    { name: '产品', url: `${site.url}/products/` },
+    { name: parentTitle, url: `${site.url}/products/${subpage.productSlug}/` },
+    { name: subpage.title, url: pageUrl },
+  ])}
+>
+  <FunnelPageView stage="selection" label={funnelLabel} />
+  <BreadcrumbHero
+    title={subpage.h1Title}
+    trail={[
+      { label: '首页', href: '/' },
+      { label: '产品', href: '/products/' },
+      { label: parentTitle, href: `/products/${subpage.productSlug}/` },
+      { label: subpage.title },
+    ]}
+    variant="2"
+  />
+
+  <DetailPageShell intro={subpage.summary}>
+    <div class="resource-meta" aria-label="产品子页面信息">
+      <span><strong>{parentTitle}</strong></span>
+      <span><strong>核验</strong> 零件号与发动机出厂编号</span>
+      <span><strong>运输</strong> 全球运输</span>
+    </div>
+
+    <DetailRfqStrip
+      quoteHref={quoteHref}
+      title={`查询 ${parentTitle.toLowerCase()} 供货情况`}
+      text="请提供零件号、发动机型号、出厂编号、数量与收货国家。我们将在发货前确认适配性。"
+      modalSource={funnelLabel}
+      modalContext={subpage.h1Title}
+    />
+
+    <div set:html={subpage.content.partOne} />
+    {subpage.slug === '16v-2000-engine-parts' && <ProcurementBrief brief={modelProcurement('2000')} source="16v-2000-model-rfq" />}
+    <div set:html={subpage.content.partTwo} />
+    <p class="resource-note detail-page-back">
+      <a href={`/products/${subpage.productSlug}/`}>← {parentTitle}</a>
+      ·
+      <a href="/products/">全部产品</a>
+      ·
+      <a href="/part-products/">配件指南</a>
+      ·
+      <a href={quoteHref}>查询供货情况</a>
+    </p>
+  </DetailPageShell>
+
+  <BlogCta
+    stage="selection"
+    topic={subpage.slug}
+    title={`需要 ${parentTitle.toLowerCase()} 相关支持？`}
+    text="请提供发动机详情与零件清单。我们将核验零件号、替代型号与运输方案。"
+    primaryLabel="查询配件"
+    primaryHref={quoteHref}
+    primaryEvent={`product_sub_${subpage.slug}_rfq`}
+    secondaryLabel="配件指南"
+    secondaryHref="/part-products/"
+    secondaryEvent="product_sub_dfm"
+  />
+</BaseLayout>

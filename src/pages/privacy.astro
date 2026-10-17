@@ -1,0 +1,137 @@
+﻿---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../components/BreadcrumbHero.astro';
+import BlogCta from '../components/BlogCta.astro';
+import FunnelPageView from '../components/FunnelPageView.astro';
+import { breadcrumbSchema, site } from '../data/site';
+import '../styles/terms-page.css';
+
+const pageUrl = `${site.url}/privacy/`;
+const legalName = site.company.legalNameEn;
+---
+
+<BaseLayout
+  title="Privacy Policy — Diesel Part Source"
+  description="How Diesel Part Source collects, uses, and protects information submitted through parts inquiry forms, email, and site analytics."
+  currentPath="/privacy"
+  jsonLd={breadcrumbSchema([
+    { name: 'Home', url: site.url },
+    { name: 'Privacy Policy', url: pageUrl },
+  ])}
+>
+  <FunnelPageView stage="awareness" label="privacy" />
+  <BreadcrumbHero
+    title="Privacy Policy"
+    trail={[
+      { label: 'Home', href: '/' },
+      { label: 'Privacy Policy' },
+    ]}
+    variant="5"
+  />
+
+  <section class="blog-details-section terms-page-section">
+    <div class="section-gap bottom">
+      <div class="container">
+        <article class="blog-details-content-block terms-page fade-in">
+          <p class="terms-intro">
+            Last updated: June 15, 2026. This policy describes how {legalName} ({site.name}) handles information when you visit
+            {site.url.replace('https://', '')} or submit an RFQ.
+          </p>
+
+          <div class="terms-meta" aria-label="Privacy policy overview">
+            <span>RFQ &amp; contact forms</span>
+            <span>Engineering file handling</span>
+            <span>Analytics &amp; cookies</span>
+            <span>Data retention up to <strong>7 years</strong></span>
+          </div>
+
+          <nav class="terms-jump-nav" aria-label="On this page">
+            <a href="#information-collected" class="terms-jump-link">Information collected</a>
+            <a href="#how-we-use" class="terms-jump-link">How we use data</a>
+            <a href="#engineering-files" class="terms-jump-link">Engineering files</a>
+            <a href="#your-rights" class="terms-jump-link">Your rights</a>
+            <a href="#contact" class="terms-jump-link">Contact</a>
+          </nav>
+
+          <h2 id="information-collected">Information We Collect</h2>
+          <ul class="terms-list">
+            <li><strong>RFQ and contact forms:</strong> name, company, email, phone, project details, and files you upload (drawings, STEP, PDF).</li>
+            <li><strong>Email and messaging:</strong> correspondence needed to quote, produce, and ship your order.</li>
+            <li><strong>Site analytics:</strong> anonymized usage data via Google Analytics when enabled (page views, referral source, device type).</li>
+            <li><strong>Technical logs:</strong> IP address, browser type, and timestamps for security and abuse prevention.</li>
+          </ul>
+
+          <h2 id="how-we-use">How We Use Information</h2>
+          <ul class="terms-list">
+            <li>Prepare quotations, parts verification feedback, and parts orders you request</li>
+            <li>Communicate about lead time, inspection, shipping, and payment</li>
+            <li>Maintain quality records tied to your PO (travelers, inspection IDs, material lots)</li>
+            <li>Improve site content and measure marketing performance</li>
+            <li>Comply with law and enforce our terms</li>
+          </ul>
+
+          <h2 id="engineering-files">Engineering Files &amp; Confidentiality</h2>
+          <p>
+            Drawings and CAD files are used only to quote and manufacture your parts. We do not sell your designs. NDA terms can be
+            confirmed on quotation when required. Remove unrelated proprietary data before upload when possible.
+          </p>
+
+          <h2>Sharing</h2>
+          <p>
+            We share information with manufacturing partners, carriers, and payment processors only as needed to fulfill your order.
+            We do not sell personal data to data brokers.
+          </p>
+
+          <h2>Retention</h2>
+          <p>
+            RFQ files and order records are kept for the period needed for production traceability, warranty, and tax compliance —
+            typically up to seven years for completed orders unless you request earlier deletion where legally permitted.
+          </p>
+
+          <h2>Cookies &amp; Analytics</h2>
+          <p>
+            We may use cookies for analytics and form functionality. You can block cookies in your browser; some features may not work
+            correctly without them.
+          </p>
+
+          <h2 id="your-rights">Your Rights</h2>
+          <p>
+            Depending on your location, you may request access, correction, or deletion of personal data we hold. Contact us at{' '}
+            <a href={`mailto:${site.email}`}>{site.email}</a> with the email address used on your RFQ.
+          </p>
+
+          <h2>International Transfers</h2>
+          <p>
+            Data may be processed in China and other countries where our partners operate. We apply reasonable safeguards for B2B
+            manufacturing workflows.
+          </p>
+
+          <h2 id="contact">Contact</h2>
+          <p>
+            {legalName}<br />
+            Email: <a href={`mailto:${site.email}`}>{site.email}</a><br />
+            Phone: {site.phone}
+          </p>
+
+          <p class="terms-related">
+            Related: <a href="/terms/payment/">Payment terms</a> · <a href="/terms/shipping/">Shipping terms</a> ·{' '}
+            <a href="/contact/">Contact</a>
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <BlogCta
+    stage="awareness"
+    topic="privacy"
+    title="Questions about your RFQ data?"
+    text="Contact us about access, correction, or deletion of personal data tied to your quotation or order."
+    primaryLabel="Contact Us"
+    primaryHref="/contact/?source=privacy"
+    primaryEvent="privacy_contact"
+    secondaryLabel="Payment terms"
+    secondaryHref="/terms/payment/"
+    secondaryEvent="privacy_payment"
+  />
+</BaseLayout>

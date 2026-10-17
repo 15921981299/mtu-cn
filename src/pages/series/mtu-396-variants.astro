@@ -1,0 +1,264 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../components/BreadcrumbHero.astro';
+import DetailPageShell from '../../components/DetailPageShell.astro';
+import DetailRfqStrip from '../../components/DetailRfqStrip.astro';
+import FaqSection from '../../components/FaqSection.astro';
+import { breadcrumbSchema, itemListSchema, faqSchema, site } from '../../data/site';
+import '../../styles/resource-page.css';
+
+const title = 'MTU 396 Engine Variants — TB / TC / TE / SE Configurations';
+const seoTitle = 'MTU 396 Engine Variants & Part Differences — 8V / 12V / 16V (TB, TC, TE, SE)';
+const description = 'MTU 396 variant decoder: TB / TC / TE / SE duty codes, numeric rating steps, and which spare parts differ by configuration. Representative model table with kW, rpm and application for 8V / 12V / 16V 396 engines.';
+const pageUrl = `${site.url}/series/mtu-396-variants/`;
+const quoteHref = `/contact/?source=mtu-396-variants`;
+
+// Designation decoder — real MTU 396 duty suffixes
+const dutyDecoder = [
+  { code: 'TB', meaning: 'Base / early marine', use: 'Yachts, naval ships, gensets (pre-TE cooling)' },
+  { code: 'TC', meaning: 'Charger / industrial & rail', use: 'Locomotives, industrial stationary duty' },
+  { code: 'TE', meaning: 'Enhanced (split-circuit charge-air cooling, introduced 1989)', use: 'Fast vessels, yachts, ferries, FPBs — highest-volume duty' },
+  { code: 'SE', meaning: 'Submarine (low magnetic / low-noise)', use: 'Low-noise, low-magnetic propulsion' },
+];
+
+// Numeric suffix = rating / power step; L = uprated, D = specific variant
+// Representative models with kW @ rpm (source: MTU rating tables, client-engine / edelmakina)
+const variantRows = [
+  { model: '8V 396 TB34', kw: '835', rpm: '1500', duty: 'TB', app: 'Genset / marine base' },
+  { model: '8V 396 TC34', kw: '770', rpm: '1500', duty: 'TC', app: 'Industrial / rail' },
+  { model: '8V 396 TE64', kw: '680', rpm: '1600', duty: 'TE', app: 'Fast vessel (low load)' },
+  { model: '8V 396 TE94', kw: '1120', rpm: '2000', duty: 'TE', app: 'Yachts / patrol craft' },
+  { model: '8V 396 SE84', kw: '600', rpm: '1800', duty: 'SE', app: 'Submarine' },
+  { model: '12V 396 TB94', kw: '1920', rpm: '2100', duty: 'TB', app: 'Naval ships' },
+  { model: '12V 396 TC14', kw: '1180', rpm: '1800', duty: 'TC', app: 'Locomotive' },
+  { model: '12V 396 TE64', kw: '1020', rpm: '1600', duty: 'TE', app: 'Ferries' },
+  { model: '12V 396 TE74L', kw: '1500', rpm: '1900', duty: 'TE', app: 'Fast vessels (high load)' },
+  { model: '12V 396 TE94', kw: '1680', rpm: '2000', duty: 'TE', app: 'Yachts / authority vessels' },
+  { model: '12V 396 SE84', kw: '1000', rpm: '1800', duty: 'SE', app: 'Submarine' },
+  { model: '16V 396 TB84', kw: '2040', rpm: '1940', duty: 'TB', app: 'Naval ships' },
+  { model: '16V 396 TB94', kw: '2560', rpm: '2100', duty: 'TB', app: 'Naval ships (high power)' },
+  { model: '16V 396 TE84', kw: '2000', rpm: '1900', duty: 'TE', app: 'Fast vessels' },
+  { model: '16V 396 TE94', kw: '2240', rpm: '2000', duty: 'TE', app: 'Fast patrol / yachts' },
+  { model: '16V 396 SE84', kw: '1350', rpm: '1800', duty: 'SE', app: 'Submarine' },
+];
+
+// Part differences by variant group — what is shared vs specific
+const partDiff = [
+  { item: 'Bore × stroke', shared: 'All 396 share 165 × 185 mm — wet liners are family-common in principle', note: 'Exact liner sealing rings still vary by build year / serial' },
+  { item: 'Cylinder-head gasket set', shared: 'NOT universal', note: 'TB / TC heads differ from TE (split-circuit cooling); SE heads are low-noise specific. Confirm by full designation + serial.' },
+  { item: 'Exhaust thermocouples', shared: 'Sensing layout is family-common', note: 'RFQ-verified 0005350260 / 0005353960 confirmed on a 396 in continuous duty; cross-ref to non-MTU sensor must be photo-checked.' },
+  { item: 'Turbocharger service kit', shared: 'Varies by duty', note: 'TE engines use sequential turbocharging; ZR140 / ZR170 / ZR210 service kits selected by model.' },
+  { item: 'Injectors / nozzles', shared: 'Varies by build', note: 'Fuel-system parts changed across decades of production — match by engine serial, not just "396".' },
+];
+
+const crossRef = [
+  { pn: '0005350260', desc: 'Exhaust gas thermocouple', fit: '396 exhaust temp sensing', src: 'RFQ · Israel buyer', tag: 'rfq' },
+  { pn: '0005353960', desc: 'Exhaust gas thermocouple', fit: '396 exhaust temp sensing', src: 'RFQ · Israel buyer', tag: 'rfq' },
+  { pn: '5600160180', desc: 'Gasket', fit: '396 general', src: 'RFQ · Oman buyer', tag: 'rfq' },
+  { pn: '5582040406', desc: 'Impeller (cooling pump)', fit: '396 seawater pump', src: 'catalog seed', tag: 'cat' },
+  { pn: '5501800016', desc: 'Oil filter element', fit: '396 lubrication', src: 'catalog seed', tag: 'cat' },
+];
+
+const faqItems = [
+  {
+    question: 'What does the suffix on an MTU 396 mean (e.g. 16V396TE94)?',
+    answer: 'The cylinder count (8V / 12V / 16V) comes first. The letter group is the duty: TB = base/early marine, TC = industrial & rail, TE = enhanced fast-vessel (split-circuit charge-air cooling), SE = submarine low-noise. The trailing number (34 / 64 / 74 / 84 / 94) is the rating step, and an "L" marks an uprated version. So 16V396TE94 = 16-cylinder, enhanced fast-vessel duty, top rating step.',
+  },
+  {
+    question: 'Can one gasket set cover every 396 variant?',
+    answer: 'No. The TB/TC heads differ from the TE heads (the TE uses split-circuit cooling introduced in 1989), and SE heads are low-noise specific. Always confirm the full designation and serial before ordering head gaskets or overhaul sets.',
+  },
+  {
+    question: 'Which 396 parts are safe to quote from the model alone?',
+    answer: 'Family-common items like the 165 × 185 mm bore philosophy and basic sensing layout give a starting point, but we still confirm by serial. RFQ-verified numbers on this page (0005350260, 0005353960, 5600160180) are quoted same-business-day from confirmed channels.',
+  },
+  {
+    question: 'Can you supply for the less common 396 duty variants?',
+    answer: 'Yes, provided the number can be identified. The cylinder head, cooling, and charge-air arrangement differs by variant, so the engine designation and serial number are what decide which version of a part fits. Send the designation, the serial number, and the component you need, and we confirm availability and the documentation that comes with the part before quoting.',
+  },
+];
+
+const jsonLd = [
+  breadcrumbSchema([
+    { name: 'Home', url: site.url },
+    { name: 'MTU Spare Parts', url: `${site.url}/products/mtu-spare-parts/` },
+    { name: 'MTU 396 Series', url: `${site.url}/series/mtu-396/` },
+    { name: title, url: pageUrl },
+  ]),
+  itemListSchema(variantRows.map((r) => ({ name: `${r.model} — ${r.kw} kW @ ${r.rpm} rpm`, url: pageUrl }))),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout
+  title={seoTitle}
+  description={description}
+  currentPath="/series/mtu-396-variants"
+  image="/images/mtu-engine-parts-hero.webp"
+  jsonLd={jsonLd}
+>
+  <BreadcrumbHero
+    title={title}
+    trail={[
+      { label: 'Home', href: '/' },
+      { label: 'MTU Spare Parts', href: '/products/mtu-spare-parts/' },
+      { label: 'MTU 396 Series', href: '/series/mtu-396/' },
+      { label: '396 Variants' },
+    ]}
+    variant="1"
+  />
+
+  <DetailPageShell intro="The MTU 396 is one of MTU's longest-serving high-speed families, with decades of variants in marine, rail, genset and submarine duty. This page decodes the designation (TB / TC / TE / SE), lists representative 8V / 12V / 16V models with their ratings, and shows which spare parts differ by configuration — the detail you need before ordering the right gasket set or overhaul kit.">
+    <img
+      slot="hero"
+      src="/images/mtu-engine-parts-hero.webp"
+      alt="MTU 396 engine variants and part differences"
+      width="1400"
+      height="692"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+
+    <div class="resource-meta">
+      <span><strong>Section</strong> MTU 396 → Variants</span>
+      <span><strong>Family</strong> 396 (8V / 12V / 16V)</span>
+      <span><strong>Duty</strong> TB / TC / TE / SE</span>
+      <span><strong>Delivery</strong> Global shipping</span>
+    </div>
+
+    <DetailRfqStrip
+      quoteHref={quoteHref}
+      title="Request 396 variant parts"
+      text="Send full designation (e.g. 16V396TE94), serial number, part numbers, quantity and destination."
+      secondaryHref="/series/mtu-396/"
+      secondaryLabel="MTU 396 hub"
+    />
+
+    <h2>1. Designation decoder</h2>
+    <p>A full 396 designation reads <strong>[cylinders]V396[duty][rating]</strong>. The duty letter tells you the application family and — critically — which cylinder-head and cooling parts you need:</p>
+    <div class="resource-table-wrap">
+      <table class="resource-table">
+        <thead>
+          <tr><th>Suffix</th><th>Meaning</th><th>Typical use</th></tr>
+        </thead>
+        <tbody>
+          {dutyDecoder.map((d) => (
+            <tr>
+              <td><strong>{d.code}</strong></td>
+              <td>{d.meaning}</td>
+              <td>{d.use}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="resource-note">The trailing number (34 / 44 / 54 / 64 / 74 / 84 / 94) is the rating step; "L" = uprated, "D" = a specific sub-variant. <strong>TE</strong> introduced split-circuit charge-air cooling in 1989 — its heads and gaskets are not interchangeable with TB/TC.</p>
+
+    <h2>2. Representative variant table (8V / 12V / 16V)</h2>
+    <p>Selected models across the family with published ratings. All share the 165 × 185 mm bore and stroke; outputs differ by duty, rating step and rpm:</p>
+    <div class="resource-table-wrap">
+      <table class="resource-table">
+        <thead>
+          <tr><th>Model</th><th>Duty</th><th>Power (kW)</th><th>Speed (rpm)</th><th>Primary application</th></tr>
+        </thead>
+        <tbody>
+          {variantRows.map((r) => (
+            <tr>
+              <td><strong>{r.model}</strong></td>
+              <td>{r.duty}</td>
+              <td>{r.kw}</td>
+              <td>{r.rpm}</td>
+              <td>{r.app}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="resource-note">This is a representative sample, not the full list — the 396 family spans 6V through 16V and many rating steps. Confirm your exact model against the identification plate before ordering.</p>
+
+    <h2>3. Which parts differ by variant</h2>
+    <p>"396 parts" is not one parts list. What is shared vs specific:</p>
+    <div class="resource-table-wrap">
+      <table class="resource-table">
+        <thead>
+          <tr><th>Item</th><th>Shared or specific?</th><th>Note</th></tr>
+        </thead>
+        <tbody>
+          {partDiff.map((p) => (
+            <tr>
+              <td><strong>{p.item}</strong></td>
+              <td>{p.shared}</td>
+              <td>{p.note}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <h2>4. Part-number cross-reference (verified)</h2>
+    <p>Tags: <span class="rfq-badge rfq">RFQ</span> = confirmed from an inbound 396 enquiry; <span class="rfq-badge cat">catalog</span> = public 396 cross-reference seed.</p>
+    <div class="resource-table-wrap">
+      <table class="resource-table">
+        <thead>
+          <tr><th>Part number</th><th>Description</th><th>396 fitment</th><th>Source</th></tr>
+        </thead>
+        <tbody>
+          {crossRef.map((r) => (
+            <tr>
+              <td><code>{r.pn}</code></td>
+              <td>{r.desc}</td>
+              <td>{r.fit}</td>
+              <td>
+                {r.tag === 'rfq' ? <span class="rfq-badge rfq">RFQ</span> : <span class="rfq-badge cat">catalog</span>}
+                {' '}{r.src}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <h2>5. Identify your exact 396 variant</h2>
+    <ul class="resource-list">
+      <li><strong>Full designation</strong> (e.g. <code>12V396TE94</code>, not "396")</li>
+      <li><strong>Engine serial number</strong> from the identification plate</li>
+      <li><strong>Existing part number</strong> marked on the old component</li>
+      <li><strong>Build year / rating</strong> — helps separate TB/TC vs TE heads</li>
+    </ul>
+
+    <h2>6. Related & cluster</h2>
+    <div class="hub-grid">
+      <a class="hub-card" href="/series/mtu-396/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 396 Series Hub</h3><p class="hub-card-summary">Configurations, parts-by-system, full cross-reference and RFQ log.</p></div></a>
+      <a class="hub-card" href="/series/mtu-2000-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 2000 Variants</h3><p class="hub-card-summary">M61 → M9x generation decoder and per-model table (135 × 156 mm).</p></div></a>
+      <a class="hub-card" href="/products/mtu-4000-series-parts/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 4000 Series</h3><p class="hub-card-summary">12V / 16V / 20V larger siblings for higher-power duty.</p></div></a>
+      <a class="hub-card" href="/series/mtu-1163/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 1163 Series Hub</h3><p class="hub-card-summary">12V / 16V / 20V large-bore family (230 × 280 mm).</p></div></a>
+      <a class="hub-card" href="/series/mtu-4000-variants/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 4000 Variant Decoder</h3><p class="hub-card-summary">M05 / M03 / C05 / R03 / R04 / T05 + M-duty notation.</p></div></a>
+      <a class="hub-card" href="/series/12v396te94/"><div class="hub-card-body"><h3 class="hub-card-title">MTU 12V 396 TE94</h3><p class="hub-card-summary">Single-model deep dive — 1,680 kW marine & genset engine.</p></div></a>
+    </div>
+
+    <FaqSection items={faqItems} title="MTU 396 Variants FAQ" subtitle="FAQ" />
+  </DetailPageShell>
+</BaseLayout>
+
+<style>
+  .rfq-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    letter-spacing: 0.03em;
+    vertical-align: middle;
+  }
+  .rfq-badge.rfq { background: #fdeccb; color: #9a5b00; }
+  .rfq-badge.cat { background: #e4eef7; color: var(--color-primary); }
+  .resource-table code {
+    background: #eef3f8;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #0a3d66;
+  }
+  .hub-card h3.hub-card-title { font-size: 17px; }
+</style>

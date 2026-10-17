@@ -1,0 +1,160 @@
+﻿---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbHero from '../../components/BreadcrumbHero.astro';
+import FunnelPageView from '../../components/FunnelPageView.astro';
+import { productFaqs } from '../../data/page-faqs';
+import { products, isProductPageNoindex } from '../../data/products';
+import { breadcrumbSchema, faqSchema, site } from '../../data/site';
+import '../../styles/resource-page.css';
+
+const featuredSlugs = new Set(['mtu-spare-parts', 'mtu-2000-series-parts', 'mtu-4000-series-parts']);
+const publishedProducts = products.filter((product) => product.slug !== 'mtu-2000-series' && !isProductPageNoindex(product));
+---
+
+<BaseLayout
+  title="柴油发动机配件 — MTU、Cummins、DEUTZ 与 Detroit Diesel"
+  description="MTU、Cummins、DEUTZ 与 Detroit Diesel 柴油发动机配件独立采购，报价前提供零件号、应用场景与供货情况核验。"
+  currentPath="/products"
+  jsonLd={[
+    breadcrumbSchema([
+      { name: '首页', url: site.url },
+      { name: '产品', url: `${site.url}/products/` },
+    ]),
+    faqSchema(productFaqs.map((f) => ({ question: f.question, answer: f.answer }))),
+  ]}
+>
+  <FunnelPageView stage="service" label="products-index" />
+  <BreadcrumbHero
+    title="柴油发动机<br>配件"
+    trail={[
+      { label: '首页', href: '/' },
+      { label: '产品' },
+    ]}
+    variant="1"
+  />
+
+  <section class="blog-details-section resource-page-section">
+    <div class="section-gap bottom">
+      <div class="container">
+        <article class="blog-details-content-block resource-page fade-in">
+          <nav class="resource-nav" aria-label="产品导航">
+            <a href="/products/" class="resource-nav-link active" aria-current="page">
+              全部发动机配件
+            </a>
+            <a href="/products/mtu-spare-parts/" class="resource-nav-link">MTU 配件</a>
+            <a href="/part-products/" class="resource-nav-link">MTU 零件号</a>
+            <a href="/products/cummins-parts/" class="resource-nav-link">Cummins</a>
+            <a href="/products/deutz-parts/" class="resource-nav-link">DEUTZ</a>
+            <a href="/part-products/" class="resource-nav-link resource-nav-all">配件指南</a>
+          </nav>
+
+          <p class="resource-intro">
+            浏览 Diesel Part Source 面向 MTU、Detroit Diesel、Cummins 与 DEUTZ 发动机的核心配件类别。请提供零件号、发动机型号、出厂编号或铭牌照片，我们将在发货前确认供货情况。
+          </p>
+
+          <div class="resource-meta">
+            <span><strong>{publishedProducts.length}</strong> 个品牌与系列专区</span>
+            <span>原厂件 · OEM 制造配件</span>
+            <span>MTU 183 至 <strong>8000</strong> 系列</span>
+          </div>
+
+          <div class="detail-rfq-strip">
+            <p>请提供零件号、发动机出厂编号与数量。我们将核查库存、替代型号与全球运输方案。</p>
+            <div class="detail-rfq-actions-inline">
+              <a href="/contact/?source=products" class="detail-rfq-link" data-rfq-modal data-rfq-context="柴油发动机配件询价" data-rfq-source="products-index">查询配件供货情况</a>
+              <a href="/part-products/" class="detail-rfq-link detail-rfq-link-secondary">浏览零件号</a>
+            </div>
+          </div>
+
+          <div class="hub-grid products-hub-grid">
+            {publishedProducts.map((product) => (
+              <article class:list={['hub-card', { featured: featuredSlugs.has(product.slug) }]}>
+                {featuredSlugs.has(product.slug) && <span class="hub-featured-badge">推荐</span>}
+                <a href={`/products/${product.slug}/`} class="hub-card-image">
+                  <img
+                    src={product.image}
+                    alt={product.title}
+                    width="400"
+                    height="280"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </a>
+                <div class="hub-card-body">
+                  <h2 class="hub-card-title">
+                    <a href={`/products/${product.slug}/`}>{product.title}</a>
+                  </h2>
+                  <p class="hub-card-summary">{product.summary}</p>
+                  <a href={`/products/${product.slug}/`} class="hub-card-link">
+                    查看配件 →
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <div class="resource-note">
+            <strong>只有旧件或发动机铭牌照片？</strong>
+            请通过
+            <a href="/contact/">询价表单</a>
+            提交照片，并注明发动机品牌、型号、出厂编号、数量与收货国家。
+          </div>
+
+          <h2 class="hub-faq-heading">发动机配件常见问题</h2>
+          <div class="hub-faq-list">
+            {productFaqs.map((faq) => (
+              <details class="hub-faq-item">
+                <summary>{faq.question}</summary>
+                <p>{faq.answer}</p>
+              </details>
+            ))}
+          </div>
+
+          <p class="resource-related">
+            <a href="/products/mtu-spare-parts/">MTU 备件</a>
+            <span aria-hidden="true">·</span>
+            <a href="/part-products/">MTU 零件号</a>
+            <span aria-hidden="true">·</span>
+            <a href="/products/cummins-parts/">Cummins 配件</a>
+            <span aria-hidden="true">·</span>
+            <a href="/products/deutz-parts/">DEUTZ 配件</a>
+            <span aria-hidden="true">·</span>
+            <a href="/part-products/">配件指南</a>
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .products-hub-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .detail-rfq-actions-inline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 14px;
+    margin-top: 12px;
+  }
+
+  .detail-rfq-link-secondary {
+    background: var(--color-white);
+    color: var(--color-primary);
+    border: 1px solid rgba(20, 110, 245, 0.35);
+  }
+
+  @media (max-width: 991px) {
+    .products-hub-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .products-hub-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

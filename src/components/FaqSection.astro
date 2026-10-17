@@ -1,0 +1,48 @@
+﻿---
+import SectionHeading from './SectionHeading.astro';
+import { faqs } from '../data/faqs';
+
+interface Props {
+  items?: readonly { question: string; answer: string }[];
+  title?: string;
+  subtitle?: string;
+}
+
+const { items, title = '常见问题', subtitle = 'FAQ' } = Astro.props;
+const faqItems = items ?? faqs;
+---
+
+<section class="faq-section">
+  <div class="section-gap bottom">
+    <div class="container">
+      <SectionHeading title={title} subtitle={subtitle} />
+      <div class="faq-wrapper fade-in">
+        <div class="faq-item-block">
+          {faqItems.map((faq, i) => (
+            <div class="overflow-hidden">
+              <details class:list={['faq-single-item', { last: i === faqItems.length - 1 }]}>
+                <summary class="faq-toggle">
+                  <h3 class="faq-title">{faq.question}</h3>
+                  <div class="faq-icon-block">
+                    <div class="faq-icon-line-1"></div>
+                    <div class="faq-icon-line-2"></div>
+                  </div>
+                </summary>
+                <div class="faq-summary-block">
+                  <p class="faq-summary">{faq.answer}</p>
+                </div>
+              </details>
+            </div>
+          ))}
+        </div>
+        <div class="faq-image-block">
+          <img src="/images/mtu-part-number-verification.webp" alt="MTU 发动机配件核验常见问题" class="faq-image" width="1104" height="1348" loading="lazy" decoding="async" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import '../scripts/faq.ts';
+</script>

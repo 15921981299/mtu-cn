@@ -1,0 +1,23 @@
+---
+import { funnelViewEventByStage, type FunnelStage } from '../data/funnel';
+
+interface Props {
+  stage: FunnelStage;
+  label?: string;
+  /** Override default stage page-view event name. */
+  event?: string;
+}
+
+const { stage, label, event } = Astro.props;
+const eventName = event ?? funnelViewEventByStage[stage];
+---
+
+<script define:vars={{ eventName, stage, label }}>
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', eventName, {
+      event_category: 'Funnel',
+      event_label: label || document.title,
+      funnel_stage: stage,
+    });
+  }
+</script>
