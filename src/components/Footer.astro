@@ -6,7 +6,7 @@ import { site } from '../data/site';
     <div class="footer-wrapper">
       <div class="footer-content-block">
         <a href="/" class="footer-logo-link-block">
-          <img src={site.logo.default} alt={`${site.name} logo`} class="footer-logo" width={site.logo.width} height={site.logo.height} loading="lazy" decoding="async" />
+          <img src={site.logo.default} srcset={`${site.logo.compact} 440w, ${site.logo.default} 660w`} sizes="220px" alt={site.logo.alt} class="footer-logo" width={site.logo.width} height={site.logo.height} loading="lazy" decoding="async" />
         </a>
         <p class="footer-title">配件核验<br />快速全球交付</p>
         <a href="/contact/" class="primary-button footer">
@@ -79,7 +79,7 @@ import { site } from '../data/site';
         </div>
         <div class="footer-nav-col">
           <p class="footer-nav-label">公司</p>
-          <a href="/about/" class="footer-link">关于 柴油零件源</a>
+          <a href="/about/" class="footer-link">关于国晁动力</a>
           <a href="/certifications/" class="footer-link">质量政策</a>
           <a href="/contact/" class="footer-link">联系我们</a>
           <a href="/privacy/" class="footer-link">隐私政策</a>

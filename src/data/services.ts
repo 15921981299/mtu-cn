@@ -13,7 +13,7 @@ export const services: ServiceItem[] = [
   {
     slug: 'mtu-engine-parts',
     title: 'MTU 发动机零件',
-    seoTitle: 'MTU 发动机零件供应商 | 柴油零件源',
+    seoTitle: 'MTU 发动机零件供应商 | 国晁动力',
     h1Title: '经核验的 MTU 发动机零件供应',
     summary:
       '覆盖 183、331、396、493、538、595、956、1163、2000、4000 与 8000 系列发动机的 MTU 全系列备件，采购路线经核验，全球交付。',
@@ -24,7 +24,7 @@ export const services: ServiceItem[] = [
   {
     slug: 'cummins-engine-parts',
     title: 'Cummins 发动机零件',
-    seoTitle: 'Cummins 发动机零件供应商 | 柴油零件源',
+    seoTitle: 'Cummins 发动机零件供应商 | 国晁动力',
     h1Title: 'Cummins 柴油发动机零件',
     summary:
       'Cummins 柴油发动机供应支持，及面向工业、船用、发电与设备维护计划的经核验替换路线。',
@@ -35,7 +35,7 @@ export const services: ServiceItem[] = [
   {
     slug: 'deutz-engine-parts',
     title: 'DEUTZ 发动机零件',
-    seoTitle: 'DEUTZ 发动机零件供应商 | 柴油零件源',
+    seoTitle: 'DEUTZ 发动机零件供应商 | 国晁动力',
     h1Title: 'DEUTZ 柴油发动机零件',
     summary:
       'DEUTZ 替换件与发动机支持，面向工程机械、动力装置、泵、压缩机与工业机群。',
@@ -46,7 +46,7 @@ export const services: ServiceItem[] = [
   {
     slug: 'industrial-engine-service',
     title: '工业发动机服务',
-    seoTitle: '工业柴油发动机服务与零件 | 柴油零件源',
+    seoTitle: '工业柴油发动机服务与零件 | 国晁动力',
     h1Title: '工业发动机服务与支持',
     summary:
       '面向用于泵、压缩机、重型设备、油田装置与工业动力系统的发动机的零件采购与技术支持。',
@@ -57,7 +57,7 @@ export const services: ServiceItem[] = [
   {
     slug: 'marine-engine-service',
     title: '船用发动机服务',
-    seoTitle: '船用柴油发动机零件与服务 | 柴油零件源',
+    seoTitle: '船用柴油发动机零件与服务 | 国晁动力',
     h1Title: '船用发动机零件与服务',
     summary:
       '为渡轮、工作船、游艇、船厂与近海发动机运营方提供经核验的 MTU 备件采购，支持紧急全球发运。',
@@ -68,7 +68,7 @@ export const services: ServiceItem[] = [
   {
     slug: 'genuine-oem-parts',
     title: '经核验 OEM 采购',
-    seoTitle: '经核验的 OEM 柴油发动机零件采购 | 柴油零件源',
+    seoTitle: '经核验的 OEM 柴油发动机零件采购 | 国晁动力',
     h1Title: '经核验的 OEM 零件采购',
     summary:
       'OEM、OEM 替代、再制造与替换采购路线，从 O 型圈到曲轴，为保养、大修与车队运营清晰标注。',
@@ -83,7 +83,7 @@ export function getServiceDetailHtml(title: string) {
     'MTU 发动机零件': {
       partOne: `
         <h2>MTU 全系列备件</h2>
-        <p>柴油零件源 专注于供应 MTU 发动机零件，覆盖经典与现行发动机家族，包括 183、331、396、493、538、595、956、1163、2000、4000 与 8000 系列。我们支持需要清晰识别、明确标注采购路线与快速发运的维护团队。</p>
+        <p>国晁动力专注于供应 MTU 发动机零件，覆盖经典与现行发动机家族，包括 183、331、396、493、538、595、956、1163、2000、4000 与 8000 系列。我们支持需要清晰识别、明确标注采购路线与快速发运的维护团队。</p>
         <h3>典型 MTU 零件</h3>
         <ul>
           <li>滤清器、密封件、O 型圈、垫片与大修包</li>
@@ -143,7 +143,7 @@ export function getServiceDetailHtml(title: string) {
     'DEUTZ 发动机零件': {
       partOne: `
         <h2>DEUTZ 发动机零件</h2>
-        <p>柴油零件源 支持用于工程机械、压缩机、泵与工业设备的 DEUTZ 柴油发动机。我们帮助买方识别零件，并合并计划保养或紧急维修的订单。</p>
+        <p>国晁动力支持用于工程机械、压缩机、泵与工业设备的 DEUTZ 柴油发动机。我们帮助买方识别零件，并合并计划保养或紧急维修的订单。</p>
         <h3>供应范围</h3>
         <ul>
           <li>滤清器、皮带、密封件、垫片与保养包</li>
@@ -182,7 +182,7 @@ export function getServiceDetailHtml(title: string) {
         <h2>围绕停机而建</h2>
         <p>告知发动机型号、故障件与目标交货日期。我们将优先安排关键备件，并帮助您选择最快的可行物流路线。</p>
         <h3>本服务涵盖什么</h3>
-        <p>柴油零件源 是零件供应商。我们的服务工作发生在订单前后，而不是在现场：识别零件、理顺清单，并把正确的件送到您的车间。维修由您自己的技术人员或当地服务伙伴执行，我们确保开工时他们有所需的零件与专用工具。</p>
+        <p>国晁动力是零件供应商。我们的服务工作发生在订单前后，而不是在现场：识别零件、理顺清单，并把正确的件送到您的车间。维修由您自己的技术人员或当地服务伙伴执行，我们确保开工时他们有所需的零件与专用工具。</p>
         <h3>一次典型的故障询价</h3>
         <ol>
           <li>您发送发动机数据铭牌照片、故障件或其号码，以及现场位置。</li>
@@ -226,7 +226,7 @@ export function getServiceDetailHtml(title: string) {
     '经核验 OEM 采购': {
       partOne: `
         <h2>OEM 与替换路线评估</h2>
-        <p>从 O 型圈到曲轴，柴油零件源 帮助买方比较 MTU、Detroit Diesel、Cummins 与 DEUTZ 发动机的切实供应路线。适用时，报价会标明 OEM、OEM 替代、再制造、修复或替换路线。</p>
+        <p>从 O 型圈到曲轴，国晁动力帮助买方比较 MTU、Detroit Diesel、Cummins 与 DEUTZ 发动机的切实供应路线。适用时，报价会标明 OEM、OEM 替代、再制造、修复或替换路线。</p>
         <h3>为何路线清晰要紧</h3>
         <ul>
           <li>正确的配合与可靠的使用寿命</li>
@@ -252,7 +252,7 @@ export function getServiceDetailHtml(title: string) {
   };
 
   return details[title] || {
-    partOne: `<h2>${title}</h2><p>柴油零件源 为全球船用与工业用户供应柴油发动机零件与服务支持。</p>`,
+    partOne: `<h2>${title}</h2><p>国晁动力为全球船用与工业用户供应柴油发动机零件与服务支持。</p>`,
     partTwo: `<h3>获取支持</h3><p><a href="/contact/">请告知您的发动机型号与零件号，联系我们</a>。</p>`,
   };
 }

@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "build": "node scripts/build.mjs",
     "build:pages": "astro build",
+    "build:edgeone": "node scripts/build-catalogs.mjs && astro build",
     "catalogs": "node scripts/build-catalogs.mjs",
     "preview": "astro preview",
     "check": "astro check",

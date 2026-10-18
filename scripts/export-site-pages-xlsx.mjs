@@ -5,7 +5,7 @@ import path from 'node:path';
 const distDir = 'dist';
 const outputDir = 'exports';
 const outputPath = path.join(outputDir, 'site-pages-current.xlsx');
-const siteUrl = 'https://dieselpartsource.com';
+const siteUrl = 'https://mtupeijian.com';
 
 const decodeHtml = (value) =>
   value

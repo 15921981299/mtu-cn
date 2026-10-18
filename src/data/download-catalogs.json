@@ -10,8 +10,8 @@
     "series": "All engine series",
     "parts": 891,
     "pages": 18,
-    "bytes": 419303,
-    "generated": "2026-10-17",
+    "bytes": 419074,
+    "generated": "2026-10-18",
     "truncatedCells": {
       "category": 4
     }
@@ -27,8 +27,8 @@
     "series": "MTU 2000",
     "parts": 160,
     "pages": 4,
-    "bytes": 77712,
-    "generated": "2026-10-17",
+    "bytes": 77637,
+    "generated": "2026-10-18",
     "truncatedCells": {}
   },
   {
@@ -42,8 +42,8 @@
     "series": "MTU 4000",
     "parts": 176,
     "pages": 4,
-    "bytes": 85187,
-    "generated": "2026-10-17",
+    "bytes": 85112,
+    "generated": "2026-10-18",
     "truncatedCells": {}
   },
   {
@@ -57,8 +57,8 @@
     "series": "MTU 396",
     "parts": 159,
     "pages": 4,
-    "bytes": 76582,
-    "generated": "2026-10-17",
+    "bytes": 76507,
+    "generated": "2026-10-18",
     "truncatedCells": {}
   },
   {
@@ -72,8 +72,8 @@
     "series": "MTU 1163",
     "parts": 95,
     "pages": 2,
-    "bytes": 46863,
-    "generated": "2026-10-17",
+    "bytes": 46810,
+    "generated": "2026-10-18",
     "truncatedCells": {}
   },
   {
@@ -87,8 +87,8 @@
     "series": "MTU 956",
     "parts": 79,
     "pages": 2,
-    "bytes": 39580,
-    "generated": "2026-10-17",
+    "bytes": 39527,
+    "generated": "2026-10-18",
     "truncatedCells": {}
   },
   {
@@ -102,8 +102,8 @@
     "series": "MTU 538",
     "parts": 80,
     "pages": 2,
-    "bytes": 39219,
-    "generated": "2026-10-17",
+    "bytes": 39166,
+    "generated": "2026-10-18",
     "truncatedCells": {}
   },
   {
@@ -117,8 +117,8 @@
     "series": "MTU 595",
     "parts": 48,
     "pages": 2,
-    "bytes": 24865,
-    "generated": "2026-10-17",
+    "bytes": 24812,
+    "generated": "2026-10-18",
     "truncatedCells": {}
   }
 ]

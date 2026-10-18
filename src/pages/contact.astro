@@ -17,7 +17,7 @@ import {
 const checkIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
 const pageUrl = `${site.url}/contact/`;
-const pageTitle = 'MTU 发动机零件询价 | 联系柴油零件源';
+const pageTitle = 'MTU 发动机零件询价 | 联系国晁动力';
 const pageDescription =
   '从上海采购 MTU、Detroit Diesel、Cummins 与 DEUTZ 发动机零件。发送零件号、发动机出厂编号、数量与目的地，获取经核验的报价与全球运输方案。';
 
@@ -84,12 +84,12 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
       { name: '零件询价', url: pageUrl },
     ]),
     contactPageSchema({
-      name: 'MTU 发动机零件询价 — 联系 柴油零件源',
+      name: 'MTU 发动机零件询价 — 联系国晁动力',
       description: pageDescription,
       url: pageUrl,
     }),
     howToSchema({
-      name: '如何向 柴油零件源 询价柴油发动机零件',
+      name: '如何向国晁动力询价柴油发动机零件',
       description:
         '发送您的 MTU 或柴油发动机零件清单，获得核验与报价，然后确认从上海发货。',
       steps: inquirySteps,
@@ -115,7 +115,7 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
         经核验的 MTU 与柴油发动机零件询价
       </h2>
       <p class="contact-seo-intro-text">
-        柴油零件源为船用、工业、轨交与发电团队供应
+        国晁动力为船用、工业、轨交与发电团队供应
         <a href="/products/mtu-spare-parts/">MTU 备件</a>、
         <a href="/products/detroit-diesel-parts/">Detroit Diesel</a>、
         <a href="/products/cummins-parts/">Cummins</a> 与
@@ -165,7 +165,7 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
                   </ul>
                 </div>
               </div>
-              <form class="contact-form" id="rfq-form" aria-labelledby="inquiry-form-heading" data-endpoint="/api/rfq/" data-fallback-email={site.email}>
+              <form class="contact-form" id="rfq-form" aria-labelledby="inquiry-form-heading" data-endpoint="/api/rfq" data-fallback-email={site.email}>
                 <div class="contact-form-column">
                   <label class="contact-field-label" for="rfq-name">您的姓名</label>
                   <input class="contact-form-input-field" type="text" id="rfq-name" name="name" placeholder="张三" autocomplete="name" />
@@ -258,9 +258,9 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
   <section class="contact-info-section" aria-labelledby="contact-nap-heading">
     <div class="section-gap bottom">
       <div class="container">
-        <h2 id="contact-nap-heading" class="contact-nap-heading">柴油零件源联系方式</h2>
+        <h2 id="contact-nap-heading" class="contact-nap-heading">国晁动力联系方式</h2>
         <p class="contact-nap-lead">
-          柴油零件源（Shanghai Diesel Part Source Co., Ltd.）为全球提供经核验的柴油发动机零件采购支持。请通过邮件、电话或 WhatsApp 联系销售台，获取 MTU 与多品牌零件支持。
+          上海国晁动力设备有限公司（国晁动力）为全球提供经核验的柴油发动机零件采购支持。请通过邮件、电话或 WhatsApp 联系销售台，获取 MTU 与多品牌零件支持。
         </p>
         <p class="contact-nap-lead contact-sales-contact">
           您的询价由 <strong>{salesContact.name}</strong>（{salesContact.role}）处理，回复语言：{salesContact.languages}，一个工作日内答复。
@@ -1038,6 +1038,17 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
 
     populateRfqAttributionFields(form);
     const formData = new FormData(form);
+
+    // EdgeOne Makers caps a function request body at 6 MB, so stay under it here
+    // rather than letting the platform reject the whole submission opaquely.
+    const drawing = formData.get('drawing');
+    if (drawing instanceof File && drawing.size > 5 * 1024 * 1024) {
+      resultEl.className = 'form-result is-visible is-error';
+      resultEl.innerHTML = '<p>附件超过 5 MB。请压缩后重试，或将文件单独发送至我们的邮箱。</p>';
+      submitBtn.disabled = false;
+      submitBtn.textContent = '发送零件询价 →';
+      return;
+    }
 
     if (formData.get('website')) {
       window.location.href = '/thank-you/?source=rfq';

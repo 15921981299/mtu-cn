@@ -1,10 +1,22 @@
 ---
 import { site } from '../data/site';
 
-const { gaMeasurementId } = site;
+const { gaMeasurementId, enableGa4, baiduAnalyticsId } = site;
 ---
 
-{gaMeasurementId && (
+{baiduAnalyticsId && (
+  <script is:inline define:vars={{ baiduAnalyticsId }}>
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement('script');
+      hm.src = 'https://hm.baidu.com/hm.js?' + baiduAnalyticsId;
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+)}
+
+{enableGa4 && gaMeasurementId && (
   <>
     <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}></script>
     <script is:inline define:vars={{ gaMeasurementId }}>

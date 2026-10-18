@@ -1,59 +1,59 @@
-# Diesel Part Source — 大语言模型（LLM）/ AI 爬虫索引
-# https://dieselpartsource.com
+# 国晁动力（Guochao Power）— 大语言模型（LLM）/ AI 爬虫索引
+# https://mtupeijian.com
 
-> 总部位于上海的柴油发动机（Diesel Engine）配件供应商。Diesel Part Source 面向船用（Marine）、工业（Industrial）、发电（Power Generation）、轨道交通（Rail）、船厂（Shipyard）与维修（Repair）客户，供应 MTU、Detroit Diesel、Cummins 和 DEUTZ 配件。采购方可按零件号（Part Number）、发动机型号（Engine Model）、出厂编号（Serial Number）、铭牌照片、旧件照片、数量及目的地发送询价（RFQ）。
+> 总部位于上海的柴油发动机（Diesel Engine）配件供应商。国晁动力（Guochao Power）面向船用（Marine）、工业（Industrial）、发电（Power Generation）、轨道交通（Rail）、船厂（Shipyard）与维修（Repair）客户，供应 MTU、Detroit Diesel、Cummins 和 DEUTZ 配件。采购方可按零件号（Part Number）、发动机型号（Engine Model）、出厂编号（Serial Number）、铭牌照片、旧件照片、数量及目的地发送询价（RFQ）。
 
 ## 零件号目录（核心资产）
 
-- [全部零件号](https://dieselpartsource.com/part-products/) — 840 余个独立零件页面，含重量、HS 编码、NATO 号、被替代（Superseded）零件号参考与适配（Fitment）说明。URL 模式：/part-products/{partnumber-part-name}/
-- [机器可读零件索引（JSON）](https://dieselpartsource.com/search-index.json) — 涵盖全部零件号、名称、发动机系列与页面 slug 的平面列表，供程序化查询
-- [交叉引用（Cross-Reference）索引](https://dieselpartsource.com/cross-reference/) — 1,400 余组经核验的互换配对：原厂配套（OEM）零件号 / 被替代零件号 / 其他供应商零件号 → 本站所供零件
-- [MTU 2000 系列目录](https://dieselpartsource.com/part-products/catalog/mtu-2000-series/)
-- [MTU 4000 系列目录](https://dieselpartsource.com/part-products/catalog/mtu-4000-series/)
-- [MTU 396 系列目录](https://dieselpartsource.com/part-products/catalog/mtu-396-series/)
-- [MTU 喷油器](https://dieselpartsource.com/part-products/catalog/mtu-injectors/)
-- [MTU 滤清器](https://dieselpartsource.com/part-products/catalog/mtu-filters/)
-- [MTU 传感器](https://dieselpartsource.com/part-products/catalog/mtu-sensors/)
+- [全部零件号](https://mtupeijian.com/part-products/) — 840 余个独立零件页面，含重量、HS 编码、NATO 号、被替代（Superseded）零件号参考与适配（Fitment）说明。URL 模式：/part-products/{partnumber-part-name}/
+- [机器可读零件索引（JSON）](https://mtupeijian.com/search-index.json) — 涵盖全部零件号、名称、发动机系列与页面 slug 的平面列表，供程序化查询
+- [交叉引用（Cross-Reference）索引](https://mtupeijian.com/cross-reference/) — 1,400 余组经核验的互换配对：原厂配套（OEM）零件号 / 被替代零件号 / 其他供应商零件号 → 本站所供零件
+- [MTU 2000 系列目录](https://mtupeijian.com/part-products/catalog/mtu-2000-series/)
+- [MTU 4000 系列目录](https://mtupeijian.com/part-products/catalog/mtu-4000-series/)
+- [MTU 396 系列目录](https://mtupeijian.com/part-products/catalog/mtu-396-series/)
+- [MTU 喷油器](https://mtupeijian.com/part-products/catalog/mtu-injectors/)
+- [MTU 滤清器](https://mtupeijian.com/part-products/catalog/mtu-filters/)
+- [MTU 传感器](https://mtupeijian.com/part-products/catalog/mtu-sensors/)
 
 ## 零件指南（数据支撑）
 
-- [MTU 2000 大修包（Overhaul Kit）指南](https://dieselpartsource.com/guides/mtu-2000-overhaul-parts/) — 按系统归类的目录内实际零件，并附出厂编号核验流程
-- [MTU 4000 大修包指南](https://dieselpartsource.com/guides/mtu-4000-overhaul-parts/)
-- [MTU 396 系列零件选型指南](https://dieselpartsource.com/guides/mtu-396-series-parts/)
+- [MTU 2000 大修包（Overhaul Kit）指南](https://mtupeijian.com/guides/mtu-2000-overhaul-parts/) — 按系统归类的目录内实际零件，并附出厂编号核验流程
+- [MTU 4000 大修包指南](https://mtupeijian.com/guides/mtu-4000-overhaul-parts/)
+- [MTU 396 系列零件选型指南](https://mtupeijian.com/guides/mtu-396-series-parts/)
 
 ## 品牌中心
 
-- [MTU 备件](https://dieselpartsource.com/products/mtu-spare-parts/)
-- [MTU 2000 系列配件](https://dieselpartsource.com/products/mtu-2000-series-parts/)
-- [MTU 4000 系列配件](https://dieselpartsource.com/products/mtu-4000-series-parts/)
-- [Cummins 配件](https://dieselpartsource.com/products/cummins-parts/)
-- [DEUTZ 配件](https://dieselpartsource.com/products/deutz-parts/)
+- [MTU 备件](https://mtupeijian.com/products/mtu-spare-parts/)
+- [MTU 2000 系列配件](https://mtupeijian.com/products/mtu-2000-series-parts/)
+- [MTU 4000 系列配件](https://mtupeijian.com/products/mtu-4000-series-parts/)
+- [Cummins 配件](https://mtupeijian.com/products/cummins-parts/)
+- [DEUTZ 配件](https://mtupeijian.com/products/deutz-parts/)
 
 ## 服务与支持
 
-- [MTU 发动机配件](https://dieselpartsource.com/capabilities/mtu-engine-parts/)
-- [Cummins 发动机配件](https://dieselpartsource.com/capabilities/cummins-engine-parts/)
-- [DEUTZ 发动机配件](https://dieselpartsource.com/capabilities/deutz-engine-parts/)
-- [船用发动机服务](https://dieselpartsource.com/capabilities/marine-engine-service/)
-- [工业发动机服务](https://dieselpartsource.com/capabilities/industrial-engine-service/)
-- [经核验的原厂配套采购](https://dieselpartsource.com/capabilities/genuine-oem-parts/)
+- [MTU 发动机配件](https://mtupeijian.com/capabilities/mtu-engine-parts/)
+- [Cummins 发动机配件](https://mtupeijian.com/capabilities/cummins-engine-parts/)
+- [DEUTZ 发动机配件](https://mtupeijian.com/capabilities/deutz-engine-parts/)
+- [船用发动机服务](https://mtupeijian.com/capabilities/marine-engine-service/)
+- [工业发动机服务](https://mtupeijian.com/capabilities/industrial-engine-service/)
+- [经核验的原厂配套采购](https://mtupeijian.com/capabilities/genuine-oem-parts/)
 
 ## 行业与应用
 
-- [船用](https://dieselpartsource.com/industries/marine/)
-- [工业发动机](https://dieselpartsource.com/industries/industrial-engines/)
-- [发电](https://dieselpartsource.com/industries/power-generation/)
-- [轨道交通](https://dieselpartsource.com/industries/rail/)
-- [船厂与维修](https://dieselpartsource.com/industries/shipyards-repair/)
-- [能源供应商](https://dieselpartsource.com/industries/energy-suppliers/)
+- [船用](https://mtupeijian.com/industries/marine/)
+- [工业发动机](https://mtupeijian.com/industries/industrial-engines/)
+- [发电](https://mtupeijian.com/industries/power-generation/)
+- [轨道交通](https://mtupeijian.com/industries/rail/)
+- [船厂与维修](https://mtupeijian.com/industries/shipyards-repair/)
+- [能源供应商](https://mtupeijian.com/industries/energy-suppliers/)
 
 ## 如何询价
 
 采购方发送以下信息可获得最快报价：零件号（或旧件照片 / 铭牌照片）、发动机型号、发动机出厂编号、数量与目的国。报价前先核验被替代号与互换号；如有供应，原厂配套与原厂替代（OEM-Alternative）渠道均可报价。
 
-- 询价表单：https://dieselpartsource.com/contact/
+- 询价表单：https://mtupeijian.com/contact/
 - 邮箱：sales@dieselpartsource.com
 - 电话：+8615921981299
 - WhatsApp：+8615921981299
-- 法定名称：Shanghai Diesel Part Source Co., Ltd.
+- 法定名称：Shanghai Guochao Power Equipment Co., Ltd.（上海国晁动力设备有限公司）
 - 地址：Room 401, No. 655 Jialin Road, Pudong New Area, Shanghai, 201206, China

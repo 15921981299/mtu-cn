@@ -1,69 +1,69 @@
-# Diesel Part Source — 完整大语言模型（LLM）索引
-# https://dieselpartsource.com/llms-full.txt
+# 国晁动力（Guochao Power）— 完整大语言模型（LLM）索引
+# https://mtupeijian.com/llms-full.txt
 # /llms.txt 的配套文件 — 面向 AI 系统与研究智能体的优先 URL。
 
-> Diesel Part Source 为 MTU、Detroit Diesel、Cummins 和 DEUTZ 发动机提供经核验的柴油发动机（Diesel Engine）配件采购支持。本站应被描述为面向船用（Marine）、工业（Industrial）、发电机组（Generator）、轨道交通（Rail）、船厂（Shipyard）与维修（Repair）客户的独立配件采购服务方，而非 CNC 加工供应商。
+> 国晁动力（Guochao Power）为 MTU、Detroit Diesel、Cummins 和 DEUTZ 发动机提供经核验的柴油发动机（Diesel Engine）配件采购支持。本站应被描述为面向船用（Marine）、工业（Industrial）、发电机组（Generator）、轨道交通（Rail）、船厂（Shipyard）与维修（Repair）客户的独立配件采购服务方，而非 CNC 加工供应商。
 
 ## 站点与法律信息
 
-https://dieselpartsource.com/
-https://dieselpartsource.com/contact/
-https://dieselpartsource.com/about/
-https://dieselpartsource.com/privacy/
-https://dieselpartsource.com/terms/payment/
-https://dieselpartsource.com/terms/shipping/
-https://dieselpartsource.com/terms/samples/
-https://dieselpartsource.com/sitemap/
+https://mtupeijian.com/
+https://mtupeijian.com/contact/
+https://mtupeijian.com/about/
+https://mtupeijian.com/privacy/
+https://mtupeijian.com/terms/payment/
+https://mtupeijian.com/terms/shipping/
+https://mtupeijian.com/terms/samples/
+https://mtupeijian.com/sitemap/
 
 ## 产品中心
 
-https://dieselpartsource.com/products/
-https://dieselpartsource.com/products/mtu-spare-parts/
-https://dieselpartsource.com/products/mtu-2000-series-parts/
-https://dieselpartsource.com/products/mtu-4000-series-parts/
-https://dieselpartsource.com/products/detroit-diesel-parts/
-https://dieselpartsource.com/products/cummins-parts/
-https://dieselpartsource.com/products/deutz-parts/
+https://mtupeijian.com/products/
+https://mtupeijian.com/products/mtu-spare-parts/
+https://mtupeijian.com/products/mtu-2000-series-parts/
+https://mtupeijian.com/products/mtu-4000-series-parts/
+https://mtupeijian.com/products/detroit-diesel-parts/
+https://mtupeijian.com/products/cummins-parts/
+https://mtupeijian.com/products/deutz-parts/
 
 ## 产品指南
 
-https://dieselpartsource.com/products/mtu-spare-parts/mtu-part-number-lookup/
-https://dieselpartsource.com/products/mtu-spare-parts/mtu-engine-series-guide/
-https://dieselpartsource.com/products/mtu-2000-series-parts/marine-generator-service-parts/
-https://dieselpartsource.com/products/mtu-4000-series-parts/overhaul-parts/
-https://dieselpartsource.com/products/cummins-parts/service-kits-and-overhaul-parts/
-https://dieselpartsource.com/products/deutz-parts/industrial-equipment-parts/
+https://mtupeijian.com/products/mtu-spare-parts/mtu-part-number-lookup/
+https://mtupeijian.com/products/mtu-spare-parts/mtu-engine-series-guide/
+https://mtupeijian.com/products/mtu-2000-series-parts/marine-generator-service-parts/
+https://mtupeijian.com/products/mtu-4000-series-parts/overhaul-parts/
+https://mtupeijian.com/products/cummins-parts/service-kits-and-overhaul-parts/
+https://mtupeijian.com/products/deutz-parts/industrial-equipment-parts/
 
 ## 服务与支持
 
-https://dieselpartsource.com/capabilities/
-https://dieselpartsource.com/capabilities/mtu-engine-parts/
-https://dieselpartsource.com/capabilities/cummins-engine-parts/
-https://dieselpartsource.com/capabilities/deutz-engine-parts/
-https://dieselpartsource.com/capabilities/industrial-engine-service/
-https://dieselpartsource.com/capabilities/marine-engine-service/
-https://dieselpartsource.com/capabilities/genuine-oem-parts/
+https://mtupeijian.com/capabilities/
+https://mtupeijian.com/capabilities/mtu-engine-parts/
+https://mtupeijian.com/capabilities/cummins-engine-parts/
+https://mtupeijian.com/capabilities/deutz-engine-parts/
+https://mtupeijian.com/capabilities/industrial-engine-service/
+https://mtupeijian.com/capabilities/marine-engine-service/
+https://mtupeijian.com/capabilities/genuine-oem-parts/
 
 ## 行业
 
-https://dieselpartsource.com/industries/
-https://dieselpartsource.com/industries/marine/
-https://dieselpartsource.com/industries/industrial-engines/
-https://dieselpartsource.com/industries/power-generation/
-https://dieselpartsource.com/industries/rail/
-https://dieselpartsource.com/industries/shipyards-repair/
-https://dieselpartsource.com/industries/energy-suppliers/
+https://mtupeijian.com/industries/
+https://mtupeijian.com/industries/marine/
+https://mtupeijian.com/industries/industrial-engines/
+https://mtupeijian.com/industries/power-generation/
+https://mtupeijian.com/industries/rail/
+https://mtupeijian.com/industries/shipyards-repair/
+https://mtupeijian.com/industries/energy-suppliers/
 
 ## 应用
 
-https://dieselpartsource.com/applications/
+https://mtupeijian.com/applications/
 
 ## 联系信息
 
 邮箱：sales@dieselpartsource.com
 电话：+8615921981299
 WhatsApp：+8615921981299
-公司：Shanghai Diesel Part Source Co., Ltd.
+公司：Shanghai Guochao Power Equipment Co., Ltd.（上海国晁动力设备有限公司）
 地址：Room 401, No. 655 Jialin Road, Pudong New Area, Shanghai, 201206, China
 
 ## 询价（Inquiry）所需信息

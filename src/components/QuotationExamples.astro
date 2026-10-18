@@ -8,7 +8,7 @@ const findPart = (number: string) => mtuParts.find((part) => part.partNumber ===
 ---
 {examples.length > 0 && <section class="quotation-examples">
   <h2>已完成配件订单</h2>
-  <p>以下为经客户授权、匿名的订单，均由柴油零件源完成交付。所列项目取自对应报价单；价格与买方信息不予公开，报价选项与数量亦不作为发货清单。</p>
+  <p>以下为经客户授权、匿名的订单，均由国晁动力完成交付。所列项目取自对应报价单；价格与买方信息不予公开，报价选项与数量亦不作为发货清单。</p>
   {examples.map((example) => <article data-quotation-example={example.id}>
     <h3 id={example.id}>{example.title}</h3>
     <p class="quotation-date">报价日期：<time datetime={example.date}>{example.date}</time></p>

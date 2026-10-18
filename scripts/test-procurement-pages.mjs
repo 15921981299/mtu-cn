@@ -87,7 +87,7 @@ test('customer examples are anonymized and distinguish quote details from confir
   const pages = [html('products/mtu-spare-parts'), html('part-products/catalog/mtu-filters'), html('applications/marine-propulsion-engines'), html('guides/mtu-4000-overhaul-parts'), html('part-products/catalog/mtu-gasket-kits')];
   const joined = pages.join('');
   for (const example of quotationExamples) assert.ok(joined.includes(`data-quotation-example="${example.id}"`), example.id);
-  assert.match(joined, /均由柴油零件源完成交付/);
+  assert.match(joined, /均由国晁动力完成交付/);
   assert.doesNotMatch(joined, /sales14@|Silas Mukarati|Omar Jabouri|RQ2610-65138|34,365\.50|RFQ-194155|RFQ 605272/);
   assert.match(html('part-products/x57508300091-fuel-filter-spin-on'), /16V4000G14F/);
   const cases = html('case-studies');

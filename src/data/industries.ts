@@ -20,7 +20,7 @@ export const industries: IndustryItem[] = [
     title: '船用',
     icon: '/images/marine-diesel-engine-parts.webp',
     image: '/images/marine-diesel-engine-parts.webp',
-    seoTitle: '船用柴油发动机零件供应商 —— 面向船厂与船队 | 柴油零件源',
+    seoTitle: '船用柴油发动机零件供应商 —— 面向船厂与船队 | 国晁动力',
     h1Title: '船用柴油发动机零件 —— 面向船厂与船队',
     summary:
       '为船厂、船舶运营方、船用服务公司、游艇、渡轮、工作船与近海船队提供零件采购与合并询价支持。',
@@ -29,7 +29,7 @@ export const industries: IndustryItem[] = [
     content: {
       partOne: `
         <h2>面向维护团队的船用零件供应</h2>
-        <p>柴油零件源 为船厂、船舶运营方与船用服务公司提供经核验的柴油发动机零件、合并报价、出口包装，以及送货到港口、船厂或维修仓库的服务。</p>
+        <p>国晁动力为船厂、船舶运营方与船用服务公司提供经核验的柴油发动机零件、合并报价、出口包装，以及送货到港口、船厂或维修仓库的服务。</p>
         <h3>我们支持的客户</h3>
         <ul>
           <li>渡轮、工作船与商用船舶船队</li>
@@ -67,7 +67,7 @@ export const industries: IndustryItem[] = [
     title: '工业发动机',
     icon: '/images/industrial-diesel-engine-parts.webp',
     image: '/images/industrial-diesel-engine-parts.webp',
-    seoTitle: '工业发动机零件 | 柴油零件源',
+    seoTitle: '工业发动机零件 | 国晁动力',
     h1Title: '工业发动机零件',
     summary:
       '为用于泵、压缩机、重型机械、油田装置与工业动力系统的柴油发动机提供零件采购。',
@@ -76,7 +76,7 @@ export const industries: IndustryItem[] = [
     content: {
       partOne: `
         <h2>面向工业发动机机群的零件供应</h2>
-        <p>用于泵、压缩机、钻机、矿用设备与工程机械的柴油发动机，通常运行在远离经销商柜台的地方。当其中一台停机时，维护团队需要快速识别正确零件，并送到可能距最近城市数小时的现场。柴油零件源 与为这类设备采购 MTU、Cummins、DEUTZ 与 Detroit Diesel 零件的设备维护部门、设备租赁车队和发动机服务承包商合作。</p>
+        <p>用于泵、压缩机、钻机、矿用设备与工程机械的柴油发动机，通常运行在远离经销商柜台的地方。当其中一台停机时，维护团队需要快速识别正确零件，并送到可能距最近城市数小时的现场。国晁动力与为这类设备采购 MTU、Cummins、DEUTZ 与 Detroit Diesel 零件的设备维护部门、设备租赁车队和发动机服务承包商合作。</p>
         <h3>我们经常报价的设备</h3>
         <ul>
           <li>消防泵、排水泵与灌溉泵组</li>
@@ -110,7 +110,7 @@ export const industries: IndustryItem[] = [
     title: '发电',
     icon: '/images/generator-engine-parts.webp',
     image: '/images/generator-engine-parts.webp',
-    seoTitle: '发电发动机零件 | 柴油零件源',
+    seoTitle: '发电发动机零件 | 国晁动力',
     h1Title: '发电发动机零件',
     summary:
       '为发电机组、备用电源、常用电源与电站维护计划提供柴油发动机备件。',
@@ -153,7 +153,7 @@ export const industries: IndustryItem[] = [
     title: '轨交',
     icon: '/images/mtu-4000-series-overhaul-parts.webp',
     image: '/images/mtu-4000-series-overhaul-parts.webp',
-    seoTitle: '轨交柴油发动机零件 | 柴油零件源',
+    seoTitle: '轨交柴油发动机零件 | 国晁动力',
     h1Title: '轨交柴油发动机零件',
     summary:
       '为轨交牵引、机车辅助系统与车队维护计划提供发动机零件支持。',
@@ -162,7 +162,7 @@ export const industries: IndustryItem[] = [
     content: {
       partOne: `
         <h2>轨交发动机零件</h2>
-        <p>柴油零件源 为处理计划车队保养与紧急维修的运营方和维护承包商提供轨交相关发动机零件询价支持。典型客户是机务段维护团队、车辆大修厂，以及运行柴油机车、柴油动车、调车机车与轨行机械的线路维修承包商。</p>
+        <p>国晁动力为处理计划车队保养与紧急维修的运营方和维护承包商提供轨交相关发动机零件询价支持。典型客户是机务段维护团队、车辆大修厂，以及运行柴油机车、柴油动车、调车机车与轨行机械的线路维修承包商。</p>
         <h3>支持范围</h3>
         <ul>
           <li>MTU 2000 与 4000 系列轨交发动机，含 PowerPack 安装</li>
@@ -194,7 +194,7 @@ export const industries: IndustryItem[] = [
     title: '船厂与维修',
     icon: '/images/marine-diesel-engine-parts.webp',
     image: '/images/mtu-part-number-verification.webp',
-    seoTitle: '船厂柴油发动机零件 | 柴油零件源',
+    seoTitle: '船厂柴油发动机零件 | 国晁动力',
     h1Title: '船厂与维修发动机零件',
     summary:
       '为船厂、发动机维修公司与大修承包商提供合并备件采购。',
@@ -234,7 +234,7 @@ export const industries: IndustryItem[] = [
     title: '能源供应商',
     icon: '/images/generator-engine-parts.webp',
     image: '/images/global-engine-parts-delivery.webp',
-    seoTitle: '能源供应商发动机零件 | 柴油零件源',
+    seoTitle: '能源供应商发动机零件 | 国晁动力',
     h1Title: '能源供应商发动机零件',
     summary:
       '为在偏远、备用、近海与工业动力环境中运行柴油发动机的能源公司提供备件采购。',

@@ -1,9 +1,13 @@
 export const site = {
-  // 中文站品牌名：展示层统一「柴油零件源」，英文名经 defaultDescription / legalNameEn 保留
-  name: '柴油零件源',
+  // 中文站品牌名：展示层统一「国晁动力」（营业执照主体为「上海国晁动力设备有限公司」）
+  name: '国晁动力',
   company: {
-    legalName: 'Shanghai Diesel Part Source Co., Ltd.',
-    legalNameEn: 'Shanghai Diesel Part Source Co., Ltd.',
+    /**
+     * 法定主体名。备案 / 合同 / 发票 / 法律声明一律以此为准，改这里即可全站生效
+     * （about、contact、privacy、how-to-source、llms.txt 与 3 处 schema.org 均读取本字段）。
+     */
+    legalName: '上海国晁动力设备有限公司',
+    legalNameEn: 'Shanghai Guochao Power Equipment Co., Ltd.',
     /**
      * Registered / correspondence address (Pudong New Area, Shanghai).
      * SINGLE SOURCE OF TRUTH: the three schema.org PostalAddress blocks, the
@@ -20,22 +24,50 @@ export const site = {
       singleLine: '中国上海市浦东新区佳林路 655 号 401 室，邮编 201206',
     },
   },
-  url: 'https://dieselpartsource.com',
+  url: 'https://mtupeijian.com',
+  /**
+   * Public contact address. Kept on the English site's mailbox until the new
+   * domain has Cloudflare Email Routing (or a Zoho mailbox) live — switching
+   * this string before then sends every inquiry into a black hole because all
+   * mailto: links and the RFQ fallback text read from here.
+   * TODO(email): switch to 'sales@mtupeijian.com' once routing is verified.
+   */
   email: 'sales@dieselpartsource.com',
   phone: '+8615921981299',
   whatsapp: '+8615921981299',
   tagline: '配件核验 | 快速交付',
+  /**
+   * 品牌标识：`public/images/logo-cn.png` 母版（由 logo.png 补正公司名而来，
+   * 见 scripts/tmp-fix-logo-name.py）经 scripts/tmp-prep-logo.py 处理
+   * （去白底 → 转透明、裁掉留白、按显示宽度 220px 输出 3x/2x WebP）。
+   * width/height 是图片的**固有像素**，不是显示尺寸——CSS 里 .brand-logo /
+   * .footer-logo 固定 220px 宽，这里只负责给出宽高比，避免布局抖动（CLS）。
+   * 显示尺寸 220 × 158/660 ≈ 52.7px 高。
+   */
   logo: {
-    default: '/images/dieselpartsource-logo.svg',
-    compact: '/images/dieselpartsource-logo.svg',
-    icon: '/images/dieselpartsource-logo.svg',
-    width: 258,
-    height: 40,
+    default: '/images/mtupeijian-logo.webp',
+    compact: '/images/mtupeijian-logo@2x.webp',
+    icon: '/images/mtupeijian-logo-schema.png',
+    /** JSON-LD Organization.logo 用位图（Google 图片抓取对 PNG 最稳）。 */
+    schema: '/images/mtupeijian-logo-schema.png',
+    alt: '国晁动力 mtupeijian.com',
+    width: 660,
+    height: 157,
   },
   /** Set your GA4 Measurement ID (e.g. G-XXXXXXXX) to enable analytics. Leave empty to disable. */
   gaMeasurementId: 'G-WPLNY49ZJV',
+  /**
+   * GA4 的 gtag.js 来自 googletagmanager.com，大陆访问经常超时，会占用连接、
+   * 拖慢 onload（百度「闪电算法」>3 秒降权）。面向国内流量默认关闭；
+   * 需要看 GA4 数据时再改 true（ID 仍保留在上面）。
+   */
+  enableGa4: false,
   /** Paste the content value from Google Search Console HTML verification. Leave empty to skip. */
-  googleSiteVerification: 'RqNtSOYc73P2ni6Y1FZl1tsK9INXgsi5qOE2HtyIdIY',
+  googleSiteVerification: '',
+  /** 百度搜索资源平台「HTML 标签验证」的 content 值。留空则不输出 meta。 */
+  baiduSiteVerification: '',
+  /** 百度统计站点代码里的 32 位 ID（hm.js? 后面那串）。留空则不加载百度统计。 */
+  baiduAnalyticsId: '',
   /** Google Tag Manager container ID (e.g. GTM-XXXXXXX). Leave empty to disable GTM. */
   gtmContainerId: '',
   social: {
@@ -103,10 +135,10 @@ export const site = {
     },
   },
   defaultDescription:
-    '柴油零件源（柴油零件源）为船用、工业、轨交与发电应用提供经核验的 MTU、Detroit Diesel、Cummins 与 DEUTZ 发动机配件采购服务，自上海全球交付。',
+    '国晁动力（上海国晁动力设备有限公司）为船用、工业、轨交与发电应用提供经核验的 MTU、Detroit Diesel、Cummins 与 DEUTZ 发动机配件采购服务，自上海全球交付。',
 };
 
-const organizationLogoUrl = `${site.url}${site.logo.default}`;
+const organizationLogoUrl = `${site.url}${site.logo.schema}`;
 
 export const organizationSchema = {
   '@context': 'https://schema.org',

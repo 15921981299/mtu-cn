@@ -98,7 +98,7 @@ export const catalogProcurement: Record<string, ProcurementBrief> = {
 
 export const supplyProcurement: ProcurementBrief = {
   heading: '逐行比较 MTU 零件报价',
-  intro: '柴油零件源 是独立供应商。目录列名是邀请您核查一个参考号，而非 MTU 授权、当前库存或适配性保证的声明。',
+  intro: '国晁动力是独立供应商。目录列名是邀请您核查一个参考号，而非 MTU 授权、当前库存或适配性保证的声明。',
   lines: [
     { item: '保养订单', scope: '按准确参考号的滤清器、密封件与传感器', check: '申请号码、数量、安装/连接器识别与目的地。', numbers: ['X57508300091', '0000925105', '0031845201'] },
     { item: '维修或大修', scope: '总成与部件行分开', check: '所含项目、档次、完整发动机称号与出厂编号；下单前支持替代方向确认。' },

@@ -40,7 +40,7 @@ function normalizeImportedModel(product: ProductItem): ProductItem {
     generatedModel: true,
     title: model,
     h1Title: `${identity} 零件识别`,
-    seoTitle: `${identity} 零件识别 | 柴油零件源`,
+    seoTitle: `${identity} 零件识别 | 国晁动力`,
     summary: `${identity} 零件询价：请按完整标记、发动机出厂编号与需求数量识别所装部件；供货情况逐单确认。`,
     capabilitySlugs: brand === 'MTU' ? product.capabilitySlugs : ['industrial-engine-service'],
     content: {
@@ -74,7 +74,7 @@ const importedModelProducts: ProductItem[] = [
     image: '/images/engine-parts-sensors-catalog.webp',
     mainImage: '/images/engine-parts-hero.webp',
     secondImage: '/images/engine-parts-verification-desk.webp',
-    seoTitle: 'MTU 16V 396 Te74l 零件 | 柴油零件源',
+    seoTitle: 'MTU 16V 396 Te74l 零件 | 国晁动力',
     h1Title: 'MTU 16V 396 Te74l 发动机零件',
     summary: 'MTU 16V 396 Te74l 发动机零件询价支持，覆盖保养、大修与更换计划。',
     materialSlugs: ['carbon-steel', 'stainless-steel'],
@@ -84,7 +84,7 @@ const importedModelProducts: ProductItem[] = [
     content: {
       partOne: `
         <h2>MTU 16V 396 Te74l 零件支持</h2>
-        <p>柴油零件源 为维护团队、经销商、服务公司与船队运营商提供 MTU 16V 396 Te74l 发动机零件询价支持。</p>
+        <p>国晁动力为维护团队、经销商、服务公司与船队运营商提供 MTU 16V 396 Te74l 发动机零件询价支持。</p>
         <h3>典型询盘</h3>
         <ul>
           <li>滤清器、垫片、密封件、皮带、传感器与保养件</li>
@@ -106,7 +106,7 @@ const importedModelProducts: ProductItem[] = [
     image: '/images/engine-parts-sensors-catalog.webp',
     mainImage: '/images/engine-parts-hero.webp',
     secondImage: '/images/engine-parts-verification-desk.webp',
-    seoTitle: 'MTU 1163 系列发动机零件 | 柴油零件源',
+    seoTitle: 'MTU 1163 系列发动机零件 | 国晁动力',
     h1Title: 'MTU 1163 系列发动机零件',
     summary: 'MTU 1163 系列发动机零件询价支持，覆盖保养、大修与更换计划。',
     materialSlugs: ['carbon-steel', 'stainless-steel'],
@@ -116,7 +116,7 @@ const importedModelProducts: ProductItem[] = [
     content: {
       partOne: `
         <h2>MTU 1163 系列发动机零件支持</h2>
-        <p>柴油零件源 为维护团队、经销商、服务公司与船队运营商提供 MTU 1163 系列发动机零件询价支持。</p>
+        <p>国晁动力为维护团队、经销商、服务公司与船队运营商提供 MTU 1163 系列发动机零件询价支持。</p>
         <h3>典型询盘</h3>
         <ul>
           <li>滤清器、垫片、密封件、皮带、传感器与保养件</li>
@@ -138,7 +138,7 @@ const importedModelProducts: ProductItem[] = [
     image: '/images/marine-diesel-engine-parts.webp',
     mainImage: '/images/marine-diesel-engine-parts.webp',
     secondImage: '/images/engine-parts-verification-desk.webp',
-    seoTitle: 'MTU 8000 发动机零件供应商 | 柴油零件源',
+    seoTitle: 'MTU 8000 发动机零件供应商 | 国晁动力',
     h1Title: 'MTU 8000 发动机零件',
     summary: 'MTU 8000 系列发动机零件支持，覆盖大功率船用推进，含保养、冷却、燃油、涡轮增压器、控制与大修询价。',
     materialSlugs: ['carbon-steel', 'stainless-steel'],
@@ -148,7 +148,7 @@ const importedModelProducts: ProductItem[] = [
     content: {
       partOne: `
         <h2>MTU 8000 系列发动机零件</h2>
-        <p>MTU 8000 系列发动机服务于大功率船用推进领域，零件可追溯性与维护窗口计划在此尤为关键。柴油零件源 为船舶运营商、船厂、发动机服务公司与采购团队提供按型号核验的零件检查与国际交付计划支持。</p>
+        <p>MTU 8000 系列发动机服务于大功率船用推进领域，零件可追溯性与维护窗口计划在此尤为关键。国晁动力为船舶运营商、船厂、发动机服务公司与采购团队提供按型号核验的零件检查与国际交付计划支持。</p>
         <h3>MTU 8000 零件类别</h3>
         <ul>
           <li>燃油泵、喷射部件、阀、管路与控制件</li>
@@ -179,7 +179,7 @@ const productCatalog: ProductItem[] = [
     image: '/images/engine-parts-sensors-catalog.webp',
     mainImage: '/images/engine-parts-hero.webp',
     secondImage: '/images/engine-parts-verification-desk.webp',
-    seoTitle: 'MTU 发动机零件与备件供应商 | 柴油零件源',
+    seoTitle: 'MTU 发动机零件与备件供应商 | 国晁动力',
     h1Title: 'MTU 发动机零件与备件',
     summary:
       '面向 183、396、595、956、1163、2000、4000 与 8000 系列发动机的独立 MTU 发动机零件供应商，提供零件号核验与全球交付。',
@@ -190,7 +190,7 @@ const productCatalog: ProductItem[] = [
     content: {
       partOne: `
         <h2>MTU 发动机零件供应</h2>
-        <p>柴油零件源 是面向船用、工业、轨道交通与发电用户的独立 MTU 发动机零件与备件供应商。我们以零件号核验、库存核查以及自上海发出的全球交付，支持日常保养订单、大修清单与紧急停机询盘。</p>
+        <p>国晁动力是面向船用、工业、轨道交通与发电用户的独立 MTU 发动机零件与备件供应商。我们以零件号核验、库存核查以及自上海发出的全球交付，支持日常保养订单、大修清单与紧急停机询盘。</p>
         <h3>按零件类别浏览</h3>
         <ul>
           <li><a href="/part-products/catalog/mtu-filters/">MTU 滤清器 —— 机油、燃油、空气、冷却液</a></li>
@@ -253,7 +253,7 @@ const productCatalog: ProductItem[] = [
     image: '/images/engine-parts-sensors-catalog.webp',
     mainImage: '/images/engine-parts-sensors-catalog.webp',
     secondImage: '/images/precision-micrometer-measurement.jpg',
-    seoTitle: 'MTU 2000 系列零件供应商 | 柴油零件源',
+    seoTitle: 'MTU 2000 系列零件供应商 | 国晁动力',
     h1Title: 'MTU 2000 系列零件供应商',
     summary:
       '面向船用推进、发电机组与工业动力装置中 MTU 2000 系列发动机的零件支持。',
@@ -294,7 +294,7 @@ const productCatalog: ProductItem[] = [
     image: '/images/engine-parts-hero.webp',
     mainImage: '/images/engine-parts-verification-desk.webp',
     secondImage: '/images/engine-parts-verification-desk.webp',
-    seoTitle: 'MTU 4000 系列零件供应商 | 柴油零件源',
+    seoTitle: 'MTU 4000 系列零件供应商 | 国晁动力',
     h1Title: 'MTU 4000 系列零件供应商',
     summary:
       'MTU 4000 系列发动机零件采购，覆盖船用、发电、轨道交通与工业发动机。请在报价中确认准确的供货零件号、出处与供货状态。',
@@ -336,7 +336,7 @@ const productCatalog: ProductItem[] = [
     image: '/images/engine-parts-sensors-catalog.webp',
     mainImage: '/images/engine-parts-sensors-catalog.webp',
     secondImage: '/images/industrial-diesel-engine-parts.webp',
-    seoTitle: 'Detroit Diesel 零件供应商 | 柴油零件源',
+    seoTitle: 'Detroit Diesel 零件供应商 | 国晁动力',
     h1Title: 'Detroit Diesel 发动机零件',
     summary:
       '面向老旧发动机平台及相关 MTU 发动机应用的 Detroit Diesel 零件支持，覆盖维护与大修项目。',
@@ -347,7 +347,7 @@ const productCatalog: ProductItem[] = [
     content: {
       partOne: `
         <h2>Detroit Diesel 零件</h2>
-        <p>柴油零件源 为处理老旧发动机平台与 MTU 相关应用的维护团队提供 Detroit Diesel 零件询价支持。</p>
+        <p>国晁动力为处理老旧发动机平台与 MTU 相关应用的维护团队提供 Detroit Diesel 零件询价支持。</p>
         <h3>询价所需信息</h3>
         <ul>
           <li>发动机型号与出厂编号</li>
@@ -368,7 +368,7 @@ const productCatalog: ProductItem[] = [
     image: '/images/engine-parts-hero.webp',
     mainImage: '/images/engine-parts-sensors-catalog.webp',
     secondImage: '/images/engine-parts-verification-desk.webp',
-    seoTitle: 'Cummins 零件供应商 | 柴油零件源',
+    seoTitle: 'Cummins 零件供应商 | 国晁动力',
     h1Title: 'Cummins 柴油发动机零件',
     summary:
       '面向发电、船用与工业发动机的 Cummins 保养件、大修部件与更换总成。',
@@ -410,7 +410,7 @@ const productCatalog: ProductItem[] = [
     image: '/images/engine-parts-sensors-catalog.webp',
     mainImage: '/images/precision-grinding-service-capability.webp',
     secondImage: '/images/engine-parts-verification-desk.webp',
-    seoTitle: 'DEUTZ 零件供应商 | 柴油零件源',
+    seoTitle: 'DEUTZ 零件供应商 | 国晁动力',
     h1Title: 'DEUTZ 柴油发动机零件',
     summary:
       '面向工程机械、工业装置、泵与压缩机的 DEUTZ 更换件与维护支持。',

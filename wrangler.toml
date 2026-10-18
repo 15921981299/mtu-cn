@@ -1,5 +1,8 @@
 #:schema node_modules/wrangler/config-schema.json
-name = "mtu"
+# ⚠️ Worker name MUST stay distinct from the English site's Worker (`mtu`,
+# which serves dieselpartsource.com). Reusing that name makes `wrangler deploy`
+# silently replace the English production site with this Chinese build.
+name = "mtu-cn"
 main = "dist/_worker.js/index.js"
 compatibility_date = "2026-07-18"
 compatibility_flags = ["nodejs_compat", "global_fetch_strictly_public"]
@@ -8,6 +11,8 @@ compatibility_flags = ["nodejs_compat", "global_fetch_strictly_public"]
 ZOHO_SMTP_USER = "sales@dieselpartsource.com"
 ZOHO_SMTP_HOST = "smtppro.zoho.com"
 ZOHO_SMTP_PORT = "465"
+# Inquiry notification recipient. Falls back to the same address in code if unset.
+RFQ_NOTIFICATION_EMAIL = "admin@machiningsupplier.com"
 
 [assets]
 directory = "./dist"
@@ -34,41 +39,48 @@ bucket_name = "mtu-rfq-uploads"
 # - dist/.assetsignore excludes the dist/_worker.js directory from the asset
 #   upload. Without that entry the Worker source is served publicly at
 #   /_worker.js/index.js — verify after every deploy:
-#     curl -sI https://dieselpartsource.com/_worker.js/index.js   # expect 404
+#     curl -sI https://mtupeijian.com/_worker.js/index.js   # expect 404
 # - Redirects live in exactly ONE place: dist/_redirects. It is generated at
 #   build time by scripts/create-worker-entry.mjs from public/_redirects plus
 #   the part-page dedup map, and the asset layer applies it to every request
 #   (static match or not). Verify after every deploy:
-#     curl -sI https://dieselpartsource.com/marine/            # expect 301
-#     curl -sI https://dieselpartsource.com/products/mtu-series-2000-gensets/
+#     curl -sI https://mtupeijian.com/marine/            # expect 301
+#     curl -sI https://mtupeijian.com/products/mtu-series-2000-gensets/
 # - http:// and www. collapsing CANNOT be expressed in _redirects (it matches
 #   paths, never scheme or hostname) and must be configured on the dashboard.
-#   Status as of 2026-09-27:
-#     http -> https  : DONE (http:// and http://www. both 301 to https)
-#     www -> root    : TODO — https://www. still serves a full duplicate (200)
+#   Status as of 2026-10-18 (new domain, nothing configured yet):
+#     http -> https  : TODO — enable SSL/TLS -> Edge Certificates -> Always Use HTTPS
+#     www -> root    : TODO — add the rule below
+#   (The old domain dieselpartsource.com already had both; that config does NOT
+#   carry over to a new zone.)
 #   Add ONE rule under Rules -> Redirect Rules:
-#     filter : http.host eq "www.dieselpartsource.com"
+#     filter : http.host eq "www.mtupeijian.com"
 #     then   : dynamic redirect to
-#              concat("https://dieselpartsource.com", http.request.uri.path)
+#              concat("https://mtupeijian.com", http.request.uri.path)
 #              status 301, preserve query string ON
 #   Single Redirects run before both the asset layer and the Worker, which is
 #   why host-level normalisation cannot live in the Worker (with
 #   run_worker_first off, the Worker never runs for a request that matches a
 #   static file — such code is dead code).
-#   www already has the proxied DNS record the rule requires: it is a second
-#   Custom Domain on this Worker. Do NOT add a 100:: / 192.0.2.0 placeholder
-#   record and do NOT delete that Custom Domain — deleting it removes the DNS
-#   record and the rule stops firing.
+#   Add www as a second Custom Domain on this Worker first (that creates the
+#   proxied DNS record the rule requires), then add the redirect rule. Do NOT
+#   add a 100:: / 192.0.2.0 placeholder record and do NOT delete that Custom
+#   Domain — deleting it removes the DNS record and the rule stops firing.
 #   Verify:
-#     curl -sI https://www.dieselpartsource.com/           # expect 301
-#     curl -sI https://dieselpartsource.com/               # expect 200
-#     curl -sI https://www.dieselpartsource.com/part-products/catalog/mtu-injectors/
+#     curl -sI https://www.mtupeijian.com/           # expect 301
+#     curl -sI https://mtupeijian.com/               # expect 200
+#     curl -sI https://www.mtupeijian.com/part-products/catalog/mtu-injectors/
 #                                                          # expect 301, path kept
 # - Do NOT add `routes` / `custom_domain` to this file. Wrangler treats routes
 #   as the complete set of bindings for the Worker, so writing them silently
 #   unbinds the dashboard-managed Custom Domains (apex and www go offline).
-# - ZOHO_SMTP_PASS is a Worker secret, managed via `wrangler secret put`
-#   or the Cloudflare dashboard — it is NOT defined here and persists
-#   across deploys.
+# - Secrets are NOT defined here; set them once on the NEW worker (they do not
+#   carry over from the English site's `mtu` worker):
+#     wrangler secret put ZOHO_SMTP_PASS      --name mtu-cn
+#     wrangler secret put RFQ_DOWNLOAD_SECRET --name mtu-cn
+#   Missing ZOHO_SMTP_PASS → /api/rfq returns "邮件服务暂未配置" (no inquiry sent).
+#   Missing RFQ_DOWNLOAD_SECRET → attachment download URLs return 503.
+#   Verify after every deploy (GET only, no side effects):
+#     curl -s https://mtupeijian.com/api/rfq   # expect {"ok":true,"ready":true}
 # - Do not add observability/log settings here; current production
 #   settings are managed on the dashboard.

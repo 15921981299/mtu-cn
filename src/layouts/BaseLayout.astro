@@ -83,12 +83,21 @@ const schemas = [
     {site.googleSiteVerification && (
       <meta name="google-site-verification" content={site.googleSiteVerification} />
     )}
+    {site.baiduSiteVerification && (
+      <meta name="baidu-site-verification" content={site.baiduSiteVerification} />
+    )}
+    {/* Baidu-specific: tells the crawler the site adapts to both desktop and mobile. */}
+    <meta name="applicable-device" content="pc,mobile" />
     {noindex && <meta name="robots" content="noindex, follow" />}
     <link rel="canonical" href={canonical} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="alternate icon" type="image/png" href="/favicon.png" />
-    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
-    {site.gaMeasurementId && <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />}
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    {site.enableGa4 && site.gaMeasurementId && (
+      <>
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+        <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
+      </>
+    )}
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:locale" content="zh_CN" />

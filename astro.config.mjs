@@ -3,7 +3,9 @@ import sitemap from '@astrojs/sitemap';
 import { isSitemapExcluded } from './src/data/sitemap-exclude.ts';
 
 export default defineConfig({
-  site: 'https://dieselpartsource.com',
+  // SINGLE SOURCE for canonical, og:image, sitemap <loc> and JSON-LD @id.
+  // Must match site.url in src/data/site.ts and the Sitemap line in public/robots.txt.
+  site: 'https://mtupeijian.com',
   trailingSlash: 'always',
   vite: {
     optimizeDeps: { entries: ['src/scripts/**/*.ts'] },

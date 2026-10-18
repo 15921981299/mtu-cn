@@ -18,7 +18,7 @@ import { site } from '../data/site';
       <p>发送零件号或简要零件清单；如有发动机出厂编号或照片，请一并提供。</p>
     </div>
 
-    <form class="rfq-modal__form" id="rfq-modal-form" data-endpoint="/api/rfq/" data-fallback-email={site.email}>
+    <form class="rfq-modal__form" id="rfq-modal-form" data-endpoint="/api/rfq" data-fallback-email={site.email}>
       <div class="rfq-modal__context" id="rfq-modal-context">当前页面询价</div>
       <label>
         <span>您的姓名</span>
@@ -46,7 +46,7 @@ import { site } from '../data/site';
         ></textarea>
       </label>
       <label class="rfq-modal__upload rfq-modal__full">
-        <span>上传照片或零件清单（最大 10 MB）</span>
+        <span>上传照片或零件清单（最大 5 MB）</span>
         <input type="file" name="drawing" accept=".pdf,.xls,.xlsx,.csv,.jpg,.jpeg,.png" />
       </label>
       <input type="hidden" name="source" value="弹窗询价" />
@@ -195,9 +195,9 @@ import { site } from '../data/site';
     populateRfqAttributionFields(form);
     const formData = new FormData(form);
     const attachment = formData.get('drawing');
-    if (attachment instanceof File && attachment.size > 10 * 1024 * 1024) {
+    if (attachment instanceof File && attachment.size > 5 * 1024 * 1024) {
       resultEl.className = 'form-result rfq-modal__result is-visible is-error';
-      resultEl.textContent = '附件超过 10 MB。请上传更小的文件，或改用完整联系表单。';
+      resultEl.textContent = '附件超过 5 MB。请压缩后重试，或改用完整联系表单。';
       submitBtn.disabled = false;
       submitBtn.textContent = '发送询价';
       return;

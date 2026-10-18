@@ -6,10 +6,10 @@ export const productSubpages = [
     productSlug: 'mtu-spare-parts',
     slug: 'mtu-part-number-lookup',
     title: 'MTU 零件号查询与识别支持',
-    seoTitle: 'MTU 零件号查询 | 柴油零件源',
+    seoTitle: 'MTU 零件号查询 | 国晁动力',
     h1Title: 'MTU 零件号查询',
     summary:
-      '请提供您的 MTU 零件号、发动机型号、出厂编号或铭牌照片。柴油零件源 会在报价前帮助核验正确的原厂件或 OEM 制造商更换件。',
+      '请提供您的 MTU 零件号、发动机型号、出厂编号或铭牌照片。国晁动力会在报价前帮助核验正确的原厂件或 OEM 制造商更换件。',
     content: {
       partOne: `<h2>如何识别 MTU 零件</h2><p>最快的 MTU 零件报价方式是提供准确的零件号与发动机出厂编号。如零件号缺失或已被替代，请发送旧件、铭牌、安装位置的照片，以及任何铸造或标签标记。</p><h3>从现有信息入手</h3><ul><li>准确零件号：检索 <a href="/part-products/">MTU 发动机零件在线目录</a></li><li>发动机系列：浏览 <a href="/part-products/catalog/mtu-2000-series/">MTU 2000</a>、<a href="/part-products/catalog/mtu-4000-series/">MTU 4000</a> 或 <a href="/part-products/catalog/mtu-396-series/">MTU 396 零件</a></li><li>部件类型：浏览 <a href="/part-products/catalog/mtu-injectors/">喷油器</a>、<a href="/part-products/catalog/mtu-fuel-pumps/">燃油泵</a>、<a href="/part-products/catalog/mtu-filters/">滤清器</a> 或 <a href="/part-products/catalog/mtu-turbocharger-parts/">涡轮增压器零件</a></li><li>标记不清：发送发动机铭牌与旧件照片以便识别</li><li>按功率档次：<a href="/products/mtu-spare-parts/mtu-genset-parts-by-power/">MTU 发电机组零件（按功率）</a></li><li>大修范围：<a href="/products/mtu-spare-parts/mtu-overhaul-kits/">MTU 大修套件</a></li><li>新型构型：<a href="/products/mtu-spare-parts/mtu-1600-series-parts/">1600 系列与 F 构型型号</a></li><li>老旧与燃气发动机：<a href="/products/mtu-spare-parts/mtu-legacy-gas-engine-parts/">老旧与燃气覆盖范围</a></li></ul><h3>有助于询价的信息</h3><ul><li>零件号与数量</li><li>发动机系列、型号与出厂编号</li><li>铭牌照片与旧件照片</li><li>船舶、发电、轨道交通或工业应用</li><li>目的国与要求的交货日期</li></ul>`,
       partTwo: `<h2>更换与替代号核查</h2><p>许多 MTU 备件存在更新或更换后的零件号。我们会在报价前比对原始零件号、更换历史、发动机应用与安装细节，避免买家在紧急维护中收到错误的备件。</p><h3>使用现有目录或零件清单</h3><p>您可以发送 Excel 清单、PDF 保养清单、目录截图或标注图纸。请尽可能提供发动机出厂编号；仅凭 PDF 参考无法确认跨生产批次的适配性。</p>${cta('核验 MTU 零件号')}`,
@@ -32,7 +32,7 @@ export const productSubpages = [
     productSlug: 'mtu-2000-series-parts',
     slug: '16v-2000-engine-parts',
     title: 'MTU 16V 2000 发动机零件',
-    seoTitle: 'MTU 16V 2000 发动机零件供应商 | 柴油零件源',
+    seoTitle: 'MTU 16V 2000 发动机零件供应商 | 国晁动力',
     h1Title: 'MTU 16V 2000 发动机零件',
     summary:
       '面向船用推进、发电、轨道交通与工业应用的 MTU 16V 2000 发动机零件，提供出厂编号核验与全球交付。',
@@ -58,7 +58,7 @@ export const productSubpages = [
     productSlug: 'mtu-2000-series-parts',
     slug: 'marine-generator-service-parts',
     title: 'MTU 2000 系列船用与发电保养零件',
-    seoTitle: 'MTU 2000 系列船用发电零件 | 柴油零件源',
+    seoTitle: 'MTU 2000 系列船用发电零件 | 国晁动力',
     h1Title: 'MTU 2000 船用与发电零件',
     summary:
       '面向 MTU 2000 系列船用推进、辅助发电与工业动力应用的保养与大修零件。',
@@ -71,12 +71,12 @@ export const productSubpages = [
     productSlug: 'mtu-4000-series-parts',
     slug: 'overhaul-parts',
     title: 'MTU 4000 系列大修零件',
-    seoTitle: 'MTU 4000 系列大修零件 | 柴油零件源',
+    seoTitle: 'MTU 4000 系列大修零件 | 国晁动力',
     h1Title: 'MTU 4000 系列大修零件',
     summary:
       '面向船用、发电、轨道交通与工业领域 MTU 4000 系列发动机的经核验 OEM、OEM 替代件、再制造件与更换件大修路线。',
     content: {
-      partOne: `<h2>MTU 4000 大修零件</h2><p>MTU 4000 系列发动机用于可靠性与开机率要求高的场合。柴油零件源 为维护团队提供缸盖作业、活塞与缸套更换、配气机构保养、轴承、垫片、密封件、冷却与燃油系统所需零件。</p><h3>常用大修类别</h3><ul><li>活塞、缸套、活塞环、轴承与垫片</li><li>气门、导管、座圈与缸盖部件</li><li>燃油泵、喷油器、传感器与控制件</li><li>冷却、润滑、增压与过滤部件</li></ul>`,
+      partOne: `<h2>MTU 4000 大修零件</h2><p>MTU 4000 系列发动机用于可靠性与开机率要求高的场合。国晁动力为维护团队提供缸盖作业、活塞与缸套更换、配气机构保养、轴承、垫片、密封件、冷却与燃油系统所需零件。</p><h3>常用大修类别</h3><ul><li>活塞、缸套、活塞环、轴承与垫片</li><li>气门、导管、座圈与缸盖部件</li><li>燃油泵、喷油器、传感器与控制件</li><li>冷却、润滑、增压与过滤部件</li></ul>`,
       partTwo: `<h2>编制合并零件清单</h2><p>请以 Excel 或邮件形式发送计划大修清单。我们可以逐行核对零件号供货情况，并协助国际发运的合并出口包装。</p><h3>上部作业或大型大修</h3><p>上部大修聚焦缸盖、气门、喷油器与涡轮增压器，零件清单相对可预测。大型大修则进一步涉及活塞、缸套、轴承与曲轴作业，最终清单取决于发动机解体后取得的测量值。对于大型作业，我们建议分两阶段报价：对必然更换的项目（如垫片套件、密封件与活塞环）报实价，对有尺寸分级的零件待检查结果确认后再报价。</p><h3>有助于加快报价的信息</h3><ul><li>完整的发动机型号（如 16V 4000 M93L 或 20V 4000 G63）与出厂编号</li><li>大修范围与大修时的运行小时数</li><li>缸套、活塞与轴承的尺寸代码或测量记录</li><li>零件抵达修理厂的目标日期</li></ul><p>请在 <a href="/part-products/catalog/mtu-4000-pistons-and-liners-parts/">4000 系列活塞与缸套</a>、<a href="/part-products/catalog/mtu-4000-bearings-parts/">轴承</a>、<a href="/part-products/catalog/mtu-4000-gaskets-and-seals-parts/">垫片与密封件</a> 与 <a href="/part-products/catalog/mtu-4000-valve-train-parts/">配气机构</a> 目录中查阅零件号。</p>${cta('询价 MTU 4000 大修零件')}`,
     },
   },
@@ -84,7 +84,7 @@ export const productSubpages = [
     productSlug: 'mtu-4000-series-parts',
     slug: '12v-4000-engine-parts',
     title: 'MTU 12V 4000 发动机零件',
-    seoTitle: 'MTU 12V 4000 发动机零件供应商 | 柴油零件源',
+    seoTitle: 'MTU 12V 4000 发动机零件供应商 | 国晁动力',
     h1Title: 'MTU 12V 4000 发动机零件',
     summary:
       '面向船用、发电、轨道交通与工业领域的 MTU 12V 4000 发动机零件，涵盖燃油、冷却、过滤、传感器与大修部件。',
@@ -97,7 +97,7 @@ export const productSubpages = [
     productSlug: 'mtu-4000-series-parts',
     slug: '16v-4000-engine-parts',
     title: 'MTU 16V 4000 发动机零件',
-    seoTitle: 'MTU 16V 4000 发动机零件供应商 | 柴油零件源',
+    seoTitle: 'MTU 16V 4000 发动机零件供应商 | 国晁动力',
     h1Title: 'MTU 16V 4000 发动机零件',
     summary:
       '面向船用推进、发电、机车与重型工业应用的 MTU 16V 4000 发动机零件，经型号与出厂编号核验。',
@@ -110,7 +110,7 @@ export const productSubpages = [
     productSlug: 'cummins-parts',
     slug: 'service-kits-and-overhaul-parts',
     title: 'Cummins 保养套件与大修零件',
-    seoTitle: 'Cummins 保养套件与大修零件 | 柴油零件源',
+    seoTitle: 'Cummins 保养套件与大修零件 | 国晁动力',
     h1Title: 'Cummins 保养套件与大修零件',
     summary:
       '面向发电、船用与工业柴油发动机的 Cummins 保养件、维护套件与大修部件。',
@@ -123,12 +123,12 @@ export const productSubpages = [
     productSlug: 'deutz-parts',
     slug: 'industrial-equipment-parts',
     title: 'DEUTZ 工业设备零件',
-    seoTitle: 'DEUTZ 工业设备零件 | 柴油零件源',
+    seoTitle: 'DEUTZ 工业设备零件 | 国晁动力',
     h1Title: 'DEUTZ 工业设备零件',
     summary:
       '面向工程机械、泵、压缩机、动力装置与工业设备维护的 DEUTZ 发动机零件。',
     content: {
-      partOne: `<h2>面向设备船队的 DEUTZ 零件</h2><p>DEUTZ 发动机广泛用于工业设备、工程机械、压缩机、泵与动力装置。柴油零件源 帮助买家采购维护与维修零件，并在发货前进行兼容性核查。</p><h3>典型类别</h3><ul><li>滤清器、皮带、密封件、垫片与保养套件</li><li>燃油、冷却、润滑与电气部件</li><li>大修零件与更换总成</li><li>计划保养清单与紧急故障维修用零件</li></ul>`,
+      partOne: `<h2>面向设备船队的 DEUTZ 零件</h2><p>DEUTZ 发动机广泛用于工业设备、工程机械、压缩机、泵与动力装置。国晁动力帮助买家采购维护与维修零件，并在发货前进行兼容性核查。</p><h3>典型类别</h3><ul><li>滤清器、皮带、密封件、垫片与保养套件</li><li>燃油、冷却、润滑与电气部件</li><li>大修零件与更换总成</li><li>计划保养清单与紧急故障维修用零件</li></ul>`,
       partTwo: `<h2>请提供的信息</h2><p>请提供 DEUTZ 发动机型号、出厂编号、旧件零件号、数量与目的地。磨损或无标记零件附照片更有帮助。</p><h3>风冷与液冷发动机</h3><p>DEUTZ 既生产风冷发动机（如 FL912 与 BFL913 系列），也生产液冷发动机（如 BF4M1013 与 TCD 2013 系列）。风冷发动机依靠冷却风扇、风扇皮带与清洁的缸片散热，因此风扇驱动、皮带与机油冷却器部件是常见更换件。液冷发动机则增加水泵、恒温器与散热器软管。了解所属类型可立即缩小零件清单范围。</p><h3>发动机编号与设备制造商</h3><p>DEUTZ 发动机编号压印在曲轴箱上，并与型号一起打印在铭牌上。由于 DEUTZ 发动机由众多设备制造商配套，散热器、进气管与排气部件等零件往往随机器而异，而非随发动机。请同时提供机器品牌与型号以及发动机数据，以便我们区分哪些零件来自 DEUTZ 零件清单、哪些随设备制造商。</p><h3>常见故障件</h3><ul><li>燃油喷射泵、喷油器与输油泵</li><li>缸盖垫片与气门室盖垫片</li><li>机油冷却器及其密封件</li><li>起动机、发电机与断油电磁阀</li></ul><p>更多详情请参阅 <a href="/products/deutz-parts/">DEUTZ 零件</a> 总览与 <a href="/capabilities/deutz-engine-parts/">DEUTZ 发动机零件采购</a>。</p>${cta('询价 DEUTZ 零件')}`,
     },
   },

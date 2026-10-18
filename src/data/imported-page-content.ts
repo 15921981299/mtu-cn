@@ -16,9 +16,9 @@ const cta = (label: string, source: string) =>
 export const importedPageContent: Record<string, ImportedPageContent> = {
   stock: {
     title: 'MTU 零件库存与供货情况',
-    seoTitle: 'MTU 零件库存与供货情况查询 | 柴油零件源',
+    seoTitle: 'MTU 零件库存与供货情况查询 | 国晁动力',
     summary:
-      '柴油零件源如何核查 MTU 零件供货情况：我们报价单上“有现货”的含义、哪些件流转最快，以及寻源件的交货期如何表述。',
+      '国晁动力如何核查 MTU 零件供货情况：我们报价单上“有现货”的含义、哪些件流转最快，以及寻源件的交货期如何表述。',
     body: `
       <h2>我们报价单上“有现货”的含义</h2>
       <p>每一报价行都带供货说明。<strong>现货</strong>指零件在上海仓库货架上，订单确认后即可包装。<strong>伙伴库存</strong>指该件由我们长期采购的供应伙伴持有，须先运至我方仓库。<strong>按单寻源</strong>指我们需要定位该零件，因此报价给出的是预计交货期而非发货日期。我们只在报价时核查后才将某行标为现货，报价单会注明每一行的预计发货时间。</p>
@@ -38,7 +38,7 @@ export const importedPageContent: Record<string, ImportedPageContent> = {
   },
   'support-services': {
     title: '零件采购支持服务',
-    seoTitle: '发动机零件采购支持服务 | 柴油零件源',
+    seoTitle: '发动机零件采购支持服务 | 国晁动力',
     summary:
       '发动机零件订单背后的非产品工作：从照片识别零件、理顺零件清单、发运前拍照、出口文件，以及按您的唛头指示包装。',
     body: `
@@ -86,7 +86,7 @@ export const importedPageContent: Record<string, ImportedPageContent> = {
   },
   'mtu-oils': {
     title: 'MTU 发动机机油',
-    seoTitle: 'MTU 发动机机油认证与供应 | 柴油零件源',
+    seoTitle: 'MTU 发动机机油认证与供应 | 国晁动力',
     summary:
       '为 MTU 柴油发动机选择机油：MTU 机油类别、油液规格为何对保修与保养间隔要紧，以及我们如何在零件订单中随供认证机油。',
     body: `
@@ -107,7 +107,7 @@ export const importedPageContent: Record<string, ImportedPageContent> = {
   },
   'mtu-coolants': {
     title: 'MTU 发动机冷却液',
-    seoTitle: 'MTU 发动机冷却液认证与供应 | 柴油零件源',
+    seoTitle: 'MTU 发动机冷却液认证与供应 | 国晁动力',
     summary:
       'MTU 柴油发动机冷却液：经认证的防冻液与缓蚀剂类型、为何混用产品会出问题，以及我们如何在冷却系统零件之外随供冷却液。',
     body: `
@@ -128,7 +128,7 @@ export const importedPageContent: Record<string, ImportedPageContent> = {
   },
   'rail-drive-solutions': {
     title: 'MTU 轨交发动机零件',
-    seoTitle: '面向机车与轨道车的 MTU 轨交发动机零件 | 柴油零件源',
+    seoTitle: '面向机车与轨道车的 MTU 轨交发动机零件 | 国晁动力',
     summary:
       '面向机车、轨道车与轨行机械中 MTU 轨交发动机的零件供应，对 2000、4000 系列及老式轨交装机作型号代码核查。',
     body: `
@@ -152,7 +152,7 @@ export const importedPageContent: Record<string, ImportedPageContent> = {
   },
   'series-4000-r03': {
     title: 'MTU 4000 系列 R03 轨交发动机零件',
-    seoTitle: 'MTU 4000 系列 R03 轨交发动机零件 | 柴油零件源',
+    seoTitle: 'MTU 4000 系列 R03 轨交发动机零件 | 国晁动力',
     summary:
       '面向货运与客运机车中 MTU 4000 系列 R03 代轨交发动机的零件，报价前经出厂编号核查。',
     body: `
@@ -176,7 +176,7 @@ export const importedPageContent: Record<string, ImportedPageContent> = {
   },
   'series-4000-r04': {
     title: 'MTU 4000 系列 R04 轨交发动机零件',
-    seoTitle: 'MTU 4000 系列 R04 轨交发动机零件 | 柴油零件源',
+    seoTitle: 'MTU 4000 系列 R04 轨交发动机零件 | 国晁动力',
     summary:
       '面向按更严欧盟排放阶段制造的 MTU 4000 系列 R04 代轨交发动机的零件，含燃油系统、传感器与排气后处理相关件。',
     body: `
@@ -199,7 +199,7 @@ export const importedPageContent: Record<string, ImportedPageContent> = {
   },
   'part/mtu-183-parts': {
     title: 'MTU 183 系列零件',
-    seoTitle: 'MTU 183 系列发动机零件 | 柴油零件源',
+    seoTitle: 'MTU 183 系列发动机零件 | 国晁动力',
     summary:
       'MTU 183 系列发动机备件，覆盖工作船、游艇与发电机组，含冷却泵、垫片、传感器与燃油喷射件。',
     body: `
@@ -222,7 +222,7 @@ export const importedPageContent: Record<string, ImportedPageContent> = {
   },
   'part/mtu-538-parts': {
     title: 'MTU 538 系列零件',
-    seoTitle: 'MTU 538 系列发动机零件 | 柴油零件源',
+    seoTitle: 'MTU 538 系列发动机零件 | 国晁动力',
     summary:
       'MTU 538 系列高速船用发动机备件，覆盖快速海军与巡逻艇，支持旧参考号追溯与照片识别零件。',
     body: `
@@ -246,7 +246,7 @@ export const importedPageContent: Record<string, ImportedPageContent> = {
   },
   'part/mtu-1800-parts': {
     title: 'MTU 1800 系列零件',
-    seoTitle: 'MTU 1800 系列发动机零件 | 柴油零件源',
+    seoTitle: 'MTU 1800 系列发动机零件 | 国晁动力',
     summary:
       'MTU 1800 系列六缸发动机（轨交与工业应用）的零件采购，按发动机出厂编号按单报价。',
     body: `
@@ -269,7 +269,7 @@ export const importedPageContent: Record<string, ImportedPageContent> = {
   },
   'part/mtu-specialized-tools': {
     title: 'MTU 专用工具',
-    seoTitle: '发动机保养用 MTU 专用工具 | 柴油零件源',
+    seoTitle: '发动机保养用 MTU 专用工具 | 国晁动力',
     summary:
       '发动机保养与大修用 MTU 专用工具：盘车装置、拉马、安装与拆卸装置、量具及工具包，按工具号寻源。',
     body: `

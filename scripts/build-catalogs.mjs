@@ -46,8 +46,8 @@ const viteEntry = require.resolve('vite', {
 const { createServer } = await import(pathToFileURL(viteEntry).href);
 
 const OUT_DIR = resolve('public/downloads');
-const SITE = 'https://dieselpartsource.com';
-const PRODUCT_NAME = 'Diesel Part Source';
+const SITE = 'https://mtupeijian.com';
+const PRODUCT_NAME = 'Guochao Power';
 
 /**
  * Catalogs to produce. `series` empty = the complete catalog.
@@ -238,7 +238,7 @@ function buildPdf({ title, subject, author, pages }) {
   setObject(
     5,
     `<< /Title ${pdfString(title)} /Author ${pdfString(author)} /Subject ${pdfString(subject)} ` +
-      `/Creator ${pdfString('Diesel Part Source catalog generator')} /Producer ${pdfString('Diesel Part Source')} ` +
+      `/Creator ${pdfString(`${PRODUCT_NAME} catalog generator`)} /Producer ${pdfString(PRODUCT_NAME)} ` +
       `/CreationDate (${stamp}) /ModDate (${stamp}) >>`
   );
 
@@ -305,7 +305,7 @@ function buildPages(catalog, rows, generatedOn) {
 
   const drawFooter = (page, index, total) => {
     page.rule(MARGIN_X, MARGIN_BOTTOM + 12, CONTENT_W, { color: [0.85, 0.87, 0.9] });
-    page.text(MARGIN_X, MARGIN_BOTTOM, `${PRODUCT_NAME}  ·  dieselpartsource.com`, {
+    page.text(MARGIN_X, MARGIN_BOTTOM, `${PRODUCT_NAME}  ·  mtupeijian.com`, {
       size: 7.5,
       color: [0.42, 0.47, 0.53],
     });
@@ -324,7 +324,7 @@ function buildPages(catalog, rows, generatedOn) {
   // ---- page 1 with the title block ----
   let page = new PdfPage();
   page.fill(MARGIN_X, fromTop(MARGIN_TOP) - 4, CONTENT_W, 2, [0.08, 0.43, 0.96]);
-  page.text(MARGIN_X, fromTop(MARGIN_TOP) + 10, `${PRODUCT_NAME}  ·  dieselpartsource.com`, {
+  page.text(MARGIN_X, fromTop(MARGIN_TOP) + 10, `${PRODUCT_NAME}  ·  mtupeijian.com`, {
     size: 10,
     bold: true,
     color: [0.08, 0.43, 0.96],
