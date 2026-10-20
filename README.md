@@ -19,6 +19,39 @@ npm run build
 npm run preview
 ```
 
+## 百度收录（sitemap 板块拆分 + 主动推送）
+
+构建期 `@astrojs/sitemap` 按 `src/data/sitemap-chunks.ts` 的规则把 sitemap
+拆成 6 个板块文件，索引 `dist/sitemap-index.xml` 自动汇总（`public/robots.txt`
+已指向它）：
+
+| 板块 | 内容 | 约 |
+|------|------|----|
+| `parts` | `/part-products/` 零件号详情页 | 812 |
+| `catalog` | `/part-products/catalog/` 目录页 | 68 |
+| `products` | `/products/` 产品线页 | 34 |
+| `models` | `/engine-models/` + `/series/` 机型页 | 23 |
+| `content` | guides / applications / capabilities / industries / news | 34 |
+| `pages` | 首页、关于、联系、条款、imported pages 等 | 28 |
+
+每块在百度站长平台是独立一行提交记录，收录进度按板块可查。新增顶层
+目录时记得回 `sitemap-chunks.ts` 补规则（漏归类会安静落入 `pages`）。
+
+主动推送（备案并拿到百度 token 后使用）：
+
+```bash
+# 百度搜索资源平台 → 数据提交 → 普通收录 → API 提交，生成 token 后：
+export BAIDU_PUSH_TOKEN=xxxx        # Windows: setx BAIDU_PUSH_TOKEN xxxx
+
+npm run push:baidu:dry              # 先看会推什么（不发请求）
+npm run push:baidu                  # 增量推送（只推新 URL，历史在 scripts/data/）
+node scripts/baidu-push.mjs --chunk parts   # 只推零件页板块
+```
+
+`site` 参数默认从 sitemap 推导；若站长平台验证的是 www 子域或不同协议，
+用 `--site` 显式指定（必须完全一致，否则报 `site error`）。回归测试：
+`npm run test:baidu-push`（离线 mock，37 项断言）。
+
 ## Site structure
 
 | Path | Description |

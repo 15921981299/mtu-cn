@@ -18,8 +18,10 @@ docs/*
 
 # SEO / build scratch (scripts, raw scan output, temp build copies)
 tmp/
-dist.prev/
+dist.prev*/
 outputs/
+# 百度主动推送的本地推送历史（机器相关，不入库）
+scripts/data/
 # Local analysis reports (competitor/SEO reviews — working docs, not site source)
 reports/
 
