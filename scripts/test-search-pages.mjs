@@ -14,7 +14,7 @@ const targets = [
 test('existing search landing pages remain indexable with self canonicals and RFQ context', () => {
   for (const slug of targets) {
     const html = page(slug);
-    assert.ok(html.includes(`rel="canonical" href="https://dieselpartsource.com/part-products/${slug}/"`), slug);
+    assert.ok(html.includes(`rel="canonical" href="https://mtupeijian.com/part-products/${slug}/"`), slug);
     assert.doesNotMatch(html, /<meta[^>]*name="robots"[^>]*noindex/, slug);
     assert.ok(html.includes(`data-rfq-source="part-${slug}"`), slug);
     assert.match(html, /Technical Data Status/, slug);

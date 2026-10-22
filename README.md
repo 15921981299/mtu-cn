@@ -1,6 +1,6 @@
 # Diesel Part Source
 
-Diesel engine parts supplier website built with [Astro](https://astro.build). Live site: [dieselpartsource.com](https://dieselpartsource.com).
+Diesel engine parts supplier website built with [Astro](https://astro.build). Live site: [mtupeijian.com](https://mtupeijian.com).
 
 ## Setup
 

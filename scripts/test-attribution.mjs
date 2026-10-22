@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import { classifyEntry, trackPageAttribution, trackAcceptedInquiry } from '../src/scripts/attribution.ts';
 
-const landing = 'https://dieselpartsource.com/part-products/0031845201-oil-filter-spin-on/';
+const landing = 'https://mtupeijian.com/part-products/0031845201-oil-filter-spin-on/';
 
 test('distinguishes search, paid, campaign, and unavailable entry sources', () => {
   for (const [referrer, expected] of [['https://www.bing.com/search?q=0031845201', 'bing'], ['https://www.google.co.uk/search?q=0031845201', 'google']]) {
@@ -22,7 +22,7 @@ test('keeps Bing and the original part landing page through the contact page', (
   globalThis.window = { location: new URL(landing) };
   globalThis.document = { referrer: 'https://www.bing.com/search?q=0031845201' };
   const first = trackPageAttribution();
-  window.location = new URL('https://dieselpartsource.com/contact/?source=part-0031845201');
+  window.location = new URL('https://mtupeijian.com/contact/?source=part-0031845201');
   document.referrer = landing;
   const second = trackPageAttribution();
   assert.equal(second.firstTouchPage, first.firstTouchPage);
