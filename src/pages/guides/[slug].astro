@@ -7,6 +7,7 @@ import ProcurementBrief from '../../components/ProcurementBrief.astro';
 import QuotationExamples from '../../components/QuotationExamples.astro';
 import { modelProcurement } from '../../data/procurement-content';
 import { partsGuides } from '../../data/guides';
+import { foundationGuides, serviceArticles } from '../../data/service-content';
 import { mtuParts } from '../../data/mtu-parts';
 import { zhCategoryName, zhPartName } from '../../data/part-names-zh';
 import { articleSchema, breadcrumbSchema, faqSchema, site } from '../../data/site';
@@ -34,6 +35,18 @@ const MAX_ROWS_PER_CATEGORY = 12;
 const guideSeries = guide.slug === 'mtu-2000-overhaul-parts' ? '2000' : guide.slug === 'mtu-4000-overhaul-parts' ? '4000' : undefined;
 // 作者身份：site.author.name 填了真实人才启用 Person 署名，否则保持 Organization（诚实兜底）
 const hasPersonAuthor = Boolean(site.author.name);
+const isFoundation = foundationGuides.some((item) => item.slug === guide.slug);
+const clusterIds: Record<string, number[]> = {
+  'mtu-engine-smoke-diagnosis-parts': [5, 7, 11],
+  'mtu-low-oil-pressure-parts': [7, 8, 24],
+  'mtu-high-coolant-temperature-parts': [6, 9, 10],
+  'mtu-maintenance-interval-parts-list': [11, 13, 19],
+  'mtu-4000-series-model-identification': [4, 14, 21],
+  'mtu-filter-cross-reference': [2, 12, 23],
+  'mtu-part-number-structure': [15, 16, 21],
+  'mtu-overhaul-interval': [8, 18, 24],
+};
+const clusterArticles = serviceArticles.filter((item) => clusterIds[guide.slug]?.includes(item.id));
 ---
 
 <BaseLayout
@@ -162,6 +175,12 @@ const hasPersonAuthor = Boolean(site.author.name);
         </details>
       ))}
     </section>
+
+    {isFoundation && <section class="resource-page-section">
+      <h2>继续看相关故障与采购问题</h2>
+      <ul class="resource-olist">{clusterArticles.map((item) => <li><a href={`/insights/${item.slug}/`}>{item.title}</a></li>)}</ul>
+      <p><a href="/insights/">全部 24 篇故障与采购文章 →</a></p>
+    </section>}
 
     <DetailRfqStrip
       title="发送您的发动机信息"

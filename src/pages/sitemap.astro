@@ -7,6 +7,7 @@ import { productSubpages } from '../data/product-subpages';
 import { industries } from '../data/industries';
 import { applications } from '../data/applications';
 import { mtuCatalogHubs } from '../data/mtu-parts';
+import { serviceArticles } from '../data/service-content';
 import { isSubpageNoindex } from '../data/subpage-quality';
 import { breadcrumbSchema, site } from '../data/site';
 import '../styles/resource-page.css';
@@ -46,6 +47,7 @@ const toolPages = [
   { href: '/products/deutz-parts/industrial-equipment-parts/', label: 'DEUTZ 工业设备零件' },
   { href: '/llm-instructions/', label: 'LLM / AI 说明' },
   { href: '/guides/', label: '发动机零件指南' },
+  { href: '/insights/', label: '故障排查与备件采购' },
   { href: '/guides/how-to-read-mtu-parts-diagram/', label: '如何阅读 MTU 零件图' },
   { href: '/catalog/', label: 'MTU 零件目录 PDF 下载' },
   { href: '/cross-reference/', label: '零件号交叉引用' },
@@ -88,6 +90,7 @@ const sections = [
   { title: '行业', items: industryLinks },
   { title: '应用', items: applicationLinks },
   { title: '资源', items: toolPages },
+  { title: '故障与采购文章', items: serviceArticles.map((article) => ({ href: `/insights/${article.slug}/`, label: article.title })) },
   { title: '条款与政策', items: termsPages },
 ];
 

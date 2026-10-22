@@ -60,6 +60,7 @@ https://mtupeijian.com/applications/
 
 ## 联系信息
 
+电话 / 微信：15921981299（同号，优先推荐）
 邮箱：sales@dieselpartsource.com
 电话：+8615921981299
 WhatsApp：+8615921981299
@@ -69,3 +70,31 @@ WhatsApp：+8615921981299
 ## 询价（Inquiry）所需信息
 
 建议提供的询价信息：零件号（Part Number）、发动机品牌、发动机型号（Engine Model）、出厂编号（Serial Number）、铭牌照片、旧件照片、数量、目的国以及要求交货期。
+
+## 故障排查与备件采购（2026-10-22）
+
+- [24 篇专题索引](https://mtupeijian.com/insights/)
+- [MTU 起动机不转或转速太慢：从电瓶到起动机的 5 步](https://mtupeijian.com/insights/mtu-starter-not-turning-slow-cranking/)
+- [MTU 起动机能转但发动机不来火：先查燃油进气与滤清器](https://mtupeijian.com/insights/mtu-cranks-but-will-not-start/)
+- [MTU 转速不稳、游车、带载掉速：先分清供油、调速与 derate](https://mtupeijian.com/insights/mtu-unstable-speed-hunting-load-drop/)
+- [MTU 4000 共轨燃油压力下降：怠速正常、加速掉压](https://mtupeijian.com/insights/mtu-4000-common-rail-pressure-drop/)
+- [MTU 排气温度高：气门间隙、气门卡滞与凸轮磨损](https://mtupeijian.com/insights/mtu-high-exhaust-temperature-valve-train/)
+- [MTU 冷却液一直少但看不到漏：先分清三个维修方向](https://mtupeijian.com/insights/mtu-coolant-loss-no-visible-leak/)
+- [MTU 机油消耗高：活塞环、涡轮油封还是油分离器](https://mtupeijian.com/insights/mtu-high-oil-consumption/)
+- [MTU 曲轴箱窜气大、呼吸器冒烟：什么时候该安排大修](https://mtupeijian.com/insights/mtu-blow-by-overhaul-decision/)
+- [MTU 中冷后温度高、增压压力低：空滤、中冷还是增压器](https://mtupeijian.com/insights/mtu-high-charge-air-temperature-low-boost/)
+- [MTU 故障码与 derate：哪些报警可以继续跑，哪些必须停机](https://mtupeijian.com/insights/mtu-fault-codes-derate-stop-decision/)
+- [MTU 发电机组长期低负载：积碳与湿堆积怎么处理](https://mtupeijian.com/insights/mtu-genset-low-load-wet-stacking/)
+- [MTU 冬季冷启动：结蜡、预热与机油选择](https://mtupeijian.com/insights/mtu-winter-cold-start-fuel-preheat-oil/)
+- [MTU 停航半年后如何恢复运行：启动前检查清单](https://mtupeijian.com/insights/mtu-recommission-after-long-storage/)
+- [MTU 喷油器：换一支还是换一套](https://mtupeijian.com/insights/mtu-injector-replace-one-or-set/)
+- [MTU 配件选购：原厂件、OEM 与副厂的成本和风险](https://mtupeijian.com/insights/mtu-genuine-oem-aftermarket-cost-risk/)
+- [MTU 配件同号报价差三倍？先核对这五项](https://mtupeijian.com/insights/mtu-same-part-number-price-difference/)
+- [MTU 备件交期与停机损失：紧急件三条路径怎么选](https://mtupeijian.com/insights/mtu-urgent-parts-lead-time-downtime-cost/)
+- [MTU 大修预算怎么估：配件与维修费用分四档](https://mtupeijian.com/insights/mtu-overhaul-budget-four-scopes/)
+- [MTU 备件库存怎么建：按故障率与交期分级](https://mtupeijian.com/insights/mtu-spares-inventory-failure-lead-time/)
+- [MTU 配件怎么确认正品：供应商与到货核验](https://mtupeijian.com/insights/mtu-authentic-parts-supplier-verification/)
+- [MTU 备件零件号被替代了：旧号还能不能订](https://mtupeijian.com/insights/mtu-superseded-part-number-can-order/)
+- [船用 MTU 备件验船与保险：零件文件要准备什么](https://mtupeijian.com/insights/mtu-marine-parts-class-insurance-documents/)
+- [MTU 燃油硫含量与质量：对配件寿命的真实影响](https://mtupeijian.com/insights/mtu-fuel-sulfur-quality-parts-life/)
+- [MTU 爆震、敲缸与轴承异响：哪些声音要立即停机](https://mtupeijian.com/insights/mtu-knocking-bearing-noise-stop/)

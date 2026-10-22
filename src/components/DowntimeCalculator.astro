@@ -1,0 +1,136 @@
+<div class="downtime-calculator" data-downtime-calculator>
+  <h3>用自己的数字比较物流与停机成本</h3>
+  <p>
+    默认值来自上表的纯演算。仅在件价与安装等共同费用相同时，比较“物流费＋天数×每日净损失”。输入不会上传。
+  </p>
+  <label
+    >每日净停机损失（元）<input
+      data-daily-loss
+      type="number"
+      min="0"
+      step="100"
+      value="20000"
+    /></label
+  >
+  <div
+    class="table-scroll"
+    role="region"
+    aria-label="停机成本演算输入，可横向滚动"
+    tabindex="0"
+  >
+    <table>
+      <thead
+        ><tr
+          ><th scope="col">方案</th><th scope="col">预计天数</th><th scope="col"
+            >物流费用（元）</th
+          ><th scope="col">物流＋停机成本</th></tr
+        ></thead
+      >
+      <tbody>
+        {
+          [
+            { name: "本地库存调拨", days: 3, freight: 6000, total: "66,000" },
+            {
+              name: "异地备货后空运",
+              days: 7,
+              freight: 12000,
+              total: "152,000",
+            },
+            {
+              name: "计划备货后海运",
+              days: 28,
+              freight: 3000,
+              total: "563,000",
+            },
+          ].map((route, i) => (
+            <tr data-cost-route>
+              <th scope="row">{route.name}</th>
+              <td>
+                <input
+                  data-route-days
+                  aria-label={`${route.name}预计天数`}
+                  type="number"
+                  min="0"
+                  max="3650"
+                  step="0.5"
+                  value={route.days}
+                />
+              </td>
+              <td>
+                <input
+                  data-route-freight
+                  aria-label={`${route.name}物流费用`}
+                  type="number"
+                  min="0"
+                  step="100"
+                  value={route.freight}
+                />
+              </td>
+              <td>
+                <output data-route-total id={`route-total-${i}`}>
+                  {route.total} 元
+                </output>
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+  <p data-cost-result role="status" aria-live="polite">
+    当前演算中，本地库存调拨的物流与停机成本最低。
+  </p>
+  <noscript
+    >启用 JavaScript 后可修改输入；当前显示的是文中默认演算结果。</noscript
+  >
+</div>
+
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>(
+    "[data-downtime-calculator]",
+  )) {
+    const update = () => {
+      const daily = root.querySelector<HTMLInputElement>("[data-daily-loss]");
+      const result = root.querySelector<HTMLElement>("[data-cost-result]");
+      const routes = [
+        ...root.querySelectorAll<HTMLElement>("[data-cost-route]"),
+      ];
+      let valid = Boolean(daily?.validity.valid && daily.value !== "");
+      const costs = routes.map((row) => {
+        const days = row.querySelector<HTMLInputElement>("[data-route-days]")!;
+        const freight = row.querySelector<HTMLInputElement>(
+          "[data-route-freight]",
+        )!;
+        const output =
+          row.querySelector<HTMLOutputElement>("[data-route-total]")!;
+        const rowValid =
+          days.value !== "" &&
+          freight.value !== "" &&
+          days.validity.valid &&
+          freight.validity.valid;
+        valid = valid && rowValid;
+        const total =
+          Number(daily?.value) * Number(days.value) + Number(freight.value);
+        output.value =
+          rowValid &&
+          daily?.validity.valid &&
+          daily.value !== "" &&
+          Number.isFinite(total)
+            ? `${total.toLocaleString("zh-CN", { maximumFractionDigits: 2 })} 元`
+            : "请检查输入";
+        return total;
+      });
+      if (!result) return;
+      if (!valid || costs.some((value) => !Number.isFinite(value))) {
+        result.textContent = "请填写有效的非负数字，再比较结果。";
+        return;
+      }
+      const minimum = Math.min(...costs);
+      const names = routes
+        .filter((_, i) => costs[i] === minimum)
+        .map((row) => row.querySelector("th")?.textContent);
+      result.textContent = `当前演算中，${names.join("、")}的物流与停机成本最低（${minimum.toLocaleString("zh-CN")} 元）。实际方案仍需核验适配、文件与交付节点。`;
+    };
+    root.addEventListener("input", update);
+  }
+</script>

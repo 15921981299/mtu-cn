@@ -1,0 +1,335 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import BreadcrumbHero from "../../components/BreadcrumbHero.astro";
+import DetailRfqStrip from "../../components/DetailRfqStrip.astro";
+import ServiceDecisionDiagram from "../../components/ServiceDecisionDiagram.astro";
+import DowntimeCalculator from "../../components/DowntimeCalculator.astro";
+import { articleDecisions } from "../../data/service-content/decisions";
+import { articleSchema, breadcrumbSchema, site } from "../../data/site";
+import { zhPartName } from "../../data/part-names-zh";
+import {
+  articleParts,
+  batchLabels,
+  contentDate,
+  contentSources,
+  foundationGuides,
+  serviceArticles,
+  type ServiceArticle,
+} from "../../data/service-content";
+import "../../styles/resource-page.css";
+import "../../styles/service-content.css";
+
+export function getStaticPaths() {
+  return serviceArticles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+const { article } = Astro.props as { article: ServiceArticle };
+const parts = articleParts(article);
+if (parts.length < 3)
+  throw new Error(`Article ${article.id} needs three real indexable parts.`);
+const photo = parts[0];
+const source = contentSources[article.evidence.source];
+if (!source) throw new Error(`Missing source for article ${article.id}`);
+const related = article.related
+  .map((id) => serviceArticles.find((item) => item.id === id)!)
+  .filter(Boolean);
+const url = `${site.url}/insights/${article.slug}/`;
+---
+
+<BaseLayout
+  title={article.title}
+  description={article.description}
+  currentPath="/guides"
+  image={photo.image}
+  ogType="article"
+  articlePublishedTime={contentDate}
+  jsonLd={[
+    breadcrumbSchema([
+      { name: "首页", url: site.url },
+      { name: "故障与采购", url: `${site.url}/insights/` },
+      { name: article.title, url },
+    ]),
+    articleSchema({
+      title: article.title,
+      description: article.description,
+      url,
+      image: `${site.url}${photo.image}`,
+      datePublished: contentDate,
+      dateModified: contentDate,
+      authorName: site.name,
+      authorType: "Organization",
+    }),
+  ]}
+>
+  <BreadcrumbHero
+    title={article.title}
+    trail={[
+      { label: "首页", href: "/" },
+      { label: "故障与采购", href: "/insights/" },
+      { label: article.title },
+    ]}
+    variant="3"
+  />
+  <article
+    class="resource-page service-article"
+    data-content-article={article.slug}
+    data-content-batch={article.batch}
+  >
+    <div class="resource-meta">
+      <span>{batchLabels[article.batch]} · {article.audience}</span>
+      <span
+        >发布／实质更新：<time datetime={contentDate}>{contentDate}</time></span
+      >
+      <span>维护：{site.name}零件内容组</span>
+    </div>
+    <nav class="service-toc" aria-label="文章目录">
+      <a href="#situation">现场情况</a><a href="#classify">分类表</a><a
+        href="#checks">排查与决策</a
+      ><a href="#limits">运行与采购红线</a><a href="#parts">换件与询价</a>
+    </nav>
+    <section id="situation" class="resource-page-section">
+      <h2>先把现场情况说清</h2>
+      <p>{article.intro}</p>
+    </section>
+    <section id="classify" class="resource-page-section">
+      <h2>先分类，再决定下一步</h2>
+      <div
+        class="table-scroll"
+        role="region"
+        aria-label={`${article.table.caption}，可横向滚动`}
+        tabindex="0"
+      >
+        <table data-content-comparison>
+          <caption>{article.table.caption}</caption>
+          <thead
+            ><tr
+              >{
+                article.table.headers.map((header) => (
+                  <th scope="col">{header}</th>
+                ))
+              }</tr
+            ></thead
+          >
+          <tbody
+            >{
+              article.table.rows.map((row) => (
+                <tr>
+                  {row.map((cell, i) =>
+                    i === 0 ? <th scope="row">{cell}</th> : <td>{cell}</td>,
+                  )}
+                </tr>
+              ))
+            }</tbody
+          >
+        </table>
+      </div>
+      <aside class="evidence-note" data-content-evidence>
+        <p><strong>判断依据与适用范围：</strong>{article.evidence.text}</p>
+        <a href={source.url} target="_blank" rel="noopener noreferrer"
+          >核对原始出处：{source.label}</a
+        >
+        <p>
+          查阅日期：{
+            contentDate
+          }。表中成本为相对层级；标注的数字为演算输入，实际价格、库存与日期需逐单确认。
+        </p>
+      </aside>
+    </section>
+    <section id="checks" class="resource-page-section">
+      <h2>
+        {article.batch === "P2" ? "把决策拆成几步" : "按顺序收集检查证据"}
+      </h2>
+      <ServiceDecisionDiagram
+        nodes={article.diagram.nodes}
+        caption={article.diagram.caption}
+        id={`decision-${article.id}`}
+        decision={articleDecisions[article.id]}
+      />
+      <ol class="service-steps">
+        {
+          article.steps.map((step) => (
+            <li>
+              <>
+                <h3>{step.title}</h3>
+                <p>{step.text}</p>
+              </>
+            </li>
+          ))
+        }
+      </ol>
+      {
+        article.batch !== "P2" && ![3, 10, 12, 13].includes(article.id) && (
+          <figure class="system-figure">
+            <div
+              class="diagram-scroll"
+              role="region"
+              aria-label="系统流向图，可横向滚动"
+              tabindex="0"
+            >
+              <img
+                src={`/images/service-diagrams/${article.id === 1 ? "starting" : article.diagram.system}.svg`}
+                alt={
+                  article.id === 1
+                    ? "电起动主电流回路、搭铁返回与起动许可控制支路示意"
+                    : `${article.diagram.system === "fuel" ? "燃油" : article.diagram.system === "cooling" ? "冷却" : article.diagram.system === "boost" ? "增压与排气" : "润滑与通风"}系统概念流向，实际连接以本机图纸为准`
+                }
+                width="960"
+                height={article.id === 1 ? 340 : 410}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <figcaption>
+              系统流向用于识别检查位置；实际支路、部件顺序与设定值以本机文档为准。
+            </figcaption>
+          </figure>
+        )
+      }
+      <aside class="mistake-note">
+        <strong>先别做错这一步：</strong>{article.mistake}
+      </aside>
+      {article.id === 17 && <DowntimeCalculator />}
+    </section>
+    <section id="limits" class="resource-page-section">
+      <h2>运行与采购红线</h2>
+      <div
+        class="table-scroll"
+        role="region"
+        aria-label="处置红线，可横向滚动"
+        tabindex="0"
+      >
+        <table data-content-redlines>
+          <thead
+            ><tr
+              ><th scope="col">遇到什么情况</th><th scope="col">下一步</th></tr
+            ></thead
+          ><tbody
+            >{
+              article.redlines.map((row) => (
+                <tr>
+                  <>
+                    <th scope="row">{row[0]}</th>
+                    <td>{row[1]}</td>
+                  </>
+                </tr>
+              ))
+            }</tbody
+          >
+        </table>
+      </div>
+      <p>
+        具体停机、重启与运行权限按本机手册及现场责任人判断；本文用于整理信息，不能替代维修诊断或批准带故障运行。
+      </p>
+    </section>
+    <section id="parts" class="resource-page-section">
+      <h2>要换件时，把这些信息一起发来</h2>
+      <p data-content-sourcing>{article.sourcing.text}</p>
+      <p>
+        <a href={article.sourcing.href} data-content-commercial
+          >{article.sourcing.label}</a
+        >：核对相关系统与供货范围后，再按下面的清单提供本机信息。
+      </p>
+      <ul class="resource-checklist">
+        {article.checklist.map((item) => <li>{item}</li>)}
+      </ul>
+      <figure class="service-part-photo">
+        <a
+          href={`/part-products/${photo.slug}/`}
+          data-content-part={photo.partNumber}
+        >
+          <span class="photo-callout" aria-hidden="true"
+            >↓ 核对完整号码、接口与供货状态</span
+          >
+          <img
+            src={photo.image}
+            alt={`${photo.partNumber} ${zhPartName(photo.name)}，项目现有目录图片，仅供识别候选部件`}
+            width="640"
+            height="480"
+            loading="lazy"
+            decoding="async"
+          />
+        </a>
+        <figcaption>
+          目录图片：{photo.partNumber}
+          {
+            zhPartName(photo.name)
+          }。箭头提示核对整件，未标注故障或拆装位置；适配需按出厂编号确认。
+        </figcaption>
+      </figure>
+      <h3>从真实零件记录继续查</h3>
+      <p>
+        以下是相关系统的识别候选，涵盖不同机型；不表示本文已诊断出需要更换，也不构成本机适配承诺。
+      </p>
+      <div class="service-parts-grid">
+        {
+          parts.map((part) => (
+            <a
+              class="service-part-card"
+              href={`/part-products/${part.slug}/`}
+              data-content-part={part.partNumber}
+            >
+              <>
+                <strong>{part.partNumber}</strong>
+                <span>{zhPartName(part.name)}</span>
+                <small>{part.series.join(" / ")} · 查看接口与询价信息 →</small>
+              </>
+            </a>
+          ))
+        }
+      </div>
+      <ul class="service-inline-links">
+        {
+          article.hubs.map((hub) => (
+            <li>
+              <a href={hub.href}>{hub.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+      <DetailRfqStrip
+        title="按已确认的位置核号询价"
+        text="附上上面的检查记录、完整型号、出厂编号和旧件号，我们再核对适配、供货状态、文件与日期。"
+        label="发送这篇文章的零件询价"
+        quoteHref={`/contact/?source=content-${article.slug}`}
+        modalSource={`content-${article.slug}`}
+        modalContext={`文章：${article.title}。请提供：${article.checklist.join("；")}`}
+      />
+      <h3>常见问题</h3>
+      {
+        article.faqs.map((faq) => (
+          <details class="service-faq">
+            <>
+              <summary>{faq.question}</summary>
+              <p>{faq.answer}</p>
+            </>
+          </details>
+        ))
+      }
+      <h3>继续看相关问题</h3>
+      <ul class="service-inline-links">
+        {
+          related.map((item) => (
+            <li>
+              <a href={`/insights/${item.slug}/`}>{item.title}</a>
+            </li>
+          ))
+        }
+      </ul>
+      <details class="foundation-links" open>
+        <summary>回到 8 篇基础指南</summary>
+        <ul>
+          {
+            foundationGuides.map((guide) => (
+              <li>
+                <a href={`/guides/${guide.slug}/`}>{guide.label}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </details>
+      <p><a href="/insights/">浏览全部 24 篇故障与采购文章 →</a></p>
+    </section>
+  </article>
+</BaseLayout>

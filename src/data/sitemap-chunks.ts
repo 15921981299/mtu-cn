@@ -77,7 +77,7 @@ export const sitemapChunks: Record<string, SitemapChunkRule> = {
 
   /** 内容营销块：指南 / 应用 / 能力 / 行业 / 动态。 */
   content: (item) =>
-    inPrefixes(pathOf(item), ['/guides/', '/applications/', '/capabilities/', '/industries/', '/news/']) ? item : undefined,
+    inPrefixes(pathOf(item), ['/guides/', '/insights/', '/applications/', '/capabilities/', '/industries/', '/news/']) ? item : undefined,
 
   // 首页、关于、联系、隐私、条款、certifications、cross-reference、
   // part-number-index、sitemap、llm-instructions、case-studies、

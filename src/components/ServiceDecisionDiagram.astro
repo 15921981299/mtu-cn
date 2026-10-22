@@ -1,0 +1,132 @@
+---
+interface Props {
+  nodes: string[];
+  caption: string;
+  id: string;
+  decision: { question: string; yes: string; no: string };
+}
+const { nodes, caption, id, decision } = Astro.props;
+const width = 960;
+const boxWidth = 168;
+const gap = 22;
+---
+
+<figure class="decision-figure">
+  <div
+    class="diagram-scroll"
+    role="region"
+    aria-label="决策图，可横向滚动"
+    tabindex="0"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox={`0 0 ${width} 300`}
+      width={width}
+      height="300"
+      role="img"
+      aria-labelledby={`${id}-title ${id}-desc`}
+    >
+      <title id={`${id}-title`}>检查与决策顺序</title>
+      <desc id={`${id}-desc`}
+        >{nodes.join(" → ")}。分流：{decision.question} 是：{
+          decision.yes
+        }；否：{decision.no}。{caption}</desc
+      >
+      <defs
+        ><marker
+          id={`${id}-arrow`}
+          viewBox="0 0 10 10"
+          refX="9"
+          refY="5"
+          markerWidth="5"
+          markerHeight="5"
+          orient="auto-start-reverse"
+          ><path d="M0 0 10 5 0 10z" fill="#28669a"></path></marker
+        ></defs
+      >
+      {
+        nodes.map((node, i) => (
+          <g>
+            <rect
+              x={10 + i * (boxWidth + gap)}
+              y="20"
+              width={boxWidth}
+              height="88"
+              rx="10"
+              fill={i === nodes.length - 1 ? "#e6f2ef" : "#eef5fb"}
+              stroke="#9fbad1"
+            />
+            <text
+              x={94 + i * (boxWidth + gap)}
+              y="49"
+              text-anchor="middle"
+              fill="#40617e"
+              font-size="13"
+            >{`0${i + 1}`}</text>
+            <text
+              x={94 + i * (boxWidth + gap)}
+              y="79"
+              text-anchor="middle"
+              fill="#152f49"
+              font-size="14"
+              font-weight="600"
+            >
+              {node}
+            </text>
+            {i < nodes.length - 1 && (
+              <path
+                d={`M${178 + i * (boxWidth + gap)} 64h20`}
+                stroke="#28669a"
+                stroke-width="2"
+                marker-end={`url(#${id}-arrow)`}
+              />
+            )}
+          </g>
+        ))
+      }
+      <g font-size="14" fill="#152f49">
+        <text x="10" y="145" font-size="13" fill="#52667a"
+          >关键分流点（仍需遵守下文处置红线）</text
+        >
+        <path
+          d="M480 163 614 218 480 273 346 218Z"
+          fill="#fff6e2"
+          stroke="#b89751"></path>
+        <text x="480" y="223" text-anchor="middle" font-size="13"
+          >{decision.question}</text
+        >
+        <rect
+          x="10"
+          y="182"
+          width="278"
+          height="72"
+          rx="9"
+          fill="#e6f2ef"
+          stroke="#9fbad1"></rect>
+        <rect
+          x="672"
+          y="182"
+          width="278"
+          height="72"
+          rx="9"
+          fill="#eef5fb"
+          stroke="#9fbad1"></rect>
+        <text x="149" y="223" text-anchor="middle">{decision.yes}</text>
+        <text x="811" y="223" text-anchor="middle">{decision.no}</text>
+        <path
+          d="M346 218H290"
+          stroke="#28669a"
+          stroke-width="2"
+          marker-end={`url(#${id}-arrow)`}></path>
+        <path
+          d="M614 218H670"
+          stroke="#28669a"
+          stroke-width="2"
+          marker-end={`url(#${id}-arrow)`}></path>
+        <text x="316" y="204" text-anchor="middle">是</text>
+        <text x="644" y="204" text-anchor="middle">否</text>
+      </g>
+    </svg>
+  </div>
+  <figcaption>{caption}</figcaption>
+</figure>

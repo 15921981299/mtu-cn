@@ -1,0 +1,97 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import BreadcrumbHero from "../../components/BreadcrumbHero.astro";
+import {
+  batchLabels,
+  contentDate,
+  foundationGuides,
+  serviceArticles,
+} from "../../data/service-content";
+import { breadcrumbSchema, itemListSchema, site } from "../../data/site";
+import "../../styles/resource-page.css";
+import "../../styles/service-content.css";
+const batches = ["P0", "P1", "P2"] as const;
+---
+
+<BaseLayout
+  title="MTU 故障排查与备件采购：24 篇使用者指南"
+  description="从起动、共轨掉压、排温、油液和增压问题，到喷油器、交期、比价、库存与文件准备，按现象查证据，再进入真实零件目录。"
+  currentPath="/guides"
+  jsonLd={[
+    breadcrumbSchema([
+      { name: "首页", url: site.url },
+      { name: "故障与采购", url: `${site.url}/insights/` },
+    ]),
+    itemListSchema(
+      serviceArticles.map((article) => ({
+        name: article.title,
+        url: `${site.url}/insights/${article.slug}/`,
+      })),
+    ),
+  ]}
+>
+  <BreadcrumbHero
+    title="故障排查与备件采购"
+    trail={[{ label: "首页", href: "/" }, { label: "故障与采购" }]}
+    variant="3"
+  />
+  <div class="resource-page service-content-index">
+    <section class="resource-page-section">
+      <p>
+        从您遇到的现象开始。先用分类表和流程图整理检查证据，需要换件时再核对完整号码、发动机出厂编号和供货状态。这里有
+        24 篇文章，内容更新于 <time datetime={contentDate}>{contentDate}</time
+        >。
+      </p>
+      <nav class="service-toc" aria-label="文章主题">
+        {
+          batches.map((batch) => (
+            <a href={`#${batch}`}>
+              {batchLabels[batch]}（
+              {serviceArticles.filter((item) => item.batch === batch).length}）
+            </a>
+          ))
+        }
+      </nav>
+    </section>
+    {
+      batches.map((batch) => (
+        <section id={batch} class="resource-page-section">
+          <>
+            <h2>{batchLabels[batch]}</h2>
+            <div class="service-articles-grid">
+              {serviceArticles
+                .filter((article) => article.batch === batch)
+                .map((article) => (
+                  <a
+                    class="service-article-card"
+                    href={`/insights/${article.slug}/`}
+                  >
+                    <span class="service-card-meta">
+                      {String(article.id).padStart(2, "0")} · {article.audience}
+                    </span>
+                    <h3>{article.title}</h3>
+                    <p>{article.description}</p>
+                    <span class="service-card-more">查看分类表与下一步 →</span>
+                  </a>
+                ))}
+            </div>
+          </>
+        </section>
+      ))
+    }
+    <section class="resource-page-section">
+      <h2>已有问题，从基础指南开始</h2><ul class="service-inline-links">
+        {
+          foundationGuides.map((guide) => (
+            <li>
+              <a href={`/guides/${guide.slug}/`}>{guide.label}</a>
+            </li>
+          ))
+        }
+      </ul><p>
+        <a href="/guides/">全部选型与大修指南</a> · <a href="/part-products/"
+          >按零件号查目录</a>
+      </p>
+    </section>
+  </div>
+</BaseLayout>
