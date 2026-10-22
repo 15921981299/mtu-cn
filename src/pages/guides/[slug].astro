@@ -51,7 +51,7 @@ const hasPersonAuthor = Boolean(site.author.name);
       description: guide.description,
       url: pageUrl,
       image: `${site.url}/images/${guideSeries === '2000' ? 'mtu-2000-series-parts.webp' : guideSeries === '4000' ? 'mtu-4000-series-overhaul-parts.webp' : 'engine-parts-hero.webp'}`,
-      dateModified: '2026-10-10',
+      dateModified: guide.updated ?? '2026-10-10',
       authorName: hasPersonAuthor ? site.author.name : site.name,
       authorType: hasPersonAuthor ? 'Person' : 'Organization',
       authorJobTitle: hasPersonAuthor && site.author.jobTitle ? site.author.jobTitle : undefined,
