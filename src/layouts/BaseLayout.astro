@@ -14,8 +14,7 @@ import JsonLd from '../components/JsonLd.astro';
 import Analytics from '../components/Analytics.astro';
 import AttributionTracker from '../components/AttributionTracker.astro';
 import Gtm from '../components/Gtm.astro';
-import FloatingQuote from '../components/FloatingQuote.astro';
-import WhatsAppButton from '../components/WhatsAppButton.astro';
+import ContactDock from '../components/ContactDock.astro';
 import RfqModal from '../components/RfqModal.astro';
 import { organizationSchema, site } from '../data/site';
 
@@ -24,7 +23,6 @@ interface Props {
   description?: string;
   currentPath?: string;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
-  hideFloatingCta?: boolean;
   /** Per-page Open Graph image (absolute path from site root, e.g. "/images/foo.webp"). Falls back to the default. */
   image?: string;
   /** Set true on confirmation/utility pages to keep them out of the index. */
@@ -42,7 +40,6 @@ const {
   description = site.defaultDescription,
   currentPath = Astro.url.pathname.replace(/\/$/, '') || '/',
   jsonLd,
-  hideFloatingCta = false,
   image,
   noindex = false,
   ogType = 'website',
@@ -131,8 +128,8 @@ const schemas = [
     </div>
     <VideoLightbox />
     <RfqModal />
-    {!hideFloatingCta && <WhatsAppButton />}
-    {!hideFloatingCta && <FloatingQuote />}
+    {/* 国内联系方式悬浮条（微信 / 电话 / 询价），全站常驻 */}
+    <ContactDock />
     <script>
       import '../scripts/lightbox.ts';
       import '../scripts/animations.ts';

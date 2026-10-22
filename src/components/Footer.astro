@@ -88,8 +88,16 @@ import { site } from '../data/site';
       </nav>
       <div class="footer-nav-meta">
         <a href={`mailto:${site.email}`} class="footer-link footer-link--email">{site.email}</a>
-        <a href={`tel:${site.phone.replace(/\s/g, '')}`} class="footer-link footer-link--email">{site.phone}</a>
+        <a href={`tel:${site.phone.replace(/\s/g, '')}`} class="footer-link footer-link--email">{site.phoneDisplay}</a>
+        <button type="button" class="footer-link footer-link--email footer-link--wechat" id="footer-wechat-btn">微信：{site.wechat}</button>
       </div>
     </div>
   </div>
 </footer>
+
+<script>
+  // 微信入口：通知 ContactDock 打开弹层（跨组件用 window 自定义事件通信）
+  document.getElementById('footer-wechat-btn')?.addEventListener('click', () => {
+    window.dispatchEvent(new CustomEvent('gc:open-wechat'));
+  });
+</script>

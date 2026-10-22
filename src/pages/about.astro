@@ -157,7 +157,9 @@ const linkArrow = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" x
             <address class="about-nap">
               <a href={`mailto:${site.email}`}>{site.email}</a>
               <span aria-hidden="true">·</span>
-              <a href={phoneHref}>{site.phone}</a>
+              <a href={phoneHref}>{site.phoneDisplay}</a>
+              <span aria-hidden="true">·</span>
+              <button type="button" class="about-nap-wechat" id="about-wechat-btn">微信 {site.wechat}</button>
               <span aria-hidden="true">·</span>
               <a href={whatsappHref} rel="noopener noreferrer" target="_blank">WhatsApp</a>
               <span class="about-nap-address">
@@ -360,6 +362,13 @@ const linkArrow = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" x
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  // 关于页 NAP 区的微信入口：打开 ContactDock 的弹层
+  document.getElementById('about-wechat-btn')?.addEventListener('click', () => {
+    window.dispatchEvent(new CustomEvent('gc:open-wechat'));
+  });
+</script>
 <style>
   .about-section {
     scroll-margin-top: 100px;
@@ -554,6 +563,20 @@ const linkArrow = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" x
 
   .about-nap a:hover {
     color: var(--color-primary);
+  }
+
+  /* 微信入口是 button，重置默认样式并保持与链接一致的观感 */
+  button.about-nap-wechat {
+    border: 0;
+    background: none;
+    padding: 0;
+    font: inherit;
+    color: #07c160;
+    cursor: pointer;
+  }
+
+  button.about-nap-wechat:hover {
+    color: #05914a;
   }
 
   .about-nap-address {

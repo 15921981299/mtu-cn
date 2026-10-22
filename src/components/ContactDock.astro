@@ -1,0 +1,472 @@
+---
+import { site } from '../data/site';
+
+const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
+const wechatId = site.wechat;
+const wechatQr = site.wechatQr;
+---
+
+{/* 桌面端：右侧竖排悬浮条 */}
+<div class="contact-dock" id="contact-dock" aria-label="联系方式">
+  <button
+    type="button"
+    class="contact-dock__btn contact-dock__btn--wechat"
+    id="contact-dock-wechat"
+    aria-label="添加微信咨询"
+    aria-haspopup="dialog"
+  >
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M8.691 3C4.916 3 1.8 5.56 1.8 8.71c0 1.806 1.012 3.415 2.6 4.47l-.65 1.95 2.27-1.15c.55.15 1.13.26 1.72.29-.06-.33-.1-.67-.1-1.02 0-2.86 2.78-5.18 6.2-5.18.2 0 .39.01.58.03C13.94 5.26 11.53 3 8.69 3Zm-2.2 3.1a.95.95 0 1 1 0 1.9.95.95 0 0 1 0-1.9Zm4.4 0a.95.95 0 1 1 0 1.9.95.95 0 0 1 0-1.9Z" fill="currentColor"/>
+      <path d="M22.2 13.28c0-2.66-2.58-4.82-5.77-4.82-3.18 0-5.77 2.16-5.77 4.82 0 2.66 2.59 4.82 5.77 4.82.53 0 1.05-.07 1.54-.2l1.9.96-.54-1.63c1.4-.9 2.87-2.4 2.87-4.95Zm-7.65-1.2a.8.8 0 1 1 0-1.6.8.8 0 0 1 0 1.6Zm4.06 0a.8.8 0 1 1 0-1.6.8.8 0 0 1 0 1.6Z" fill="currentColor"/>
+    </svg>
+    <span class="contact-dock__label">微信</span>
+  </button>
+  <a href={phoneHref} class="contact-dock__btn contact-dock__btn--phone" id="contact-dock-phone" aria-label="电话咨询">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M6.6 3.5 8.7 7.2c.4.8.6 1.2.5 1.6-.1.4-.5.7-1.2 1.3-.6.5-.9.8-.8 1.3.1.5.7 1.4 1.9 2.6 1.2 1.2 2.1 1.8 2.6 1.9.5.1.8-.2 1.3-.8.6-.7.9-1.1 1.3-1.2.4-.1.8.1 1.6.5l3.7 2.1c.7.4 1.1.6 1.3 1 .2.4.2.9.1 1.6-.2 1.3-1.2 2.2-2.4 2.4-1.9.3-4.6-.2-8.3-3.9-3.7-3.7-4.2-6.4-3.9-8.3.2-1.2 1.1-2.2 2.4-2.4.7-.1 1.2-.1 1.6.1Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span class="contact-dock__label">电话</span>
+  </a>
+  <a
+    href="/contact/?source=dock"
+    class="contact-dock__btn contact-dock__btn--quote"
+    data-rfq-modal
+    data-rfq-context="悬浮条零件询价"
+    data-rfq-source="dock"
+    aria-label="发送零件询价"
+  >
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M21 15V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span class="contact-dock__label">询价</span>
+  </a>
+</div>
+
+{/* 移动端：底部通栏（常驻） */}
+<div class="contact-dock-mobile" id="contact-dock-mobile" aria-label="联系方式">
+  <a href={phoneHref} class="contact-dock-mobile__item" id="contact-dock-m-phone">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M6.6 3.5 8.7 7.2c.4.8.6 1.2.5 1.6-.1.4-.5.7-1.2 1.3-.6.5-.9.8-.8 1.3.1.5.7 1.4 1.9 2.6 1.2 1.2 2.1 1.8 2.6 1.9.5.1.8-.2 1.3-.8.6-.7.9-1.1 1.3-1.2.4-.1.8.1 1.6.5l3.7 2.1c.7.4 1.1.6 1.3 1 .2.4.2.9.1 1.6-.2 1.3-1.2 2.2-2.4 2.4-1.9.3-4.6-.2-8.3-3.9-3.7-3.7-4.2-6.4-3.9-8.3.2-1.2 1.1-2.2 2.4-2.4.7-.1 1.2-.1 1.6.1Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    电话咨询
+  </a>
+  <button type="button" class="contact-dock-mobile__item contact-dock-mobile__item--wechat" id="contact-dock-m-wechat" aria-haspopup="dialog">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M8.691 3C4.916 3 1.8 5.56 1.8 8.71c0 1.806 1.012 3.415 2.6 4.47l-.65 1.95 2.27-1.15c.55.15 1.13.26 1.72.29-.06-.33-.1-.67-.1-1.02 0-2.86 2.78-5.18 6.2-5.18.2 0 .39.01.58.03C13.94 5.26 11.53 3 8.69 3Zm-2.2 3.1a.95.95 0 1 1 0 1.9.95.95 0 0 1 0-1.9Zm4.4 0a.95.95 0 1 1 0 1.9.95.95 0 0 1 0-1.9Z" fill="currentColor"/>
+      <path d="M22.2 13.28c0-2.66-2.58-4.82-5.77-4.82-3.18 0-5.77 2.16-5.77 4.82 0 2.66 2.59 4.82 5.77 4.82.53 0 1.05-.07 1.54-.2l1.9.96-.54-1.63c1.4-.9 2.87-2.4 2.87-4.95Zm-7.65-1.2a.8.8 0 1 1 0-1.6.8.8 0 0 1 0 1.6Zm4.06 0a.8.8 0 1 1 0-1.6.8.8 0 0 1 0 1.6Z" fill="currentColor"/>
+    </svg>
+    微信咨询
+  </button>
+  <button type="button" class="contact-dock-mobile__item contact-dock-mobile__item--quote" data-rfq-modal data-rfq-context="移动端悬浮条零件询价" data-rfq-source="dock-mobile">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M21 15V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    零件询价
+  </button>
+</div>
+
+{/* 微信弹层 */}
+<div class="wechat-pop" id="wechat-pop" aria-hidden="true">
+  <div class="wechat-pop__backdrop" data-wechat-close></div>
+  <div class="wechat-pop__panel" role="dialog" aria-modal="true" aria-labelledby="wechat-pop-title" tabindex="-1">
+    <button type="button" class="wechat-pop__close" data-wechat-close aria-label="关闭">&times;</button>
+    <div class="wechat-pop__brand" id="wechat-pop-brand">
+      <img src={site.logo.default} alt="国晁动力" width="660" height="157" loading="lazy" decoding="async" />
+    </div>
+    <div class="wechat-pop__body">
+      <div class="wechat-pop__qr is-hidden" id="wechat-pop-qr">
+        <img src={wechatQr} alt="国晁动力微信二维码" width="200" height="200" decoding="async" id="wechat-qr-img" />
+      </div>
+      <div class="wechat-pop__info">
+        <h2 class="wechat-pop__title" id="wechat-pop-title">添加微信，直接发零件号</h2>
+        <div class="wechat-pop__id-row">
+          <span class="wechat-pop__id-label">微信号</span>
+          <span class="wechat-pop__id-value" id="wechat-id-value">{wechatId}</span>
+          <button type="button" class="wechat-pop__copy" id="wechat-copy-btn">复制</button>
+        </div>
+        <p class="wechat-pop__steps" id="wechat-pop-steps">打开微信 →「添加朋友」→ 粘贴微信号，发送零件号或铭牌照片即可报价</p>
+      </div>
+    </div>
+    <p class="wechat-pop__alt">急询可直拨 <a href={phoneHref}>{site.phoneDisplay}</a>（微信同号）</p>
+  </div>
+</div>
+
+<style>
+  /* ── 桌面端竖排悬浮条 ── */
+  .contact-dock {
+    position: fixed;
+    right: 24px;
+    bottom: 96px;
+    z-index: 90;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    opacity: 0;
+    transform: translateY(16px);
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .contact-dock.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .contact-dock__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border: 0;
+    border-radius: 999px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.22);
+    transition: filter 0.2s, transform 0.2s;
+  }
+  .contact-dock__btn:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+  }
+  .contact-dock__btn:focus-visible {
+    outline: 2px solid #146ef5;
+    outline-offset: 2px;
+  }
+  .contact-dock__btn--wechat { background: #07c160; }
+  .contact-dock__btn--phone { background: #146ef5; }
+  .contact-dock__btn--quote { background: #f97316; }
+  .contact-dock__label { line-height: 1; }
+
+  /* ── 移动端底部通栏 ── */
+  .contact-dock-mobile {
+    display: none;
+  }
+
+  /* ── 微信弹层 ── */
+  .wechat-pop {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s, visibility 0.2s;
+  }
+  .wechat-pop.is-open {
+    visibility: visible;
+    opacity: 1;
+  }
+  .wechat-pop__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+  }
+  .wechat-pop__panel {
+    position: relative;
+    width: min(400px, 100%);
+    max-height: calc(100dvh - 40px);
+    overflow: auto;
+    padding: 28px 26px 20px;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 24px 64px rgba(15, 23, 42, 0.3);
+    text-align: center;
+    transform: translateY(8px);
+    transition: transform 0.2s;
+  }
+  .wechat-pop.is-open .wechat-pop__panel {
+    transform: translateY(0);
+  }
+  .wechat-pop__close {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    border: 0;
+    background: none;
+    font-size: 22px;
+    line-height: 1;
+    color: #94a3b8;
+    cursor: pointer;
+  }
+  .wechat-pop__close:hover { color: #475569; }
+  .wechat-pop__kicker {
+    margin: 0 0 6px;
+    color: #07c160;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+  .wechat-pop__title {
+    margin: 0 0 16px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.4;
+    color: #1e293b;
+  }
+  .wechat-pop__lead {
+    margin: 0 0 16px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #475569;
+  }
+  .wechat-pop__brand img {
+    display: block;
+    width: 200px;
+    height: auto;
+    margin: 2px auto 18px;
+  }
+  .wechat-pop__brand.is-hidden { display: none; }
+
+  /* 主体区：无二维码时竖排（Logo 在上），有二维码时上下居中 —— 二维码做视觉焦点，
+     信息全宽排布。曾试过左右分栏（码 168 + 信息 158px），微信号与复制按钮必然
+     换行、标题折行，观感拥挤，故放弃。 */
+  .wechat-pop__body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .wechat-pop__panel.has-qr .wechat-pop__body {
+    gap: 0;
+  }
+  .wechat-pop__panel.has-qr .wechat-pop__info {
+    text-align: center;
+  }
+  .wechat-pop__qr img {
+    display: block;
+    width: 180px;
+    height: 180px;
+    margin: 2px auto 18px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background: #fff;
+  }
+  .wechat-pop__qr.is-hidden { display: none; }
+  .wechat-pop__id-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 0 0 14px;
+    padding: 10px 12px;
+    border: 1px dashed rgba(7, 193, 96, 0.45);
+    border-radius: 10px;
+    background: rgba(7, 193, 96, 0.05);
+  }
+  .wechat-pop__id-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #07c160;
+  }
+  .wechat-pop__id-value {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: #1e293b;
+  }
+  .wechat-pop__copy {
+    padding: 5px 12px;
+    border: 0;
+    border-radius: 6px;
+    background: #07c160;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: filter 0.2s;
+  }
+  .wechat-pop__copy:hover { filter: brightness(1.08); }
+  .wechat-pop__copy.is-copied { background: #475569; }
+  .wechat-pop__steps {
+    margin: 0 0 10px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: #475569;
+  }
+  .wechat-pop__alt {
+    margin: 16px 0 0;
+    padding-top: 14px;
+    border-top: 1px solid #f1f5f9;
+    font-size: 12.5px;
+    color: #64748b;
+  }
+  .wechat-pop__alt a {
+    color: #146ef5;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  /* 窄屏（含手机弹层）：二维码放大居中 */
+  @media (max-width: 480px) {
+    .wechat-pop__panel { width: min(360px, 100%); }
+    .wechat-pop__panel.has-qr .wechat-pop__qr img {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 16px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .contact-dock { display: none; }
+    .contact-dock-mobile {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 90;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      background: #fff;
+      box-shadow: 0 -2px 12px rgba(15, 23, 42, 0.12);
+      padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+    .contact-dock-mobile__item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      min-height: 54px;
+      border: 0;
+      background: none;
+      font-size: 11.5px;
+      font-weight: 700;
+      font-family: inherit;
+      text-decoration: none;
+      cursor: pointer;
+      color: #334155;
+    }
+    .contact-dock-mobile__item--wechat { color: #07c160; }
+    .contact-dock-mobile__item--quote { color: #f97316; }
+    .contact-dock-mobile__item:active { background: #f1f5f9; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .contact-dock,
+    .contact-dock__btn,
+    .wechat-pop,
+    .wechat-pop__panel {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  import { site } from '../data/site';
+
+  const wechatId = site.wechat;
+
+  // ── 桌面悬浮条：滚动后出现 ──
+  const dock = document.getElementById('contact-dock');
+  const toggleDock = () => dock?.classList.toggle('is-visible', window.scrollY > 480);
+  if (dock) {
+    toggleDock();
+    window.addEventListener('scroll', toggleDock, { passive: true });
+  }
+
+  // ── 微信弹层 ──
+  const pop = document.getElementById('wechat-pop');
+  const panel = pop?.querySelector<HTMLElement>('.wechat-pop__panel');
+  const qrWrap = document.getElementById('wechat-pop-qr');
+  const qrBrand = document.getElementById('wechat-pop-brand');
+  const qrSteps = document.getElementById('wechat-pop-steps');
+  const qrImg = document.getElementById('wechat-qr-img') as HTMLImageElement | null;
+  let lastFocus: HTMLElement | null = null;
+
+  // 二维码已上传（加载成功）：显示二维码 + 左右分栏；未上传（404）：保留 Logo 竖排。
+  // 注意：浏览器预扫描可能在本 script（deferred module）执行前就完成了图片加载，
+  // 直接监听 load 会错过事件，所以先检查 complete。
+  const onQrLoaded = () => {
+    if (!qrImg || qrImg.naturalWidth === 0) return;
+    panel?.classList.add('has-qr');
+    qrWrap?.classList.remove('is-hidden');
+    qrBrand?.classList.add('is-hidden');
+    if (qrSteps) qrSteps.textContent = '微信扫一扫直接添加，发送零件号即可报价';
+  };
+  if (qrImg) {
+    if (qrImg.complete) onQrLoaded();
+    else qrImg.addEventListener('load', onQrLoaded);
+  }
+
+  const openPop = () => {
+    if (!pop) return;
+    lastFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    pop.classList.add('is-open');
+    pop.setAttribute('aria-hidden', 'false');
+    panel?.focus();
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'click_wechat', {
+        event_category: 'RFQ',
+        event_label: window.location.pathname,
+      });
+    }
+  };
+
+  const closePop = () => {
+    if (!pop) return;
+    pop.classList.remove('is-open');
+    pop.setAttribute('aria-hidden', 'true');
+    lastFocus?.focus();
+  };
+
+  pop?.querySelectorAll('[data-wechat-close]').forEach((el) =>
+    el.addEventListener('click', closePop)
+  );
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && pop?.classList.contains('is-open')) closePop();
+  });
+
+  document.getElementById('contact-dock-wechat')?.addEventListener('click', openPop);
+  document.getElementById('contact-dock-m-wechat')?.addEventListener('click', openPop);
+
+  // 页脚等位置的微信入口通过自定义事件打开同一弹层
+  window.addEventListener('gc:open-wechat', openPop);
+
+  // ── 复制微信号 ──
+  const copyBtn = document.getElementById('wechat-copy-btn');
+  copyBtn?.addEventListener('click', async () => {
+    let ok = false;
+    try {
+      await navigator.clipboard.writeText(wechatId);
+      ok = true;
+    } catch {
+      // 非安全上下文（http）下 clipboard 不可用，退回 execCommand
+      const ta = document.createElement('textarea');
+      ta.value = wechatId;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        ok = document.execCommand('copy');
+      } catch {
+        ok = false;
+      }
+      ta.remove();
+    }
+    if (ok && copyBtn) {
+      copyBtn.textContent = '已复制';
+      copyBtn.classList.add('is-copied');
+      window.setTimeout(() => {
+        copyBtn.textContent = '复制';
+        copyBtn.classList.remove('is-copied');
+      }, 1600);
+    }
+  });
+
+  // ── 电话点击埋点 ──
+  document.getElementById('contact-dock-phone')?.addEventListener('click', () => {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'click_phone', {
+        event_category: 'RFQ',
+        event_label: 'dock',
+      });
+    }
+  });
+</script>

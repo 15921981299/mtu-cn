@@ -1,0 +1,429 @@
+{
+  "buildCommand": "npm run build:edgeone",
+  "installCommand": "npm install",
+  "outputDirectory": "dist",
+  "nodeVersion": "22.11.0",
+  "mainlandRegions": [
+    "ap-shanghai"
+  ],
+  "overseasRegions": [
+    "ap-hongkong"
+  ],
+  "redirects": [
+    {
+      "source": "/products/mtu-2000-series/",
+      "destination": "/products/mtu-2000-series-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/marine/",
+      "destination": "/applications/marine-propulsion-engines/",
+      "statusCode": 301
+    },
+    {
+      "source": "/industrial-engines/",
+      "destination": "/industries/industrial-engines/",
+      "statusCode": 301
+    },
+    {
+      "source": "/power-generation/",
+      "destination": "/industries/power-generation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/mtu-filters/",
+      "destination": "/part-products/catalog/mtu-filters/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part/mtu-spare-parts/",
+      "destination": "/products/mtu-spare-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part/mtu-2000-parts/",
+      "destination": "/part-products/catalog/mtu-2000-series/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part/mtu-4000-parts/",
+      "destination": "/part-products/catalog/mtu-4000-series/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part/mtu-396-parts/",
+      "destination": "/part-products/catalog/mtu-396-series/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part/mtu-595-parts/",
+      "destination": "/part-products/catalog/mtu-595-series/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part/mtu-956-1163-parts/",
+      "destination": "/part-products/catalog/mtu-956-series/",
+      "statusCode": 301
+    },
+    {
+      "source": "/products/mtu-series-2000-gensets/",
+      "destination": "/applications/auxiliary-generator-engines/",
+      "statusCode": 301
+    },
+    {
+      "source": "/products/mtu-series-4000-engines/",
+      "destination": "/products/mtu-4000-series-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/products/mtu-series-4000-gensets/",
+      "destination": "/applications/auxiliary-generator-engines/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/4b-series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/6B-Series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/6C-Series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/6L-Series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/automotive-engine/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/b-series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/C-Series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/Construction-Engines/",
+      "destination": "/industries/industrial-engines/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/Cummins/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/deutz-diesel-engine/",
+      "destination": "/products/deutz-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/G-Drive-6L-series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/G-Drive-B-series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/G-Drive-C-series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/G-Drive-K19-series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/G-Drive-K38-series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/G-Drive-K50-series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/G-Drive-M-series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/G-Drive-N-series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/G-Drive-QSZ-series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/generator-engine/",
+      "destination": "/industries/power-generation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/ISB-Series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/ISDe-Series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/ISF-Series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/ISLe-Series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/ISM-Series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/k-series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/k19-series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/l-series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/M-Series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/Marine-Engine/",
+      "destination": "/applications/marine-propulsion-engines/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/marine-engine-6b-series/",
+      "destination": "/applications/marine-propulsion-engines/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/marine-engine-6c-series/",
+      "destination": "/applications/marine-propulsion-engines/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/marine-engine-l-series/",
+      "destination": "/applications/marine-propulsion-engines/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/marine-engine-n-series/",
+      "destination": "/applications/marine-propulsion-engines/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/marine-k38-series/",
+      "destination": "/applications/marine-propulsion-engines/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/n-series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/qsb-series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/QSL-Series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/QSZ-Series/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part/cummins-parts/",
+      "destination": "/products/cummins-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part/deutz-parts/",
+      "destination": "/products/deutz-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/products/mtu-16v-396-te74l/",
+      "destination": "/engine-models/mtu-12v-396-tb94-to-te94-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/products/mtu-series-1163-engines/",
+      "destination": "/engine-models/mtu-1163-tb73-to-tb93-parts/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part-products/0000530926-valve-collet/",
+      "destination": "/part-products/0000530926-valve-keeper-wedge/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part-products/0030176421-nozzle-holder-w-nozzle/",
+      "destination": "/part-products/0030176421-nozzle-holder-with-nozzle/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part-products/0080375619-rectanglr-sect-ring/",
+      "destination": "/part-products/0080375619-rectangular-section-ring/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part-products/0090375019-taper-face-comp-ring/",
+      "destination": "/part-products/0090375019-taper-face-compression-ring/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part-products/5110809821turbine-wheel/",
+      "destination": "/part-products/5110809821turbine-turbine-wheel/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part-products/5110850060-piston-ring/",
+      "destination": "/part-products/5110850060-piston-ring-for-turbocharger/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part-products/5120850560-piston-ring-f-turbocharger/",
+      "destination": "/part-products/5120850560-piston-ring-for-turbocharger/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part-products/5240160153-tube-injector/",
+      "destination": "/part-products/5240160153-injector-sleeve/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part-products/5240332630-crankshaft-bearing-free-end/",
+      "destination": "/part-products/5240332630-crankshaft-bearing-aux-pto-end/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part-products/5240332730-crankshaft-bearing-driving/",
+      "destination": "/part-products/5240332730-crankshaft-bearing-driving-end/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part-products/5272010505-shaft-wat-pump/",
+      "destination": "/part-products/5272010505-shaft-water-pump/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part-products/5320100130-cylinder-head-cover/",
+      "destination": "/part-products/5320100130-cylinder-head-cover-lower-part/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part-products/5360320014-sleeve-wear-front-cr-shf/",
+      "destination": "/part-products/5360320014-sleeve-wear-front-crankshaft/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part-products/5361800515-valve-asm-oil-press-relief/",
+      "destination": "/part-products/5361800515-oil-pressure-relief-valve/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part-products/5410180233-diaphragm/",
+      "destination": "/part-products/5410180233-diaphragm-for-oil-separator/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part-products/5410180233-diaphragm-f-oil-separator/",
+      "destination": "/part-products/5410180233-diaphragm-for-oil-separator/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part-products/5410530225-valve-sprng-retainer/",
+      "destination": "/part-products/5410530225-valve-spring-retainer/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part-products/5419900501-point-head-screw/",
+      "destination": "/part-products/5419900501-12-point-head-screw/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part-products/5501801015-press-relief-valve/",
+      "destination": "/part-products/5501801015-pressure-relief-valve/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part-products/5550100051-nozzle-holder-w-nozzle/",
+      "destination": "/part-products/5550100051-nozzle-holder-with-nozzle/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part-products/5550105141-cylinder-head-w-valve/",
+      "destination": "/part-products/5550105141-cylinder-head-with-valve/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part-products/5551800015-press-limiting-valve/",
+      "destination": "/part-products/5551800015-pressure-limiting-valve/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part-products/8699970499-radial-lip-shft-seal/",
+      "destination": "/part-products/8699970499-radial-lip-shaft-seal/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part-products/x00009806-rectanglr-sect-ring/",
+      "destination": "/part-products/x00009806-rectangular-section-ring/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part-products/x00011800-wiring-harness-for-senso/",
+      "destination": "/part-products/x00011800-wiring-harness-for-sensor/",
+      "statusCode": 301
+    },
+    {
+      "source": "/part-products/x51699100034-radial-lip-shft-seal-aux-pto/",
+      "destination": "/part-products/x51699100034-radial-lip-shft-seal-aux-pto-end/",
+      "statusCode": 301
+    }
+  ]
+}

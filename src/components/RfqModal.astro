@@ -15,7 +15,7 @@ import { site } from '../data/site';
     <div class="rfq-modal__header">
       <p class="rfq-modal__kicker">快速配件询价</p>
       <h2 id="rfq-modal-title">查询价格与供货情况</h2>
-      <p>发送零件号或简要零件清单；如有发动机出厂编号或照片，请一并提供。</p>
+      <p>发送零件号或简要零件清单；如有发动机出厂编号或照片，请一并提供。也可以直接添加微信 <strong>{site.wechat}</strong>（电话同号）发送。</p>
     </div>
 
     <form class="rfq-modal__form" id="rfq-modal-form" data-endpoint="/api/rfq" data-fallback-email={site.email}>
@@ -25,12 +25,12 @@ import { site } from '../data/site';
         <input type="text" name="name" autocomplete="name" />
       </label>
       <label>
-        <span>邮箱 *</span>
-        <input type="email" name="email" autocomplete="email" required />
+        <span>手机 / 微信 *</span>
+        <input type="tel" name="phone" placeholder="13800138000 或微信号" autocomplete="tel" required />
       </label>
       <label>
-        <span>微信 / 电话</span>
-        <input type="tel" name="phone" autocomplete="tel" />
+        <span>邮箱（选填）</span>
+        <input type="email" name="email" autocomplete="email" />
       </label>
       <label>
         <span>数量</span>
@@ -67,6 +67,7 @@ import { site } from '../data/site';
 </div>
 
 <script>
+  import { site } from '../data/site';
   import { trackAcceptedInquiry, populateRfqAttributionFields } from '../scripts/attribution';
 
   const modal = document.getElementById('rfq-modal');
@@ -237,9 +238,8 @@ import { site } from '../data/site';
       });
       window.location.href = '/thank-you/?source=rfq-modal';
     } catch {
-      const fallbackEmail = form.dataset.fallbackEmail ?? 'sales@dieselpartsource.com';
       resultEl.className = 'form-result rfq-modal__result is-visible is-error';
-      resultEl.innerHTML = `<p>提交失败。请发送邮件至 <a href="mailto:${fallbackEmail}">${fallbackEmail}</a>，或使用<a href="/contact/?source=modal-error">完整联系表单</a>。</p>`;
+      resultEl.innerHTML = `<p>提交失败。请致电 <a href="tel:${site.phone.replace(/\s/g, '')}">${site.phoneDisplay}</a> 或添加微信（同号），也可使用<a href="/contact/?source=modal-error">完整联系表单</a>。</p>`;
       submitBtn.disabled = false;
       submitBtn.textContent = '发送询价';
     }

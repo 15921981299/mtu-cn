@@ -10,7 +10,6 @@ import '../styles/utility-page.css';
   title="感谢 — 已收到您的零件询价 | 国晁动力"
   description="感谢您提交发动机零件询价。国晁动力将审核您的零件号、发动机详情与交付需求。"
   currentPath="/thank-you"
-  hideFloatingCta
   noindex
 >
   <BreadcrumbHero title="感谢！" current="已收到报价请求" variant="5" />
@@ -21,7 +20,7 @@ import '../styles/utility-page.css';
         <article class="blog-details-content-block resource-page fade-in utility-card">
           <h2>我们已收到您的请求</h2>
           <p>我们的零件团队将审核您的零件号、发动机型号、出厂编号、数量与交付需求，然后回复供货情况或待确认问题。</p>
-          <p>期间如有疑问？请发邮件至 <a href={`mailto:${site.email}`}>{site.email}</a>。</p>
+          <p>期间如有疑问？请致电 <a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phoneDisplay}</a> 或添加微信（同号），也可发送邮件至 <a href={`mailto:${site.email}`}>{site.email}</a>。</p>
 
           <div class="utility-actions">
             <a href="/capabilities/" class="primary-button dark-hover">

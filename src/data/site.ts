@@ -34,6 +34,16 @@ export const site = {
    */
   email: 'sales@dieselpartsource.com',
   phone: '+8615921981299',
+  /** 手机 / 微信同号。国内买家习惯加微信发零件号照片，不写邮箱。 */
+  phoneDisplay: '15921981299',
+  wechat: '15921981299',
+  /**
+   * 微信二维码。把真实二维码截图放到 public/images/wechat-qr.png 即自动显示；
+   * 文件不存在时页面回退为「微信号 + 复制 + 添加指引」。不放假二维码——
+   * 个人微信号没有可扫描加好友的公开 schema，假码扫出来只会是文本。
+   */
+  wechatQr: '/images/wechat-qr.png',
+  /** 海外流量入口：联系页 NAP 区保留 wa.me 链接，悬浮条已让位给微信。 */
   whatsapp: '+8615921981299',
   tagline: '配件核验 | 快速交付',
   /**

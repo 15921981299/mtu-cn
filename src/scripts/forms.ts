@@ -20,21 +20,23 @@ function setLoading(form: HTMLFormElement, loading: boolean) {
 async function handleQuote(form: HTMLFormElement) {
   const name = form.querySelector<HTMLInputElement>('[name="name"]')?.value.trim();
   const email = form.querySelector<HTMLInputElement>('[name="email"]')?.value.trim();
+  const phone = form.querySelector<HTMLInputElement>('[name="phone"]')?.value.trim();
   const message = form.querySelector<HTMLTextAreaElement>('[name="message"]')?.value.trim();
 
-  if (!name || !email || !message) {
-    showResult(form, '请填写<strong>所有字段</strong>后再提交询价。', 'error');
+  // 国内买家可以只留手机/微信，不留邮箱。
+  if (!name || !message || (!email && !phone)) {
+    showResult(form, '请填写<strong>姓名、联系方式和询价内容</strong>后再提交。', 'error');
     return;
   }
 
   const endpoint = form.dataset.endpoint ?? '/api/rfq';
-  const fallbackEmail = form.dataset.fallbackEmail ?? 'sales@dieselpartsource.com';
 
   setLoading(form, true);
 
   const formData = new FormData();
   formData.append('name', name);
-  formData.append('email', email);
+  if (email) formData.append('email', email);
+  if (phone) formData.append('phone', phone);
   formData.append('message', message);
   formData.append('source', `sidebar:${window.location.pathname}`);
 
@@ -54,7 +56,7 @@ async function handleQuote(form: HTMLFormElement) {
   } catch {
     showResult(
       form,
-      `<strong>提交失败。</strong>请发送邮件至 <a href="mailto:${fallbackEmail}">${fallbackEmail}</a>，或使用<a href="/contact/">完整询价表单</a>上传图纸。`,
+      `<strong>提交失败。</strong>请致电 15921981299 或添加微信（同号），也可使用<a href="/contact/">完整询价表单</a>上传图纸。`,
       'error'
     );
     setLoading(form, false);

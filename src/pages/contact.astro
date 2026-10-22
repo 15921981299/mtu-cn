@@ -67,8 +67,6 @@ const shipmentChecks = [
   '按确认后的订单准备商业发票与装箱单',
 ];
 
-const whatsappDigits = site.whatsapp.replace(/\D/g, '');
-const whatsappHref = `https://wa.me/${whatsappDigits}`;
 const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
 ---
 
@@ -77,7 +75,6 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
   description={pageDescription}
   currentPath="/contact"
   image="/images/mtu-part-number-verification.webp"
-  hideFloatingCta
   jsonLd={[
     breadcrumbSchema([
       { name: '首页', url: site.url },
@@ -156,7 +153,7 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
                   <li><span class="contact-trust-check" set:html={checkIcon} />询价快速响应</li>
                   <li><span class="contact-trust-check" set:html={checkIcon} />零件号核验</li>
                   <li><span class="contact-trust-check" set:html={checkIcon} />标明 OEM / 替代供货路线</li>
-                  <li><span class="contact-trust-check" set:html={checkIcon} />全球交付支持</li>
+                  <li><span class="contact-trust-check" set:html={checkIcon} />上海发货 · 全国可达</li>
                 </ul>
                 <div class="quote-package-card">
                   <p class="quote-package-kicker">我们的零件回复包含</p>
@@ -171,16 +168,16 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
                   <input class="contact-form-input-field" type="text" id="rfq-name" name="name" placeholder="张三" autocomplete="name" />
                 </div>
                 <div class="contact-form-column">
-                  <label class="contact-field-label" for="rfq-email">您的邮箱 *</label>
-                  <input class="contact-form-input-field" type="email" id="rfq-email" name="email" placeholder="name@company.com" autocomplete="email" required />
+                  <label class="contact-field-label" for="rfq-phone">手机 / 微信 *</label>
+                  <input class="contact-form-input-field" type="tel" id="rfq-phone" name="phone" placeholder="13800138000 或微信号" autocomplete="tel" required />
                 </div>
                 <div class="contact-form-column">
-                  <label class="contact-field-label" for="rfq-phone">WhatsApp / 电话</label>
-                  <input class="contact-form-input-field" type="tel" id="rfq-phone" name="phone" placeholder="+86 138 0000 0000" autocomplete="tel" />
+                  <label class="contact-field-label" for="rfq-email">邮箱（选填，接收报价单）</label>
+                  <input class="contact-form-input-field" type="email" id="rfq-email" name="email" placeholder="name@company.com" autocomplete="email" />
                 </div>
                 <div class="contact-form-column">
-                  <label class="contact-field-label" for="rfq-country">目的国</label>
-                  <input class="contact-form-input-field" type="text" id="rfq-country" name="country" placeholder="例如：美国、德国、澳大利亚" autocomplete="country-name" />
+                  <label class="contact-field-label" for="rfq-country">所在地区</label>
+                  <input class="contact-form-input-field" type="text" id="rfq-country" name="country" placeholder="例如：上海、江苏、新加坡" autocomplete="country-name" />
                 </div>
                 <div class="contact-form-column">
                   <label class="contact-field-label" for="rfq-engine-model">发动机型号</label>
@@ -224,7 +221,7 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
                 </div>
                 <div class="contact-form-button-block">
                   <button type="submit" class="contact-form-button">发送零件询价 →</button>
-                  <p class="contact-form-submit-note">仅需填写邮箱与零件详情。如有需要，我们会进一步询问。</p>
+                  <p class="contact-form-submit-note">留下手机号或微信即可，我们一个工作日内联系您；邮箱选填，便于发送正式报价单。</p>
                 </div>
                 <div class="form-result" aria-live="polite"></div>
               </form>
@@ -260,7 +257,7 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
       <div class="container">
         <h2 id="contact-nap-heading" class="contact-nap-heading">国晁动力联系方式</h2>
         <p class="contact-nap-lead">
-          上海国晁动力设备有限公司（国晁动力）为全球提供经核验的柴油发动机零件采购支持。请通过邮件、电话或 WhatsApp 联系销售台，获取 MTU 与多品牌零件支持。
+          上海国晁动力设备有限公司（国晁动力）为全球提供经核验的柴油发动机零件采购支持。优先推荐<strong>微信</strong>——发送零件号或铭牌照片即可核验；也可电话或邮件联系。
         </p>
         <p class="contact-nap-lead contact-sales-contact">
           您的询价由 <strong>{salesContact.name}</strong>（{salesContact.role}）处理，回复语言：{salesContact.languages}，一个工作日内答复。
@@ -269,22 +266,23 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
           <div class="contact-info-single-block fade-in">
             <div class="contact-info-icon-block"><img src="/images/contact-email-message-icon.svg" alt="" aria-hidden="true" class="contact-info-icon" width="24" height="24" loading="lazy" decoding="async" /></div>
             <div class="contact-info-content-block">
-              <h3 class="contact-info-title">邮箱</h3>
+              <h3 class="contact-info-title">邮箱（选填）</h3>
               <p class="contact-info-summary">
                 <a href={`mailto:${site.email}`} class="contact-info-link">{site.email}</a>
               </p>
+              <p class="contact-info-note">用于接收正式报价单、发票与对公文件；日常询价用微信更快。</p>
             </div>
           </div>
           <div class="contact-info-single-block fade-in">
             <div class="contact-info-icon-block"><img src="/images/contact-phone-call-icon.svg" alt="" aria-hidden="true" class="contact-info-icon" width="24" height="24" loading="lazy" decoding="async" /></div>
             <div class="contact-info-content-block">
-              <h3 class="contact-info-title">电话与 WhatsApp</h3>
+              <h3 class="contact-info-title">手机 / 微信</h3>
               <p class="contact-info-summary">
-                <a href={phoneHref} class="contact-info-link">{site.phone}</a>
+                <a href={phoneHref} class="contact-info-link">{site.phoneDisplay}</a>
                 <span class="contact-info-sep" aria-hidden="true">·</span>
-                <a href={whatsappHref} class="contact-info-link" rel="noopener noreferrer" target="_blank">WhatsApp</a>
+                <button type="button" class="contact-info-link contact-info-link--wechat" id="nap-wechat-btn">微信号 {site.wechat}</button>
               </p>
-              <p class="contact-info-note">船舶或发电机组紧急停机？请在留言中注明，以便优先处理。</p>
+              <p class="contact-info-note">船舶或发电机组紧急停机？请直接致电并说明「停机待件」，以便优先处理。</p>
             </div>
           </div>
           <div class="contact-info-single-block fade-in">
@@ -805,6 +803,19 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
     transition: color 0.2s ease;
   }
 
+  /* 微信入口是 button（打开悬浮弹层），重置浏览器默认样式 */
+  button.contact-info-link {
+    border: 0;
+    background: none;
+    padding: 0;
+    font-family: inherit;
+    color: #07c160;
+  }
+
+  button.contact-info-link:hover {
+    color: #05914a;
+  }
+
   .contact-info-link:focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
@@ -902,7 +913,13 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
 
 
 <script>
+  import { site } from '../data/site';
   import { trackAcceptedInquiry, populateRfqAttributionFields } from '../scripts/attribution';
+
+  // 联系页 NAP 区的微信入口：打开 ContactDock 的弹层
+  document.getElementById('nap-wechat-btn')?.addEventListener('click', () => {
+    window.dispatchEvent(new CustomEvent('gc:open-wechat'));
+  });
 
   // ── 文件上传 UI ──
   const fileLabel = document.querySelector<HTMLLabelElement>('.file-upload-label');
@@ -964,36 +981,36 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
     if (urlSource) {
       const sourceInput = form.querySelector<HTMLInputElement>('input[name="source"]');
       const sourceMap: Record<string, string> = {
-        comparison: 'Google Search',
-        compare: 'Google Search',
-        selection: 'Google Search',
-        resource: 'Google Search',
-        resources: 'Google Search',
-        floating: 'Google Search',
-        homepage: 'Google Search',
-        'parts-inquiry': 'Google Search',
-        'parts-review': 'Google Search',
-        'parts-list': 'Google Search',
-        'order-support': 'Google Search',
-        'related-parts-resources': 'Google Search',
-        engineer: 'Google Search',
-        procurement: 'Google Search',
-        quality: 'Google Search',
-        'engineer-hub': 'Google Search',
-        'procurement-hub': 'Google Search',
-        'quality-hub': 'Google Search',
-        'payment-terms': 'Google Search',
-        'shipping-terms': 'Google Search',
-        sample: 'Google Search',
-        rfq: 'Google Search',
-        products: 'Google Search',
-        capabilities: 'Google Search',
-        industries: 'Google Search',
-        applications: 'Google Search',
-        standard: 'Google Search',
-        certifications: 'Google Search',
-        about: 'Google Search',
-        'product-sub': 'Google Search',
+        comparison: '百度搜索',
+        compare: '百度搜索',
+        selection: '百度搜索',
+        resource: '百度搜索',
+        resources: '百度搜索',
+        floating: '百度搜索',
+        homepage: '百度搜索',
+        'parts-inquiry': '百度搜索',
+        'parts-review': '百度搜索',
+        'parts-list': '百度搜索',
+        'order-support': '百度搜索',
+        'related-parts-resources': '百度搜索',
+        engineer: '百度搜索',
+        procurement: '百度搜索',
+        quality: '百度搜索',
+        'engineer-hub': '百度搜索',
+        'procurement-hub': '百度搜索',
+        'quality-hub': '百度搜索',
+        'payment-terms': '百度搜索',
+        'shipping-terms': '百度搜索',
+        sample: '百度搜索',
+        rfq: '百度搜索',
+        products: '百度搜索',
+        capabilities: '百度搜索',
+        industries: '百度搜索',
+        applications: '百度搜索',
+        standard: '百度搜索',
+        certifications: '百度搜索',
+        about: '百度搜索',
+        'product-sub': '百度搜索',
         '404': 'Other',
       };
       const mapped =
@@ -1003,7 +1020,7 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
              urlSource.startsWith('industry-') ||
              urlSource.startsWith('application-') ||
              urlSource.startsWith('product-sub-')
-            ? 'Google Search'
+            ? '百度搜索'
             : '');
       if (sourceInput && mapped) sourceInput.value = mapped;
     }
@@ -1044,7 +1061,7 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
     const drawing = formData.get('drawing');
     if (drawing instanceof File && drawing.size > 5 * 1024 * 1024) {
       resultEl.className = 'form-result is-visible is-error';
-      resultEl.innerHTML = '<p>附件超过 5 MB。请压缩后重试，或将文件单独发送至我们的邮箱。</p>';
+      resultEl.innerHTML = '<p>附件超过 5 MB。请压缩后重试，或添加微信发送给我们。</p>';
       submitBtn.disabled = false;
       submitBtn.textContent = '发送零件询价 →';
       return;
@@ -1099,7 +1116,7 @@ const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
       }
     } catch (err) {
       resultEl.className = 'form-result is-visible is-error';
-      resultEl.innerHTML = `<p>提交出错，请直接发送邮件至 <a href="mailto:${form.dataset.fallbackEmail ?? 'sales@dieselpartsource.com'}">${form.dataset.fallbackEmail ?? 'sales@dieselpartsource.com'}</a>。</p>`;
+      resultEl.innerHTML = `<p>提交出错，请直接致电 <a href="tel:${site.phone.replace(/\s/g, '')}">${site.phoneDisplay}</a> 或添加微信（同号）。</p>`;
     }
 
     submitBtn.disabled = false;

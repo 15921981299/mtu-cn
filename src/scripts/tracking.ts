@@ -1,3 +1,5 @@
+import './content-analytics';
+
 type GtagFn = (...args: unknown[]) => void;
 
 function gtag(): GtagFn | null {
@@ -11,8 +13,9 @@ function track(event: string, params: Record<string, unknown>): void {
 
 /**
  * Site-wide outbound / contact-intent click tracking.
- * Captures email and phone clicks plus WhatsApp links that appear inside page
- * content (the floating WhatsApp button tracks itself separately).
+ * Captures email, phone and WhatsApp links inside page content. The contact
+ * dock (微信 / 电话 / 询价) tracks its own events; 微信 clicks land on the
+ * dock's copy button / popup, which reports click_wechat itself.
  */
 document.addEventListener('click', (event) => {
   const target = event.target as HTMLElement | null;
@@ -41,7 +44,6 @@ document.addEventListener('click', (event) => {
   }
 
   if (href.includes('wa.me') || href.includes('api.whatsapp.com')) {
-    if (link.id === 'whatsapp-button') return;
     track('click_whatsapp', {
       event_category: 'RFQ',
       event_label: path,

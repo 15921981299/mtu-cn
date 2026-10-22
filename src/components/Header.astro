@@ -12,6 +12,7 @@ const productsActive = isActive('/products') || isActive('/part-products');
 const supportActive = isActive('/capabilities') || isActive('/industries');
 const companyActive = isActive('/about') || isActive('/certifications');
 const resourcesActive = isActive('/resources') || isActive('/part-products/catalog') || isActive('/part-number-index');
+const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
 ---
 
 <header class="header">
@@ -159,7 +160,7 @@ const resourcesActive = isActive('/resources') || isActive('/part-products/catal
 
         <PartSearch />
 
-        <a href="/contact/" class="contact-number-block contact-number-block--compact" aria-label="联系我们">
+        <a href={phoneHref} class="contact-number-block contact-number-block--compact" aria-label={`拨打询价热线 ${site.phoneDisplay}`}>
           <div class="contact-icon-block">
             <div class="contact-icon-circle-one"></div>
             <div class="contact-icon-circle-two"></div>
@@ -170,8 +171,8 @@ const resourcesActive = isActive('/resources') || isActive('/part-products/catal
             </div>
           </div>
           <div class="contact-text-block contact-text-block--desktop">
-            <p class="contact-text">询价</p>
-            <span class="contact-text hover">{site.email}</span>
+            <p class="contact-text">询价热线</p>
+            <span class="contact-text hover">{site.phoneDisplay}</span>
           </div>
         </a>
         <button class="menu-button" aria-label="打开菜单" id="menu-toggle">

@@ -55,7 +55,7 @@ const legalName = site.company.legalNameEn;
 
           <h2 id="information-collected">我们收集的信息</h2>
           <ul class="terms-list">
-            <li><strong>询价与联系表单：</strong>姓名、公司、邮箱、电话、项目详情，以及您上传的文件（图纸、STEP、PDF）。</li>
+            <li><strong>询价与联系表单：</strong>姓名、公司、邮箱、手机号 / 微信号、项目详情，以及您上传的文件（图纸、STEP、PDF）。</li>
             <li><strong>邮件与消息：</strong>为您的订单报价、生产与发货所需的往来通信。</li>
             <li><strong>网站分析：</strong>启用时通过 Google Analytics 收集匿名化使用数据（页面浏览、来源、设备类型）。</li>
             <li><strong>技术日志：</strong>IP 地址、浏览器类型与时间戳，用于安全与滥用防范。</li>
@@ -104,8 +104,8 @@ const legalName = site.company.legalNameEn;
           <h2 id="contact">联系我们</h2>
           <p>
             {legalName}<br />
-            邮箱：<a href={`mailto:${site.email}`}>{site.email}</a><br />
-            电话：{site.phone}
+            电话 / 微信：{site.phoneDisplay}（同号）<br />
+            邮箱：<a href={`mailto:${site.email}`}>{site.email}</a>
           </p>
 
           <p class="terms-related">

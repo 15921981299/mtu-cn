@@ -1,3 +1,5 @@
+import { contentLeadParams } from './content-attribution.ts';
+
 const STORAGE_KEY = 'ms_attribution_v1';
 
 export type AttributionTouch = {
@@ -129,6 +131,7 @@ export function populateRfqAttributionFields(form: HTMLFormElement): void {
   setHidden('entry_medium', data.entryMedium ?? 'unknown');
   setHidden('referrer_host', data.referrerHost ?? '');
   setHidden('entry_campaign', data.campaign ?? '');
+  for (const [name, value] of Object.entries(contentLeadParams())) setHidden(name, value);
   setHidden('page_url', `${window.location.origin}${window.location.pathname}`);
 
   const params = new URLSearchParams(window.location.search);
@@ -148,6 +151,7 @@ export function populateRfqAttributionFields(form: HTMLFormElement): void {
 export function getLeadAttributionParams(): Record<string, string> {
   const data = getAttributionSnapshot();
   return {
+    ...contentLeadParams(),
     first_touch_page: data?.firstTouchPage ?? window.location.pathname,
     entry_source: data?.entrySource ?? 'unknown',
     entry_medium: data?.entryMedium ?? 'unknown',
